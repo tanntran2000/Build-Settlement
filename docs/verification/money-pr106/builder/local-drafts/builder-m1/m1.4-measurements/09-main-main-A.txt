@@ -1,0 +1,8 @@
+UTC start 2026-11-26T03:02:37.353981+00:00
+CWD C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-bench-worker.mjs C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 tick control C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\main-100-npc.json "" normal
+
+{"variant":"control","mode":"tick","pid":36408,"node":"v24.19.0","inputSha256":"312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3","outcomeSha256":"48f3fd7853ad555311a632bba3c54da1f78781a96a47467cad0596b8990c3035","sizeBytes":300238,"coldMs":97.3378,"warmMs":[68.3279,64.0777,63.1981,69.0216,54.5734,50.4711,51.4113,50.6234,49.8186,47.6808,47.4454,46.6648,49.5282,47.9934,56.1942,50.9984,47.5744,49.1835,46.4969,48.7117]}
+
+Exit 0
+UTC end 2026-11-26T03:02:40.092758+00:00

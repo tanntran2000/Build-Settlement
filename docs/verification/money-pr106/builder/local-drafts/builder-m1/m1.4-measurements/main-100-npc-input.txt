@@ -1,0 +1,8 @@
+UTC start 2026-11-26T03:00:16.834235+00:00
+CWD C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-bench-worker.mjs C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 prepare control C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\main-100-npc.json "" normal
+
+{"variant":"control","bytes":300238,"sha256":"312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3","comparableSha":"517603292615bc12b6dc14e612faaeae2c15233f6905c7be075529c2af79c720","npcCount":100,"stock":0,"lots":0,"actionsPerLot":[],"departures":0}
+
+Exit 0
+UTC end 2026-11-26T03:00:18.561677+00:00

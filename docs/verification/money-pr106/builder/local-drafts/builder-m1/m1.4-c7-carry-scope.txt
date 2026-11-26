@@ -1,0 +1,11 @@
+UTC 2026-11-26T08:16:39.781380+00:00
+HEAD 21956b639f0f4a302968008f01bbea0654ed5438
+Tree 7c8f6cb1b85a2193358bbab86d43f3c7d807cd50
+Parent 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+
+Command git diff --stat 3f1467a..HEAD
+ packages/ui/src/__tests__/outside-view.test.ts | 31 +++++++++++++++++++
+ packages/ui/src/society-view.ts                | 41 +++++++++++++++++++-------
+ 2 files changed, 62 insertions(+), 10 deletions(-)
+Exit 0
+Only packages/ui/ and its tests changed.

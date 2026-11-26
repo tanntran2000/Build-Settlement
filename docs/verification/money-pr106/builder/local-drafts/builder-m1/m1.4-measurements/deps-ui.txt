@@ -1,0 +1,8 @@
+UTC start 2026-11-26T02:57:23.276540+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+Command robocopy C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\node_modules C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\ui\node_modules /E /XD .vite .vite-temp /NFL /NDL /NJH /NJS /NP /R:1 /W:1
+
+
+
+Exit 1
+UTC end 2026-11-26T02:57:23.513017+00:00

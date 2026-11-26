@@ -1,0 +1,44 @@
+UTC start 2026-11-25T16:13:59.917377+00:00
+Base HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+Base tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+External Step 0 scratch copy
+Proposed file SHA-256 dd3d7ec19c5a73b6dd40ee8f315fa69bcedb1ee83a5a84b67c722ee2b33dc069
+Command node node_modules/vitest/vitest.mjs run packages/core/src/__tests__/catalog-data.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (52 tests | 1 failed) 78ms
+   × 'tuning.json' has recursively frozen typed views 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' has recursively frozen typed views
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ frozen packages/core/src/__tests__/catalog-data.test.ts:66:38
+     64|   function frozen(value: unknown) {
+     65|     if (value && typeof value === 'object') {
+     66|       expect(Object.isFrozen(value)).toBe(true);
+       |                                      ^
+     67|       Object.values(value).forEach(frozen);
+     68|     }
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:73:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 51 passed (52)
+   Start at  23:14:01
+   Duration  1.31s (transform 520ms, setup 0ms, import 695ms, tests 78ms, environment 0ms)
+
+
+Exit 1
+UTC end 2026-11-25T16:14:02.595581+00:00

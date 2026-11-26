@@ -1,0 +1,142 @@
+UTC start 2026-11-26T02:08:20.648575+00:00
+HEAD 06e6b1da57a41cea4918b66b14c76056e36f615d
+HEAD tree 86c0e90458eb404cc3e0f357e506e0ddf55f107f
+?? tests/e2e/difficulty.spec.ts
+
+Command npm.cmd run build --workspace=@haven/ui
+UTC start 2026-11-26T02:08:20.740738+00:00
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 273 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CC6rjaS5.css                   38.55 kB │ gzip:   7.76 kB
+dist/assets/index-CJ9yZfP_.js                   524.57 kB │ gzip: 166.80 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.71s
+
+Exit 0
+UTC end 2026-11-26T02:08:30.333575+00:00
+
+Command npm.cmd run test:smoke -- tests/e2e/difficulty.spec.ts --output C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts
+UTC start 2026-11-26T02:08:30.333697+00:00
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 274 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CC6rjaS5.css                   38.55 kB │ gzip:   7.76 kB
+dist/assets/index-CJ9yZfP_.js                   524.57 kB │ gzip: 166.80 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.34s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/difficulty.spec.ts --output C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts
+
+
+Running 2 tests using 1 worker
+
+(node:19872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1280 (8.8s)
+(node:12612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1600 (5.8s)
+
+
+  1) [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1280 
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator: getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' })
+    Expected: checked
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeChecked" getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' }) with timeout 5000ms
+      - waiting for getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' })
+
+
+      11 |     const normal = group.getByRole('radio', { name: 'Normal' });
+      12 |     const easy = group.getByRole('radio', { name: 'Easy' });
+    > 13 |     await expect(normal).toBeChecked();
+         |                          ^
+      14 |     await normal.focus();
+      15 |     await normal.press('ArrowRight');
+      16 |     await expect(easy).toBeChecked();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\difficulty.spec.ts:13:26
+
+    Error Context: ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1fb5b-nd-survives-storage-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1fb5b-nd-survives-storage-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1fb5b-nd-survives-storage-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1600 
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator: getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' })
+    Expected: checked
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeChecked" getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' }) with timeout 5000ms
+      - waiting for getByRole('radiogroup', { name: 'Difficulty' }).getByRole('radio', { name: 'Normal' })
+
+
+      11 |     const normal = group.getByRole('radio', { name: 'Normal' });
+      12 |     const easy = group.getByRole('radio', { name: 'Easy' });
+    > 13 |     await expect(normal).toBeChecked();
+         |                          ^
+      14 |     await normal.focus();
+      15 |     await normal.press('ArrowRight');
+      16 |     await expect(easy).toBeChecked();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\difficulty.spec.ts:13:26
+
+    Error Context: ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1b52f-nd-survives-storage-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1b52f-nd-survives-storage-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\money-prM1\builder-m1\m1.3-red-browser-artifacts\difficulty-New-Game-diffic-1b52f-nd-survives-storage-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1280 
+    [chromium] › tests\e2e\difficulty.spec.ts:6:3 › New Game difficulty is keyboard-selectable and survives storage at 1600 
+
+Exit 1
+UTC end 2026-11-26T02:09:12.428189+00:00

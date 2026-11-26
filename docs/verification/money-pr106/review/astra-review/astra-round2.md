@@ -1,0 +1,58 @@
+# Money M1 independent review · Round 2
+
+**FAIL.** Both P1 tests now enforce their contracts, and both original Easy forecast reproductions pass. A valid Warehouse case still displays 80 capacity when End Week applies 40. The original Normal controls pass, but the broader statement that every Normal forecast is unchanged is false.
+
+| P0 | P1 | P2 | New P3 | Carried P3 playtest risks |
+|---:|---:|---:|---:|---:|
+| 0 | 0 | 2 | 1 | 2 |
+
+Money Astra 6.2 • 2026-11-26. The first Git check confirmed `feat/money-difficulty` at `3f1467ac278ab1ad8379c7ca58bced6e121d9c4a`, tree `5f0fb88334ed9f9cecea0d3ffb338562ce444768`. Its sole parent is the reviewed `fbad4d834689eb798c13bca27dccf5d16c1f6704`. The remote-tracking tip matches. The Correction 6 plan, round-one review and builder summary matched the supplied SHA-256 values. All 316 entries in the builder manifest rehashed successfully. Tân’s approval was “Duyệt sửa cả 4 (Recommended)”. [Binding plan](C:/Users/Admin/.t3/local-drafts/money-prM1/binding-plan-384cadd.md) · [Round one](C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round1.md) · [Builder evidence](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/M1.4-C6.md)
+
+## Findings
+
+**P2 · A funded Warehouse can lose its worker before spoilage.** The forecast tests staffing at the start of the week and funding during the allocation. End Week can release the worker after resolving the population change. It reads the building’s staffing again when it caps stocks. The funding calculation now agrees, but the capacity shown to the player can still be wrong. I reproduced this on both Normal and Easy at both commits. It is an outstanding case under Correction 6 item 2. [Forecast at society-view.ts:110](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/society-view.ts:110) · [Worker release at tile-trial-week.ts:112](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-week.ts:112) · [Spoilage check at outside-week.ts:41](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/outside-week.ts:41)
+
+- Start a seed-2026 game with 100 residents, 120,000 milli Gold and 75,000 milli Wood. Transfer 30 free residents to common Makers, bringing the Maker count to 50, and set Maker debt pressure to 100. Pause the Farm and Market with zero workers. Assign four Makers to the level-one Processor and one to the level-one Warehouse at `spec-2`. Enable level-one Slave Quarters at `slum-1`.
+- The live reader accepts the session. The panel predicts capacity **80**. End Week reports that `spec-2` released one Maker after the population change. Common Makers fall from 50 to 49. The Warehouse is now unstaffed, **35,000 milli Wood spoils**, and **40,000 milli** remains. The input session stays byte-equivalent. A regression case should compare the preview to this final spoilage result.
+
+**P2 · Normal forecasts change outside the two approved control fixtures.** This is a compatibility finding against round-two check 2. In both examples the new number is accurate and the simulation result is identical across commits. The distinction matters when deciding what Normal compatibility the release can claim. [Storage funding at society-view.ts:112](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/society-view.ts:112) · [Hospital forecast at items-view.ts:53](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/items-view.ts:53)
+
+| Valid Normal reproduction | Round-one forecast | Round-two forecast | Actual End Week at either commit |
+|---|---:|---:|---|
+| Original four-extractor Warehouse fixture, with opening Gold changed from 480 to 6,000 milli | 40 capacity | 80 capacity | The four charges consume 30,000 milli. Licensed Vice adds 1,500, the Warehouse is funded and all 75,000 milli Wood survives. |
+| Original 900-milli Hospital fixture, with the three extractors removed and Farm, Processor and Market paused. The staffed, supplied Hospital starts with 50 player health. | +1/week | +2/week | Tax funds the Hospital. Regeneration is +2 and health closes at 52. |
+
+Correction 6’s shared funding rule corrects these older Normal underestimates. Its narrower requirement to preserve the two specified Normal controls passes. Exact preservation of every prior Normal display and universal agreement with End Week give different answers for the saves above.
+
+**P3 · Literal question marks in the builder evidence.** The timeout paragraph contains three ASCII `?` characters in place of quotation marks and a link separator. UTF-8 decoding succeeds and the supplied SHA-256 matches. The generator contains the damaged text, so regenerating the evidence as written reproduces it. This affects the evidence text under AGENTS §6.5. [M1.4-C6.md:28](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/M1.4-C6.md:28) · [seal-m1.4-c6.py:83](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/seal-m1.4-c6.py:83)
+
+The two earlier P3 playtest risks remain open. I verified R-029 for the three scripted calibration routes and R-030 for the 7.5-Gold cost of an enabled idle extractor in the separate risk-register revision `cb2daa6`. [PLAYTEST-RISK-REGISTER.md:69](https://github.com/tanntran2000/Build-Settlement/blob/cb2daa6822eef60aa52ea58dde3081390ad660d0/docs/verification/PLAYTEST-RISK-REGISTER.md#L69)
+
+## Original findings and independent reproductions
+
+I ran the original fixtures through the production forecast functions and `executeCharacterLifeCommand` after confirming ports 4173 and 4174 had no listeners. For the comparison, I loaded the two parent UI modules directly from Git into memory. The new commit contains no simulation changes. The probes checked live-session validity, successful End Week and input immutability. Both revision runs exited 0.
+
+| Original fixture | Round-one forecast | Round-two forecast | Engine result on the new head |
+|---|---:|---:|---|
+| Easy Warehouse, opening 480 milli | 40 | **80** | 1,725 milli law income. All 75 Wood retained. |
+| Normal Warehouse, opening 480 milli | 80 | **80** | 1,500 milli law income. All 75 Wood retained. |
+| Easy Hospital, opening 900 milli | +1 | **+2** | Health 50 → 52. |
+| Normal Hospital, opening 900 milli | +1 | **+1** | Health 50 → 51. |
+
+The planning potion predicate and purchase dispatcher are unchanged. On Normal the 900-milli fixture closed the shop and returned `NO_SHOP` on purchase at both revisions. A staffed, supplied Hospital with 3,000 milli opening Gold opened the shop and accepted the tier-one purchase at both. Only the weekly recovery display switched to the forecast allocator. [Planning predicate](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/items-view.ts:45) · [Planning purchase](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/item-command.ts:85)
+
+Both original P1 findings are closed. I independently compared the full `INCOMPATIBLE_SAVE` refusal, including the established message, on the raw v13 JSON and detached-row paths. The reconstructed historical state, original rows and fixture bytes were preserved. Separately changing each of the five Normal rates to 10,001 produced exactly `tuning.json#DIFFICULTY_TRIAL.profiles.normal.<field>: must be 10000`. The committed tests now enforce complete equality on these values. The probe exited 0. [Raw refusal](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/money-save.test.ts:42) · [Rows and immutability](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/money-save.test.ts:45) · [Exact diagnostic](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/__tests__/difficulty.test.ts:23)
+
+## Scope, tests and measurements
+
+The eight-file diff contains 106 insertions and 20 deletions. Two test files strengthen the P1 assertions. Two UI test files add four parameterized cases for the Easy and Normal fixtures. Two view modules implement the forecasts. The remaining two files carry the session through the existing UI: `TileManagement.svelte` owns the NPCs, player and profiles, and `CharacterLifeShell.svelte` passes that session to storage so the allocator can account for wages and item context before funding buildings. Those two changes serve Correction 6 item 2. The `items-view.ts` change is confined to weekly recovery. The diff removes no existing case, weakens no assertion and introduces no skip or timeout. `git diff --check fbad4d8..3f1467a` exited 0. [TileManagement.svelte:233](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:233) · [CharacterLifeShell.svelte:141](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/CharacterLifeShell.svelte:141) · [Wage and context prelude](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/society-view.ts:98)
+
+The first RED attempt used invalid fixtures. The corrected RED log identifies the parent head and a four-test-file working delta. Its two Easy cases failed on the original forecast values and both Normal controls passed, with 30/32 passing and exit 1. After the product edit, all 32 passed, exit 0. At the final head and tree, gates 1–7 all exited 0, including 154 architecture and 3,317 unit tests. The gzip bundle was remeasured at 174,963 B. The diff contains only UI and tests, satisfying Correction 6’s condition for carrying the End Week timing measurements. [First RED](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-red.txt) · [Corrected RED](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-red-attempt2.txt) · [GREEN](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-green.txt) · [Final unit log](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-attempt1-gate-6-unit.txt:17) · [Bundle](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-bundle.txt)
+
+## Smoke timeout
+
+**The evidence supports pre-existing timing sensitivity.** The same fulfillment case reached its 60-second deadline before M1. Archived isolated comparisons recorded 56.9/56.2 seconds on pre-M1 main and 56.1/59.5 seconds on the contemporary branch. R-028 already records this failure mode. At the C6 head, the first full run recorded 418 passes and one overall test timeout, exit 1. The retained trace contains no failed value comparison. The full retry ran at the same head, tree and timeout and passed 419/419, exit 0. Its log records **59.6 seconds for case 37 during that full retry**. The bound packet provides no separate isolated C6 run to verify at 59.6 seconds. I found no evidence of a fulfillment logic regression. [Pre-M1 full-run timeout](https://github.com/tanntran2000/Build-Settlement/blob/71c67902404944383d252ba8e19db8eebeea2c34/docs/verification/p7b-pr104/claude-tester/claude-gates-1-7-and-smoke-15f8c02.txt#L1556) · [Historical timing comparison](https://github.com/tanntran2000/Build-Settlement/blob/71c67902404944383d252ba8e19db8eebeea2c34/docs/verification/p7b-pr104/claude-tester/compare-fulfillment-main-vs-15f8c02.txt) · [C6 timeout](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-attempt1-gate-8-smoke.txt:467) · [C6 retry](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-attempt2-gate-8-smoke.txt:77)
+
+Only the requested review was written. The smoke results above are builder evidence. The independent reproductions used no server or browser.
+
+VERDICT: FAIL

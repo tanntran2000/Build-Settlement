@@ -1,0 +1,24 @@
+UTC start 2026-11-26T08:14:48.573740+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 be74d46fcfd111a07daa990bdaeb4e9ec9f0112a65581cb4d8616501093e18d6
+Command npm.cmd test -- packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts
+M packages/ui/src/__tests__/outside-view.test.ts
+ M packages/ui/src/society-view.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  15:14:49
+   Duration  1.31s (transform 1.30s, setup 0ms, import 1.79s, tests 210ms, environment 0ms)
+
+
+Exit 0
+UTC end 2026-11-26T08:14:51.248461+00:00

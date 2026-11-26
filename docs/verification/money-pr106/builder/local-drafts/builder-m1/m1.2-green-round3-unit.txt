@@ -1,0 +1,84 @@
+UTC start 2026-11-26T02:03:58.014770+00:00
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+HEAD tree 83a17c4de3eaad26b867155d512a2f898683b91b
+Working delta SHA-256 3bb579ad32cbf97ddd6e8d98382fbc426d81398c4cf996cf3844e2cf0b23cdcc
+Command npm.cmd test
+M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/__tests__/society-world-integrity.test.ts
+ M packages/core/src/data/buildings.json
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/difficulty.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-stock-integrity.test.ts
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-5-weeks.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-crime-death.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-crime-raid.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-crime-robbery.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-crime-wound.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-demand-card.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-laws.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-new-game.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/life-rebellion-last-week.json
+ M packages/persistence/src/__tests__/fixtures/society-v14/new-game.json
+ M packages/simulation/src/__tests__/authority-refusals.test.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/household-week.test.ts
+ M packages/simulation/src/__tests__/items-week.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/order-commands.test.ts
+ M packages/simulation/src/__tests__/order-tax-week.test.ts
+ M packages/simulation/src/__tests__/order-week.test.ts
+ M packages/simulation/src/__tests__/society-command-transaction.test.ts
+ M packages/simulation/src/__tests__/society-end-week.test.ts
+ M packages/simulation/src/__tests__/society-renewable-support.test.ts
+ M packages/simulation/src/__tests__/society-stock-integrity.test.ts
+ M packages/simulation/src/__tests__/society-stock-policy-ports.test.ts
+ M packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/workshop-operation.ts
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M scripts/p7b-road-balance.ts
+ M tests/e2e/goods-stock.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/simulation/src/__tests__/difficulty-week.test.ts
+?? packages/simulation/src/__tests__/fixtures/legacy-economy.ts
+?? scripts/money-calibration.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc.test.ts (41 tests | 1 failed) 6825ms
+     × resolves three distinct English full names from the seeded fixture keys 5643ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/world/__tests__/npc.test.ts > createNpcWorldSession > resolves three distinct English full names from the seeded fixture keys
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/core/src/world/__tests__/npc.test.ts:46:3
+     44|     expect(again).toEqual(before);
+     45|   });
+     46|   it('resolves three distinct English full names from the seeded fixtu…
+       |   ^
+     47|     const { cultures, originCulture } = NPC_GENERATOR_CATALOG;
+     48|     for (let seed = 0; seed < 200; seed++) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 146 passed (147)
+      Tests  1 failed | 3312 passed (3313)
+   Start at  09:03:59
+   Duration  116.08s (transform 17.57s, setup 0ms, import 92.95s, tests 406.44s, environment 88ms)
+
+
+Exit 1
+UTC end 2026-11-26T02:05:56.222364+00:00

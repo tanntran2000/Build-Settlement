@@ -1,0 +1,140 @@
+{
+  "main-normal-empty -> head-normal-empty": {
+    "byteDelta": 103,
+    "decodedChanges": [
+      {
+        "path": "cityRulesetId",
+        "wasPresent": true,
+        "before": "tile-society-13",
+        "isPresent": true,
+        "after": "tile-society-14"
+      },
+      {
+        "path": "state.city.world.settlements.settlement_haven_01.inventory.food",
+        "wasPresent": true,
+        "before": 20000,
+        "isPresent": true,
+        "after": 40000
+      },
+      {
+        "path": "state.city.goodsStock.amountMilli",
+        "wasPresent": true,
+        "before": 10000,
+        "isPresent": true,
+        "after": 30000
+      },
+      {
+        "path": "state.city.society.rulesetId",
+        "wasPresent": true,
+        "before": "tile-society-13",
+        "isPresent": true,
+        "after": "tile-society-14"
+      },
+      {
+        "path": "state.city.society.difficulty",
+        "wasPresent": false,
+        "before": null,
+        "isPresent": true,
+        "after": "normal"
+      },
+      {
+        "path": "state.player.purse",
+        "wasPresent": false,
+        "before": null,
+        "isPresent": true,
+        "after": {
+          "moneyMilli": 0,
+          "levyPercent": 0,
+          "donatedThisWeekMilli": 0,
+          "robbery": null
+        }
+      }
+    ]
+  },
+  "head-normal-empty -> head-easy-empty": {
+    "byteDelta": -2,
+    "decodedChanges": [
+      {
+        "path": "state.city.society.difficulty",
+        "wasPresent": true,
+        "before": "normal",
+        "isPresent": true,
+        "after": "easy"
+      }
+    ]
+  },
+  "head-normal-empty -> head-normal-populated": {
+    "byteDelta": 53,
+    "decodedChanges": [
+      {
+        "path": "state.player.purse.moneyMilli",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 1201
+      },
+      {
+        "path": "state.player.purse.levyPercent",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 5
+      },
+      {
+        "path": "state.player.purse.donatedThisWeekMilli",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 1000
+      },
+      {
+        "path": "state.player.purse.robbery",
+        "wasPresent": true,
+        "before": null,
+        "isPresent": true,
+        "after": {
+          "id": "home-robbery-w1",
+          "week": 1,
+          "excessMilli": 201
+        }
+      }
+    ]
+  },
+  "head-easy-empty -> head-easy-populated": {
+    "byteDelta": 53,
+    "decodedChanges": [
+      {
+        "path": "state.player.purse.moneyMilli",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 1201
+      },
+      {
+        "path": "state.player.purse.levyPercent",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 5
+      },
+      {
+        "path": "state.player.purse.donatedThisWeekMilli",
+        "wasPresent": true,
+        "before": 0,
+        "isPresent": true,
+        "after": 1000
+      },
+      {
+        "path": "state.player.purse.robbery",
+        "wasPresent": true,
+        "before": null,
+        "isPresent": true,
+        "after": {
+          "id": "home-robbery-w1",
+          "week": 1,
+          "excessMilli": 201
+        }
+      }
+    ]
+  }
+}

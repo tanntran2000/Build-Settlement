@@ -1,0 +1,72 @@
+UTC start 2026-11-26T06:16:04.987437+00:00
+HEAD fbad4d834689eb798c13bca27dccf5d16c1f6704
+HEAD tree 3f19271c83e8ad89f9281c4a1c550dc5336536da
+Working delta SHA-256 d8b3664acb6819a281a55ec5fb5f6c96b95160de216c71278e1d8df7d8718252
+Command npm.cmd test -- packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+M packages/core/src/trial/__tests__/difficulty.test.ts
+ M packages/persistence/src/__tests__/money-save.test.ts
+ M packages/ui/src/__tests__/items-view.test.ts
+ M packages/ui/src/__tests__/outside-view.test.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/outside-view.test.ts (7 tests | 1 failed) 121ms
+   × includes easy law income when forecasting Warehouse capacity 76ms
+ ❯ packages/ui/src/__tests__/items-view.test.ts (14 tests | 1 failed) 170ms
+   × forecasts easy Hospital recovery using weekly funding 58ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > forecasts easy Hospital recovery using weekly funding
+AssertionError: expected 'Health 50 / 100 · Regen +1/week' to be 'Health 50 / 100 · Regen +2/week' // Object.is equality
+
+Expected: "Health 50 / 100 · Regen +2/week"
+Received: "Health 50 / 100 · Regen +1/week"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:137:33
+    135|   expect(result.next.player.character.health).toBe(50 + regen);
+    136|   expect(v.potionShop(city, 'service-1')).toBe(false);
+    137|   expect(v.healthLine(session)).toBe('Health 50 / 100 · Regen +' + reg…
+       |                                 ^
+    138|   expect(session).toStrictEqual(before);
+    139| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/src/__tests__/outside-view.test.ts > includes easy law income when forecasting Warehouse capacity
+AssertionError: expected { good: 'Wood', amount: 75, …(1) } to strictly equal { good: 'Wood', amount: 75, …(1) }
+
+- Expected
++ Received
+
+  {
+    "amount": 75,
+-   "capacity": 80,
++   "capacity": 40,
+    "good": "Wood",
+  }
+
+ ❯ packages/ui/src/__tests__/outside-view.test.ts:34:62
+     32|   expect(result.report!.laws!.incomeMilli).toBe(lawIncome);
+     33|   expect(result.report!.after.wood).toBe(75000);
+     34|   expect(storageView(city).find(row => row.good === 'Wood')).toStrictE…
+       |                                                              ^
+     35|   expect(session).toStrictEqual(before);
+     36| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 2 passed (4)
+      Tests  2 failed | 30 passed (32)
+   Start at  13:16:06
+   Duration  1.82s (transform 2.54s, setup 0ms, import 3.63s, tests 413ms, environment 1ms)
+
+
+Exit 1
+UTC end 2026-11-26T06:16:08.284437+00:00

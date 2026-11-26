@@ -1,0 +1,45 @@
+UTC 2026-11-26T04:22:59.9540344Z
+HEAD fbad4d834689eb798c13bca27dccf5d16c1f6704
+Tree 3f19271c83e8ad89f9281c4a1c550dc5336536da
+Branch feat/money-difficulty
+origin/main ab83228df9ee1c70f97c634324c3202e2def0ea0
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             22
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+powershell          17676                2.234
+browser             26844                0.531
+browser              8044                0.453
+audiodg              2560                0.391
+T3 Code (Nightly)   27188                0.281
+codebase-memory-mcp  9956                0.125
+codebase-memory-mcp 31264                0.094
+codex               21008                0.094
+browser             13992                0.062
+codebase-memory-mcp 11500                0.062
+codebase-memory-mcp  3124                0.062
+Zalo                35672                0.047
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:44 PM
+
+
+
+Sleep/resume System records since 2026-11-26T10:33:43.2726340+07:00
+No matching events

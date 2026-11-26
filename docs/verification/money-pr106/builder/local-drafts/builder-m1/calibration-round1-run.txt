@@ -1,0 +1,11 @@
+M1.1 HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+M1.1 tree 83a17c4de3eaad26b867155d512a2f898683b91b
+UTC start 2026-11-25T16:22:05.770064+00:00
+Command node scripts/money-calibration.ts C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\calibration-round1.json
+Scratch C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\tree
+8e383462a27510c781a64a9211d2af7b77aaa0cb575f063766a60a009a01888b  packages/core/src/data/buildings.json
+4f899e0a4927fd11837157a758b9a455fbe6e63ce66832f721a2b5df2ce7ff1a  packages/core/src/data/tuning.json
+
+
+Exit 0
+UTC end 2026-11-25T16:22:19.796910+00:00

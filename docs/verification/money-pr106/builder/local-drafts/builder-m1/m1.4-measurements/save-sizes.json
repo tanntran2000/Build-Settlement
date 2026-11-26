@@ -1,0 +1,90 @@
+{
+  "main-normal-empty": {
+    "variant": "empty",
+    "difficulty": "normal",
+    "bytes": 17422,
+    "sha256": "835f61f3deb075a0542227e2810565a810fe18184b4fb8764c2913dd28149c97",
+    "purse": null,
+    "ruleset": "tile-society-13",
+    "utcStart": "2026-11-26T03:00:08.614941+00:00",
+    "utcEnd": "2026-11-26T03:00:10.303582+00:00",
+    "exit": 0,
+    "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-bench-worker.mjs C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\_scratch\\m1.4-main C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 fresh-save empty C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-measurements\\main-normal-empty.json \"\" normal"
+  },
+  "head-normal-empty": {
+    "variant": "empty",
+    "difficulty": "normal",
+    "bytes": 17525,
+    "sha256": "41ca7bbb86324f22029f09d418af927995c71c227e2289d1dbed1678a179657a",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14",
+    "utcStart": "2026-11-26T03:00:10.303722+00:00",
+    "utcEnd": "2026-11-26T03:00:11.920033+00:00",
+    "exit": 0,
+    "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 fresh-save empty C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-measurements\\head-normal-empty.json \"\" normal"
+  },
+  "head-normal-populated": {
+    "variant": "populated",
+    "difficulty": "normal",
+    "bytes": 17578,
+    "sha256": "898b47a58c1634f77f1c4f8c5fba54a0a93b75c5d8b90f10a764ce78f8c23557",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": {
+        "id": "home-robbery-w1",
+        "week": 1,
+        "excessMilli": 201
+      }
+    },
+    "ruleset": "tile-society-14",
+    "utcStart": "2026-11-26T03:00:11.920193+00:00",
+    "utcEnd": "2026-11-26T03:00:13.521229+00:00",
+    "exit": 0,
+    "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 fresh-save populated C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-measurements\\head-normal-populated.json \"\" normal"
+  },
+  "head-easy-empty": {
+    "variant": "empty",
+    "difficulty": "easy",
+    "bytes": 17523,
+    "sha256": "af522bd6936f68f14c59e6b2b2c988a57c4fb203c8f578af20bb65ae400f1f21",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14",
+    "utcStart": "2026-11-26T03:00:13.521417+00:00",
+    "utcEnd": "2026-11-26T03:00:15.136820+00:00",
+    "exit": 0,
+    "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 fresh-save empty C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-measurements\\head-easy-empty.json \"\" easy"
+  },
+  "head-easy-populated": {
+    "variant": "populated",
+    "difficulty": "easy",
+    "bytes": 17576,
+    "sha256": "59066ffffa88d176d923bcbeeaa8743bd446d9310377cfe5c16004ba492ea089",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": {
+        "id": "home-robbery-w1",
+        "week": 1,
+        "excessMilli": 201
+      }
+    },
+    "ruleset": "tile-society-14",
+    "utcStart": "2026-11-26T03:00:15.136986+00:00",
+    "utcEnd": "2026-11-26T03:00:16.768896+00:00",
+    "exit": 0,
+    "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 fresh-save populated C:\\Users\\Admin\\.t3\\local-drafts\\money-prM1\\builder-m1\\m1.4-measurements\\head-easy-populated.json \"\" easy"
+  }
+}

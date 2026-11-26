@@ -1,0 +1,8 @@
+M1.1 HEAD 63d2b2627b57d172be8459c64989e42ff650f692, Round 3 scratch
+UTC start 2026-11-26T01:34:04.012887+00:00
+Command node --import ./scripts/p7b-road-balance.ts --input-type=module -e "const m=await import('./packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts');
+const {writeFileSync}=await import('node:fs');
+writeFileSync(process.argv[1],JSON.stringify(m.CATALOG_SEEDS.map(m.runCatalogScenario),null,2)+'\n','utf8');" C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\round3-catalog-golden.json
+
+Exit 0
+UTC end 2026-11-26T01:34:15.047770+00:00

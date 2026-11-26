@@ -1,0 +1,8 @@
+UTC start 2026-11-26T03:01:33.654650+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-bench-worker.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 tick control C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\easy-100-npc.json "" easy
+
+{"variant":"control","mode":"tick","pid":496,"node":"v24.19.0","inputSha256":"b9a60499be39b0b3591ed9d8dc8ac551a28b9c8483a9057186b93192120542e2","outcomeSha256":"133cde328a478435ddfb660c669659fe77ea76542656cfcb04e60ab6433f7500","sizeBytes":300339,"coldMs":100.3017,"warmMs":[70.3741,62.8091,60.6393,53.1264,54.1097,60.2643,55.8317,53.0943,50.6123,50.332,55.5783,48.7903,49.1846,52.3644,49.4946,50.0475,46.1816,47.2449,46.0748,48.1157]}
+
+Exit 0
+UTC end 2026-11-26T03:01:36.365185+00:00

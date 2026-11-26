@@ -1,0 +1,78 @@
+Strict UTF-8 audit. Restored curly quotation marks and middle-dot separator in both C6 files.
+audit-m1.4-c7-utf8.py strict UTF-8, 9 question marks
+commit-m1.4-c7.py strict UTF-8, 0 question marks
+environment-m1.4-c7-attempt1-after-smoke.txt strict UTF-8, 0 question marks
+environment-m1.4-c7-attempt1-before-gates.txt strict UTF-8, 0 question marks
+environment-m1.4-c7-attempt1-before-smoke.txt strict UTF-8, 0 question marks
+M1.4-C6.md strict UTF-8, 0 question marks
+m1.4-c7-attempt1-before-gates-idle.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-before-smoke-idle.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-execution-environment.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-1-diff.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-2-lint.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-3-typecheck.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-4-architecture.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-5-architecture-tests.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-6-unit.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-7-build.txt strict UTF-8, 0 question marks
+m1.4-c7-attempt1-gate-8-smoke.txt strict UTF-8, 6 question marks
+m1.4-c7-bundle.txt strict UTF-8, 0 question marks
+m1.4-c7-carry-scope.txt strict UTF-8, 0 question marks
+m1.4-c7-change.patch strict UTF-8, 10 question marks
+m1.4-c7-commit.txt strict UTF-8, 0 question marks
+m1.4-c7-full-unit.txt strict UTF-8, 0 question marks
+m1.4-c7-green.txt strict UTF-8, 0 question marks
+m1.4-c7-gzip/assets-index-CC6rjaS5.css.gz binary artifact
+m1.4-c7-gzip/assets-index-gG65i6WU.js.gz binary artifact
+m1.4-c7-push-scope.txt strict UTF-8, 0 question marks
+m1.4-c7-push.txt strict UTF-8, 0 question marks
+m1.4-c7-red.txt strict UTF-8, 0 question marks
+m1.4-c7-remote-head.txt strict UTF-8, 0 question marks
+m1.4-c7-session-attempt1.txt strict UTF-8, 0 question marks
+m1.4-c7-smoke-last-run.json strict UTF-8, 0 question marks
+m1.4-c7-storage-fix.py strict UTF-8, 12 question marks
+m1.4-c7-utf8-repair.txt strict UTF-8, 0 question marks
+M1.4-C7.md strict UTF-8, 0 question marks
+README.md strict UTF-8, 0 question marks
+run-m1.4-c7.ps1 strict UTF-8, 0 question marks
+seal-m1.4-c6.py strict UTF-8, 5 question marks
+seal-m1.4-c7.py strict UTF-8, 5 question marks
+
+Question-mark contexts for inspection
+audit-m1.4-c7-utf8.py:10  assert '?fulfillment states match strip and report.?' not in text
+audit-m1.4-c7-utf8.py:11  assert re.search(r'(?:\) \u00b7 \[Timeout context\]|\+\x27 \u00b7 \x27\+link\(.+Timeout context)',text),name
+audit-m1.4-c7-utf8.py:28  summary.append(f'{rel} strict UTF-8, {text.count("?")} question marks')
+audit-m1.4-c7-utf8.py:30   if '?' not in line:continue
+audit-m1.4-c7-utf8.py:32    assert not re.search(r'\]\([^\n]*\)\s+\?\s+\[|\?[a-z][^?]{10,80}\.\?',line), (rel,n,line)
+m1.4-c7-attempt1-gate-8-smoke.txt:276   ok 235 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=weekly (1.5s)
+m1.4-c7-attempt1-gate-8-smoke.txt:277   ok 236 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=tiles (1.5s)
+m1.4-c7-attempt1-gate-8-smoke.txt:278   ok 237 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=population (1.4s)
+m1.4-c7-attempt1-gate-8-smoke.txt:279   ok 238 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world (1.5s)
+m1.4-c7-attempt1-gate-8-smoke.txt:280   ok 239 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world-npc (1.4s)
+m1.4-c7-attempt1-gate-8-smoke.txt:281   ok 240 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world-life (1.4s)
+m1.4-c7-change.patch:56 +function workshopOpening(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-change.patch:61  export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-change.patch:75 +    building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+m1.4-c7-change.patch:77 +function storageCapacityMilli(city: TileTrialState, session?: CharacterLifeSessionState): number {
+m1.4-c7-change.patch:89 +      capacity + (operatingIds.has(tile.id) ? O.storage.warehousePerLevelMilli * tile.building!.level : 0),
+m1.4-c7-change.patch:95  export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-change.patch:98 -   building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+m1.4-c7-change.patch:99 - const funded = warehouses.length ? forecastWorkshopOperation(city, session)?.operatingIds : undefined;
+m1.4-c7-change.patch:102 -   if (funded?.has(tile.id)) capacity += O.storage.warehousePerLevelMilli * tile.building!.level;
+m1.4-c7-storage-fix.py:12 replace("""export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-storage-fix.py:22 export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-storage-fix.py:25    building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+m1.4-c7-storage-fix.py:26  const funded = warehouses.length ? forecastWorkshopOperation(city, session)?.operatingIds : undefined;
+m1.4-c7-storage-fix.py:29    if (funded?.has(tile.id)) capacity += O.storage.warehousePerLevelMilli * tile.building!.level;
+m1.4-c7-storage-fix.py:31 """function workshopOpening(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-storage-fix.py:36 export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
+m1.4-c7-storage-fix.py:47     building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+m1.4-c7-storage-fix.py:49 function storageCapacityMilli(city: TileTrialState, session?: CharacterLifeSessionState): number {
+m1.4-c7-storage-fix.py:61       capacity + (operatingIds.has(tile.id) ? O.storage.warehousePerLevelMilli * tile.building!.level : 0),
+m1.4-c7-storage-fix.py:67 export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
+seal-m1.4-c6.py:29 patterns=rb'-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|sk-(?:proj-|svcacct-)[A-Za-z0-9_-]{30,}|xox[baprs]-[A-Za-z0-9-]{20,}'
+seal-m1.4-c6.py:40 assert re.search(r'(?m)^  419 passed \(',read(gates[-1]))
+seal-m1.4-c6.py:94  assert re.search(r'(?m)^'+head+r'\s+refs/heads/feat/money-difficulty$',read('m1.4-c6-remote-head.txt'))
+seal-m1.4-c7.py:28 patterns=rb'-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|sk-(?:proj-|svcacct-)[A-Za-z0-9_-]{30,}|xox[baprs]-[A-Za-z0-9-]{20,}'
+seal-m1.4-c7.py:39 assert re.search(r'(?m)^  419 passed \(',read(gates[-1]))
+seal-m1.4-c7.py:89  assert re.search(r'(?m)^'+head+r'\s+refs/heads/feat/money-difficulty$',read('m1.4-c7-remote-head.txt'))

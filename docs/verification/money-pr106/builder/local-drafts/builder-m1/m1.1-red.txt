@@ -1,0 +1,142 @@
+UTC start 2026-11-25T16:11:04.903869+00:00
+HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+HEAD tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+Working delta SHA-256 6ed0e5019378ba0d57e88ded06a1ec1ee24ac8b9a9c494e7664bbe9c1c78f6a1
+Command node node_modules/vitest/vitest.mjs run packages/core/src/trial/__tests__/difficulty.test.ts packages/core/src/character/__tests__/purse-shape.test.ts packages/persistence/src/__tests__/money-save.test.ts
+?? packages/core/src/character/__tests__/purse-shape.test.ts
+?? packages/core/src/trial/__tests__/difficulty.test.ts
+?? packages/persistence/src/__tests__/money-save.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts (0 test)
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts (4 tests | 4 failed) 35ms
+   × persists the starting difficulty and initializes the Player purse 21ms
+   × refuses invalid purse moneyMilli = -1 4ms
+   × refuses invalid purse levyPercent = 21 3ms
+   × refuses invalid purse donatedThisWeekMilli = 1.5 5ms
+ ❯ packages/persistence/src/__tests__/money-save.test.ts (3 tests | 3 failed) 38ms
+   × round-trips normal difficulty and a populated purse byte-identically 19ms
+   × round-trips easy difficulty and a populated purse byte-identically 7ms
+   × refuses v13 JSON and detached store rows without rewriting either 11ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/difficulty.test.ts [ packages/core/src/trial/__tests__/difficulty.test.ts ]
+Error: Cannot find module '../difficulty.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/__tests__/difficulty.test.ts
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts:4:1
+      2| import tuningJson from '../../data/tuning.json' with { type: 'json' };
+      3| import { validateTuning } from '../../data/validate.js';
+      4| import { applyDifficulty, difficultyProfile } from '../difficulty.js';
+       | ^
+      5|
+      6| it('keeps each Normal multiplier at 10000 bps', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/money-save.test.ts > round-trips normal difficulty and a populated purse byte-identically
+ FAIL  packages/persistence/src/__tests__/money-save.test.ts > round-trips easy difficulty and a populated purse byte-identically
+Error: Checkpoint must contain a valid complete Character Life session in Planning.
+ ❯ packages/persistence/src/__tests__/money-save.test.ts:16:29
+     14|   };
+     15|   const saved = serializeCharacterLifeSave(state);
+     16|   if (!saved.success) throw Error(saved.error.message);
+       |                             ^
+     17|   const decoded = deserializeCharacterLifeSave(saved.text);
+     18|   expect(decoded).toStrictEqual({ success: true, state });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/persistence/src/__tests__/money-save.test.ts > refuses v13 JSON and detached store rows without rewriting either
+AssertionError: expected { success: true, state: { …(5) } } to match object { success: false, …(1) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "INCOMPATIBLE_SAVE",
+-   },
+-   "success": false,
++   "success": true,
+  }
+
+ ❯ packages/persistence/src/__tests__/money-save.test.ts:35:47
+     33|   }
+     34|   const before = structuredClone(rows);
+     35|   expect(deserializeCharacterLifeSave(bytes)).toMatchObject({ success:…
+       |                                               ^
+     36|   const decoded = recordsToSession(rows);
+     37|   expect(decoded).toStrictEqual(historical);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > persists the starting difficulty and initializes the Player purse
+AssertionError: expected undefined to be 'normal' // Object.is equality
+
+- Expected:
+"normal"
+
++ Received:
+undefined
+
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:12:45
+     10|
+     11| it('persists the starting difficulty and initializes the Player purse'…
+     12|   expect(create().city.society!.difficulty).toBe('normal');
+       |                                             ^
+     13|   const state = create('easy');
+     14|   expect(state.city.society!.difficulty).toBe('easy');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > refuses invalid purse moneyMilli = -1
+TypeError: Cannot set properties of undefined (setting 'moneyMilli')
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:21:24
+     19|   'refuses invalid purse %s = %s', (key, value) => {
+     20|     const state = create();
+     21|     state.player.purse[key] = value;
+       |                        ^
+     22|     expect(isCharacterLifeSessionState(state)).toBe(false);
+     23|   },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > refuses invalid purse levyPercent = 21
+TypeError: Cannot set properties of undefined (setting 'levyPercent')
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:21:24
+     19|   'refuses invalid purse %s = %s', (key, value) => {
+     20|     const state = create();
+     21|     state.player.purse[key] = value;
+       |                        ^
+     22|     expect(isCharacterLifeSessionState(state)).toBe(false);
+     23|   },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > refuses invalid purse donatedThisWeekMilli = 1.5
+TypeError: Cannot set properties of undefined (setting 'donatedThisWeekMilli')
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:21:24
+     19|   'refuses invalid purse %s = %s', (key, value) => {
+     20|     const state = create();
+     21|     state.player.purse[key] = value;
+       |                        ^
+     22|     expect(isCharacterLifeSessionState(state)).toBe(false);
+     23|   },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  7 failed (7)
+   Start at  23:11:05
+   Duration  982ms (transform 874ms, setup 0ms, import 1.10s, tests 73ms, environment 0ms)
+
+
+Exit 1
+UTC end 2026-11-25T16:11:06.813953+00:00

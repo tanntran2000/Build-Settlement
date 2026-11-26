@@ -1,0 +1,7 @@
+M1.1 HEAD 63d2b2627b57d172be8459c64989e42ff650f692, Round 3 scratch, composed draft 1
+UTC start 2026-11-26T01:37:59.103981+00:00
+Command node node_modules/vitest/vitest.mjs run --reporter=json --outputFile C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\round3-composed-unit-attempt1-results.json
+JSON report written to C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/round3-composed-unit-attempt1-results.json
+
+Exit 1
+UTC end 2026-11-26T01:39:39.420780+00:00

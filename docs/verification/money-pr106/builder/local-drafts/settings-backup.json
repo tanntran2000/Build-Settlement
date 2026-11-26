@@ -1,0 +1,33 @@
+{
+  "storageCleanup": {
+    "browserArtifactsAfterDays": 7,
+    "logsAfterDays": 7
+  },
+  "defaultModelSelection": {
+    "instanceId": "codex",
+    "model": "gpt-6.2-sol",
+    "options": [
+      {
+        "id": "reasoningEffort",
+        "value": "xhigh"
+      },
+      {
+        "id": "serviceTier",
+        "value": "priority"
+      }
+    ]
+  },
+  "projectSettingsFolded": true,
+  "enableAgentDeviceAccess": true,
+  "enableDeviceSupport": true,
+  "deviceOnboardingCompleted": true,
+  "idleCompaction": "onReturn",
+  "backgroundActivity": {
+    "schemaVersion": 1,
+    "profile": "performance",
+    "overrides": {}
+  },
+  "automaticGitFetchInterval": 15000,
+  "providerHealthRefreshInterval": 60000,
+  "backgroundActivityProfile": "performance"
+}

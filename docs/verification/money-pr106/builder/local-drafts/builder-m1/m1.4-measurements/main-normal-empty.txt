@@ -1,0 +1,8 @@
+UTC start 2026-11-26T03:00:08.614941+00:00
+CWD C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-bench-worker.mjs C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 fresh-save empty C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\main-normal-empty.json "" normal
+
+{"variant":"empty","difficulty":"normal","bytes":17422,"sha256":"835f61f3deb075a0542227e2810565a810fe18184b4fb8764c2913dd28149c97","purse":null,"ruleset":"tile-society-13"}
+
+Exit 0
+UTC end 2026-11-26T03:00:10.302977+00:00

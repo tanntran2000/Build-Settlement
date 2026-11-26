@@ -1,0 +1,18 @@
+UTC start 2026-11-25T16:14:37.873419+00:00
+Base HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+Base tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+External Step 0 scratch copy, proposal SHA-256 a17d75b920f551ff27cd9a19e9dfad0066c68288949abe09d5927bb07ddbaa04
+Command node node_modules/vitest/vitest.mjs run packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/difficulty.test.ts packages/core/src/character/__tests__/purse-shape.test.ts packages/persistence/src/__tests__/money-save.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+
+ Test Files  4 passed (4)
+      Tests  65 passed (65)
+   Start at  23:14:40
+   Duration  3.64s (transform 4.28s, setup 0ms, import 5.96s, tests 670ms, environment 2ms)
+
+
+Exit 0
+UTC end 2026-11-25T16:14:44.661760+00:00

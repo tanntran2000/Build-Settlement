@@ -1,0 +1,5 @@
+Base HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0 tree b138254d44b76e3b2c8c6eb853449608a3bbc094; final composed scratch only
+UTC 2026-11-25T16:01:50.2213895Z
+Command node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --target ESNext --module ESNext --moduleResolution bundler --allowImportingTsExtensions --resolveJsonModule scripts/money-calibration.ts tests/e2e/difficulty.spec.ts
+Exit 0
+UTC end 2026-11-25T16:01:55.3532146Z

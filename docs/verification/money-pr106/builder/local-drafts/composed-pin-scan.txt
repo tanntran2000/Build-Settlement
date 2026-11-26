@@ -1,0 +1,146 @@
+packages/core/src/__tests__/catalog-data.test.ts:113:   { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '11eabe3f7b69f2b87e06936bd57934e3ed27c80138dda99793a5347d399de941' },
+packages/core/src/__tests__/catalog-data.test.ts:114:   { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: 'ff8b32c50fbe6112bb65f87c1fcc2b80ad402b131b965faec0188b9b79764565' },
+packages/core/src/__tests__/catalog-data.test.ts:115:   { name: 'LAW_CATALOG', value: LAW_CATALOG, hash: '349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783' },
+packages/core/src/__tests__/catalog-data.test.ts:116:   { name: 'LAW_TRIAL', value: LAW_TRIAL, hash: 'eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9' },
+packages/core/src/__tests__/catalog-data.test.ts:117:   { name: 'LAW_MESSAGES', value: LAW_MESSAGES, hash: 'b1604af8f5ef88797692d5889c97e05683d90c5e40ae73be5194fe2d4359d35d' },
+packages/core/src/__tests__/catalog-data.test.ts:118:   { name: 'RESEARCH_TOPICS', value: RESEARCH_TOPICS, hash: '385099be87e4298a2e5b5bc941fd2998bf938212f3d194b0a5b96f784c17e249' },
+packages/core/src/__tests__/catalog-data.test.ts:119:   { name: 'OUTSIDE_PLOTS', value: OUTSIDE_PLOTS, hash: '362281328564816894d00020e1c6bc07079fe3c53441d6295280af1aef6b6030' },
+packages/core/src/__tests__/catalog-data.test.ts:120:   { name: 'ORDER_TRIAL', value: ORDER_TRIAL, hash: 'b984a299a145cf032cd3781d2e5f91acf04a68f445a21624004c50cab36b2c97' },
+packages/core/src/__tests__/catalog-data.test.ts:121:   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
+packages/core/src/__tests__/catalog-data.test.ts:122:   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
+packages/core/src/__tests__/catalog-data.test.ts:123:   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
+packages/core/src/__tests__/catalog-data.test.ts:124:   { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '7f9df69f986ec05ae331a2fe8a8b7e4e94d29c6523412cf4f6cda3b03dd9aec6' },
+packages/core/src/__tests__/catalog-data.test.ts:125:   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: 'd92145743557d8c74bf6f91af7645e7fa7553d6839e4ae0c8d2a441a1079fe65' },
+packages/core/src/__tests__/catalog-data.test.ts:126:   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
+packages/core/src/__tests__/catalog-data.test.ts:127:   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
+packages/core/src/__tests__/catalog-data.test.ts:128:   { name: 'OUTSIDE_TRIAL', value: OUTSIDE_TRIAL, hash: 'e4d5ed7cc9056c8ec0e89263f7633c0d6d262feba89afb3a88484a312417e5db' },
+packages/core/src/__tests__/catalog-data.test.ts:130: const catalogHash = (value: object): string => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');
+packages/core/src/__tests__/catalog-data.test.ts:133:   expect(catalogHash(value)).toBe(hash);
+packages/core/src/__tests__/catalog-data.test.ts:139:   expect(catalogHash(changed)).not.toBe(pinnedCatalogs[0].hash);
+packages/core/src/__tests__/catalog-data.test.ts:144:   expect(catalogHash(ITEM_CATALOG)).toBe('7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d');
+packages/core/src/__tests__/catalog-data.test.ts:148:   expect(catalogHash(ITEM_TRIAL)).toBe('fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198');
+packages/core/src/__tests__/catalog-data.test.ts:151:   { name: 'NPC_ORIGINS', value: NPC_ORIGINS, hash: 'c252b2c5d31d302c307df967c94b43714f4e3debd527299819f60117f0378f09' },
+packages/core/src/__tests__/catalog-data.test.ts:152:   { name: 'NPC_HOBBIES', value: NPC_HOBBIES, hash: '8a4c0e75fca9aa9b8fd5e26a5bfac38aa161864e02b97832c77955089d7205c2' },
+packages/core/src/__tests__/catalog-data.test.ts:153:   { name: 'P7A_TRIAL', value: P7A_TRIAL, hash: 'b1429bf557d9a96e825a2d9a6d788524ee1e57db1572d35a6c405f2924797013' },
+packages/core/src/__tests__/catalog-data.test.ts:155:   expect(catalogHash(value)).toBe(hash);
+packages/core/src/__tests__/recipes-catalog.test.ts:25:   expect(hash(Object.fromEntries(originalIds.map(id=>[id,core.ITEM_CATALOG[id]])))).toBe('1413b93d1dbd2392ed64fa8b847cc6ad6a69cc57371b0c7d8b459580d9b72b25');
+packages/core/src/__tests__/recipes-catalog.test.ts:105:   load();expect(hash(core.RECIPES)).toBe('7ccddfc8953ff24d17edf085224ffa8d9937a93080f6021d6379a38e11cc8065');
+packages/core/src/__tests__/recipes-catalog.test.ts:106:   expect(hash(core.CRAFT_TRIAL)).toBe('587e7927288b57df15e2ffa68b1f3244b8eba3b92b107c0da40e58fcdad7d6b8');
+packages/core/src/trial/__tests__/items.test.ts:33:  s.npcs[0].postTileId=null;expect(api.buildItemWeekContext(s).postSkills).toEqual({});expect(s.city.society!.items.equipped.npc_w1_guild_0.weapon).toBeDefined();
+packages/core/src/trial/__tests__/society.test.ts:72:   expect(result.value.city.society).toEqual({ ...createSocietyState().society, items: {
+packages/core/src/trial/society.ts:64:     if (!hasWeeklyKeys(raw, ['rulesetId', 'difficulty', 'standing', 'laws', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research','items','acquisition']) || (raw.difficulty !== 'normal' && raw.difficulty !== 'easy') || !isAcquisitionState(raw.acquisition) || raw.rulesetId !== SOCIETY_RULESET || !isLawsState(raw.laws) ||
+packages/core/src/trial/state.ts:17:         !(hasWeeklyKeys(raw.goodsStock, ['rulesetId', 'amountMilli']) && raw.goodsStock.rulesetId === GOODS_STOCK_RULESET && integer(raw.goodsStock.amountMilli))) return false;
+packages/core/src/world/__tests__/item-market-seed.test.ts:17:   expect(world(0).city.society!.items.market).not.toEqual(world(42).city.society!.items.market);
+packages/core/src/world/__tests__/item-market-seed.test.ts:21:   expect(newGame(0).city.society!.items.market).not.toEqual(newGame(42).city.society!.items.market);
+packages/core/src/world/__tests__/item-market-seed.test.ts:25:   expect(newGame(seed).city.society!.items.market).toEqual(newGame(seed).city.society!.items.market);
+packages/core/src/world/__tests__/item-market-seed.test.ts:26:   expect(newGame(seed).city.society!.items.market).toEqual(world(seed).city.society!.items.market);
+packages/core/src/world/__tests__/npc-generator.test.ts:24:   [0, 1, 'guild', 0, 'npc_w1_guild_0', 'Adrel Brassmark', 40, 'workshop_district', 8000, '5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f'],
+packages/core/src/world/__tests__/npc-generator.test.ts:25:   [42, 3, 'auction-house', 2, 'npc_w3_auction-house_2', 'Neraya Dustlark', 19, 'caravan', 15000, 'db94789a78e6ca07288524a07ac42ca6d67eca53dbaf3ed027d7c22f00931e5a'],
+packages/core/src/world/__tests__/npc-generator.test.ts:26:   [2026, 4, 'slave-market', 'lot', 'npc_w4_slave-market_lot', 'Halla Ironbrook', 32, 'frontier', 63000, '1e25d57b31365e1d20678bdc20483efb7ed74cc6c60e8e93d0513b8215ebd63b'],
+packages/core/src/world/__tests__/npc-generator.test.ts:27:   [2026, 1, 'auction-house', 'lot', 'npc_w1_auction-house_lot', 'Orielle Seawick', 29, 'port_town', 60000, 'b0cca7a583a112c302575a4dc686de04976151f8a8db3bf2bf09eed7a0a8eeed'],
+packages/core/src/world/__tests__/npc-generator.test.ts:211:     expect(sha(data)).toBe('ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14');
+packages/core/src/world/__tests__/session.test.ts:14:   const s = session(seed); const expectedCity=createSocietyState();expectedCity.world.worldMetadata.worldSeed=seed;expect(s.city).toEqual({ ...expectedCity, society: { ...expectedCity.society!, items: { ...expectedCity.society!.items, market: seed === 0 ? [
+packages/persistence/src/__tests__/craft-records.test.ts:47:   expect(s.city.society!.items).toEqual(initial.city.society!.items);expect(s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold).toBe(gold);
+packages/persistence/src/__tests__/fixtures/society-v13/life-5-weeks.json:1: fixture or whole line SHA256 2439d49cdd26c5f1d6ab8c083d1cf484e64a500357453b1d5fde49ec34a8ce17
+packages/persistence/src/__tests__/fixtures/society-v13/life-crime-death.json:1: fixture or whole line SHA256 9e506a97a11da524b5d94579027bc86a92370880fc894ab556c4d6e7b7be58ea
+packages/persistence/src/__tests__/fixtures/society-v13/life-crime-raid.json:1: fixture or whole line SHA256 b9e5c9990e497815e9ce12ee583221802b8b20e7448446482a09b0172f12ea4c
+packages/persistence/src/__tests__/fixtures/society-v13/life-crime-robbery.json:1: fixture or whole line SHA256 c835e9ec6aaa38cc31f6116e84472f0fdf3651da621c3ee16e5597fc9299b147
+packages/persistence/src/__tests__/fixtures/society-v13/life-crime-wound.json:1: fixture or whole line SHA256 ec35d953173c43d43eae322b9315fd63b9a50b580ea96d2d93b7e080ee54b054
+packages/persistence/src/__tests__/fixtures/society-v13/life-demand-card.json:1: fixture or whole line SHA256 dc238fee659f3abcebb4c438c2fe91212762d804751bd7da3be2a25e5f959f40
+packages/persistence/src/__tests__/fixtures/society-v13/life-laws.json:1: fixture or whole line SHA256 59551d8f200c4bd3f29b89957cdc258ecda3524679a413eec9341b23753465d8
+packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json:1: fixture or whole line SHA256 835f61f3deb075a0542227e2810565a810fe18184b4fb8764c2913dd28149c97
+packages/persistence/src/__tests__/fixtures/society-v13/life-rebellion-last-week.json:1: fixture or whole line SHA256 be834d617fa1e958be1b62266a4ffbab7903829daa8e2178ba71f8d4eba7b090
+packages/persistence/src/__tests__/fixtures/society-v13/new-game.json:1: fixture or whole line SHA256 ada66902b8caf630839feccb40e643d59002724c76c3c5bcd968227f278fe54f
+packages/persistence/src/__tests__/money-save.test.ts:25:   const fixture = new URL('./fixtures/society-v13/life-new-game.json', import.meta.url);
+packages/persistence/src/__tests__/money-save.test.ts:31:     if (row.table === 'meta') (row.value as { rulesetId: string }).rulesetId = 'tile-society-13';
+packages/persistence/src/__tests__/money-save.test.ts:32:     if (row.table === 'city') (row.value as typeof staged.city).society.rulesetId = 'tile-society-13';
+packages/persistence/src/__tests__/npc-life-records.test.ts:61:   expect(hash.digest('hex')).toBe('f21b183ab20596596c19357e620213b295bebd539e0ae19fa1f96652c78b8255');
+packages/persistence/src/__tests__/npc-life-records.test.ts:65:   const current = new URL('./fixtures/society-v14/', import.meta.url), historical = new URL('./fixtures/society-v13/', import.meta.url);
+packages/persistence/src/__tests__/session-records.test.ts:71:   expect(decoded.city.society!.items.equipped).toStrictEqual(current.city.society!.items.equipped);
+packages/persistence/src/session-records.ts:26:         !hasWeeklyKeys(raw.goodsStock, ['rulesetId','amountMilli']) || raw.goodsStock.rulesetId !== GOODS_STOCK_RULESET || !count(raw.goodsStock.amountMilli)) return false;
+packages/persistence/src/session-records.ts:103:   if (!hasWeeklyKeys(meta, ['saveFormat','rulesetId','revision','phase']) || meta.saveFormat !== CHARACTER_LIFE_SAVE_FORMAT ||
+packages/simulation/src/__tests__/character-life-command.test.ts:306:   expect({ ...s.city, tiles: undefined }).toEqual({ ...before.city, tiles: undefined });
+packages/simulation/src/__tests__/character-life-command.test.ts:308:     .toEqual({ outside: before.outside, npcs: before.npcs, player: before.player, profiles: before.profiles });
+packages/simulation/src/__tests__/character-life-observation.test.ts:254:     expect(assigned.freeManagerSlots.map(p => p.tileId)).toEqual(managerSlotTileIds(s.city).filter(id => !s.npcs.some(n => n.postTileId === id)));
+packages/simulation/src/__tests__/character-life-observation.test.ts:262:     expect(replaced.freeManagerSlots.map(p => p.tileId)).toEqual(managerSlotTileIds(s.city).filter(id => !s.npcs.some(n => n.postTileId === id)));
+packages/simulation/src/__tests__/character-life-observation.test.ts:339:     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.world.week, 'report', result.next.city.revision]);
+packages/simulation/src/__tests__/craft-week.test.ts:14:   0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'8e572bc49c9ecd1d578032548a16ce0785dac863dc0dd0ff1be9961764fc6857',priorCity:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},
+packages/simulation/src/__tests__/craft-week.test.ts:15:   42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'f558e188697a8279c0e5bd65a4ea0c56c993cacd98f9c46bdd352c10062a1813',priorCity:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},
+packages/simulation/src/__tests__/craft-week.test.ts:16:   20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'9f4b8aa3adfb2ef5a0a9759c1f8b07aed63c307992ca50ac5373bda5d692efdf',priorCity:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},
+packages/simulation/src/__tests__/craft-week.test.ts:192:   expect(r.report!.items.workshopsIdle).toEqual(['service-1']);expect(r.report!.items.crafted).toBeUndefined();expect(r.next.city.society!.items.workshops!['service-1'].orders).toHaveLength(1);
+packages/simulation/src/__tests__/crisis-commands.test.ts:15:  expect(pay.nextState.society!.crisis.lastChoice).toEqual({stage:kind,option:'pay',goldMilli:cost});expect(pay.nextState.society!.pendingCard).toBeNull();expect(pay.nextState.revision).toBe(1);
+packages/simulation/src/__tests__/crisis-commands.test.ts:48:  expect(r.nextState.society!.order).toEqual({security:100,crime:100,authority:100});expect(r.nextState.society!.tension).toBe(0);expect(s).toEqual(before);
+packages/simulation/src/__tests__/exhausted-materials.test.ts:47:   expect(a.next.city.society!.items.materials).toEqual(b.next.city.society!.items.materials);
+packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts:9: const versions = { before: 'tile-society-12', after: 'tile-society-13' };
+packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts:37: const fixtures = readdirSync(root + '/society-v13').sort();
+packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts:42:   const candidate = readFileSync(root + '/society-v13/' + name, 'utf8');
+packages/simulation/src/__tests__/household-week.test.ts:120:   expect([declined.next.npcs[0].household.notice, declined.next.npcs[0].household.lifelongAskWeek]).toStrictEqual([null, s.city.world.week]);
+packages/simulation/src/__tests__/item-command.test.ts:11: function ok(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>={}){const before=structuredClone(s);const r=action(s,type,fields);expect(s).toEqual(before);expect(r.success).toBe(true);if(!r.success)throw Error(r.error.code);expect(r.next.city.revision).toBe(s.city.revision+1);return r.next;}
+packages/simulation/src/__tests__/item-effects.test.ts:67:   expect(b.society!.items.market).toEqual(a.society!.items.market.map(o => ({ ...o, priceMilli: Math.floor(o.priceMilli*(100-percent)/100) })));
+packages/simulation/src/__tests__/item-effects.test.ts:73:   expect(s.society!.items.market.map(o => o.priceMilli)).toEqual(control.society!.items.market.map(o => o.priceMilli*9/10));
+packages/simulation/src/__tests__/items-week.test.ts:38:   expect(a.society!.items.market).not.toEqual(createSocietyState().society!.items.market);
+packages/simulation/src/__tests__/items-week.test.ts:98:   expect(s.society!.items.storage).toEqual([]); expect(s.society!.items.nextItemId).toBe(nextId);
+packages/simulation/src/__tests__/items-week.test.ts:136:   0: '54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848',
+packages/simulation/src/__tests__/items-week.test.ts:137:   42: 'eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926',
+packages/simulation/src/__tests__/items-week.test.ts:138:   20261028: '8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177',
+packages/simulation/src/__tests__/law-command.test.ts:51:  expect(r.nextState.society!.order.authority).toBe(0);expect(r.nextState.society!.laws.promise).toEqual(s.society!.laws.promise);
+packages/simulation/src/__tests__/law-fixture.test.ts:31:  expect(s.city.society!.laws).toEqual({active:['poor-relief','watch-levy','guild-charters'],votedWeek:4,repealedUntil:{'free-assembly':8},promise:{group:'free',lawId:'guild-charters',satisfactionAtVote:s.city.society!.satisfaction.free,weeksLeft:4}});
+packages/simulation/src/__tests__/law-week.test.ts:92:  expect(society).toEqual({...oldSociety,difficulty:'normal',acquisition:{week:0,stock:[],lots:[],departures:[]},items: {
+packages/simulation/src/__tests__/npc-acquisition.test.ts:49:     expect([stock(next).gold, next.city.revision, state(next).stock[0].status]).toStrictEqual([0, s.city.revision + 1, 'bought']);
+packages/simulation/src/__tests__/npc-homes.test.ts:180:     expect(mansion.city.society!.items).toStrictEqual(hall.city.society!.items);
+packages/simulation/src/__tests__/npc-homes.test.ts:181:     expect(mansion.city.world.settlements).toStrictEqual(hall.city.world.settlements);
+packages/simulation/src/__tests__/npc-life-week.test.ts:141:     expect(exhausted.playerSkills).toEqual(active.playerSkills); expect(exhausted.playerTraits).toEqual(active.playerTraits);
+packages/simulation/src/__tests__/order-week.test.ts:168:  expect(r.society).toEqual({...baseline.society,tensionAfter:1});
+packages/simulation/src/__tests__/order-week.test.ts:179:  if(crime===24){const control=runTileTrialWeek(createSocietyState());expect(result.report!.society).toEqual(control.society);}
+packages/simulation/src/__tests__/outside-commands.test.ts:49:  it('pays once and keeps progress through pause and reselection',()=>{let s=next(city(),{type:'SET_RESEARCH',topic:'deep-mining'});expect(inv(s).gold).toBe(190000);expect(s.society!.research.paid).toEqual(['deep-mining']);s.society!.research.progressMilli['deep-mining']=3000;s=next(s,{type:'SET_RESEARCH',topic:null});s=next(s,{type:'SET_RESEARCH',topic:'deep-mining'});expect(inv(s).gold).toBe(190000);expect(s.society!.research.progressMilli['deep-mining']).toBe(3000);});
+packages/simulation/src/__tests__/outside-commands.test.ts:74:  before.outside['pasture-1'].clearMilli=1000;expect(n.society!.outside).toEqual(before.outside);expect(n.society!.research).toEqual(before.research);expect(n.society!.stocksMilli).toEqual({stone:40000,wool:40000,cloth:40000,herbs:40000});
+packages/simulation/src/__tests__/outside-week.test.ts:46:   expect(a.outside?.hospitalsIdle).toEqual(['service-1']);expect(b.outside?.hospitalsIdle).toEqual([]);expect(wet.society!.stocksMilli.herbs).toBe(0);
+packages/simulation/src/__tests__/outside-week.test.ts:85:   expect(runTileTrialWeek(s).outside?.cleared).toEqual([]);expect(s.society!.outside['pasture-1'].clearMilli).toBe(2000);
+packages/simulation/src/__tests__/outside-week.test.ts:86:   const r=runTileTrialWeek(s);expect(r.outside?.cleared).toEqual(['pasture-1']);expect(s.society!.outside['pasture-1']).toMatchObject({wild:false,clearMilli:4000,clearWorkers:0});
+packages/simulation/src/__tests__/outside-week.test.ts:94:   const a=runTileTrialWeek(s);expect(a.outside?.cleared).toEqual(['forest-3']);expect(inv(s).wood).toBe(13000);expect(s.society!.outside['forest-3'].clearMilli).toBe(6000);
+packages/simulation/src/__tests__/outside-week.test.ts:99:   for(let i=0;i<7;i++){expect(runTileTrialWeek(s).outside?.researchCompleted).toEqual([]);expect(s.society!.research.progressMilli['deep-mining']).toBe((i+1)*1000);}
+packages/simulation/src/__tests__/outside-week.test.ts:100:   expect(runTileTrialWeek(s).outside?.researchCompleted).toEqual(['deep-mining']);expect(s.society!.research).toMatchObject({topic:null,completed:['deep-mining']});
+packages/simulation/src/__tests__/replay-checkpoint.test.ts:278:   expect(loaded.nextState).toStrictEqual({ ...snapshot.city, revision: snapshot.city.revision + 1 });
+packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:44:     expect(r.nextState.society!.satisfaction).toEqual(s.society!.satisfaction);
+packages/simulation/src/__tests__/society-week.test.ts:161:     expect(r).toEqual(resolveSocietyWeek(i)); expect(i).toEqual(before); expect(isSocietyState(r.society)).toBe(true);
+packages/simulation/src/__tests__/world-npc.test.ts:46:     expect(na.city).toEqual(nb.city); expect(na.npcs.map(n => n.postTileId)).toEqual(nb.npcs.map(n => n.postTileId));
+packages/simulation/src/__tests__/world-npc.test.ts:57:     expect({ ...next.city, revision: s.city.revision }).toEqual(s.city); expect(next.outside).toEqual(s.outside);
+packages/simulation/src/__tests__/world-npc.test.ts:71:     expect(again.npcs).toEqual(s.npcs); expect(again.city.revision).toBe(s.city.revision + 1);
+packages/ui/src/NpcSheet.svelte:28:       case 'End': next = tabs.length - 1; break;
+packages/ui/src/__tests__/character-life-session.test.ts:88:   expect(result.next).toEqual({ ...loaded, city: { ...loaded.city, revision: 6 } });
+packages/ui/src/__tests__/character-life-session.test.ts:109:   expect(prepareCharacterLifeLoad(live, loaded, live.city.revision)).toEqual(prepareCharacterLifeLoad(live, loaded, live.city.revision));
+packages/ui/src/__tests__/world-npc-session.test.ts:30:   expect(result.next.city).toEqual({ ...loaded.city, revision: 6 });
+packages/ui/src/__tests__/world-session.test.ts:32:   expect({ ...result.next.city, revision }).toEqual(loaded.city); expect(result.next.outside).toEqual(loaded.outside); expect(live).toEqual(before);
+packages/ui/src/__tests__/world-session.test.ts:58:   expect(result.next.city).toEqual({ ...loaded.city, revision: 10 });
+packages/ui/src/__tests__/world-session.test.ts:103:   expect(prepared.next.city.world).toEqual(decoded.state.city.world); expect(prepared.next.outside).toEqual(decoded.state.outside);
+packages/ui/src/society-view.ts:22:  case 'academy':return `Trains up to ${T.trainingPerLevel*level} Free residents per week`;
+packages/ui/src/society-view.ts:23:  case 'town-market':return `Distributes up to ${GOODS_STOCK_TRIAL.capacityPerLevelMilli*level/1000} Goods per week`;
+packages/ui/src/society-view.ts:24:  case 'trading-post':return `Imports ${2*level} Luxury per week for ${3*level} Gold`;
+tests/e2e/character-life-navigation.spec.ts:288:     expect(exported).toEqual(next.next); expect(exported.city.world.week).toBe(absolute + 1);
+tests/e2e/character-life-navigation.spec.ts:962:     expect(restored).toEqual({ ...saved, city: { ...saved.city, revision: restored.city.revision } });
+tests/e2e/character-life-navigation.spec.ts:1405:       expect(exported).toEqual({ ...saved, city: { ...saved.city, revision: exported.city.revision } });
+tests/e2e/character-life-navigation.spec.ts:1408:       expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
+tests/e2e/difficulty.spec.ts:31:     expect(before.player.purse).toStrictEqual(fresh.player.purse);
+tests/e2e/laws.spec.ts:20:  const actual=await exportLife(page);expect(actual).toEqual(enacted.next);const week=executeCharacterLifeCommand(actual,{type:'END_WEEK',expectedRevision:actual.city.revision,expectedWeek:actual.city.world.week});if(!week.success||!week.report)throw Error('Week failed');
+tests/e2e/laws.spec.ts:27: fixture or whole line SHA256 eeea03d51c24b9db238411f9b8772e6a87fb04ff0b182b3a70eb899cb72859a1
+tests/e2e/order.spec.ts:29:  await page.reload();await button(page,'Continue').click();expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);await importLife(page,before);expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);
+tests/e2e/outside.spec.ts:20: await page.reload();await button(page,'Continue').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));await importLife(page,before);const imported=await exportLife(page),expected=structuredClone(before);expected.city.revision=before.city.revision+1;expect(serializeCharacterLifeSave(imported)).toEqual(serializeCharacterLifeSave(expected));});
+tests/e2e/outside.spec.ts:41:  expect(serializeCharacterLifeSave(after)).toEqual(serializeCharacterLifeSave(expected));expect(after.city.society!.outside['pasture-1'].clearWorkers).toBe(draft==='zero'?0:2);
+tests/e2e/smoke.spec.ts:42:   const actual=await exportLife(page);expect(actual).toEqual(expected);expect(actual.city.world.week).toBe(week+1);
+tests/e2e/storage.spec.ts:37:  await start(page);await save(page);const prior=await readStoredRecords(page);await importLife(page,makeLife(54321));await injectWriteAbort(page);await go(page,'session');await button(page,'Save locally').click();await expect(page.getByRole('alert')).toHaveText(BLOCKED);expect(await readStoredRecords(page)).toEqual(prior);expect(await exportLife(page)).toEqual({...makeLife(54321),city:{...makeLife(54321).city,revision:1}});
+tests/e2e/storage.spec.ts:86:  expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
+tests/e2e/storage.spec.ts:100:  expect(await exportLife(page)).toEqual({...makeLife(),city:{...makeLife().city,revision:1}});
+tests/e2e/storage.spec.ts:116:  expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
+tests/e2e/storage.spec.ts:185:   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:Math.max(liveRevision,savedC.city.revision)+1}});
+tests/e2e/tile-local-checkpoint.spec.ts:58: fixture or whole line SHA256 b74bbcee7a722395c3232f68ac434a49d42135b64fa7b46f7402000219b9377a
+tests/e2e/tile-local-checkpoint.spec.ts:65:   expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+tests/e2e/tile-population.spec.ts:11: fixture or whole line SHA256 17bff2996da381e06a1f28676bb2f3a9d597d0025054970a9e8982baa5359df6
+tests/e2e/tile-trial.spec.ts:26: fixture or whole line SHA256 1e2bd4b5d6203ca984d46c1aff0d330e820f5cff09f1c02163532fdeaf968bf2
+tests/e2e/tile-trial.spec.ts:29: fixture or whole line SHA256 645c1dfb08d3f007cb98821f7f61cf5d03e0d3a95135ec84290d669d2db1ac4f
+tests/e2e/tile-workforce.spec.ts:66:   expect(restored.state.city.tiles).toEqual(JSON.parse(saved).state.city.tiles);
+tests/e2e/workforce-draft-error.spec.ts:52:       expect(submitted.state.city.world).toEqual(before.state.city.world);
+tests/e2e/workforce-draft-error.spec.ts:70:       expect(restored.state.city.tiles).toEqual(before.state.city.tiles);
+tests/e2e/workforce-draft-error.spec.ts:71:       expect(restored.state.city.world).toEqual(before.state.city.world);
+tests/e2e/world-session.spec.ts:26: fixture or whole line SHA256 286bb5143bd7db439d9b8d19a979745d1c281aa329657daca65a12c9b11b6fff
+tests/e2e/world-session.spec.ts:29: fixture or whole line SHA256 aed39e97e9a5b4e5d433e31817ae5af00764d74f55e21d2cd7fb274188d724c8
+tests/e2e/world-session.spec.ts:35: fixture or whole line SHA256 81a8be070fa8cebb4d6f159943c783ef45ed2dacdc312a5226740a4c23685352

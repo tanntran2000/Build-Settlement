@@ -1,0 +1,22 @@
+﻿Head 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a. Windows GetSystemTimes samples. Scheduling targets are mean <= 18% and each interval <= 25%.
+{"utc": "2026-11-26T06:19:05.387244+00:00", "twoSecondCpuPercent": [9.28, 16.11, 10.55], "meanCpuPercent": 11.98}
+Selected quiet window 2026-11-26T06:19:05.387244+00:00
+Top process CPU seconds in the selected window
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+browser             35312                1.531
+powershell          41640                  1.5
+browser             26844                1.344
+browser              8044                1.297
+codex               31512                0.141
+codebase-memory-mcp  9956                0.125
+T3 Code (Nightly)   11100                0.125
+codebase-memory-mcp  3124                0.109
+claude              23660                0.094
+codebase-memory-mcp 11500                0.094
+codebase-memory-mcp 13412                0.078
+T3 Code (Nightly)    5872                0.078
+
+
+

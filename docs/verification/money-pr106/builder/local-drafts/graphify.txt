@@ -1,0 +1,1071 @@
+Affected nodes for createCharacterLifeSession()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- session() [calls] packages/core/src/character/__tests__/session.test.ts:L18
+- newGame() [calls] packages/core/src/world/__tests__/item-market-seed.test.ts:L11
+- session() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L8
+- session() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/crisis-save.test.ts:L4
+- checkpoint() [calls] packages/persistence/src/__tests__/item-owner-import.test.ts:L8
+- life() [calls] packages/persistence/src/__tests__/item-records.test.ts:L8
+- stocked() [calls] packages/persistence/src/__tests__/items-canonical.test.ts:L9
+- stocked() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/law-save.test.ts:L7
+- life() [calls] packages/persistence/src/__tests__/npc-life-records.test.ts:L10
+- newGame() [calls] packages/persistence/src/__tests__/session-records.test.ts:L74
+- town() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L5
+- life() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L11
+- session() [calls] packages/simulation/src/__tests__/craft-week.test.ts:L161
+- crisisFixtureSession() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L5
+- life() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L14
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L11
+- life() [calls] packages/simulation/src/__tests__/item-command.test.ts:L6
+- life() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L119
+- life() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L11
+- newGame() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L25
+- session() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L23
+- session() [calls] packages/simulation/src/__tests__/outside-session.test.ts:L4
+- life() [calls] packages/simulation/src/__tests__/society-life.test.ts:L7
+- session() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L7
+- create() [calls] packages/ui/src/CharacterLifeApp.svelte:L35
+- a2Session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L182
+- session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L10
+- life() [calls] packages/ui/src/__tests__/crafting-view.test.ts:L9
+- fixture() [calls] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L6
+- session() [calls] packages/ui/src/__tests__/items-view.test.ts:L12
+- session() [calls] packages/ui/src/__tests__/world-npc-session.test.ts:L8
+- character/__tests__/session.test.ts [imports] packages/core/src/character/__tests__/session.test.ts:L5
+- items.test.ts [imports] packages/core/src/trial/__tests__/items.test.ts:L3
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L2
+- item-market-seed.test.ts [imports] packages/core/src/world/__tests__/item-market-seed.test.ts:L2
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L1
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L2
+- crisis-save.test.ts [imports] packages/persistence/src/__tests__/crisis-save.test.ts:L2
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L3
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L4
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L3
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L3
+- law-save.test.ts [imports] packages/persistence/src/__tests__/law-save.test.ts:L3
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L5
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L4
+- society-new-game-fixture.test.ts [imports] packages/persistence/src/__tests__/society-new-game-fixture.test.ts:L3
+- society-save.test.ts [imports] packages/persistence/src/__tests__/society-save.test.ts:L1
+- acquisition-fixture.ts [imports] packages/simulation/src/__tests__/acquisition-fixture.ts:L1
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L5
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L2
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L1
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L3
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L3
+- guild-fixture-names.test.ts [imports] packages/simulation/src/__tests__/guild-fixture-names.test.ts:L2
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L3
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L1
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L2
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L3
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L1
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L2
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L1
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L1
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L3
+- CharacterLifeApp.svelte [imports] packages/ui/src/CharacterLifeApp.svelte:L3
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L1
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L2
+- crisis-checkpoint.test.ts [imports] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L3
+- items-view.test.ts [imports] packages/ui/src/__tests__/items-view.test.ts:L3
+- world-npc-session.test.ts [imports] packages/ui/src/__tests__/world-npc-session.test.ts:L1
+- heldAndReady() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L17
+- stocked() [calls] packages/persistence/src/__tests__/item-records.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/session-records.test.ts:L75
+- market() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L22
+- recruit() [calls] packages/simulation/src/__tests__/household-week.test.ts:L10
+- setup() [calls] packages/simulation/src/__tests__/npc-auction.test.ts:L11
+- auctionFixture() [calls] packages/simulation/src/__tests__/replay-checkpoint.test.ts:L30
+- household-week.test.ts [imports] packages/simulation/src/__tests__/household-week.test.ts:L7
+- npc-acquisition.test.ts [imports] packages/simulation/src/__tests__/npc-acquisition.test.ts:L7
+- npc-auction.test.ts [imports] packages/simulation/src/__tests__/npc-auction.test.ts:L5
+- replay-checkpoint.test.ts [imports] packages/simulation/src/__tests__/replay-checkpoint.test.ts:L6
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L6
+- queued() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L44
+- findCrimeFixture() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L14
+- crisisFixture() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L13
+- fixture() [calls] packages/simulation/src/__tests__/law-fixture.test.ts:L14
+- crime-fixtures.test.ts [imports] packages/simulation/src/__tests__/crime-fixtures.test.ts:L5
+- law-fixture.test.ts [imports] packages/simulation/src/__tests__/law-fixture.test.ts:L6
+- catalog-golden.test.ts [imports] packages/simulation/src/__tests__/catalog-golden.test.ts:L3
+- populate() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L40
+- npc() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L30
+- a2Text() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L183
+- populated() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L28
+- savedGame() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L219
+- allocationLife() [calls] packages/ui/src/__tests__/crafting-view.test.ts:L24
+- operatingLife() [calls] packages/ui/src/__tests__/crafting-view.test.ts:L225
+- crisis-fixtures.test.ts [imports_from] packages/simulation/src/__tests__/crisis-fixtures.test.ts:L5
+- law-week.test.ts [imports_from] packages/simulation/src/__tests__/law-week.test.ts:L8
+- data-inspector.test.ts [imports_from] packages/ui/src/__tests__/data-inspector.test.ts:L160
+- src/main.ts [imports_from] packages/ui/src/main.ts:L4
+Affected nodes for createSocietyState()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- isLiveCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L99
+- active() [calls] packages/core/src/__tests__/society-world-integrity.test.ts:L6
+- active() [calls] packages/core/src/__tests__/weekly.test.ts:L5
+- isTileTrialPlanningState() [calls] packages/core/src/trial/state.ts:L85
+- staffed() [calls] packages/core/src/trial/__tests__/law.test.ts:L6
+- society-p7b.test.ts [calls] packages/core/src/trial/__tests__/society-p7b.test.ts:L19
+- createWorldSession() [calls] packages/core/src/world/session.ts:L18
+- isStoredCity() [calls] packages/persistence/src/session-records.ts:L40
+- recordsToSession() [calls] packages/persistence/src/session-records.ts:L167
+- expanded() [calls] packages/simulation/src/__tests__/authority-refusals.test.ts:L9
+- refused() [calls] packages/simulation/src/__tests__/authority-refusals.test.ts:L23
+- city() [calls] packages/simulation/src/__tests__/crisis-commands.test.ts:L7
+- city() [calls] packages/simulation/src/__tests__/crisis-week.test.ts:L7
+- city() [calls] packages/simulation/src/__tests__/garrison-week.test.ts:L8
+- fundedCity() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L14
+- city() [calls] packages/simulation/src/__tests__/items-week.test.ts:L11
+- city() [calls] packages/simulation/src/__tests__/law-command.test.ts:L7
+- run() [calls] packages/simulation/src/__tests__/law-week.test.ts:L152
+- city() [calls] packages/simulation/src/__tests__/order-commands.test.ts:L10
+- built() [calls] packages/simulation/src/__tests__/order-week.test.ts:L11
+- crimeCity() [calls] packages/simulation/src/__tests__/order-week.test.ts:L57
+- city() [calls] packages/simulation/src/__tests__/outside-commands.test.ts:L6
+- city() [calls] packages/simulation/src/__tests__/outside-week.test.ts:L10
+- funded() [calls] packages/simulation/src/__tests__/smithy-data.test.ts:L6
+- city() [calls] packages/simulation/src/__tests__/society-command-transaction.test.ts:L8
+- population() [calls] packages/simulation/src/__tests__/society-immigration-integrity.test.ts:L5
+- population() [calls] packages/simulation/src/__tests__/society-renewable-support.test.ts:L10
+- freeCity() [calls] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L8
+- society() [calls] packages/simulation/src/__tests__/society-week.test.ts:L5
+- forRing4() [calls] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L27
+- executeWorldNpcCityCommand() [calls] packages/simulation/src/world-npc.ts:L55
+- character/validate.ts [imports] packages/core/src/character/validate.ts:L3
+- society-world-integrity.test.ts [imports] packages/core/src/__tests__/society-world-integrity.test.ts:L3
+- weekly.test.ts [imports] packages/core/src/__tests__/weekly.test.ts:L2
+- state.ts [imports] packages/core/src/trial/state.ts:L8
+- crime.test.ts [imports] packages/core/src/trial/__tests__/crime.test.ts:L2
+- crisis.test.ts [imports] packages/core/src/trial/__tests__/crisis.test.ts:L2
+- items.test.ts [imports] packages/core/src/trial/__tests__/items.test.ts:L4
+- law.test.ts [imports] packages/core/src/trial/__tests__/law.test.ts:L2
+- order.test.ts [imports] packages/core/src/trial/__tests__/order.test.ts:L2
+- outside.test.ts [imports] packages/core/src/trial/__tests__/outside.test.ts:L2
+- society-map.test.ts [imports] packages/core/src/trial/__tests__/society-map.test.ts:L2
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L3
+- world/session.ts [imports] packages/core/src/world/session.ts:L3
+- npc.test.ts [imports] packages/core/src/world/__tests__/npc.test.ts:L3
+- world/__tests__/session.test.ts [imports] packages/core/src/world/__tests__/session.test.ts:L2
+- session-records.ts [imports] packages/persistence/src/session-records.ts:L3
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L1
+- society-new-game-fixture.test.ts [imports] packages/persistence/src/__tests__/society-new-game-fixture.test.ts:L3
+- society-save.test.ts [imports] packages/persistence/src/__tests__/society-save.test.ts:L1
+- authority-refusals.test.ts [imports] packages/simulation/src/__tests__/authority-refusals.test.ts:L1
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L5
+- crime-week.test.ts [imports] packages/simulation/src/__tests__/crime-week.test.ts:L3
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L2
+- crisis-week.test.ts [imports] packages/simulation/src/__tests__/crisis-week.test.ts:L2
+- garrison-week.test.ts [imports] packages/simulation/src/__tests__/garrison-week.test.ts:L2
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L3
+- items-week.test.ts [imports] packages/simulation/src/__tests__/items-week.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L1
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L2
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L1
+- order-tax-week.test.ts [imports] packages/simulation/src/__tests__/order-tax-week.test.ts:L1
+- order-week.test.ts [imports] packages/simulation/src/__tests__/order-week.test.ts:L1
+- outside-commands.test.ts [imports] packages/simulation/src/__tests__/outside-commands.test.ts:L2
+- outside-week.test.ts [imports] packages/simulation/src/__tests__/outside-week.test.ts:L2
+- smithy-data.test.ts [imports] packages/simulation/src/__tests__/smithy-data.test.ts:L1
+- society-command-transaction.test.ts [imports] packages/simulation/src/__tests__/society-command-transaction.test.ts:L3
+- society-end-week.test.ts [imports] packages/simulation/src/__tests__/society-end-week.test.ts:L1
+- society-facilities.test.ts [imports] packages/simulation/src/__tests__/society-facilities.test.ts:L2
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L1
+- society-immigration-integrity.test.ts [imports] packages/simulation/src/__tests__/society-immigration-integrity.test.ts:L2
+- society-plots.test.ts [imports] packages/simulation/src/__tests__/society-plots.test.ts:L1
+- society-renewable-support.test.ts [imports] packages/simulation/src/__tests__/society-renewable-support.test.ts:L2
+- society-restore-integrity.test.ts [imports] packages/simulation/src/__tests__/society-restore-integrity.test.ts:L2
+- society-stock-policy-ports.test.ts [imports] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L2
+- society-week.test.ts [imports] packages/simulation/src/__tests__/society-week.test.ts:L3
+- tile-trial-p7b.test.ts [imports] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L2
+- tile-trial.test.ts [imports] packages/simulation/src/__tests__/tile-trial.test.ts:L2
+- world-npc.ts [imports] packages/simulation/src/world-npc.ts:L1
+- crime-view.test.ts [imports] packages/ui/src/__tests__/crime-view.test.ts:L2
+- crisis-view.test.ts [imports] packages/ui/src/__tests__/crisis-view.test.ts:L2
+- garrison-view.test.ts [imports] packages/ui/src/__tests__/garrison-view.test.ts:L2
+- law-view.test.ts [imports] packages/ui/src/__tests__/law-view.test.ts:L2
+- outside-view.test.ts [imports] packages/ui/src/__tests__/outside-view.test.ts:L2
+- society-view.test.ts [imports] packages/ui/src/__tests__/society-view.test.ts:L2
+- executeItemCommand() [calls] packages/simulation/src/item-command.ts:L17
+- executeAcquisitionCommand() [calls] packages/simulation/src/npc-acquisition.ts:L171
+- validate.test.ts [imports] packages/core/src/character/__tests__/validate.test.ts:L8
+- item-command.ts [imports] packages/simulation/src/item-command.ts:L1
+- npc-acquisition.ts [imports] packages/simulation/src/npc-acquisition.ts:L1
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- isWorldSessionState() [calls] packages/core/src/world/session.ts:L37
+- executeTileTrialCommand() [calls] packages/simulation/src/tile-trial.ts:L101
+- society-v1-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v1-fixture.test.ts:L1
+- society-v2-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v2-fixture.test.ts:L2
+- society-v3-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v3-fixture.test.ts:L2
+- society-v4-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v4-fixture.test.ts:L2
+- society-v5-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v5-fixture.test.ts:L2
+- society-v6-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v6-fixture.test.ts:L2
+- society-v7-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v7-fixture.test.ts:L2
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L2
+- society-v9-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L2
+- tile-trial.ts [imports] packages/simulation/src/tile-trial.ts:L3
+- createNpcWorldSession() [calls] packages/core/src/world/npc.ts:L82
+- world() [calls] packages/core/src/world/__tests__/item-market-seed.test.ts:L5
+- session() [calls] packages/core/src/world/__tests__/session.test.ts:L7
+- session() [calls] packages/persistence/src/__tests__/world-session-save.test.ts:L7
+- session() [calls] packages/ui/src/__tests__/world-session.test.ts:L6
+- npc.ts [imports] packages/core/src/world/npc.ts:L11
+- generate.test.ts [imports] packages/core/src/world/__tests__/generate.test.ts:L6
+- item-market-seed.test.ts [imports] packages/core/src/world/__tests__/item-market-seed.test.ts:L2
+- world-session-save.test.ts [imports] packages/persistence/src/__tests__/world-session-save.test.ts:L2
+- replay-checkpoint.test.ts [imports] packages/simulation/src/__tests__/replay-checkpoint.test.ts:L2
+- world-session.test.ts [imports] packages/ui/src/__tests__/world-session.test.ts:L1
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L4
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L2
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L30
+- expectRecordRef() [calls] packages/persistence/src/__tests__/session-records.test.ts:L85
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L86
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L4
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L5
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L6
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L6
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L6
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L7
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L6
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- assassination() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L77
+- output() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L26
+- quarry() [calls] packages/simulation/src/__tests__/outside-commands.test.ts:L12
+- expanded() [calls] packages/simulation/src/__tests__/society-renewable-support.test.ts:L31
+- employment() [calls] packages/simulation/src/__tests__/society-week.test.ts:L89
+- input() [calls] packages/simulation/src/__tests__/society-week.test.ts:L113
+- executeCharacterLifeCommand() [calls] packages/simulation/src/character-life-command.ts:L53
+- city() [calls] packages/simulation/src/__tests__/world-npc.test.ts:L17
+- character-life-command.ts [imports] packages/simulation/src/character-life-command.ts:L2
+- npc-acquisition.test.ts [imports] packages/simulation/src/__tests__/npc-acquisition.test.ts:L6
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L9
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L5
+- world-npc.test.ts [imports] packages/simulation/src/__tests__/world-npc.test.ts:L4
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L23
+- character/session.ts [imports_from] packages/core/src/character/session.ts:L12
+- character/__tests__/session.test.ts [imports_from] packages/core/src/character/__tests__/session.test.ts:L6
+- npcs.ts [imports_from] packages/core/src/__tests__/helpers/npcs.ts:L1
+- persistence/src/index.ts [re_exports] packages/persistence/src/index.ts:L7
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L3
+- character-life-command.test.ts [imports_from] packages/simulation/src/__tests__/character-life-command.test.ts:L9
+Affected nodes for createPlayerCharacter()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- createCharacterLifeSession() [calls] packages/core/src/character/session.ts:L130
+- player() [calls] packages/core/src/character/__tests__/session.test.ts:L17
+- character/__tests__/session.test.ts [imports] packages/core/src/character/__tests__/session.test.ts:L5
+- CharacterCreation.svelte [imports] packages/ui/src/CharacterCreation.svelte:L2
+- session() [calls] packages/core/src/character/__tests__/session.test.ts:L18
+- newGame() [calls] packages/core/src/world/__tests__/item-market-seed.test.ts:L11
+- session() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L8
+- session() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/crisis-save.test.ts:L4
+- checkpoint() [calls] packages/persistence/src/__tests__/item-owner-import.test.ts:L8
+- life() [calls] packages/persistence/src/__tests__/item-records.test.ts:L8
+- stocked() [calls] packages/persistence/src/__tests__/items-canonical.test.ts:L9
+- stocked() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/law-save.test.ts:L7
+- life() [calls] packages/persistence/src/__tests__/npc-life-records.test.ts:L10
+- newGame() [calls] packages/persistence/src/__tests__/session-records.test.ts:L74
+- town() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L5
+- life() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L11
+- session() [calls] packages/simulation/src/__tests__/craft-week.test.ts:L161
+- crisisFixtureSession() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L5
+- life() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L14
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L11
+- life() [calls] packages/simulation/src/__tests__/item-command.test.ts:L6
+- life() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L119
+- life() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L11
+- newGame() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L25
+- session() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L23
+- session() [calls] packages/simulation/src/__tests__/outside-session.test.ts:L4
+- life() [calls] packages/simulation/src/__tests__/society-life.test.ts:L7
+- session() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L7
+- create() [calls] packages/ui/src/CharacterLifeApp.svelte:L35
+- a2Session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L182
+- session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L10
+- life() [calls] packages/ui/src/__tests__/crafting-view.test.ts:L9
+- fixture() [calls] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L6
+- session() [calls] packages/ui/src/__tests__/items-view.test.ts:L12
+- session() [calls] packages/ui/src/__tests__/world-npc-session.test.ts:L8
+- items.test.ts [imports] packages/core/src/trial/__tests__/items.test.ts:L3
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L2
+- item-market-seed.test.ts [imports] packages/core/src/world/__tests__/item-market-seed.test.ts:L2
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L1
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L2
+- crisis-save.test.ts [imports] packages/persistence/src/__tests__/crisis-save.test.ts:L2
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L3
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L4
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L3
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L3
+- law-save.test.ts [imports] packages/persistence/src/__tests__/law-save.test.ts:L3
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L5
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L4
+- society-new-game-fixture.test.ts [imports] packages/persistence/src/__tests__/society-new-game-fixture.test.ts:L3
+- society-save.test.ts [imports] packages/persistence/src/__tests__/society-save.test.ts:L1
+- acquisition-fixture.ts [imports] packages/simulation/src/__tests__/acquisition-fixture.ts:L1
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L5
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L2
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L1
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L3
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L3
+- guild-fixture-names.test.ts [imports] packages/simulation/src/__tests__/guild-fixture-names.test.ts:L2
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L3
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L1
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L2
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L3
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L1
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L2
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L1
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L1
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L3
+- CharacterLifeApp.svelte [imports] packages/ui/src/CharacterLifeApp.svelte:L3
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L1
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L2
+- crisis-checkpoint.test.ts [imports] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L3
+- items-view.test.ts [imports] packages/ui/src/__tests__/items-view.test.ts:L3
+- world-npc-session.test.ts [imports] packages/ui/src/__tests__/world-npc-session.test.ts:L1
+Affected nodes for isPlayerCharacter()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- createPlayerCharacter() [calls] packages/core/src/character/session.ts:L123
+- hasCharacterLifeProfiles() [calls] packages/core/src/character/validate.ts:L107
+- recordsToSession() [calls] packages/persistence/src/session-records.ts:L173
+- character/session.ts [imports] packages/core/src/character/session.ts:L12
+- character/__tests__/session.test.ts [imports] packages/core/src/character/__tests__/session.test.ts:L6
+- validate.test.ts [imports] packages/core/src/character/__tests__/validate.test.ts:L8
+- session-records.ts [imports] packages/persistence/src/session-records.ts:L3
+- createCharacterLifeSession() [calls] packages/core/src/character/session.ts:L130
+- player() [calls] packages/core/src/character/__tests__/session.test.ts:L17
+- CharacterCreation.svelte [imports] packages/ui/src/CharacterCreation.svelte:L2
+- isCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L85
+- isLiveCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L101
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L30
+- expectRecordRef() [calls] packages/persistence/src/__tests__/session-records.test.ts:L85
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L86
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L4
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L5
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L6
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L6
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L6
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L7
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L6
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L5
+- society-v9-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L25
+- persistence/src/index.ts [re_exports] packages/persistence/src/index.ts:L7
+Affected nodes for isCharacterLifeSessionState()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- createCharacterLifeSession() [calls] packages/core/src/character/session.ts:L133
+- withNpcs() [calls] packages/core/src/__tests__/helpers/npcs.ts:L51
+- deserializeCharacterLifeSave() [calls] packages/persistence/src/character-life-save.ts:L39
+- serializeCharacterLifeSave() [calls] packages/persistence/src/character-life-save.ts:L17
+- prepareCharacterLifeLoad() [calls] packages/ui/src/character-life-session.ts:L39
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L87
+- fixture() [calls] tests/e2e/character-life-boundary.spec.ts:L23
+- character/session.ts [imports] packages/core/src/character/session.ts:L12
+- character/__tests__/session.test.ts [imports] packages/core/src/character/__tests__/session.test.ts:L6
+- validate.test.ts [imports] packages/core/src/character/__tests__/validate.test.ts:L8
+- npcs.ts [imports] packages/core/src/__tests__/helpers/npcs.ts:L1
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- character-life-save.ts [imports] packages/persistence/src/character-life-save.ts:L1
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L3
+- guild-fixture-names.test.ts [imports] packages/simulation/src/__tests__/guild-fixture-names.test.ts:L2
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L1
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L2
+- session() [calls] packages/core/src/character/__tests__/session.test.ts:L18
+- newGame() [calls] packages/core/src/world/__tests__/item-market-seed.test.ts:L11
+- session() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L8
+- session() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/crisis-save.test.ts:L4
+- checkpoint() [calls] packages/persistence/src/__tests__/item-owner-import.test.ts:L8
+- life() [calls] packages/persistence/src/__tests__/item-records.test.ts:L8
+- stocked() [calls] packages/persistence/src/__tests__/items-canonical.test.ts:L9
+- stocked() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L9
+- session() [calls] packages/persistence/src/__tests__/law-save.test.ts:L7
+- life() [calls] packages/persistence/src/__tests__/npc-life-records.test.ts:L10
+- newGame() [calls] packages/persistence/src/__tests__/session-records.test.ts:L74
+- town() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L5
+- life() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L11
+- session() [calls] packages/simulation/src/__tests__/craft-week.test.ts:L161
+- crisisFixtureSession() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L5
+- life() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L14
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L11
+- life() [calls] packages/simulation/src/__tests__/item-command.test.ts:L6
+- life() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L119
+- life() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L11
+- newGame() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L25
+- session() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L23
+- session() [calls] packages/simulation/src/__tests__/outside-session.test.ts:L4
+- life() [calls] packages/simulation/src/__tests__/society-life.test.ts:L7
+- session() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L7
+- create() [calls] packages/ui/src/CharacterLifeApp.svelte:L35
+- a2Session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L182
+- session() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L10
+- life() [calls] packages/ui/src/__tests__/crafting-view.test.ts:L9
+- fixture() [calls] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L6
+- session() [calls] packages/ui/src/__tests__/items-view.test.ts:L12
+- session() [calls] packages/ui/src/__tests__/world-npc-session.test.ts:L8
+- items.test.ts [imports] packages/core/src/trial/__tests__/items.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L2
+- item-market-seed.test.ts [imports] packages/core/src/world/__tests__/item-market-seed.test.ts:L2
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L1
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L2
+- crisis-save.test.ts [imports] packages/persistence/src/__tests__/crisis-save.test.ts:L2
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L4
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L3
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L3
+- law-save.test.ts [imports] packages/persistence/src/__tests__/law-save.test.ts:L3
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L5
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L4
+- society-new-game-fixture.test.ts [imports] packages/persistence/src/__tests__/society-new-game-fixture.test.ts:L3
+- society-save.test.ts [imports] packages/persistence/src/__tests__/society-save.test.ts:L1
+- acquisition-fixture.ts [imports] packages/simulation/src/__tests__/acquisition-fixture.ts:L1
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L5
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L2
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L1
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L3
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L3
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L3
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L1
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L2
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L1
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L2
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L1
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L1
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L3
+- CharacterLifeApp.svelte [imports] packages/ui/src/CharacterLifeApp.svelte:L3
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L1
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L2
+- crisis-checkpoint.test.ts [imports] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L3
+- items-view.test.ts [imports] packages/ui/src/__tests__/items-view.test.ts:L3
+- world-npc-session.test.ts [imports] packages/ui/src/__tests__/world-npc-session.test.ts:L1
+- lifeSession() [calls] packages/core/src/character/__tests__/validate.test.ts:L28
+- npcSession() [calls] packages/core/src/character/__tests__/validate.test.ts:L11
+- session() [calls] packages/core/src/world/__tests__/npc.test.ts:L10
+- session() [calls] packages/persistence/src/__tests__/session-records.test.ts:L75
+- life() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L14
+- life() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L16
+- session() [calls] packages/simulation/src/__tests__/world-npc.test.ts:L6
+- populated() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L28
+- generated() [calls] packages/ui/src/__tests__/npc-sheet-view.test.ts:L16
+- withBrowserNpcs() [calls] tests/e2e/character-life-navigation.helpers.ts:L25
+- npc-life.test.ts [imports] packages/core/src/world/__tests__/npc-life.test.ts:L2
+- npc.test.ts [imports] packages/core/src/world/__tests__/npc.test.ts:L2
+- character-life-command.test.ts [imports] packages/simulation/src/__tests__/character-life-command.test.ts:L1
+- character-life-observation.test.ts [imports] packages/simulation/src/__tests__/character-life-observation.test.ts:L1
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L2
+- world-npc.test.ts [imports] packages/simulation/src/__tests__/world-npc.test.ts:L2
+- npc-sheet-view.test.ts [imports] packages/ui/src/__tests__/npc-sheet-view.test.ts:L3
+- character-life-navigation.helpers.ts [imports] tests/e2e/character-life-navigation.helpers.ts:L4
+- npc-homes.spec.ts [imports] tests/e2e/npc-homes.spec.ts:L2
+- importCheckpoint() [calls] packages/ui/src/CharacterLifeApp.svelte:L52
+- society-only-save.test.ts [imports] packages/persistence/src/__tests__/society-only-save.test.ts:L2
+- society-v1-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v1-fixture.test.ts:L4
+- society-v2-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v2-fixture.test.ts:L4
+- society-v3-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v3-fixture.test.ts:L4
+- society-v4-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v4-fixture.test.ts:L4
+- society-v5-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v5-fixture.test.ts:L4
+- society-v6-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v6-fixture.test.ts:L4
+- society-v7-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v7-fixture.test.ts:L4
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L4
+- title.spec.ts [imports] tests/e2e/title.spec.ts:L147
+- importCheckpoint() [calls] packages/ui/src/TileManagement.svelte:L201
+- encode() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L9
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L27
+- crisisFixtureBytes() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L40
+- saveLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L48
+- bytes() [calls] tests/e2e/autosave.spec.ts:L9
+- importLife() [calls] tests/e2e/character-life-navigation.helpers.ts:L147
+- encodedLife() [calls] tests/e2e/character-life-navigation.spec.ts:L742
+- encoded() [calls] tests/e2e/society-command.helpers.ts:L8
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- bytes() [calls] tests/e2e/title.spec.ts:L106
+- autosave.spec.ts [imports] tests/e2e/autosave.spec.ts:L3
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L3
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L3
+- outside.spec.ts [imports] tests/e2e/outside.spec.ts:L4
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L4
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- exportCheckpoint() [calls] packages/ui/src/TileManagement.svelte:L158
+- loadWorldSession() [calls] packages/ui/src/TileManagement.svelte:L170
+- TileManagement.svelte [imports] packages/ui/src/TileManagement.svelte:L18
+- readSlot() [calls] packages/ui/src/CharacterLifeApp.svelte:L22
+- savedGame() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L219
+- continueLocally() [calls] packages/ui/src/TileManagement.svelte:L215
+- p7b-checkpoint.test.ts [imports] packages/ui/src/__tests__/p7b-checkpoint.test.ts:L5
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L25
+- persistence/src/index.ts [re_exports] packages/persistence/src/index.ts:L4
+- session-records.ts [imports_from] packages/persistence/src/session-records.ts:L2
+- TitleScreen.svelte [imports_from] packages/ui/src/TitleScreen.svelte:L4
+Affected nodes for runTileTrialWeek()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- output() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L29
+- run() [calls] packages/simulation/src/__tests__/law-week.test.ts:L152
+- executeTileTrialCommand() [calls] packages/simulation/src/tile-trial.ts:L106
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L7
+- crime-week.test.ts [imports] packages/simulation/src/__tests__/crime-week.test.ts:L5
+- crisis-week.test.ts [imports] packages/simulation/src/__tests__/crisis-week.test.ts:L53
+- garrison-week.test.ts [imports] packages/simulation/src/__tests__/garrison-week.test.ts:L5
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L4
+- items-week.test.ts [imports] packages/simulation/src/__tests__/items-week.test.ts:L4
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L6
+- order-tax-week.test.ts [imports] packages/simulation/src/__tests__/order-tax-week.test.ts:L3
+- order-week.test.ts [imports] packages/simulation/src/__tests__/order-week.test.ts:L6
+- outside-week.test.ts [imports] packages/simulation/src/__tests__/outside-week.test.ts:L4
+- society-end-week.test.ts [imports] packages/simulation/src/__tests__/society-end-week.test.ts:L4
+- tile-trial.ts [imports] packages/simulation/src/tile-trial.ts:L4
+- choose() [calls] packages/simulation/src/__tests__/crisis-commands.test.ts:L9
+- reject() [calls] packages/simulation/src/__tests__/crisis-commands.test.ts:L10
+- act() [calls] packages/simulation/src/__tests__/law-command.test.ts:L12
+- next() [calls] packages/simulation/src/__tests__/order-commands.test.ts:L16
+- reject() [calls] packages/simulation/src/__tests__/order-commands.test.ts:L25
+- send() [calls] packages/simulation/src/__tests__/outside-commands.test.ts:L9
+- act() [calls] packages/simulation/src/__tests__/smithy-data.test.ts:L12
+- refused() [calls] packages/simulation/src/__tests__/smithy-data.test.ts:L17
+- rejected() [calls] packages/simulation/src/__tests__/society-command-transaction.test.ts:L22
+- success() [calls] packages/simulation/src/__tests__/society-command-transaction.test.ts:L28
+- endSociety() [calls] packages/simulation/src/__tests__/society-end-week.test.ts:L67
+- run() [calls] packages/simulation/src/__tests__/society-plots.test.ts:L4
+- act() [calls] packages/simulation/src/__tests__/society-renewable-support.test.ts:L20
+- act() [calls] packages/simulation/src/__tests__/society-restore-integrity.test.ts:L5
+- fail() [calls] packages/simulation/src/__tests__/society-restore-integrity.test.ts:L10
+- command() [calls] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L12
+- end() [calls] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L17
+- plan() [calls] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L24
+- act() [calls] packages/simulation/src/__tests__/tile-trial.test.ts:L6
+- rejected() [calls] packages/simulation/src/__tests__/tile-trial.test.ts:L12
+- executeWorldNpcCityCommand() [calls] packages/simulation/src/world-npc.ts:L59
+- prepareWorldSessionLoad() [calls] packages/ui/src/world-session.ts:L47
+- authority-refusals.test.ts [imports] packages/simulation/src/__tests__/authority-refusals.test.ts:L3
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L8
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L3
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L3
+- outside-commands.test.ts [imports] packages/simulation/src/__tests__/outside-commands.test.ts:L3
+- replay-checkpoint.test.ts [imports] packages/simulation/src/__tests__/replay-checkpoint.test.ts:L7
+- smithy-data.test.ts [imports] packages/simulation/src/__tests__/smithy-data.test.ts:L3
+- society-command-transaction.test.ts [imports] packages/simulation/src/__tests__/society-command-transaction.test.ts:L4
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L4
+- society-plots.test.ts [imports] packages/simulation/src/__tests__/society-plots.test.ts:L3
+- society-renewable-support.test.ts [imports] packages/simulation/src/__tests__/society-renewable-support.test.ts:L3
+- society-restore-integrity.test.ts [imports] packages/simulation/src/__tests__/society-restore-integrity.test.ts:L3
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L4
+- society-stock-policy-ports.test.ts [imports] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L3
+- tile-trial-p7b.test.ts [imports] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L3
+- tile-trial.test.ts [imports] packages/simulation/src/__tests__/tile-trial.test.ts:L3
+- world-npc.ts [imports] packages/simulation/src/world-npc.ts:L3
+- world-session.ts [imports] packages/ui/src/world-session.ts:L2
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L2
+Affected nodes for resolveWorkshopOperation()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- runTileTrialWeek() [calls] packages/simulation/src/tile-trial-week.ts:L18
+- workshopForecast() [calls] packages/ui/src/items-view.ts:L109
+- tile-trial-p7b.test.ts [imports] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L5
+- tile-trial-week.ts [imports] packages/simulation/src/tile-trial-week.ts:L1
+- items-view.ts [imports] packages/ui/src/items-view.ts:L3
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L5
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L10
+- output() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L29
+- run() [calls] packages/simulation/src/__tests__/law-week.test.ts:L152
+- executeTileTrialCommand() [calls] packages/simulation/src/tile-trial.ts:L106
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L7
+- crime-week.test.ts [imports] packages/simulation/src/__tests__/crime-week.test.ts:L5
+- crisis-week.test.ts [imports] packages/simulation/src/__tests__/crisis-week.test.ts:L53
+- garrison-week.test.ts [imports] packages/simulation/src/__tests__/garrison-week.test.ts:L5
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L4
+- items-week.test.ts [imports] packages/simulation/src/__tests__/items-week.test.ts:L4
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L6
+- order-tax-week.test.ts [imports] packages/simulation/src/__tests__/order-tax-week.test.ts:L3
+- order-week.test.ts [imports] packages/simulation/src/__tests__/order-week.test.ts:L6
+- outside-week.test.ts [imports] packages/simulation/src/__tests__/outside-week.test.ts:L4
+- society-end-week.test.ts [imports] packages/simulation/src/__tests__/society-end-week.test.ts:L4
+- tile-trial.ts [imports] packages/simulation/src/tile-trial.ts:L4
+- workshopCapacity() [calls] packages/ui/src/items-view.ts:L121
+- WorkshopPanel.svelte [imports] packages/ui/src/WorkshopPanel.svelte:L4
+- crisis-week.ts [imports_from] packages/simulation/src/crisis-week.ts:L2
+- law-week.ts [imports_from] packages/simulation/src/law-week.ts:L3
+- household-week.ts [imports_from] packages/simulation/src/household-week.ts:L7
+- npc-acquisition.ts [imports_from] packages/simulation/src/npc-acquisition.ts:L10
+- world-npc.ts [imports_from] packages/simulation/src/world-npc.ts:L2
+- view() [imports_from] packages/ui/src/__tests__/items-view.test.ts:L7
+- EquipmentView.svelte [imports_from] packages/ui/src/EquipmentView.svelte:L6
+- ItemCard.svelte [imports_from] packages/ui/src/ItemCard.svelte:L3
+- MarketPanel.svelte [imports_from] packages/ui/src/MarketPanel.svelte:L4
+- PotionPanel.svelte [imports_from] packages/ui/src/PotionPanel.svelte:L3
+- report-letters.ts [imports_from] packages/ui/src/report-letters.ts:L253
+- SoloWeekReport.svelte [imports_from] packages/ui/src/SoloWeekReport.svelte:L3
+- TileManagement.svelte [imports_from] packages/ui/src/TileManagement.svelte:L3
+- items-view.test.ts [dynamic_import] packages/ui/src/__tests__/items-view.test.ts:L1
+- society-view.ts [imports_from] packages/ui/src/society-view.ts:L117
+- craft-records.test.ts [imports_from] packages/persistence/src/__tests__/craft-records.test.ts:L3
+- item-records.test.ts [imports_from] packages/persistence/src/__tests__/item-records.test.ts:L7
+- src/__tests__/items-canonical.test.ts [imports_from] packages/persistence/src/__tests__/items-canonical.test.ts:L4
+- items-rebuild-order.test.ts [imports_from] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L4
+- character-life-observation.test.ts [imports_from] packages/simulation/src/__tests__/character-life-observation.test.ts:L11
+- society-factory-determinism.test.ts [imports_from] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L3
+- acquisition-view.ts [imports_from] packages/ui/src/acquisition-view.ts:L6
+- AcquisitionPanel.svelte [imports_from] packages/ui/src/AcquisitionPanel.svelte:L4
+- CharacterLifeCharacters.svelte [imports_from] packages/ui/src/CharacterLifeCharacters.svelte:L7
+- SocietyReport.svelte [imports_from] packages/ui/src/SocietyReport.svelte:L3
+- world-session.ts [imports_from] packages/ui/src/world-session.ts:L2
+- household.spec.ts [imports_from] tests/e2e/household.spec.ts:L3
+Affected nodes for resolveLawGold()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- runTileTrialWeek() [calls] packages/simulation/src/tile-trial-week.ts:L38
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L5
+- tile-trial-week.ts [imports] packages/simulation/src/tile-trial-week.ts:L5
+- output() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L29
+- run() [calls] packages/simulation/src/__tests__/law-week.test.ts:L152
+- executeTileTrialCommand() [calls] packages/simulation/src/tile-trial.ts:L106
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L7
+- crime-week.test.ts [imports] packages/simulation/src/__tests__/crime-week.test.ts:L5
+- crisis-week.test.ts [imports] packages/simulation/src/__tests__/crisis-week.test.ts:L53
+- garrison-week.test.ts [imports] packages/simulation/src/__tests__/garrison-week.test.ts:L5
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L4
+- items-week.test.ts [imports] packages/simulation/src/__tests__/items-week.test.ts:L4
+- order-tax-week.test.ts [imports] packages/simulation/src/__tests__/order-tax-week.test.ts:L3
+- order-week.test.ts [imports] packages/simulation/src/__tests__/order-week.test.ts:L6
+- outside-week.test.ts [imports] packages/simulation/src/__tests__/outside-week.test.ts:L4
+- society-end-week.test.ts [imports] packages/simulation/src/__tests__/society-end-week.test.ts:L4
+- tile-trial.ts [imports] packages/simulation/src/tile-trial.ts:L4
+- crisis-week.ts [imports_from] packages/simulation/src/crisis-week.ts:L2
+- law-week.ts [imports_from] packages/simulation/src/law-week.ts:L3
+- household-week.ts [imports_from] packages/simulation/src/household-week.ts:L7
+- npc-acquisition.ts [imports_from] packages/simulation/src/npc-acquisition.ts:L10
+- world-npc.ts [imports_from] packages/simulation/src/world-npc.ts:L2
+Affected nodes for payNpcWages()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- executeCharacterLifeCommand() [calls] packages/simulation/src/character-life-command.ts:L48
+- character-life-command.ts [imports] packages/simulation/src/character-life-command.ts:L7
+- household-week.test.ts [imports] packages/simulation/src/__tests__/household-week.test.ts:L6
+- act() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L7
+- command() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L14
+- rejection() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L89
+- act() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L26
+- act() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L29
+- refuse() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L35
+- end() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L10
+- findCrimeFixture() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L16
+- crisisFixture() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L21
+- fixtureStep() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L9
+- end() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L31
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/item-command.test.ts:L10
+- command() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L121
+- action() [calls] packages/simulation/src/__tests__/law-fixture.test.ts:L9
+- action() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L22
+- command() [calls] packages/simulation/src/__tests__/lord-health.test.ts:L13
+- command() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L69
+- action() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L42
+- step() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L9
+- run() [calls] packages/ui/src/EquipmentView.svelte:L19
+- act() [calls] tests/e2e/acquisition.spec.ts:L11
+- act() [calls] tests/e2e/crafting.spec.ts:L8
+- resolveReport() [calls] tests/e2e/crafting.spec.ts:L149
+- act() [calls] tests/e2e/items.spec.ts:L9
+- act() [calls] tests/e2e/society-command.helpers.ts:L12
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L3
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L7
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L4
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L4
+- acquisition-fixture.ts [imports] packages/simulation/src/__tests__/acquisition-fixture.ts:L2
+- character-life-command.test.ts [imports] packages/simulation/src/__tests__/character-life-command.test.ts:L8
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L7
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L8
+- crime-fixtures.test.ts [imports] packages/simulation/src/__tests__/crime-fixtures.test.ts:L6
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L4
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L3
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L4
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L5
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L4
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L7
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L4
+- law-fixture.test.ts [imports] packages/simulation/src/__tests__/law-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L4
+- lord-health.test.ts [imports] packages/simulation/src/__tests__/lord-health.test.ts:L5
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L10
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L8
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L4
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L3
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L3
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L3
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L5
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L5
+- EquipmentView.svelte [imports] packages/ui/src/EquipmentView.svelte:L4
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L5
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L3
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L11
+- character-life-navigation-accessibility.spec.ts [imports] tests/e2e/character-life-navigation-accessibility.spec.ts:L2
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L4
+- character-life.spec.ts [imports] tests/e2e/character-life.spec.ts:L5
+- crafting.spec.ts [imports] tests/e2e/crafting.spec.ts:L3
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L5
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L5
+- error-log.spec.ts [imports] tests/e2e/error-log.spec.ts:L5
+- garrison.spec.ts [imports] tests/e2e/garrison.spec.ts:L4
+- goods-stock.spec.ts [imports] tests/e2e/goods-stock.spec.ts:L3
+- items.spec.ts [imports] tests/e2e/items.spec.ts:L5
+- laws.spec.ts [imports] tests/e2e/laws.spec.ts:L4
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L5
+- npc-homes.spec.ts [imports] tests/e2e/npc-homes.spec.ts:L3
+- npc-sheet.spec.ts [imports] tests/e2e/npc-sheet.spec.ts:L4
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L2
+- outside.spec.ts [imports] tests/e2e/outside.spec.ts:L1
+- smoke.spec.ts [imports] tests/e2e/smoke.spec.ts:L2
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L3
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L6
+- tile-feedback-precision.spec.ts [imports] tests/e2e/tile-feedback-precision.spec.ts:L4
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L4
+- tile-population.spec.ts [imports] tests/e2e/tile-population.spec.ts:L4
+- tile-save.spec.ts [imports] tests/e2e/tile-save.spec.ts:L4
+- tile-trial.spec.ts [imports] tests/e2e/tile-trial.spec.ts:L4
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L4
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L4
+- character-life-observation.test.ts [indirect_call] packages/simulation/src/__tests__/character-life-observation.test.ts:L128
+- answer() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L60
+- release() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L71
+- run() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L81
+- command() [calls] packages/ui/src/TileManagement.svelte:L74
+- society-guard.test.ts [indirect_call] packages/simulation/src/__tests__/society-guard.test.ts:L19
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L4
+- character-life-observation.ts [imports_from] packages/simulation/src/character-life-observation.ts:L8
+Affected nodes for recordsToSession()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L30
+- expectRecordRef() [calls] packages/persistence/src/__tests__/session-records.test.ts:L85
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L86
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L4
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L5
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L6
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L6
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L6
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L7
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L6
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L5
+- society-v9-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- readSlot() [calls] packages/ui/src/CharacterLifeApp.svelte:L22
+- savedGame() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L219
+- continueLocally() [calls] packages/ui/src/TileManagement.svelte:L215
+- CharacterLifeApp.svelte [imports] packages/ui/src/CharacterLifeApp.svelte:L8
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L6
+- p7b-checkpoint.test.ts [imports] packages/ui/src/__tests__/p7b-checkpoint.test.ts:L5
+- TileManagement.svelte [imports] packages/ui/src/TileManagement.svelte:L18
+- slot() [calls] tests/e2e/autosave.spec.ts:L22
+- slot() [calls] tests/e2e/tile-local-checkpoint.spec.ts:L12
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L7
+- autosave.spec.ts [imports] tests/e2e/autosave.spec.ts:L1
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L1
+- character-life.spec.ts [imports] tests/e2e/character-life.spec.ts:L1
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L1
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L1
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L1
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L1
+- storage.spec.ts [imports] tests/e2e/storage.spec.ts:L5
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L1
+- title.spec.ts [imports] tests/e2e/title.spec.ts:L1
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L1
+- crisis-checkpoint.test.ts [imports_from] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L4
+- TitleScreen.svelte [imports_from] packages/ui/src/TitleScreen.svelte:L4
+Affected nodes for serializeCharacterLifeSave()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- encode() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L9
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L27
+- crisisFixtureBytes() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L40
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L54
+- saveLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L48
+- bytes() [calls] tests/e2e/autosave.spec.ts:L9
+- importLife() [calls] tests/e2e/character-life-navigation.helpers.ts:L147
+- encodedLife() [calls] tests/e2e/character-life-navigation.spec.ts:L742
+- encoded() [calls] tests/e2e/society-command.helpers.ts:L8
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- bytes() [calls] tests/e2e/title.spec.ts:L106
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L4
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L5
+- crisis-save.test.ts [imports] packages/persistence/src/__tests__/crisis-save.test.ts:L3
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L4
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L5
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L5
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L5
+- law-save.test.ts [imports] packages/persistence/src/__tests__/law-save.test.ts:L4
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L8
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L5
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L4
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L2
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L4
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L7
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- autosave.spec.ts [imports] tests/e2e/autosave.spec.ts:L3
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L10
+- character-life-navigation.helpers.ts [imports] tests/e2e/character-life-navigation.helpers.ts:L5
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L3
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L3
+- outside.spec.ts [imports] tests/e2e/outside.spec.ts:L4
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L4
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- title.spec.ts [imports] tests/e2e/title.spec.ts:L103
+- exportCheckpoint() [calls] packages/ui/src/TileManagement.svelte:L158
+- society-save.test.ts [indirect_call] packages/persistence/src/__tests__/society-save.test.ts:L9
+- envelope() [calls] packages/persistence/src/__tests__/character-life-save.test.ts:L10
+- crisis-fixtures.test.ts [imports] packages/simulation/src/__tests__/crisis-fixtures.test.ts:L5
+- catalog-golden.test.ts [imports] packages/simulation/src/__tests__/catalog-golden.test.ts:L3
+- savedGame() [calls] packages/ui/src/__tests__/character-life-session.test.ts:L220
+- mainMenu() [calls] packages/ui/src/TileManagement.svelte:L223
+- nextLifeWeek() [calls] packages/ui/src/TileManagement.svelte:L132
+- saveLocally() [calls] packages/ui/src/TileManagement.svelte:L208
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L6
+- TileManagement.svelte [imports] packages/ui/src/TileManagement.svelte:L18
+- start() [calls] tests/e2e/autosave.spec.ts:L15
+- seedBrowserNpcs() [calls] tests/e2e/character-life-navigation.helpers.ts:L36
+- prepareLoadIntent() [calls] tests/e2e/character-life-navigation.spec.ts:L911
+- resolveReport() [calls] tests/e2e/crafting.spec.ts:L151
+- start() [calls] tests/e2e/error-log.spec.ts:L6
+- boot() [calls] tests/e2e/npc-sheet.spec.ts:L20
+- start() [calls] tests/e2e/order.spec.ts:L6
+- start() [calls] tests/e2e/outside.spec.ts:L9
+- boot() [calls] tests/e2e/society-command.helpers.ts:L7
+- start() [calls] tests/e2e/society.spec.ts:L11
+- start() [calls] tests/e2e/storage.spec.ts:L13
+- start() [calls] tests/e2e/tile-feedback-precision.spec.ts:L6
+- start() [calls] tests/e2e/tile-local-checkpoint.spec.ts:L28
+- start() [calls] tests/e2e/tile-workforce.spec.ts:L5
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L8
+- character-life-navigation-accessibility.spec.ts [imports] tests/e2e/character-life-navigation-accessibility.spec.ts:L5
+- character-life.spec.ts [imports] tests/e2e/character-life.spec.ts:L6
+- crafting.spec.ts [imports] tests/e2e/crafting.spec.ts:L5
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L7
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L7
+- error-log.spec.ts [imports] tests/e2e/error-log.spec.ts:L4
+- garrison.spec.ts [imports] tests/e2e/garrison.spec.ts:L5
+- goods-stock.spec.ts [imports] tests/e2e/goods-stock.spec.ts:L4
+- household.spec.ts [imports] tests/e2e/household.spec.ts:L4
+- items.spec.ts [imports] tests/e2e/items.spec.ts:L6
+- laws.spec.ts [imports] tests/e2e/laws.spec.ts:L5
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L8
+- npc-homes.spec.ts [imports] tests/e2e/npc-homes.spec.ts:L4
+- npc-sheet.spec.ts [imports] tests/e2e/npc-sheet.spec.ts:L5
+- smoke.spec.ts [imports] tests/e2e/smoke.spec.ts:L3
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L7
+- storage.spec.ts [imports] tests/e2e/storage.spec.ts:L4
+- tile-feedback-precision.spec.ts [imports] tests/e2e/tile-feedback-precision.spec.ts:L3
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L6
+- tile-workforce.spec.ts [imports] tests/e2e/tile-workforce.spec.ts:L3
+- workforce-draft-error.spec.ts [imports] tests/e2e/workforce-draft-error.spec.ts:L3
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L6
+- tile-population.spec.ts [imports] tests/e2e/tile-population.spec.ts:L5
+- tile-save.spec.ts [imports] tests/e2e/tile-save.spec.ts:L2
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L5
+- slot() [calls] tests/e2e/autosave.spec.ts:L22
+- slot() [calls] tests/e2e/tile-local-checkpoint.spec.ts:L12
+- crime-fixtures.test.ts [imports_from] packages/simulation/src/__tests__/crime-fixtures.test.ts:L5
+- law-fixture.test.ts [imports_from] packages/simulation/src/__tests__/law-fixture.test.ts:L6
+- law-week.test.ts [imports_from] packages/simulation/src/__tests__/law-week.test.ts:L8
+- CharacterLifeApp.svelte [imports_from] packages/ui/src/CharacterLifeApp.svelte:L8
+- crisis-checkpoint.test.ts [imports_from] packages/ui/src/__tests__/crisis-checkpoint.test.ts:L4
+- p7b-checkpoint.test.ts [imports_from] packages/ui/src/__tests__/p7b-checkpoint.test.ts:L5
+- TitleScreen.svelte [imports_from] packages/ui/src/TitleScreen.svelte:L4
+- tile-trial.spec.ts [imports_from] tests/e2e/tile-trial.spec.ts:L3
+Affected nodes for isWorldSessionState()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- isLiveCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L99
+- isNpcWorldSessionState() [calls] packages/core/src/world/npc.ts:L75
+- recordsToSession() [calls] packages/persistence/src/session-records.ts:L167
+- deserializeWorldSessionSave() [calls] packages/persistence/src/world-session-save.ts:L71
+- serializeWorldSessionSave() [calls] packages/persistence/src/world-session-save.ts:L50
+- executeWorldNpcCityCommand() [calls] packages/simulation/src/world-npc.ts:L55
+- captureLoadedSession() [calls] packages/ui/src/world-session.ts:L40
+- character/validate.ts [imports] packages/core/src/character/validate.ts:L8
+- npc.ts [imports] packages/core/src/world/npc.ts:L11
+- generate.test.ts [imports] packages/core/src/world/__tests__/generate.test.ts:L6
+- npc.test.ts [imports] packages/core/src/world/__tests__/npc.test.ts:L7
+- world/__tests__/session.test.ts [imports] packages/core/src/world/__tests__/session.test.ts:L3
+- session-records.ts [imports] packages/persistence/src/session-records.ts:L3
+- world-session-save.test.ts [imports] packages/persistence/src/__tests__/world-session-save.test.ts:L2
+- world-session-save.ts [imports] packages/persistence/src/world-session-save.ts:L1
+- world-npc.ts [imports] packages/simulation/src/world-npc.ts:L1
+- world-session.test.ts [imports] packages/ui/src/__tests__/world-session.test.ts:L1
+- world-session.ts [imports] packages/ui/src/world-session.ts:L1
+- executeItemCommand() [calls] packages/simulation/src/item-command.ts:L17
+- executeAcquisitionCommand() [calls] packages/simulation/src/npc-acquisition.ts:L171
+- validate.test.ts [imports] packages/core/src/character/__tests__/validate.test.ts:L8
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L2
+- item-command.ts [imports] packages/simulation/src/item-command.ts:L1
+- npc-acquisition.ts [imports] packages/simulation/src/npc-acquisition.ts:L1
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- isCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L83
+- withNpcs() [calls] packages/core/src/__tests__/helpers/npcs.ts:L51
+- executeWorldNpcCommand() [calls] packages/simulation/src/world-npc.ts:L22
+- prepareNpcWorldSessionLoad() [calls] packages/ui/src/world-npc-session.ts:L12
+- npcs.ts [imports] packages/core/src/__tests__/helpers/npcs.ts:L5
+- world-npc.test.ts [imports] packages/simulation/src/__tests__/world-npc.test.ts:L1
+- world-npc-session.ts [imports] packages/ui/src/world-npc-session.ts:L1
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L30
+- expectRecordRef() [calls] packages/persistence/src/__tests__/session-records.test.ts:L85
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L86
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L4
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L5
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L6
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L6
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L6
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L7
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L6
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L5
+- society-v9-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- society-only-save.test.ts [imports] packages/persistence/src/__tests__/society-only-save.test.ts:L2
+- society-save.test.ts [indirect_call] packages/persistence/src/__tests__/society-save.test.ts:L8
+- encode() [calls] packages/persistence/src/__tests__/world-session-save.test.ts:L8
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L6
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L5
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L3
+- executeCharacterLifeCommand() [calls] packages/simulation/src/character-life-command.ts:L53
+- city() [calls] packages/simulation/src/__tests__/world-npc.test.ts:L17
+- character-life-command.ts [imports] packages/simulation/src/character-life-command.ts:L2
+- npc-acquisition.test.ts [imports] packages/simulation/src/__tests__/npc-acquisition.test.ts:L6
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L9
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L5
+- society-guard.test.ts [indirect_call] packages/simulation/src/__tests__/society-guard.test.ts:L18
+- prepareWorldSessionLoad() [calls] packages/ui/src/world-session.ts:L45
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L23
+- character/session.ts [imports_from] packages/core/src/character/session.ts:L12
+- character/__tests__/session.test.ts [imports_from] packages/core/src/character/__tests__/session.test.ts:L6
+- character/types.ts [imports_from] packages/core/src/character/types.ts:L2
+- acquisition-replay.ts [imports_from] packages/core/src/trial/acquisition-replay.ts:L7
+- npc-price.ts [imports_from] packages/core/src/world/npc-price.ts:L3
+- persistence/src/index.ts [re_exports] packages/persistence/src/index.ts:L7
+- character-life-save.ts [imports_from] packages/persistence/src/character-life-save.ts:L3
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L3
+- character-life-command.test.ts [imports_from] packages/simulation/src/__tests__/character-life-command.test.ts:L9
+Graph: graphify-out/graph.json (2689 nodes) | Traversal: BFS depth=2 | Start: ['legacy()', 'settlement()', 'active()', 'player()'] | 85 nodes found
+
+[!] TRUNCATED: showing 54 of 85 nodes (~2000-token budget). The answer may be among the 31 cut nodes — raise the token budget to 3065 to get all 85 (CLI: --budget 3065, MCP: token_budget=3065) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).
+
+NODE legacy() [src=packages/simulation/src/__tests__/character-life-command.test.ts loc=L17 community=state.ts]
+NODE settlement() [src=packages/simulation/src/__tests__/authority-refusals.test.ts loc=L7 community=data-inspector.test.ts]
+NODE active() [src=packages/core/src/__tests__/society-world-integrity.test.ts loc=L6 community=character/validate.ts]
+NODE player() [src=packages/core/src/character/__tests__/validate.test.ts loc=L20 community=p6b-crafting-path-diff.ts]
+NODE playerCharacter() [src=packages/core/src/character/__tests__/validate.test.ts loc=L19 community=p6b-crafting-path-diff.ts]
+NODE PLAYER_PROFESSIONS [src=packages/core/src/character/catalog.ts loc=L67 community=go]
+NODE PLAYER_CHARACTER_ID [src=packages/core/src/character/catalog.ts loc=L4 community=go]
+NODE isPlayerCharacter() [src=packages/core/src/character/validate.ts loc=L68 community=npc-homes.test.ts]
+NODE packages_core_src_index_default_player_draft [src= loc= community=isWorldSessionState]
+NODE createSocietyState() [src=packages/core/src/trial/society.ts loc=L47 community=character-life-navigation.helpers.ts]
+NODE validate.test.ts [src=packages/core/src/character/__tests__/validate.test.ts loc=L1 community=p6b-crafting-path-diff.ts]
+NODE character-life-command.test.ts [src=packages/simulation/src/__tests__/character-life-command.test.ts loc=L1 community=state.ts]
+NODE authority-refusals.test.ts [src=packages/simulation/src/__tests__/authority-refusals.test.ts loc=L1 community=data-inspector.test.ts]
+NODE society-world-integrity.test.ts [src=packages/core/src/__tests__/society-world-integrity.test.ts loc=L1 community=character/validate.ts]
+NODE expanded() [src=packages/simulation/src/__tests__/authority-refusals.test.ts loc=L8 community=data-inspector.test.ts]
+NODE refused() [src=packages/simulation/src/__tests__/authority-refusals.test.ts loc=L16 community=data-inspector.test.ts]
+NODE lifeSession() [src=packages/core/src/character/__tests__/validate.test.ts loc=L28 community=p6b-crafting-path-diff.ts]
+NODE rejection() [src=packages/simulation/src/__tests__/character-life-command.test.ts loc=L82 community=state.ts]
+NODE base() [src=packages/core/src/character/__tests__/validate.test.ts loc=L12 community=p6b-crafting-path-diff.ts]
+NODE oldAction() [src=packages/simulation/src/__tests__/character-life-command.test.ts loc=L72 community=state.ts]
+NODE core/src/index.ts [src=packages/core/src/index.ts loc=L1 community=createCharacterLifeSession]
+NODE vitest [src=package.json loc=L35 community=createCharacterLifeSession]
+NODE executeCharacterLifeCommand() [src=packages/simulation/src/character-life-command.ts loc=L18 community=society-week.ts]
+NODE character-life-command.ts [src=packages/simulation/src/character-life-command.ts loc=L1 community=society-week.ts]
+NODE society.ts [src=packages/core/src/trial/society.ts loc=L1 community=tile-local-checkpoint.spec.ts]
+NODE executeTileTrialCommand() [src=packages/simulation/src/tile-trial.ts loc=L6 community=character-life-navigation.helpers.ts]
+NODE TileTrialState [src=packages/core/src/trial/types.ts loc=L23 community=character-life-session.test.ts]
+NODE npc.ts [src=packages/core/src/world/npc.ts loc=L1 community=with]
+NODE tile-trial.ts [src=packages/simulation/src/tile-trial.ts loc=L1 community=character-life-navigation.helpers.ts]
+NODE persistence/src/index.ts [src=packages/persistence/src/index.ts loc=L1 community=createCharacterLifeSession]
+NODE character/validate.ts [src=packages/core/src/character/validate.ts loc=L1 community=npc-homes.test.ts]
+NODE withNpcs() [src=packages/core/src/__tests__/helpers/npcs.ts loc=L23 community=npc.ts]
+NODE npcs.ts [src=packages/core/src/__tests__/helpers/npcs.ts loc=L1 community=npc.ts]
+NODE isTileTrialState() [src=packages/core/src/trial/state.ts loc=L13 community=character-life-navigation.helpers.ts]
+NODE societyPopulation() [src=packages/core/src/trial/society.ts loc=L80 community=character-life-navigation.helpers.ts]
+NODE canonical-state.ts [src=packages/core/src/domain/canonical-state.ts loc=L1 community=character/validate.ts]
+NODE character/catalog.ts [src=packages/core/src/character/catalog.ts loc=L1 community=go]
+NODE world-npc.ts [src=packages/simulation/src/world-npc.ts loc=L1 community=character-life-navigation.helpers.ts]
+NODE character.ts [src=packages/core/src/domain/character.ts loc=L1 community=error-log.ts]
+NODE tile-trial-immigration.ts [src=packages/simulation/src/tile-trial-immigration.ts loc=L1 community=data-inspector.test.ts]
+NODE NPC_TEST_KEYS [src=packages/core/src/__tests__/helpers/npcs.ts loc=L15 community=npc.ts]
+NODE isCharacterLifeSessionState() [src=packages/core/src/character/validate.ts loc=L80 community=npc.ts]
+NODE packages_persistence_src_index_deserializecharacterlifesave [src= loc= community=world/session.ts]
+NODE character/types.ts [src=packages/core/src/character/types.ts loc=L1 community=error-log.ts]
+NODE packages_core_src_index_characterlifesessionstate [src= loc= community=TileManagement.svelte]
+NODE isWorldNpcList() [src=packages/core/src/world/npc.ts loc=L47 community=with]
+NODE packages_core_src_index_createcharacterlifesession [src= loc= community=isWorldSessionState]
+NODE createNpcWorldSession() [src=packages/core/src/world/npc.ts loc=L81 community=p6b-crafting-path-diff.ts]
+NODE isLiveCharacterLifeSessionState() [src=packages/core/src/character/validate.ts loc=L93 community=npc-homes.test.ts]
+NODE packages_persistence_src_index_serializecharacterlifesave [src= loc= community=TileManagement.svelte]
+NODE isCharacterProfile() [src=packages/core/src/character/validate.ts loc=L31 community=npc-homes.test.ts]
+NODE createNamedCharacter() [src=packages/core/src/domain/character.ts loc=L88 community=error-log.ts]
+NODE resolveTrialImmigration() [src=packages/simulation/src/tile-trial-immigration.ts loc=L21 community=data-inspector.test.ts]
+NODE isNamedCharacterRecord() [src=packages/core/src/world/npc.ts loc=L34 community=with]
+... (truncated — 31 more nodes cut by ~2000-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)
+Node: resolveWorkshopOperation()
+  ID:        packages_simulation_src_workshop_operation_resolveworkshopoperation
+  Source:    packages/simulation/src/workshop-operation.ts L42
+  Type:      code
+  Community: character-life-session.test.ts
+  Degree:    17
+
+Connections (17):
+  <-- tile-trial-week.ts [imports] [EXTRACTED] packages/simulation/src/tile-trial-week.ts:L1
+  <-- items-view.ts [imports] [EXTRACTED] packages/ui/src/items-view.ts:L3
+  <-- runTileTrialWeek() [calls] [EXTRACTED] packages/simulation/src/tile-trial-week.ts:L18
+  <-- workshop-operation.ts [contains] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L42
+  --> buildingWorkerCap() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L86
+  <-- simulation/src/index.ts [re_exports] [EXTRACTED] packages/simulation/src/index.ts:L10
+  <-- crafting-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/crafting-view.test.ts:L5
+  <-- tile-trial-p7b.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L5
+  --> trialBuilding() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L65
+  --> trialSafe() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L52
+  --> lawTerms() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L55
+  --> npcBeds() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L64
+  <-- workshopForecast() [calls] [EXTRACTED] packages/ui/src/items-view.ts:L109
+  --> scaled() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L54
+  --> postContext() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L46
+  --> itemOutput() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L78
+  --> authorityTaxBps() [calls] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L55

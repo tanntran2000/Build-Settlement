@@ -1,0 +1,30 @@
+UTC start 2026-11-26T02:57:12.391543+00:00
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+HEAD tree 29f27649e984eda84b76909b2f53ae6a3ab9e120
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/with-awake.py python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/measure-m1.4.py
+
+
+Windows system sleep inhibited for this process while the child runs.
+Junction created for C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\node_modules\@haven\content <<===>> C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\content
+Junction created for C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\node_modules\@haven\core <<===>> C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\core
+Junction created for C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\node_modules\@haven\persistence <<===>> C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\persistence
+Junction created for C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\node_modules\@haven\simulation <<===>> C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\simulation
+Junction created for C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\node_modules\@haven\ui <<===>> C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\m1.4-main\packages\ui
+Bundle 1 [('main', 173845), ('head', 174917)]
+Bundle 2 [('head', 174917), ('main', 173845)]
+Bundle 3 [('main', 173845), ('head', 174917)]
+Timing round 1
+Timing round 2
+Timing round 3
+Timing round 4
+Timing round 5
+Timing round 6
+Timing round 7
+Timing round 8
+Timing round 9
+Timing round 10
+Process execution-state request released.
+
+Exit 0
+UTC end 2026-11-26T03:03:11.689429+00:00

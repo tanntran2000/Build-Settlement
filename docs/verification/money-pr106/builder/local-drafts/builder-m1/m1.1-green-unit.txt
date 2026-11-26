@@ -1,0 +1,152 @@
+UTC start 2026-11-25T16:11:57.747075+00:00
+HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+HEAD tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+Working delta SHA-256 d3db75b7adadb1bde1883b91a36df00e3077ff6e631b274807c4d0cad5c103ad
+Command cmd.exe /d /c npm.cmd test
+M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/character/__tests__/validate.test.ts
+ M packages/core/src/character/session.ts
+ M packages/core/src/character/types.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/trial/society.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/core/src/world/npc.ts
+ M packages/core/src/world/session.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/household-week.test.ts
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/core/src/character/__tests__/purse-shape.test.ts
+?? packages/core/src/trial/__tests__/difficulty.test.ts
+?? packages/core/src/trial/difficulty.ts
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-5-weeks.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-death.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-raid.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-robbery.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-wound.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-demand-card.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-laws.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-new-game.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-rebellion-last-week.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/new-game.json
+?? packages/persistence/src/__tests__/money-save.test.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (52 tests | 1 failed) 258ms
+   × 'tuning.json' validates to the unchanged typed views 67ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' validates to the unchanged typed views
+AssertionError: expected { ORDER_TRIAL: { …(11) }, …(13) } to deeply equal { ORDER_TRIAL: { …(11) }, …(11) }
+
+- Expected
++ Received
+
+@@ -100,10 +100,27 @@
+      "refuse": {
+        "tension": 5,
+      },
+      "warningTension": 50,
+    },
++   "DIFFICULTY_TRIAL": {
++     "marker": "TRIAL",
++     "profiles": {
++       "easy": {
++         "goodsPriceBps": 10000,
++         "lawPayBps": 10000,
++         "taxBps": 10000,
++         "upkeepBps": 10000,
++       },
++       "normal": {
++         "goodsPriceBps": 10000,
++         "lawPayBps": 10000,
++         "taxBps": 10000,
++         "upkeepBps": 10000,
++       },
++     },
++   },
+    "GARRISON_TRIAL": {
+      "cap": 12,
+      "securityPerStep": 3,
+      "soldiersPerStep": 4,
+    },
+@@ -248,10 +265,14 @@
+      },
+      "workshopClothRecipe": {
+        "clothMilli": 1000,
+        "woodMilli": 1000,
+      },
++   },
++   "PURSE_TRIAL": {
++     "levyMaxPercent": 20,
++     "marker": "TRIAL",
+    },
+    "RETAINERS_HALL_TRIAL": {
+      "maxPerCity": 2,
+    },
+    "RING4_TRIAL": {
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:40:50
+     38| it.each(cases)('$file validates to the unchanged typed views', async e…
+     39|   const api = await validators();
+     40|   expect(api[entry.validator](data(entry.file))).toEqual(entry.view());
+       |                                                  ^
+     41| });
+     42|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 145 passed (146)
+      Tests  1 failed | 3307 passed (3308)
+   Start at  23:11:59
+   Duration  71.84s (transform 10.80s, setup 0ms, import 69.45s, tests 272.87s, environment 67ms)
+
+
+Exit 1
+UTC end 2026-11-25T16:13:11.037259+00:00

@@ -1,0 +1,40 @@
+--- a/packages/core/src/__tests__/catalog-data.test.ts
++++ b/packages/core/src/__tests__/catalog-data.test.ts
+@@ -3,7 +3,7 @@
+ import { expect, expectTypeOf, it } from 'vitest';
+ import {
+   TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS,
+-  OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL,
++  OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, DIFFICULTY_TRIAL, PURSE_TRIAL,
+   GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,
+   RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,
+   NPC_ORIGINS, NPC_HOBBIES, P7A_TRIAL,
+@@ -21,6 +21,7 @@
+   { file: 'tuning.json', validator: 'validateTuning', view: () => ({
+       ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE,
+       IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,
++      DIFFICULTY_TRIAL, PURSE_TRIAL,
+     }),
+     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
+   { file: 'npc-life.json', validator: 'validateNpcLife', view: () => ({ origins: NPC_ORIGINS, hobbies: NPC_HOBBIES, P7A_TRIAL }),
+--- a/packages/core/src/character/validate.ts
++++ b/packages/core/src/character/validate.ts
+@@ -13,7 +13,7 @@
+ OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
+ } from './catalog.js';
+ import tuningJson from '../data/tuning.json' with { type: 'json' };
+-import { validateTuning } from '../data/validate.js';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ import type { CharacterLifeSessionState,CharacterProfile,PlayerCharacter } from './types.js';
+ 
+ const ids = (list: readonly { id: string }[]) => list.map(w => w.id);
+@@ -27,7 +27,8 @@
+   hasWeeklyKeys(v, [...required, ...optional.filter(k => typeof v === 'object' && v !== null && Object.hasOwn(v, k))]);
+ const adult = (c: NamedCharacter) => c.age >= L.ageMin;
+ const inAgeRange = (c: NamedCharacter) => c.age >= L.ageMin && c.age <= L.ageMax;
+-const { levyMaxPercent } = validateTuning(tuningJson).PURSE_TRIAL;
++export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
++const { levyMaxPercent } = PURSE_TRIAL;
+ const balanceRange = [0, Number.MAX_SAFE_INTEGER] as const;
+ const DISCLOSURES = ['known', 'unknown'];
+ 

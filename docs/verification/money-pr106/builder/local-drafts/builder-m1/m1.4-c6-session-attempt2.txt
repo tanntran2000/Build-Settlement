@@ -1,0 +1,143 @@
+UTC start 2026-11-26T07:07:23.524534+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/with-awake.py powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/run-m1.4-c6.ps1 -From 8 -Attempt 2
+
+
+Windows system sleep inhibited for this process while the child runs.
+UTC 2026-11-26T07:07:37.2790687Z
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+Tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Branch feat/money-difficulty
+origin/main ab83228df9ee1c70f97c634324c3202e2def0ea0
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             69
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+claude              36620                5.156
+powershell          39684                3.625
+browser             35312                3.141
+browser             26844                1.828
+browser              8044                1.438
+claude               3504                0.516
+T3 Code (Nightly)   27188                0.438
+codex               31512                0.391
+claude              23660                0.297
+codebase-memory-mcp  9956                0.281
+codebase-memory-mcp 13412                0.281
+codebase-memory-mcp  3124                0.281
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:44 PM
+
+
+
+Sleep/resume System records since 2026-11-26T14:07:24.4241445+07:00
+No matching events
+before-smoke CPU samples 11.52% / 9.47% / 8.79%
+  ok 388 [chromium] \u203a tests\e2e\title.spec.ts:139:49 \u203a options storage junk still renders title (701ms)
+  ok 389 [chromium] \u203a tests\e2e\title.spec.ts:139:49 \u203a options storage throws still renders title (722ms)
+  ok 390 [chromium] \u203a tests\e2e\title.spec.ts:148:1 \u203a Large report at 320px keeps all six letters and stock ledger inside the page (1.5s)
+  ok 391 [chromium] \u203a tests\e2e\title.spec.ts:174:1 \u203a Fullscreen reflects live document changes while Options stays open (607ms)
+  ok 392 [chromium] \u203a tests\e2e\title.spec.ts:184:1 \u203a fallen city clears cached Continue after New Game and creation Cancel (1.8s)
+  ok 393 [chromium] \u203a tests\e2e\title.spec.ts:197:1 \u203a Quit invalidates a pending checkpoint file read (1.0s)
+  ok 394 [chromium] \u203a tests\e2e\title.spec.ts:221:3 \u203a B2 Main menu \u203a Main menu saves and refreshes focused Continue on the title (2.2s)
+  ok 395 [chromium] \u203a tests\e2e\title.spec.ts:229:3 \u203a B2 Main menu \u203a Main menu is locked with its reason throughout Report (979ms)
+  ok 396 [chromium] \u203a tests\e2e\title.spec.ts:238:3 \u203a B2 Main menu \u203a Main menu write failure keeps Planning, the session and the previous save (1.5s)
+  ok 397 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to valid clears only its old error at 1280px (4.8s)
+  ok 398 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to still invalid clears only its old error at 1280px (3.4s)
+  ok 399 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to confirmed value clears only its old error at 1280px (3.4s)
+  ok 400 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to valid clears only its old error at 390px (4.7s)
+  ok 401 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to still invalid clears only its old error at 390px (3.3s)
+  ok 402 [chromium] \u203a tests\e2e\workforce-draft-error.spec.ts:27:5 \u203a editing rejected workforce to confirmed value clears only its old error at 390px (3.2s)
+  ok 403 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:12:1 \u203a an imported roster lists 3 generated NPCs, all unassigned, with stats, traits and post-skill status (3.3s)
+  ok 404 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:24:1 \u203a same pinned seed reproduces names; clicks never reroll them (5.0s)
+  ok 405 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:27:1 \u203a only built manager tiles are offered; a low-stat Hall resident can take the Farm slot (3.0s)
+  ok 406 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:30:1 \u203a pause keeps the post; replacing the building clears it (3.7s)
+  ok 407 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:33:1 \u203a assignment is refused in Report and kept through the week (3.3s)
+  ok 408 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:36:1 \u203a save, continue, export and import preserve posts and resolved names; slots stay separate (4.6s)
+  ok 409 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:41:1 \u203a non-Life world files are refused without changing the game or either older slot (1.5s)
+  ok 410 [chromium] \u203a tests\e2e\world-session.spec.ts:22:1 \u203a U7: fresh seeds differ but summary and rendered metadata reveal no hidden world data (1.9s)
+  ok 411 [chromium] \u203a tests\e2e\world-session.spec.ts:25:1 \u203a U2: End Week while import is pending rejects both halves and preserves all three slots (3.6s)
+  ok 412 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending success and its feedback (7.1s)
+  ok 413 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending invalid JSON and its feedback (7.2s)
+  ok 414 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending read rejection and its feedback (8.3s)
+  ok 415 [chromium] \u203a tests\e2e\world-session.spec.ts:31:1 \u203a U3: failed Continue leaves a pending valid import eligible (1.7s)
+  ok 416 [chromium] \u203a tests\e2e\world-session.spec.ts:34:1 \u203a U4: only newest reversed import publishes city and outside; older failures cannot replace feedback (2.6s)
+  ok 417 [chromium] \u203a tests\e2e\world-session.spec.ts:37:1 \u203a U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (12.4s)
+  ok 418 [chromium] \u203a tests\e2e\world-session.spec.ts:40:1 \u203a U8: Report locks all four checkpoint controls (924ms)
+  ok 419 [chromium] \u203a tests\e2e\world-session.spec.ts:43:1 \u203a U9: local and portable saves restore the whole populated session and uninterrupted next week (25.0s)
+
+  Slow test file: [chromium] \u203a tests\e2e\character-life-navigation-accessibility.spec.ts (14.0m)
+  Slow test file: [chromium] \u203a tests\e2e\character-life-navigation.spec.ts (7.7m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  419 passed (47.5m)
+
+Exit 0
+UTC end 2026-11-26T07:55:40.871670+00:00
+UTC 2026-11-26T07:55:49.1497806Z
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+Tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Branch feat/money-difficulty
+origin/main ab83228df9ee1c70f97c634324c3202e2def0ea0
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             22
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+browser             26844                3.016
+browser              8044                2.703
+powershell          39684                1.516
+T3 Code (Nightly)    5872                0.156
+claude              23660                0.156
+ZaloCall            30020                0.094
+cloudflared         24460                0.094
+msedgewebview2      10152                0.062
+codebase-memory-mcp  9956                0.062
+ms-teams             7176                0.047
+codebase-memory-mcp  3124                0.047
+codebase-memory-mcp 13412                0.031
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:44 PM
+
+
+
+Sleep/resume System records since 2026-11-26T14:07:24.4241445+07:00
+No matching events
+Process execution-state request released.
+
+Exit 0
+UTC end 2026-11-26T07:55:51.110657+00:00

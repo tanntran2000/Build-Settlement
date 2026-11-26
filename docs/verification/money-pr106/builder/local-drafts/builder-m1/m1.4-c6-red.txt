@@ -1,0 +1,61 @@
+UTC start 2026-11-26T06:15:38.568561+00:00
+HEAD fbad4d834689eb798c13bca27dccf5d16c1f6704
+HEAD tree 3f19271c83e8ad89f9281c4a1c550dc5336536da
+Working delta SHA-256 525ce8ff979cb50a18e2f1c951db2422ccda95d01a0f3d76d89e6f7b36ba5cd0
+Command npm.cmd test -- packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+M packages/core/src/trial/__tests__/difficulty.test.ts
+ M packages/persistence/src/__tests__/money-save.test.ts
+ M packages/ui/src/__tests__/items-view.test.ts
+ M packages/ui/src/__tests__/outside-view.test.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/outside-view.test.ts (7 tests | 2 failed) 55ms
+   × includes easy law income when forecasting Warehouse capacity 27ms
+   × includes normal law income when forecasting Warehouse capacity 8ms
+ ❯ packages/ui/src/__tests__/items-view.test.ts (14 tests | 2 failed) 133ms
+   × forecasts easy Hospital recovery using weekly funding 22ms
+   × forecasts normal Hospital recovery using weekly funding 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > forecasts easy Hospital recovery using weekly funding
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > forecasts normal Hospital recovery using weekly funding
+Error: World session is invalid; nothing was changed.
+ ❯ packages/ui/src/__tests__/items-view.test.ts:131:30
+    129|     type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: c…
+    130|   });
+    131|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+    132|   expect(result.report!.items!.regen).toBe(regen);
+    133|   expect(result.next.player.character.health).toBe(50 + regen);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/ui/src/__tests__/outside-view.test.ts > includes easy law income when forecasting Warehouse capacity
+ FAIL  packages/ui/src/__tests__/outside-view.test.ts > includes normal law income when forecasting Warehouse capacity
+Error: World session is invalid; nothing was changed.
+ ❯ packages/ui/src/__tests__/outside-view.test.ts:31:30
+     29|     type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: c…
+     30|   });
+     31|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     32|   expect(result.report!.laws!.incomeMilli).toBe(lawIncome);
+     33|   expect(result.report!.after.wood).toBe(75000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  2 failed | 2 passed (4)
+      Tests  4 failed | 28 passed (32)
+   Start at  13:15:42
+   Duration  2.75s (transform 3.33s, setup 0ms, import 4.70s, tests 334ms, environment 1ms)
+
+
+Exit 1
+UTC end 2026-11-26T06:15:45.268433+00:00

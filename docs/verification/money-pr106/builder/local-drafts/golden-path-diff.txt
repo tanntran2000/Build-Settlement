@@ -1,0 +1,19 @@
+Base HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+Base tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+Decoded shape-only comparison
+Golden before abf942d07057a6630182cd3c8fea972be10c9c2a9aa8868dcc15dc580d23b13f
+Golden after  c4ebaed170b63f00a3ae708c55340c2a15cc1a56fa8911fbe3decf1fa6e7348f
+Golden seed 0: cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+Golden seed 42: cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+Golden seed 20261028: cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-5-weeks.json: 17451 to 17554 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-crime-death.json: 17416 to 17519 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-crime-raid.json: 17474 to 17577 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-crime-robbery.json: 17414 to 17517 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-crime-wound.json: 17415 to 17518 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-demand-card.json: 17489 to 17592 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-laws.json: 17630 to 17733 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-new-game.json: 17422 to 17525 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+life-rebellion-last-week.json: 17432 to 17535 bytes; cityRulesetId, state.city.society.difficulty, state.city.society.rulesetId, state.player.purse
+new-game.json: 10596 to 10618 bytes; rulesetId, state.society.difficulty, state.society.rulesetId
+Exit 0

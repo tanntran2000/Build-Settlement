@@ -1,0 +1,28 @@
+UTC: 2026-11-26T09:16:55Z
+HEAD: 21956b639f0f4a302968008f01bbea0654ed5438
+CPU avg %: 44
+Top CPU processes:
+
+Name                   Id         CPU
+----                   --         ---
+browser             26844  7729.40625
+browser              8044    6825.375
+T3 Code (Nightly)    5872 1054.546875
+codebase-memory-mcp  9956  729.328125
+msedgewebview2      10720  562.890625
+ChatGPT             15920  538.890625
+T3 Code (Nightly)   27188         465
+claude              21564    417.1875
+
+
+
+Ports 4173/4174 listeners:
+0
+09:17:15 CPU % 60
+09:17:22 CPU % 20
+09:17:29 CPU % 14
+09:17:36 CPU % 34
+09:17:43 CPU % 77
+Note: background load is the desktop 'browser' processes (ids 26844, 8044, ~0.4 core each) and the T3 app; no test, dev server or build process was running.
+
+Tester note, 2026-11-26 10:25Z: during gate 5 the case "a source root symlink cannot escape and an internal symlink can be scanned" took 3,535,679 ms (Builder C7 run at the same head: 94 ms). At the same time a Tester-started `du`/`find` walk over C:/Users/Admin/.t3/local-drafts/money-prM1 was running; it was stopped at about 10:24Z. Gate 5 still passed 154/154, exit 0. No architecture tool source changed in M1.

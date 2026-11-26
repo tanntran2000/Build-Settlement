@@ -1,0 +1,15 @@
+UTC 2026-11-26T03:25:34.769311+00:00
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+Plan SHA-256 2a955c7fbb6166cf3ad607afc2057d81195edcf6a376c2ffbaa0cf5cc2d06835
+Owner (Tân) "Duyệt cả 2 (Recommended)"
+
+Proposal SHA-256 9813724a17ab44d70db385622403baee1523d35a8604f20dee90853e211887fe  m1.4-food-stock-pin-proposal.json
+tests/e2e/character-life-navigation.spec.ts
+Before SHA-256 aa47cc8fcc8038294a2faa5171f4b58c625f53d404bb30622abe223eb724e758
+After SHA-256  2d3a01807902880efe9d3080dce1335ca0fe88f42a5ae8f72786731713e78083
+
+Proposal SHA-256 b013f303bc632592f13ffd8d2cfd87032494ff5ab4a17383b5e804e8ec2edad0  m1.4-stock-ledger-fixture-proposal.json
+tests/e2e/tile-feedback-precision.spec.ts
+Before SHA-256 4a1e722a8ddacf2987faeee74eee291474a94d0af18b2cdec4a1f1c6f04c9101
+After SHA-256  9c17d9e6636e1488e15bf790620c4f31b9a9a3fcce321a1babf6d01dbbed3dd1
+

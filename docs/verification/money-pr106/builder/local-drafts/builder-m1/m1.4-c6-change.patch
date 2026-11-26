@@ -1,0 +1,250 @@
+diff --git a/packages/core/src/trial/__tests__/difficulty.test.ts b/packages/core/src/trial/__tests__/difficulty.test.ts
+index 126261c..4756cd4 100644
+--- a/packages/core/src/trial/__tests__/difficulty.test.ts
++++ b/packages/core/src/trial/__tests__/difficulty.test.ts
+@@ -13,9 +13,14 @@ it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps'] as
+   'rejects non-identity Normal %s at its catalog path', field => {
+     const data = structuredClone(tuningJson);
+     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
+-    expect(() => validateTuning(data)).toThrow(
+-      'tuning.json#DIFFICULTY_TRIAL.profiles.normal.' + field + ': must be 10000',
+-    );
++    let message: string | undefined;
++    try {
++      validateTuning(data);
++    } catch (error) {
++      if (!(error instanceof Error)) throw error;
++      message = error.message;
++    }
++    expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.normal.' + field + ': must be 10000');
+   },
+ );
+ 
+diff --git a/packages/persistence/src/__tests__/money-save.test.ts b/packages/persistence/src/__tests__/money-save.test.ts
+index 771c8ac..bc565eb 100644
+--- a/packages/persistence/src/__tests__/money-save.test.ts
++++ b/packages/persistence/src/__tests__/money-save.test.ts
+@@ -32,10 +32,17 @@ it('refuses v13 JSON and detached store rows without rewriting either', () => {
+     if (row.table === 'city') (row.value as typeof staged.city).society.rulesetId = 'tile-society-13';
+   }
+   const before = structuredClone(rows);
+-  expect(deserializeCharacterLifeSave(bytes)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
++  const refusal = {
++    success: false,
++    error: {
++      code: 'INCOMPATIBLE_SAVE',
++      message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.',
++    },
++  };
++  expect(deserializeCharacterLifeSave(bytes)).toStrictEqual(refusal);
+   const decoded = recordsToSession(rows);
+   expect(decoded).toStrictEqual(historical);
+-  expect(serializeCharacterLifeSave(decoded)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
++  expect(serializeCharacterLifeSave(decoded)).toStrictEqual(refusal);
+   expect(rows).toStrictEqual(before);
+   expect(readFileSync(fixture, 'utf8')).toBe(bytes);
+ });
+diff --git a/packages/ui/src/CharacterLifeShell.svelte b/packages/ui/src/CharacterLifeShell.svelte
+index 9f01523..9202f27 100644
+--- a/packages/ui/src/CharacterLifeShell.svelte
++++ b/packages/ui/src/CharacterLifeShell.svelte
+@@ -1,7 +1,7 @@
+ <script lang="ts">
+   import './ledger-theme.css';
+   import { tick, type Snippet } from 'svelte';
+-  import { type TileTrialState, type TileTrialReport } from '@haven/core';
++  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport } from '@haven/core';
+   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
+   import CrisisCard from './CrisisCard.svelte';
+   import SocietyPopulation from './SocietyPopulation.svelte';
+@@ -11,6 +11,7 @@
+   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
+ 
+   export let state: TileTrialState;
++  export let storageSession: CharacterLifeSessionState;
+   export let recoveryLine: string;
+   export let report: Readonly<TileTrialReport> | null;
+   export let destination: LifeDestination;
+@@ -137,7 +138,7 @@
+       <div class="information-columns">
+       <div><h3>Resources</h3><dl class="stocks">
+         <div><dt>Gold</dt><dd data-testid="trial-stock-gold">{formatMilli(settlement.inventory.gold)}</dd></div>
+-        {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
++        {#each storageView(state, storageSession) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
+       </dl></div>
+       <div class="city-status"><h3>City status</h3>
+       <p data-testid="trial-laws">{lawsRow(state)}</p>
+diff --git a/packages/ui/src/TileManagement.svelte b/packages/ui/src/TileManagement.svelte
+index a5ae82b..814dafc 100644
+--- a/packages/ui/src/TileManagement.svelte
++++ b/packages/ui/src/TileManagement.svelte
+@@ -230,7 +230,7 @@
+ {#if state.society?.crisis.stage === 'fallen'}
+   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
+ {:else if lifeMode && outside && npcs && player && profiles}
+-  <CharacterLifeShell bind:this={lifeShell} {state} {report} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
++  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
+     {#snippet playerInfo()}
+       <p>{player!.character.name}</p><p>Leader of Haven</p>
+     {/snippet}
+diff --git a/packages/ui/src/__tests__/items-view.test.ts b/packages/ui/src/__tests__/items-view.test.ts
+index 4db7774..dfeb0d2 100644
+--- a/packages/ui/src/__tests__/items-view.test.ts
++++ b/packages/ui/src/__tests__/items-view.test.ts
+@@ -1,6 +1,7 @@
+ import { describe, expect, it } from 'vitest';
+ import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
+ import { ITEM_CATALOG, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type ItemWeekReport, type TileTrialReport } from '@haven/core';
++import { executeCharacterLifeCommand } from '@haven/simulation';
+ import { reportLetters } from '../report-letters.js';
+ 
+ async function view() {
+@@ -105,3 +106,34 @@ describe('C2 shops, recovery and item letters',()=>{
+     for(const letter of letters)expect(letter.rows.length).toBeLessThanOrEqual(4);
+   });
+ });
++
++it.each([['easy', 2], ['normal', 1]] as const)('forecasts %s Hospital recovery using weekly funding', async (difficulty, regen) => {
++  const v = await view();
++  const made = createCharacterLifeSession(2026, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Ana' }, difficulty);
++  if (!made.success) throw Error(made.error.message);
++  const session = made.value, { city } = session;
++  const tile = (id: string) => city.tiles.find(t => t.id === id)!;
++  session.player.character.health = 50;
++  city.society!.classes.free -= 10;
++  city.society!.classes.luminaries.common += 10;
++  city.world.settlements[city.world.activeSettlementId!].inventory.gold = 900;
++  city.society!.stocksMilli.herbs = 10000;
++  tile('field-1').building!.workers = 1;
++  tile('plain-1').building!.workers = 1;
++  tile('spec-1').building!.enabled = false;
++  for (const [id, typeId] of [['forest-1', 'logging'], ['ore-1', 'mine'], ['forest-2', 'logging']] as const) {
++    tile(id).building = { typeId, level: 1, workers: 0, enabled: true };
++  }
++  tile('service-1').building = { typeId: 'hospital', level: 1, workers: 2, enabled: true };
++
++  const before = structuredClone(session);
++  const result = executeCharacterLifeCommand(session, {
++    type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: city.world.week,
++  });
++  if (!result.success) throw Error(result.error.message);
++  expect(result.report!.items!.regen).toBe(regen);
++  expect(result.next.player.character.health).toBe(50 + regen);
++  expect(v.potionShop(city, 'service-1')).toBe(false);
++  expect(v.healthLine(session)).toBe('Health 50 / 100 · Regen +' + regen + '/week');
++  expect(session).toStrictEqual(before);
++});
+diff --git a/packages/ui/src/__tests__/outside-view.test.ts b/packages/ui/src/__tests__/outside-view.test.ts
+index c6f3536..eda0b7a 100644
+--- a/packages/ui/src/__tests__/outside-view.test.ts
++++ b/packages/ui/src/__tests__/outside-view.test.ts
+@@ -1,8 +1,36 @@
+ import {expect,it} from 'vitest';
+-import {createSocietyState,type TileTrialReport} from '@haven/core';
++import {createCharacterLifeSession,createSocietyState,DEFAULT_PLAYER_DRAFT,type TileTrialReport} from '@haven/core';
++import {executeCharacterLifeCommand} from '@haven/simulation';
+ import {outsideRings,storageView,outsideReportLines} from '../society-view.js';
+ it('groups outside plots, clearing and deposits in units',()=>{const rings=outsideRings(createSocietyState());expect(rings.map(r=>[r.locked,r.plots.length])).toEqual([[false,10],[true,10],[true,10]]);expect(rings[1].plots.find(p=>p.tileId==='pasture-1')!.clear).toEqual({progress:0,work:4});expect(rings[0].plots.find(p=>p.tileId==='forest-1')!.deposit).toEqual({good:'Wood',remaining:60,cap:60});});
+ it('shows ordered storage and starting Wood capacity',()=>{const rows=storageView(createSocietyState());expect(rows.map(r=>r.good)).toEqual(['Food','Wheat','Wood','Iron','Stone','Wool','Cloth','Herbs','Goods','Luxury']);expect(rows.find(r=>r.good==='Wood')).toEqual({good:'Wood',amount:8,capacity:40});});
+ it('uses exact outside report copy including both exhausted buildings',()=>{const report={outside:{spoiledMilli:{wheat:1250},exhausted:['ore-1','rock-1'],cleared:['pasture-1'],researchCompleted:['deep-mining'],hospitalsIdle:['service-1']}} as unknown as TileTrialReport;expect(outsideReportLines(report)).toEqual(['1.25 Wheat spoiled: storage full.','ore-1: deposit exhausted; the Iron Mine closed and the plot is now plain.','rock-1: deposit exhausted; the Quarry closed and the plot is now plain.','pasture-1 cleared.','Research completed: Deep Mining.','service-1: Hospital idle, no Herbs.']);});
+ it('shows only eligible Deep Shafts and counts clearing workers',()=>{const city=createSocietyState();city.society!.research.completed=['deep-mining'];city.tiles.find(t=>t.id==='ore-1')!.building={typeId:'mine',level:1,workers:0,enabled:true};expect(outsideRings(city)[0].plots.find(p=>p.tileId==='ore-1')!.deepShaftAllowed).toBe(true);city.society!.outside['ore-1'].deepShaft=true;expect(outsideRings(city)[0].plots.find(p=>p.tileId==='ore-1')!.deepShaftAllowed).toBe(false);});
+ it('adds capacity only for funded fully staffed enabled Warehouses',()=>{const city=createSocietyState(),tile=city.tiles.find(t=>t.id==='spec-1')!;city.tiles.find(t=>t.id==='plain-1')!.building!.workers=0;tile.building={typeId:'warehouse',level:2,workers:2,enabled:true};expect(storageView(city)[0].capacity).toBe(120);tile.building.enabled=false;expect(storageView(city)[0].capacity).toBe(40);tile.building.enabled=true;tile.building.workers=1;expect(storageView(city)[0].capacity).toBe(40);tile.building.workers=2;city.world.settlements[city.world.activeSettlementId!].inventory.gold=0;city.world.settlements[city.world.activeSettlementId!].cohorts[0].count=0;expect(storageView(city)[0].capacity).toBe(40);});
++
++it.each([['easy', 1725], ['normal', 1500]] as const)('includes %s law income when forecasting Warehouse capacity', (difficulty, lawIncome) => {
++  const made = createCharacterLifeSession(2026, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Ana' }, difficulty);
++  if (!made.success) throw Error(made.error.message);
++  const session = made.value, { city } = session;
++  const tile = (id: string) => city.tiles.find(t => t.id === id)!;
++  const stocks = city.world.settlements[city.world.activeSettlementId!].inventory;
++  stocks.gold = 480;
++  stocks.wood = 75000;
++  city.society!.order.authority = 50;
++  city.society!.laws.active = ['licensed-vice'];
++  for (const id of ['field-1', 'plain-1', 'spec-1']) Object.assign(tile(id).building!, { enabled: false, workers: 0 });
++  for (const [id, typeId] of [['forest-1', 'logging'], ['ore-1', 'mine'], ['forest-2', 'logging'], ['ore-2', 'mine']] as const) {
++    tile(id).building = { typeId, level: 1, workers: 0, enabled: true };
++  }
++  tile('spec-2').building = { typeId: 'warehouse', level: 1, workers: 1, enabled: true };
++
++  const before = structuredClone(session);
++  const result = executeCharacterLifeCommand(session, {
++    type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: city.world.week,
++  });
++  if (!result.success) throw Error(result.error.message);
++  expect(result.report!.laws!.incomeMilli).toBe(lawIncome);
++  expect(result.report!.after.wood).toBe(75000);
++  expect(storageView(city, session).find(row => row.good === 'Wood')).toStrictEqual({ good: 'Wood', amount: 75, capacity: 80 });
++  expect(session).toStrictEqual(before);
++});
+diff --git a/packages/ui/src/items-view.ts b/packages/ui/src/items-view.ts
+index d5b1e09..afaa1d2 100644
+--- a/packages/ui/src/items-view.ts
++++ b/packages/ui/src/items-view.ts
+@@ -1,6 +1,7 @@
+ import { ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, buildingWorkerCap, TRIAL_BUILDINGS, OUTSIDE_TRIAL, type ItemDefinition, type ItemsState, type Slot, type CharacterLifeSessionState, type Skill, type TileTrialState, type ItemWeekReport } from '@haven/core';
+ import { CRAFT_TRIAL, RECIPES, type WorldNpc } from '@haven/core';
+ import { resolveWorkshopOperation } from '@haven/simulation';
++import { forecastWorkshopOperation } from './society-view.js';
+ 
+ export const itemTitle = (s: string) => s.replace(/(^|[-_ ])\w/g, part => part.replace(/[-_]/g,' ').toUpperCase());
+ const everyday: Slot[] = ['earrings','necklace','top','bottom','shoes','ring','weapon','hand'];
+@@ -48,7 +49,9 @@ export function potionShop(state:TileTrialState,tileId:string):boolean {
+   return b.typeId==='hospital'&&b.workers===buildingWorkerCap(b.typeId,b.level)&&gold>=TRIAL_BUILDINGS.hospital.upkeepMilli*b.level&&state.society!.stocksMilli.herbs>=OUTSIDE_TRIAL.hospitalHerbsPerLevelMilli*b.level;
+ }
+ export function healthLine(session:CharacterLifeSessionState):string {
+-  const hospital=session.city.tiles.some(t=>t.building?.typeId==='hospital'&&potionShop(session.city,t.id));
++  const hospitals = session.city.tiles.filter(t => t.building?.enabled && t.building.typeId === 'hospital');
++  const operation = hospitals.length ? forecastWorkshopOperation(session.city, session) : undefined;
++  const hospital = hospitals.some(t => operation?.byTile[t.id]?.operating);
+   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
+ }
+ export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;
+diff --git a/packages/ui/src/society-view.ts b/packages/ui/src/society-view.ts
+index a456725..c34f62b 100644
+--- a/packages/ui/src/society-view.ts
++++ b/packages/ui/src/society-view.ts
+@@ -82,8 +82,9 @@ export function workforceSummary(city:TileTrialState):string {
+  const pools=staffPools(city);
+  return Object.entries(pools).map(([id,p])=>`${id[0].toUpperCase()+id.slice(1)} ${p.assigned}/${p.available}`).join(' · ')+' WF assigned';
+ }
+-import { OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type TileTrialReport, TILE_TRIAL_BALANCE } from '@haven/core';
+-import { FARM_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI } from '@haven/simulation';
++import { buildItemWeekContext, OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
++import { resolveWorkshopOperation } from '@haven/simulation';
++import { payNpcWages } from '../../simulation/src/household-week.js';
+ import { formatMilli } from './milli-format.js';
+ export function outsideRings(city:TileTrialState) {
+  return ([1,2,3] as const).map(ring=>({ring,locked:ring>city.society!.wallRing,plots:OUTSIDE_PLOTS.filter(p=>p.ring===ring).map(p=>{
+@@ -94,15 +95,24 @@ export function outsideRings(city:TileTrialState) {
+  deepShaftAllowed:ring<=city.society!.wallRing&&!o.wild&&!o.deepShaft&&o.depositMilli!>0&&!!b&&['mine','quarry'].includes(b.typeId)&&city.society!.research.completed.includes('deep-mining')};
+  })}));
+ }
+-export function storageView(city:TileTrialState) {
++export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
++  try {
++    if (!session) return resolveWorkshopOperation(city);
++    const opening = payNpcWages(session).session;
++    return resolveWorkshopOperation(opening.city, buildItemWeekContext(opening));
++  } catch {
++    // A valid checkpoint can still exceed safe arithmetic when the week is simulated.
++    return undefined;
++  }
++}
++export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
+  const society=city.society!,settlement=city.world.settlements[city.world.activeSettlementId!],stocks=settlement.inventory;
+- const profile=difficultyProfile(society.difficulty);
+- let gold=stocks.gold+applyDifficulty(settlement.cohorts.reduce((n,c)=>n+c.count,0)*TILE_TRIAL_BALANCE.taxGoldPerResident,profile.taxBps);
+- let capacity:number=O.storage.baseMilli;
+- for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];
+- const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Math.floor(gold/FARM_GOLD_PER_BATCH_MILLI)):0;
+- const debit=Math.max(applyDifficulty(d.upkeepMilli*b.level,profile.upkeepBps),batches*FARM_GOLD_PER_BATCH_MILLI);if(gold<debit)continue;gold-=debit;
+- if(b.typeId==='warehouse'&&b.workers===buildingWorkerCap(b.typeId,b.level))capacity+=O.storage.warehousePerLevelMilli*b.level;
++ const warehouses = city.tiles.filter(({ building }) =>
++   building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
++ const funded = warehouses.length ? forecastWorkshopOperation(city, session)?.operatingIds : undefined;
++ let capacity: number = O.storage.baseMilli;
++ for (const tile of warehouses) {
++   if (funded?.has(tile.id)) capacity += O.storage.warehousePerLevelMilli * tile.building!.level;
+  }
+  const amounts={Food:stocks.food,Wheat:stocks.wheat,Wood:stocks.wood,Iron:stocks.iron,Stone:society.stocksMilli.stone,Wool:society.stocksMilli.wool,Cloth:society.stocksMilli.cloth,Herbs:society.stocksMilli.herbs,Goods:city.goodsStock!.amountMilli,Luxury:society.luxuryStockMilli};
+  return Object.entries(amounts).map(([good,amount])=>({good,amount:amount/1000,capacity:capacity/1000}));

@@ -1,0 +1,6 @@
+﻿m1.2-candidate 5
+8274e2eb7e25ebe446188b962b05dfd629eeccedb56693719bdd01f580a19da0 packages/simulation/src/law-week.ts
+ef05690c84dd096dccc7ea6cf6e217251a9ac925f6daea862ced7226a272ebad packages/simulation/src/tile-trial-week.ts
+fc903ffc3c01ec677cc2df30a9eeb5b40e0a03200ce6267524c82f3b49163b25 packages/simulation/src/workshop-operation.ts
+1791ae0e32ffee720a550b9e6ea5ddeb798293e1c47fbf13f4b08736d5c2199f scripts/p7b-road-balance.ts
+9689bc0b9678d6de0bcf6650ca1ffb27e5605a75479022464fa9ed7d8fe17637 scripts/money-calibration.ts

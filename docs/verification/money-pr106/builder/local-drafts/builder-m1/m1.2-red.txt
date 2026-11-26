@@ -1,0 +1,43 @@
+UTC start 2026-11-25T16:19:55.007489+00:00
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+HEAD tree 83a17c4de3eaad26b867155d512a2f898683b91b
+Working delta SHA-256 780881c6d87d1683fe4b579e1905ffc79f5c69e46a974eb05879d1768debec5f
+Command node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/difficulty-week.test.ts
+?? packages/simulation/src/__tests__/difficulty-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/difficulty-week.test.ts (3 tests | 1 failed) 35ms
+   × Easy scales each credit and scheduled upkeep while preserving Farm batch cost 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/difficulty-week.test.ts > Easy scales each credit and scheduled upkeep while preserving Farm batch cost
+AssertionError: expected 3000 to be 4500 // Object.is equality
+
+- Expected
++ Received
+
+- 4500
++ 3000
+
+ ❯ packages/simulation/src/__tests__/difficulty-week.test.ts:49:25
+     47| it('Easy scales each credit and scheduled upkeep while preserving Farm…
+     48|   const normal = week('normal').report, easy = week('easy').report;
+     49|   expect(easy.taxMilli).toBe(Math.floor(normal.taxMilli * 15000 / 1000…
+       |                         ^
+     50|   expect(easy.goods.revenueMilli).toBe(Math.floor(normal.goods.revenue…
+     51|   expect(easy.laws!.incomeMilli).toBe(Math.floor(normal.laws!.incomeMi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  23:19:55
+   Duration  1.14s (transform 610ms, setup 0ms, import 800ms, tests 35ms, environment 0ms)
+
+
+Exit 1
+UTC end 2026-11-25T16:19:56.882638+00:00

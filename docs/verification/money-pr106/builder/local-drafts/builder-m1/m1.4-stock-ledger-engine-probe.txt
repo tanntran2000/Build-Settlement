@@ -1,0 +1,6 @@
+Command node --import ./scripts/p7b-road-balance.ts --input-type=module
+
+{"proposal":false,"success":false,"error":{"code":"EXECUTION_ERROR","message":"The action failed validation or safe arithmetic; the original state was preserved."}}
+{"proposal":true,"success":true,"beforeGoldMilli":9007199254710991,"netGoldMilli":-12150,"afterGoldMilli":9007199254698841,"taxMilli":24000,"operatingUpkeepMilli":32000,"farmBatchGoldMilli":5000,"homeUpkeepPaidMilli":3000,"unpaidUpkeepMilli":0}
+
+Exit 0

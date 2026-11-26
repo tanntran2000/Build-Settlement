@@ -1,0 +1,12 @@
+UTC 2026-11-26T03:03:23.571525+00:00
+Branch feat/money-difficulty
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+Tree 29f27649e984eda84b76909b2f53ae6a3ab9e120
+Base ab83228df9ee1c70f97c634324c3202e2def0ea0
+e9afed5d8f37c36611706fb3cc8dd763707ca119 feat(ui): difficulty choice on new game
+06e6b1da57a41cea4918b66b14c76056e36f615d feat(simulation): difficulty multipliers and retuned gold
+63d2b2627b57d172be8459c64989e42ff650f692 feat(core): difficulty profiles, player purse and ruleset 14
+Git status and index empty.
+Both proposed test files match their before bytes. git diff --check origin/main...HEAD exited 0.
+9813724a17ab44d70db385622403baee1523d35a8604f20dee90853e211887fe  m1.4-food-stock-pin-proposal.json
+b013f303bc632592f13ffd8d2cfd87032494ff5ab4a17383b5e804e8ec2edad0  m1.4-stock-ledger-fixture-proposal.json

@@ -1,0 +1,23 @@
+--- a/packages/simulation/src/law-week.ts
++++ b/packages/simulation/src/law-week.ts
+@@ -2,16 +2,18 @@
+ import { cityHappiness, societyCounts } from './society-week.js';
+ import { trialSafe } from './tile-trial-week.js';
+ 
+-export function resolveLawGold(s:TileTrialState,stocks:{gold:number}):Omit<LawWeekReport,'inForce'|'promise'|'incomeMilli'> & {applied:LawId[]} {
++export function resolveLawGold(s:TileTrialState,stocks:{gold:number}):Omit<LawWeekReport,'inForce'|'promise'> & {applied:LawId[]} {
+  const applied:LawId[]=[],unfunded:LawId[]=[],costs:LawWeekReport['costs']=[];
++ let incomeMilli=0;
+  for(const lawId of s.society!.laws.active){
+   const effect=LAW_CATALOG[lawId].effect;
++  incomeMilli=trialSafe(incomeMilli+(effect.incomeMilli??0));
+   const cost=effect.costMilli??0;
+   if(stocks.gold<cost){unfunded.push(lawId);continue;}
+   stocks.gold=trialSafe(stocks.gold-cost);applied.push(lawId);
+   if(cost>0)costs.push({lawId,goldMilli:cost});
+  }
+- return {applied,unfunded,costs};
++ return {applied,unfunded,costs,incomeMilli};
+ }
+ export function resolveLawPromiseWeek(s:TileTrialState):LawWeekReport['promise'] {
+  const society=s.society!,promise=society.laws.promise;

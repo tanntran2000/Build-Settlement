@@ -1,0 +1,83 @@
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+Scratch C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\tree
+UTC start 2026-11-26T01:32:42.189967+00:00
+Command node node_modules/vitest/vitest.mjs run packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts (8 tests | 3 failed) 30ms
+   × keeps each Normal multiplier at 10000 bps 15ms
+   × rejects non-identity Normal levyMoneyBps at its catalog path 5ms
+   × stores the Easy levy conversion for the later levy implementation 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/difficulty.test.ts > keeps each Normal multiplier at 10000 bps
+AssertionError: expected { taxBps: 10000, …(3) } to strictly equal { taxBps: 10000, …(4) }
+
+- Expected
++ Received
+
+  {
+    "goodsPriceBps": 10000,
+    "lawPayBps": 10000,
+-   "levyMoneyBps": 10000,
+    "taxBps": 10000,
+    "upkeepBps": 10000,
+  }
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts:7:39
+      5|
+      6| it('keeps each Normal multiplier at 10000 bps', () => {
+      7|   expect(difficultyProfile('normal')).toStrictEqual({
+       |                                       ^
+      8|     taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: …
+      9|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/core/src/trial/__tests__/difficulty.test.ts > rejects non-identity Normal levyMoneyBps at its catalog path
+AssertionError: expected [Function] to throw error including 'tuning.json#DIFFICULTY_TRIAL.profiles…' but got 'tuning.json#DIFFICULTY_TRIAL.profiles…'
+
+Expected: "tuning.json#DIFFICULTY_TRIAL.profiles.normal.levyMoneyBps: must be 10000"
+Received: "tuning.json#DIFFICULTY_TRIAL.profiles.normal.levyMoneyBps: unexpected field"
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts:16:40
+     14|     const data = structuredClone(tuningJson);
+     15|     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
+     16|     expect(() => validateTuning(data)).toThrow(
+       |                                        ^
+     17|       'tuning.json#DIFFICULTY_TRIAL.profiles.normal.' + field + ': mus…
+     18|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/core/src/trial/__tests__/difficulty.test.ts > stores the Easy levy conversion for the later levy implementation
+AssertionError: expected undefined to be 20000 // Object.is equality
+
+- Expected:
+20000
+
++ Received:
+undefined
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts:23:50
+     21|
+     22| it('stores the Easy levy conversion for the later levy implementation'…
+     23|   expect(difficultyProfile('easy').levyMoneyBps).toBe(20000);
+       |                                                  ^
+     24| });
+     25|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 5 passed (8)
+   Start at  08:32:43
+   Duration  1.04s (transform 218ms, setup 0ms, import 300ms, tests 30ms, environment 0ms)
+
+
+Exit 1
+UTC end 2026-11-26T01:32:44.855758+00:00

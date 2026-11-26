@@ -1,0 +1,24 @@
+UTC start 2026-11-25T16:20:13.825476+00:00
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+HEAD tree 83a17c4de3eaad26b867155d512a2f898683b91b
+Working delta SHA-256 92afe10a47af1fe0d3c5cece108aec11c1d3e20e46955ddaef5cf406d9b3df15
+Command node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/difficulty-week.test.ts
+M packages/simulation/src/law-week.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/workshop-operation.ts
+ M scripts/p7b-road-balance.ts
+?? packages/simulation/src/__tests__/difficulty-week.test.ts
+?? scripts/money-calibration.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  23:20:14
+   Duration  1.13s (transform 626ms, setup 0ms, import 820ms, tests 29ms, environment 0ms)
+
+
+Exit 0
+UTC end 2026-11-25T16:20:15.695712+00:00

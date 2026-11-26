@@ -1,0 +1,32 @@
+UTC start 2026-11-26T03:25:37.076532+00:00
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+HEAD tree 29f27649e984eda84b76909b2f53ae6a3ab9e120
+Working delta SHA-256 7d420a2b1e89fd786b2e58fa5b2cad94929b2b97c364787f59ceca25199b5894
+Command python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/with-awake.py npm.cmd run build --workspace=@haven/ui
+M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/tile-feedback-precision.spec.ts
+
+Windows system sleep inhibited for this process while the child runs.
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 273 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CC6rjaS5.css                   38.55 kB │ gzip:   7.76 kB
+dist/assets/index-BP5SCKnC.js                   525.62 kB │ gzip: 167.15 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.56s
+Process execution-state request released.
+
+Exit 0
+UTC end 2026-11-26T03:25:53.291553+00:00

@@ -1,0 +1,30 @@
+UTC start 2026-11-26T06:16:45.569735+00:00
+HEAD fbad4d834689eb798c13bca27dccf5d16c1f6704
+HEAD tree 3f19271c83e8ad89f9281c4a1c550dc5336536da
+Working delta SHA-256 530c5bd2ce7f2a3afbbf3a4f35d1481f2b32a15fa3768e807d51f85c9d4a92c1
+Command npm.cmd test -- packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+M packages/core/src/trial/__tests__/difficulty.test.ts
+ M packages/persistence/src/__tests__/money-save.test.ts
+ M packages/ui/src/CharacterLifeShell.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/__tests__/items-view.test.ts
+ M packages/ui/src/__tests__/outside-view.test.ts
+ M packages/ui/src/items-view.ts
+ M packages/ui/src/society-view.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/outside-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/persistence/src/__tests__/money-save.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  32 passed (32)
+   Start at  13:16:47
+   Duration  2.40s (transform 3.22s, setup 0ms, import 4.83s, tests 395ms, environment 2ms)
+
+
+Exit 0
+UTC end 2026-11-26T06:16:50.058830+00:00

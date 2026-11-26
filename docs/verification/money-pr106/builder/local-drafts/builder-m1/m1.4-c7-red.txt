@@ -1,0 +1,53 @@
+UTC start 2026-11-26T08:13:15.008932+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command npm.cmd test -- packages/ui/src/__tests__/outside-view.test.ts
+M packages/ui/src/__tests__/outside-view.test.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/outside-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/outside-view.test.ts (9 tests | 2 failed) 101ms
+   × drops normal Warehouse capacity when End Week releases its worker 22ms
+   × drops easy Warehouse capacity when End Week releases its worker 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/outside-view.test.ts > drops normal Warehouse capacity when End Week releases its worker
+ FAIL  packages/ui/src/__tests__/outside-view.test.ts > drops easy Warehouse capacity when End Week releases its worker
+AssertionError: expected { good: 'Wood', amount: 75, …(1) } to strictly equal { good: 'Wood', amount: 75, …(1) }
+
+- Expected
++ Received
+
+  {
+    "amount": 75,
+-   "capacity": 40,
++   "capacity": 80,
+    "good": "Wood",
+  }
+
+ ❯ packages/ui/src/__tests__/outside-view.test.ts:66:19
+     64|   const preview = storageView(city, session).find(row => row.good === …
+     65|   expect(JSON.stringify(session)).toBe(before);
+     66|   expect(preview).toStrictEqual({ good: 'Wood', amount: 75, capacity: …
+       |                   ^
+     67| });
+     68|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  15:13:17
+   Duration  1.75s (transform 840ms, setup 0ms, import 1.07s, tests 101ms, environment 0ms)
+
+
+Exit 1
+UTC end 2026-11-26T08:13:19.061670+00:00

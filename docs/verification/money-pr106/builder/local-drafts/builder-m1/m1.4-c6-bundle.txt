@@ -1,0 +1,11 @@
+UTC start 2026-11-26T07:07:22.941947+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command node C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/measure-bundle.mjs packages/ui/dist C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c6-gzip
+
+
+{"gzipLevel":"zlib default","assets":[{"file":"assets/index-CC6rjaS5.css","bytes":38547,"sha256":"db75f1f06acd4306a38955861b233f781be9e9f7043d96f70a6256f56158fa3b","gzipBytes":7764,"gzipSha256":"091d0102e0bbde5d1c3395b0ed19fec1e9c86fbae7d09e87a7ee8d50480372af"},{"file":"assets/index-DoJ6rcES.js","bytes":525834,"sha256":"282f467c02ae7f015ebb1c59bad0d73158b2ded18bbf4c71880b93c947958132","gzipBytes":167199,"gzipSha256":"46fa9de290675b251ab5e6134e9970814333abeed88cbcc9d3c161622ab98ffe"}],"indexSha256":"dd03dfc6a0b5341e0be2204e09efab6a20a3225ee1be276640b28a88895d62c5","jsGzipBytes":167199,"cssGzipBytes":7764,"totalGzipBytes":174963}
+
+Exit 0
+UTC end 2026-11-26T07:07:23.285188+00:00

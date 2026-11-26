@@ -1,0 +1,3 @@
+﻿HEAD=fbad4d834689eb798c13bca27dccf5d16c1f6704
+VITEST_MAX_WORKERS=3
+Stages 1-7 CI unset. Stage 8 CI=1.

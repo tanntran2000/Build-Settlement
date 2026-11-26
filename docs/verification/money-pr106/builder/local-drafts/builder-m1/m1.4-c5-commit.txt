@@ -1,0 +1,7 @@
+[feat/money-difficulty fbad4d8] test(e2e): retuned stock pins in two browser fixtures
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+HEAD fbad4d834689eb798c13bca27dccf5d16c1f6704
+Tree 3f19271c83e8ad89f9281c4a1c550dc5336536da
+Parent e9afed5d8f37c36611706fb3cc8dd763707ca119
+Focused pass count 92
+Focused verification m1.4-c5-focused-smoke.txt

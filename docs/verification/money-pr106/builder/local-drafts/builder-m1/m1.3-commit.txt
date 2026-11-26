@@ -1,0 +1,14 @@
+[feat/money-difficulty e9afed5] feat(ui): difficulty choice on new game
+ 7 files changed, 70 insertions(+), 16 deletions(-)
+ create mode 100644 tests/e2e/difficulty.spec.ts
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+Tree 29f27649e984eda84b76909b2f53ae6a3ab9e120
+Parent 06e6b1da57a41cea4918b66b14c76056e36f615d
+Approved paths committed 7
+e81102d4c64e9135c621f66a7db56d78a6bd5dec624fecf2cbd38f4060885402  packages/ui/src/CharacterCreation.svelte
+b8dbfc9091d35973b08c5c546e2868cca443d6f78b8fdeec62157b1d8197e469  packages/ui/src/CharacterLifeApp.svelte
+d78389ea0fdd8eebfd86729af830b3f39c9b6b44354de5c63c2175d6734383fe  packages/ui/src/CharacterLifeCity.svelte
+d6aa3d247bcf808e6665cbba83ae168b25123ec29a90246e0954290ce88985d5  packages/ui/src/CouncilPanel.svelte
+dfa6ca43e9000624dd228f818dadd87d6de9051f4b7d836911f8f67536122cdb  packages/ui/src/TileManagement.svelte
+e6df05a9fae544d73bf3243fe812ff6f60a4854d6dd73713330d004f5182e6ab  packages/ui/src/society-view.ts
+10b3d389e07849518c1d908e8b6459e3ede5579121c7e522aa9e2afd485178ea  tests/e2e/difficulty.spec.ts

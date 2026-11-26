@@ -1,0 +1,17 @@
+UTC 2026-11-25T16:30:07.459797+00:00
+Branch feat/money-difficulty
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+Tree 83a17c4de3eaad26b867155d512a2f898683b91b
+Index staged paths 0
+Worktree paths verified exactly against approved preflight bytes 6
+git diff --check exit 0
+No numeric, rule, fixture or additional test edits in the worktree.
+Optional policy proposal SHA-256 fc8a09db9971a3371bce4830c1f6dd5f7953558b8f6cf6b941bd11cb24c91397
+Law receipt compatibility proposal SHA-256 68848bceb636d34d99dcfefa3fc3355224402888aba2ad4c5605d4561942c4e0
+All three calibration grids have 18 cases of 40 seeded weeks. The ledger recheck verified 2160 rows.
+ M packages/simulation/src/law-week.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/workshop-operation.ts
+ M scripts/p7b-road-balance.ts
+?? packages/simulation/src/__tests__/difficulty-week.test.ts
+?? scripts/money-calibration.ts

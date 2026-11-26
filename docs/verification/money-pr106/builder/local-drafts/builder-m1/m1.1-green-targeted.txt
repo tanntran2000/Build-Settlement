@@ -1,0 +1,83 @@
+UTC start 2026-11-25T16:11:50.704444+00:00
+HEAD ab83228df9ee1c70f97c634324c3202e2def0ea0
+HEAD tree b138254d44b76e3b2c8c6eb853449608a3bbc094
+Working delta SHA-256 d3db75b7adadb1bde1883b91a36df00e3077ff6e631b274807c4d0cad5c103ad
+Command node node_modules/vitest/vitest.mjs run packages/core/src/trial/__tests__/difficulty.test.ts packages/core/src/character/__tests__/purse-shape.test.ts packages/persistence/src/__tests__/money-save.test.ts
+M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/character/__tests__/validate.test.ts
+ M packages/core/src/character/session.ts
+ M packages/core/src/character/types.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/trial/society.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/core/src/world/npc.ts
+ M packages/core/src/world/session.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/household-week.test.ts
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/core/src/character/__tests__/purse-shape.test.ts
+?? packages/core/src/trial/__tests__/difficulty.test.ts
+?? packages/core/src/trial/difficulty.ts
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-5-weeks.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-death.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-raid.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-robbery.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-crime-wound.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-demand-card.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-laws.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-new-game.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/life-rebellion-last-week.json
+?? packages/persistence/src/__tests__/fixtures/society-v14/new-game.json
+?? packages/persistence/src/__tests__/money-save.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  23:11:51
+   Duration  1.01s (transform 952ms, setup 0ms, import 1.39s, tests 110ms, environment 1ms)
+
+
+Exit 0
+UTC end 2026-11-25T16:11:52.446386+00:00

@@ -1,0 +1,141 @@
+UTC start 2026-11-26T03:25:53.502364+00:00
+HEAD e9afed5d8f37c36611706fb3cc8dd763707ca119
+HEAD tree 29f27649e984eda84b76909b2f53ae6a3ab9e120
+Working delta SHA-256 7d420a2b1e89fd786b2e58fa5b2cad94929b2b97c364787f59ceca25199b5894
+Command python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/with-awake.py npm.cmd run test:smoke -- tests/e2e/character-life-navigation.spec.ts tests/e2e/tile-feedback-precision.spec.ts --output C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c5-focused-artifacts
+M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/tile-feedback-precision.spec.ts
+
+Windows system sleep inhibited for this process while the child runs.
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 274 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CC6rjaS5.css                   38.55 kB │ gzip:   7.76 kB
+dist/assets/index-BP5SCKnC.js                   525.62 kB │ gzip: 167.15 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.54s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/character-life-navigation.spec.ts tests/e2e/tile-feedback-precision.spec.ts --output C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c5-focused-artifacts
+
+
+Running 92 tests using 1 worker
+
+(node:6744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 320px (5.4s)
+  ok  2 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 375px (2.5s)
+  ok  3 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 1280px (2.5s)
+  ok  4 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 1600px (2.5s)
+  ok  5 [chromium] › tests\e2e\character-life-navigation.spec.ts:97:3 › city windows preserve state and return focus at 375px (5.4s)
+  ok  6 [chromium] › tests\e2e\character-life-navigation.spec.ts:97:3 › city windows preserve state and return focus at 1280px (5.8s)
+  ok  7 [chromium] › tests\e2e\character-life-navigation.spec.ts:155:1 › leaving Report does not acknowledge the week (1.7s)
+  ok  8 [chromium] › tests\e2e\character-life-navigation.spec.ts:195:1 › food stock remains reachable when sidebar collapses (2.2s)
+  ok  9 [chromium] › tests\e2e\character-life-navigation.spec.ts:220:1 › report calendar parser reconstructs absolute weeks independently (137ms)
+  ok 10 [chromium] › tests\e2e\character-life-navigation.spec.ts:225:1 › fulfillment states match strip and report (49.8s)
+  ok 11 [chromium] › tests\e2e\character-life-navigation.spec.ts:251:1 › near-full requirement track retains 99.99 percent exactly (922ms)
+  ok 12 [chromium] › tests\e2e\character-life-navigation.spec.ts:265:1 › all Life calendar surfaces cross year boundaries (10.6s)
+  ok 13 [chromium] › tests\e2e\character-life-navigation.spec.ts:300:1 › rejected load keeps absolute week 41 diagnostic beside Year 2 presentation (1.4s)
+  ok 14 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Information (5.0s)
+  ok 15 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Player (4.7s)
+  ok 16 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Population (5.1s)
+  ok 17 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 375px (4.9s)
+  ok 18 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px (4.9s)
+  ok 19 [chromium] › tests\e2e\character-life-navigation.spec.ts:411:1 › age-17 checkpoint rejection preserves the valid profile and open adult disclosure (2.9s)
+  ok 20 [chromium] › tests\e2e\character-life-navigation.spec.ts:438:1 › one character window remembers areas and closes new-person disclosures (8.7s)
+  ok 21 [chromium] › tests\e2e\character-life-navigation.spec.ts:496:1 › inventory shows equipment and player unavailable areas stay honest (2.4s)
+  ok 22 [chromium] › tests\e2e\character-life-navigation.spec.ts:519:1 › NPC Work uses the displayed post and reports stale choices locally (4.3s)
+  ok 23 [chromium] › tests\e2e\character-life-navigation.spec.ts:587:1 › life shell navigation is read-only (2.1s)
+  ok 24 [chromium] › tests\e2e\character-life-navigation.spec.ts:619:1 › city actions retain costs and targeted errors (2.5s)
+  ok 25 [chromium] › tests\e2e\character-life-navigation.spec.ts:666:1 › turn repeat is guarded without stealing focus (2.1s)
+  ok 26 [chromium] › tests\e2e\character-life-navigation.spec.ts:718:1 › unavailable Life Plan next week is visibly inactive (1.1s)
+  ok 27 [chromium] › tests\e2e\character-life-navigation.spec.ts:755:1 › report oracle formatter preserves grouped exact milli values (103ms)
+  ok 28 [chromium] › tests\e2e\character-life-navigation.spec.ts:761:1 › report oracle parser preserves grouped exact milli integers (123ms)
+  ok 29 [chromium] › tests\e2e\character-life-navigation.spec.ts:767:1 › report oracle parser rejects malformed grouping and sub-milli precision (123ms)
+  ok 30 [chromium] › tests\e2e\character-life-navigation.spec.ts:771:1 › UI snapshots retain ErrorLog history, counts and diagnostic feedback (1.4s)
+  ok 31 [chromium] › tests\e2e\character-life-navigation.spec.ts:792:1 › checkpoint feedback normalization rejects unrelated diagnostic changes (1.7s)
+  ok 32 [chromium] › tests\e2e\character-life-navigation.spec.ts:822:1 › unapplied drafts survive navigation with committed-only resolution (6.9s)
+  ok 33 [chromium] › tests\e2e\character-life-navigation.spec.ts:880:1 › unapplied drafts follow distinct workforce and post lifetimes (2.1s)
+  ok 34 [chromium] › tests\e2e\character-life-navigation.spec.ts:938:3 › same-id load resets UI only after publication: Continue (4.7s)
+  ok 35 [chromium] › tests\e2e\character-life-navigation.spec.ts:965:3 › same-ID Player private disclosure resets on successful Continue (1.3s)
+  ok 36 [chromium] › tests\e2e\character-life-navigation.spec.ts:938:3 › same-id load resets UI only after publication: Import (3.9s)
+  ok 37 [chromium] › tests\e2e\character-life-navigation.spec.ts:965:3 › same-ID Player private disclosure resets on successful Import (1.4s)
+  ok 38 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: invalid JSON (4.3s)
+  ok 39 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: incompatible schema (4.2s)
+  ok 40 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: oversize (4.7s)
+  ok 41 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: invalid local Continue (4.3s)
+  ok 42 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: read rejection (4.8s)
+  ok 43 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: Report phase (4.4s)
+  ok 44 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: stale revision (4.1s)
+  ok 45 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: superseded reads (4.1s)
+  ok 46 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: newer Import (3.2s)
+  ok 47 [chromium] › tests\e2e\character-life-navigation.spec.ts:1014:3 › rejected and superseded loads preserve UI intent: later Continue (3.1s)
+  ok 48 [chromium] › tests\e2e\character-life-navigation.spec.ts:1082:1 › rejected and superseded loads preserve UI intent: open Player disclosure (1.0s)
+  ok 49 [chromium] › tests\e2e\character-life-navigation.spec.ts:1095:1 › rejected and superseded loads preserve UI intent: targeted workforce error (2.0s)
+  ok 50 [chromium] › tests\e2e\character-life-navigation.spec.ts:1109:3 › report matches complete executor projection: shortage (9.1s)
+  ok 51 [chromium] › tests\e2e\character-life-navigation.spec.ts:1109:3 › report matches complete executor projection: zero (9.5s)
+  ok 52 [chromium] › tests\e2e\character-life-navigation.spec.ts:1109:3 › report matches complete executor projection: precision (9.1s)
+  ok 53 [chromium] › tests\e2e\character-life-navigation.spec.ts:1109:3 › report matches complete executor projection: service (8.8s)
+  ok 54 [chromium] › tests\e2e\character-life-navigation.spec.ts:1109:3 › report matches complete executor projection: empty (8.9s)
+  ok 55 [chromium] › tests\e2e\character-life-navigation.spec.ts:1160:5 › player flows at 1280px › F1 weekly turn — keyboard (30.8s)
+  ok 56 [chromium] › tests\e2e\character-life-navigation.spec.ts:1231:5 › player flows at 1280px › turn pointer repeats remain guarded (2.0s)
+  ok 57 [chromium] › tests\e2e\character-life-navigation.spec.ts:1262:5 › player flows at 1280px › F2 manager assignment — keyboard (9.9s)
+  ok 58 [chromium] › tests\e2e\character-life-navigation.spec.ts:1302:5 › player flows at 1280px › F3 read people (6.6s)
+  ok 59 [chromium] › tests\e2e\character-life-navigation.spec.ts:1370:5 › player flows at 1280px › F4 session reset and atomic failures (10.3s)
+  ok 60 [chromium] › tests\e2e\character-life-navigation.spec.ts:1160:5 › player flows at 375px › F1 weekly turn — keyboard (28.1s)
+  ok 61 [chromium] › tests\e2e\character-life-navigation.spec.ts:1231:5 › player flows at 375px › turn pointer repeats remain guarded (1.7s)
+  ok 62 [chromium] › tests\e2e\character-life-navigation.spec.ts:1262:5 › player flows at 375px › F2 manager assignment — keyboard (9.6s)
+  ok 63 [chromium] › tests\e2e\character-life-navigation.spec.ts:1302:5 › player flows at 375px › F3 read people (6.1s)
+  ok 64 [chromium] › tests\e2e\character-life-navigation.spec.ts:1370:5 › player flows at 375px › F4 session reset and atomic failures (10.0s)
+  ok 65 [chromium] › tests\e2e\character-life-navigation.spec.ts:1439:1 › B2 Report view switches after End Week and guards double Enter (1.1s)
+  ok 66 [chromium] › tests\e2e\character-life-navigation.spec.ts:1462:1 › B2 City Report City preserves export and saved checkpoint (1.5s)
+  ok 67 [chromium] › tests\e2e\character-life-navigation.spec.ts:1479:1 › B2 pending load error remains visible while Report is selected (3.2s)
+  ok 68 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:40:3 › displays exact Gold 8796093022208001 without changing its checkpoint integer (1.5s)
+  ok 69 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:40:3 › displays exact Gold 9007199254740991 without changing its checkpoint integer (1.6s)
+  ok 70 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 1280px and repeated failures preserve state (2.8s)
+  ok 71 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 1280px and repeated failures preserve state (3.2s)
+  ok 72 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 1280px and repeated failures preserve state (3.2s)
+  ok 73 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 1280px and repeated failures preserve state (3.5s)
+  ok 74 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 1280px and repeated failures preserve state (2.8s)
+  ok 75 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 1280px and repeated failures preserve state (3.3s)
+  ok 76 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 1280px (2.1s)
+  ok 77 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 390px and repeated failures preserve state (2.6s)
+  ok 78 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 390px and repeated failures preserve state (3.1s)
+  ok 79 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 390px and repeated failures preserve state (3.6s)
+  ok 80 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 390px and repeated failures preserve state (3.1s)
+  ok 81 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 390px and repeated failures preserve state (2.7s)
+  ok 82 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 390px and repeated failures preserve state (3.3s)
+  ok 83 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 390px (2.0s)
+  ok 84 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 320px and repeated failures preserve state (2.6s)
+  ok 85 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 320px and repeated failures preserve state (3.7s)
+  ok 86 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 320px and repeated failures preserve state (3.1s)
+  ok 87 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 320px and repeated failures preserve state (3.1s)
+  ok 88 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 320px and repeated failures preserve state (2.6s)
+  ok 89 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 320px and repeated failures preserve state (3.2s)
+  ok 90 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 320px (2.0s)
+  ok 91 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:123:1 › checkpoint errors stay in checkpoints and a valid load clears building feedback (1.4s)
+  ok 92 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:137:1 › stock ledger preserves grouped integer milli digits and a negative net (1.0s)
+
+  Slow test file: [chromium] › tests\e2e\character-life-navigation.spec.ts (6.3m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  92 passed (7.6m)
+Process execution-state request released.
+
+Exit 0
+UTC end 2026-11-26T03:33:39.929936+00:00

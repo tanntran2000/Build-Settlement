@@ -1,0 +1,84 @@
+Money M1 Astra 6.2 high review
+mcp:75a46f91-b9d2-4051-b904-abb7154670e7  completed  codex/gpt-6.2-astra
+
+[assistant]
+All 96 changed paths match the approved bytes, and the calibration replay reproduced all 720 weekly rows. I also reproduced two player-visible discrepancies on valid Easy saves: the storage panel showed 40 capacity when the engine provided 80, and the health panel predicted +1 regeneration when End Week applied +2.
+
+[assistant]
+**VERDICT: FAIL** at `fbad4d8`. Findings: **0 P0, 2 P1, 2 P2, 2 P3**.
+
+The two P1 findings are partial matchers in new tests for v13 save refusal and the Normal validator diagnostic. The two P2 findings are reproducible on valid Easy saves. The storage panel showed capacity **40** when the engine provided **80**, and the health panel predicted **+1** regeneration when End Week applied **+2**. The P3 findings concern the narrow calibration routes and the cost of opening with idle extractors.
+
+All **96 changed files** matched the approved packets, all **61 behavior cases** retained their intended branches, and all **18 calibration cells** met their targets. I verified the builder’s **419/419** smoke result against the requested head and tree without rerunning smoke.
+
+[Full independent review, per-file ledger, and reconstruction table](C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round1.md)
+
+[user]
+Claude (Orchestrator) → Astra: Money M1 review, round 2. Same rules as round 1. Read-only: do not edit, commit or push anything.
+
+New head: feat/money-difficulty at 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a (tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768), worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Round 1 head was fbad4d8; the only new commit is 3f1467a `fix(ui): difficulty-aware storage and health forecasts` (8 files, +106/−20).
+
+Owner (Tân) approved your four P1/P2 fixes, verbatim dialog answer: "Duyệt sửa cả 4 (Recommended)". Your two P3 findings are not changed in M1; they are logged as playtest risks R-029 and R-030.
+
+Binding plan with Correction 6: C:/Users/Admin/.t3/local-drafts/money-prM1/binding-plan-384cadd.md (SHA-256 f45a306ce615a5d0996c83bf15ef554bef6b5141a40f8e7a71eee6883c0bb558). Your round 1: astra-review/astra-round1.md (SHA-256 6017dbbc…). Builder evidence: builder-m1/M1.4-C6.md (SHA-256 ceb0766b4c3a87be167d7b81ce58afea0c99164a57b94a6e8150152da9e6d0a6) and builder-m1/SHA256SUMS.txt.
+
+Check:
+1. Each of your four findings is fixed as Correction 6 says: (P1) money-save.test.ts asserts the full INCOMPATIBLE_SAVE envelope on both paths and difficulty.test.ts compares the message exactly, immutability checks kept; (P2) storageView capacity equals End Week's funding decision including difficulty-scaled law income; (P2) Hospital regen forecast equals End Week's on Easy. Re-run your own round 1 reproductions against the new head.
+2. Normal is unchanged: Normal forecasts, the Normal planning potion purchase rule sharing potionShop, and every existing test.
+3. Scope: the diff fbad4d8..3f1467a stays inside Correction 6 (items-view.ts allowed for this fix only). Say why CharacterLifeShell.svelte and TileManagement.svelte changed and whether that is in scope. No loosened assertion, removed case or new timeout.
+4. Tests were RED before the fix (Builder RED evidence in builder-m1/).
+5. Builder notes: the first full smoke was 418/419 (fulfillment case hit its existing 60 s timeout), single case passed at 59.6 s on the unchanged head, full retry 419/419. Say whether this is a product regression from M1 or pre-existing timing; do not propose a timeout change.
+
+Write your review to C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round2.md, findings by severity (P1/P2/P3) with file:line and reproduction, ending with one line `VERDICT: PASS` or `VERDICT: FAIL`.
+
+[assistant]
+I’ll verify the new head, tree, and Correction 6 packet, then rerun the two forecast reproductions and check the Normal behavior and smoke retry evidence. I’ll write only the requested round-two review.
+
+[assistant]
+The original Easy fixtures now match End Week, and their Normal controls still pass. I found a second storage case on both difficulties: the Warehouse receives funding, then loses its worker before spoilage. The panel shows 80 capacity, but End Week uses 40 and discards 35 Wood.
+
+[assistant]
+**VERDICT: FAIL** at `3f1467a`. Both P1 fixes passed independent checks, and both original Easy forecast reproductions now agree with End Week. Two P2 findings remain.
+
+- **Warehouse capacity.** On both difficulties, the preview shows 80 capacity. End Week releases the Warehouse’s only worker, applies 40 capacity, and spoils 35 of 75 Wood.
+- **Normal forecast compatibility.** Two valid Normal setups now show different forecasts from round 1. Both new forecasts agree with End Week, but they fail the requirement that Normal forecasts remain unchanged.
+
+**Counts:** 0 P0, 0 P1, 2 P2, and 1 new P3 for corrupted punctuation in the builder evidence. R-029 and R-030 remain the two carried playtest risks.
+
+The fulfillment timeout is consistent with pre-M1 timing. The full retry passed **419/419**. The 59.6-second result appears in that retry’s log. I could not verify a separate isolated run.
+
+[Read the round 2 review](C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round2.md)
+
+[user]
+Claude (Orchestrator) → Astra: Money M1 review, round 3. Same rules as before. Read-only: do not edit, commit or push anything.
+
+New head: feat/money-difficulty at 21956b639f0f4a302968008f01bbea0654ed5438 (tree 7c8f6cb1b85a2193358bbab86d43f3c7d807cd50), same worktree. The only new commit is 21956b6 `fix(ui): storage preview follows end-week staffing` (2 files, +62/−10).
+
+Owner (Tân), verbatim dialog answers to your round 2: Warehouse staffing — "Sửa luôn trong M1"; Normal forecast changes — "Chấp nhận (Recommended)".
+
+Binding plan with Correction 7: C:/Users/Admin/.t3/local-drafts/money-prM1/binding-plan-88108cf.md (SHA-256 7e577952ea687d144ee192458c47d91802ba30060363cb68e4622699d34c36e6). Builder evidence: builder-m1/M1.4-C7.md and builder-m1/SHA256SUMS.txt.
+
+Check:
+1. Correction 7 item 1: re-run your seed-2026 Warehouse reproduction on Normal and Easy; the preview must equal the capacity End Week applies at spoilage. Look for any other valid case where the preview and End Week still differ (staffing, funding, law income, difficulty), and confirm the input session is never mutated.
+2. The preview now projects on a detached city. Say whether that adds meaningful cost per UI render (it runs in the browser on every view update) and whether it can diverge from End Week's step order. No timeout or threshold changes.
+3. Correction 7 item 2: Normal simulation output is unchanged; only previews changed.
+4. Correction 7 item 3: the C6 evidence `?` characters are repaired, the manifest rehashes, and no new evidence file has `?` in place of non-ASCII text.
+5. Scope: no other product change, loosened assertion, removed case or new timeout; RED before GREEN.
+6. Informational: did the Warehouse staffing mismatch already exist on main ab83228 (before M1)? One line.
+
+This is the last fix round on these findings. Write your review to C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round3.md, findings by severity (P1/P2/P3) with file:line and reproduction, ending with one line `VERDICT: PASS` or `VERDICT: FAIL`.
+
+[assistant]
+I’ll verify the head and Correction 7, then rerun the Warehouse case on both difficulties and compare the preview’s work and step order with End Week.
+
+[assistant]
+The seed-2026 case now shows 40 capacity on both difficulties, matching the 35 Wood that End Week spoils. I also reproduced the old 80-capacity display on pre-M1 main. The broader check found agreement in 360 valid sessions. I’m now measuring the preview itself, since the recorded End Week timings exclude UI work.
+
+[assistant]
+**VERDICT: PASS** at `21956b6`. **0 P0, 0 P1, 0 P2, and 1 new P3.**
+
+The seed-2026 Warehouse now previews **40 capacity** on both Normal and Easy, exactly matching End Week: 40 Wood retained and 35 spoiled. I reproduced the old 80-capacity display on pre-M1 main. Across 360 additional valid sessions, every preview matched actual spoilage and every input session stayed byte-identical. The three Normal comparison fixtures also produced byte-identical End Week results across rounds 2 and 3.
+
+The **P3** is render cost. A funded Warehouse added **3.2–4.3 ms per storage refresh** in the measured Node fixtures. The storage rows stay mounted when the panel is hidden. Browser frame time was not measured.
+
+The C6 evidence text is repaired, and all **352 manifest hashes** matched. [Read the round 3 review](C:/Users/Admin/.t3/local-drafts/money-prM1/astra-review/astra-round3.md)

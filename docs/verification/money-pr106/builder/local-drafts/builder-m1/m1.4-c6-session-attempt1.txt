@@ -1,0 +1,351 @@
+UTC start 2026-11-26T06:18:44.022213+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command python C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/with-awake.py powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/run-m1.4-c6.ps1
+
+
+Windows system sleep inhibited for this process while the child runs.
+UTC 2026-11-26T06:18:54.9809512Z
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+Tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Branch feat/money-difficulty
+origin/main ab83228df9ee1c70f97c634324c3202e2def0ea0
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             40
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+ChatGPT             15920                3.531
+powershell          41640                2.484
+browser             26844                0.969
+T3 Code (Nightly)    5872                0.906
+browser              8044                0.766
+claude               3504                0.531
+browser             35312                0.312
+ms-teams             7176                0.281
+claude              23660                0.234
+codebase-memory-mcp  9956                0.203
+codebase-memory-mcp 13412                0.156
+codebase-memory-mcp  3124                0.125
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:44 PM
+
+
+
+Sleep/resume System records since 2026-11-26T13:18:45.0711820+07:00
+No matching events
+before-gates CPU samples 9.28% / 16.11% / 10.55%
+UTC start 2026-11-26T06:19:07.216648+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command git diff --check origin/main...HEAD
+
+
+
+Exit 0
+UTC end 2026-11-26T06:19:07.395017+00:00
+UTC start 2026-11-26T06:19:07.839117+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command npm.cmd run lint
+
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+Exit 0
+UTC end 2026-11-26T06:19:29.335129+00:00
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command npm.cmd run typecheck
+
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+Exit 0
+UTC end 2026-11-26T06:20:09.331376+00:00
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}
+
+Exit 0
+UTC end 2026-11-26T06:20:17.822007+00:00
+\u2714 s1: BOM ranges preserve multiline attribute and body locations (76.3993ms)
+\u2714 s1: fallback reports computed body imports alongside the unsupported attribute (82.995ms)
+\u2714 s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (151.8203ms)
+\u2714 s1: a malformed body remains an INCOMPLETE parse failure (111.8366ms)
+\u2714 s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (4112.6812ms)
+\u2714 scan includes exactly eligible production .ts/.svelte, recursively (93.6283ms)
+\u2714 computed dependency cannot pass: import(name); (46.3436ms)
+\u2714 computed dependency cannot pass: import(`@haven/${name}`); (44.3525ms)
+\u2714 computed dependency cannot pass: import('@haven/' + name); (44.8125ms)
+\u2714 computed dependency cannot pass: require(name); (42.9284ms)
+\u2714 computed dependency cannot pass: require(); (45.5769ms)
+\u2714 unresolved internal/relative dependency: import './missing'; (53.9553ms)
+\u2714 unresolved internal/relative dependency: import '@haven/core/no-such-file'; (46.456ms)
+\u2714 unresolved internal/relative dependency: import '@haven/core/../../missing'; (43.4147ms)
+\u2714 relative asset imports resolve without expanding the production scan (73.788ms)
+\u2714 parse error is incomplete verification: packages/core/src/index.ts const = ; (48.1725ms)
+\u2714 parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (43.2728ms)
+\u2714 parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (44.4406ms)
+\u2714 missing and empty scope fail without fabricated line numbers (34.4844ms)
+\u2714 a scope containing only excluded files is empty (39.7944ms)
+\u2714 unreadable root and source preserve path/cause without a line (36.7943ms)
+\u2714 manifest failure cannot make internal imports appear external (45.673ms)
+\u2714 two/three package cycles include a witness and every import location (69.5351ms)
+\u2714 within-package file cycles are legal, package DAG has no cycles (51.987ms)
+\u2714 diagnostics and graph output are stable across scans and creation order (129.2454ms)
+\u2714 symlink escape is verification failure, never scanned or followed (80.4588ms)
+\u2714 a source root symlink cannot escape and an internal symlink can be scanned (154.2413ms)
+\u2714 inspected TypeScript, Svelte and local config code is never executed (61.2387ms)
+\u2714 CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (18865.5861ms)
+\u2139 tests 154
+\u2139 suites 0
+\u2139 pass 154
+\u2139 fail 0
+\u2139 cancelled 0
+\u2139 skipped 0
+\u2139 todo 0
+\u2139 duration_ms 49135.2247
+
+Exit 0
+UTC end 2026-11-26T06:21:08.717320+00:00
+UTC start 2026-11-26T06:21:09.211298+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command npm.cmd test
+
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  147 passed (147)
+      Tests  3317 passed (3317)
+   Start at  13:21:10
+   Duration  114.45s (transform 8.40s, setup 0ms, import 53.92s, tests 192.27s, environment 51ms)
+
+
+Exit 0
+UTC end 2026-11-26T06:23:05.431434+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+HEAD tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Working delta SHA-256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Command npm.cmd run build
+
+
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+\u2713 273 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB \u2502 gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CC6rjaS5.css                   38.55 kB \u2502 gzip:   7.76 kB
+dist/assets/index-DoJ6rcES.js                   525.83 kB \u2502 gzip: 167.20 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+\u2713 built in 6.00s
+
+Exit 0
+UTC end 2026-11-26T06:23:34.983318+00:00
+UTC 2026-11-26T06:23:41.4789899Z
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+Tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Branch feat/money-difficulty
+origin/main ab83228df9ee1c70f97c634324c3202e2def0ea0
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             18
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+powershell          41640                1.641
+browser             38704                0.891
+browser             26844                0.828
+browser              8044                0.656
+ms-teams             7176                0.094
+codebase-memory-mcp  9956                0.047
+claude              23660                0.031
+codebase-memory-mcp 36624                0.031
+cloudflared         24460                0.031
+WINWORD              6692                0.031
+codebase-memory-mcp  3124                0.031
+codebase-memory-mcp 11500                0.031
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:44 PM
+
+
+
+Sleep/resume System records since 2026-11-26T13:18:45.0711820+07:00
+No matching events
+before-smoke CPU samples 6.73% / 3.81% / 8.88%
+  ok 404 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:24:1 \u203a same pinned seed reproduces names; clicks never reroll them (4.0s)
+  ok 405 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:27:1 \u203a only built manager tiles are offered; a low-stat Hall resident can take the Farm slot (2.0s)
+  ok 406 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:30:1 \u203a pause keeps the post; replacing the building clears it (2.8s)
+  ok 407 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:33:1 \u203a assignment is refused in Report and kept through the week (2.3s)
+  ok 408 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:36:1 \u203a save, continue, export and import preserve posts and resolved names; slots stay separate (5.0s)
+  ok 409 [chromium] \u203a tests\e2e\world-npc-session.spec.ts:41:1 \u203a non-Life world files are refused without changing the game or either older slot (1.7s)
+  ok 410 [chromium] \u203a tests\e2e\world-session.spec.ts:22:1 \u203a U7: fresh seeds differ but summary and rendered metadata reveal no hidden world data (2.9s)
+  ok 411 [chromium] \u203a tests\e2e\world-session.spec.ts:25:1 \u203a U2: End Week while import is pending rejects both halves and preserves all three slots (3.8s)
+  ok 412 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending success and its feedback (9.5s)
+  ok 413 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending invalid JSON and its feedback (7.0s)
+  ok 414 [chromium] \u203a tests\e2e\world-session.spec.ts:28:63 \u203a U3: successful Continue invalidates pending read rejection and its feedback (6.5s)
+  ok 415 [chromium] \u203a tests\e2e\world-session.spec.ts:31:1 \u203a U3: failed Continue leaves a pending valid import eligible (1.6s)
+  ok 416 [chromium] \u203a tests\e2e\world-session.spec.ts:34:1 \u203a U4: only newest reversed import publishes city and outside; older failures cannot replace feedback (4.0s)
+  ok 417 [chromium] \u203a tests\e2e\world-session.spec.ts:37:1 \u203a U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (14.4s)
+  ok 418 [chromium] \u203a tests\e2e\world-session.spec.ts:40:1 \u203a U8: Report locks all four checkpoint controls (1.0s)
+  ok 419 [chromium] \u203a tests\e2e\world-session.spec.ts:43:1 \u203a U9: local and portable saves restore the whole populated session and uninterrupted next week (32.6s)
+
+
+  1) [chromium] \u203a tests\e2e\character-life-navigation.spec.ts:225:1 \u203a fulfillment states match strip and report 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: test-results\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\error-context.md
+
+    attachment #2: trace (application/zip) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    test-results\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\trace.zip
+
+    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+
+  Slow test file: [chromium] \u203a tests\e2e\character-life-navigation-accessibility.spec.ts (12.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] \u203a tests\e2e\character-life-navigation.spec.ts:225:1 \u203a fulfillment states match strip and report 
+  418 passed (43.1m)
+
+Exit 1
+UTC end 2026-11-26T07:07:09.744841+00:00
+Process execution-state request released.
+
+Exit 1
+UTC end 2026-11-26T07:07:10.019704+00:00

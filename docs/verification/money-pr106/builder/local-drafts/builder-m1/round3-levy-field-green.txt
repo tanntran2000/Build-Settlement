@@ -1,0 +1,17 @@
+HEAD 63d2b2627b57d172be8459c64989e42ff650f692
+Scratch C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\tree
+UTC start 2026-11-26T01:32:45.019487+00:00
+Command node node_modules/vitest/vitest.mjs run packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  08:32:45
+   Duration  876ms (transform 258ms, setup 0ms, import 364ms, tests 18ms, environment 0ms)
+
+
+Exit 0
+UTC end 2026-11-26T01:32:46.900725+00:00

@@ -1,0 +1,26 @@
+
+Generate the ten v14 scenario fixtures using their existing generators in scratch
+UTC start 2026-11-25T16:24:37.965488+00:00
+Command node node_modules/vitest/vitest.mjs run packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  23:24:38
+   Duration  21.58s (transform 2.51s, setup 0ms, import 3.73s, tests 21.91s, environment 1ms)
+
+
+Exit 0
+UTC end 2026-11-25T16:25:00.439982+00:00
+
+Replay the three golden seeds in scratch and write a separate candidate artifact
+UTC start 2026-11-25T16:25:00.440047+00:00
+Command node --import ./scripts/p7b-road-balance.ts --input-type=module -e "const m=await import('./packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts');
+const {writeFileSync}=await import('node:fs');
+const states=m.CATALOG_SEEDS.map(m.runCatalogScenario);
+writeFileSync(process.argv[1],JSON.stringify(states,null,2)+'\n','utf8');" C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\round2-catalog-golden.json
+
+Exit 0
+UTC end 2026-11-25T16:25:06.692307+00:00

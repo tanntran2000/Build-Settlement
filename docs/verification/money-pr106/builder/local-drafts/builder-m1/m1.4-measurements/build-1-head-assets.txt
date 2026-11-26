@@ -1,0 +1,8 @@
+UTC start 2026-11-26T02:58:24.244807+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\measure-bundle.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\dist C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\gzip-head
+
+{"gzipLevel":"zlib default","assets":[{"file":"assets/index-BP5SCKnC.js","bytes":525622,"sha256":"0df6e41108309d2692e88ce3a3cf33b292cbfc45fe1c9900a1c33cd88854c108","gzipBytes":167153,"gzipSha256":"cda3071d8af5350d162ba5582a62b13543671841361d3e5ba3df88dc2c566990"},{"file":"assets/index-CC6rjaS5.css","bytes":38547,"sha256":"db75f1f06acd4306a38955861b233f781be9e9f7043d96f70a6256f56158fa3b","gzipBytes":7764,"gzipSha256":"091d0102e0bbde5d1c3395b0ed19fec1e9c86fbae7d09e87a7ee8d50480372af"}],"indexSha256":"aff0056b4ba427288b98707471ddf8dba1993d89656f9b412b2f852a7cae4df6","jsGzipBytes":167153,"cssGzipBytes":7764,"totalGzipBytes":174917}
+
+Exit 0
+UTC end 2026-11-26T02:58:24.369770+00:00

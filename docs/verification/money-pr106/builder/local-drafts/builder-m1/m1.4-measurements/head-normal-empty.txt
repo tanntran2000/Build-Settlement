@@ -1,0 +1,8 @@
+UTC start 2026-11-26T03:00:10.303722+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+Command node C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-bench-worker.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 fresh-save empty C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\m1.4-measurements\head-normal-empty.json "" normal
+
+{"variant":"empty","difficulty":"normal","bytes":17525,"sha256":"41ca7bbb86324f22029f09d418af927995c71c227e2289d1dbed1678a179657a","purse":{"moneyMilli":0,"levyPercent":0,"donatedThisWeekMilli":0,"robbery":null},"ruleset":"tile-society-14"}
+
+Exit 0
+UTC end 2026-11-26T03:00:11.914388+00:00

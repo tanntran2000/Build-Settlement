@@ -1,0 +1,45 @@
+Round 3 proposal/worktree verification
+UTC 2026-11-26T01:42:23.955440+00:00
+Worktree C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+External composed tree C:\Users\Admin\.t3\local-drafts\money-prM1\_scratch\tree
+
+Command git rev-parse HEAD HEAD^{tree}
+63d2b2627b57d172be8459c64989e42ff650f692
+83a17c4de3eaad26b867155d512a2f898683b91b
+
+Exit 0
+
+Command git branch --show-current
+feat/money-difficulty
+
+Exit 0
+
+Command git status --porcelain=v1 --untracked-files=all
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/workshop-operation.ts
+ M scripts/p7b-road-balance.ts
+?? packages/simulation/src/__tests__/difficulty-week.test.ts
+?? scripts/money-calibration.ts
+
+Exit 0
+
+Command git diff --cached --name-only
+
+
+Exit 0
+
+Command git diff --check
+
+warning: in the working copy of 'scripts/p7b-road-balance.ts', LF will be replaced by CRLF the next time Git touches it
+Exit 0
+Worktree file SHA-256 ef05690c84dd096dccc7ea6cf6e217251a9ac925f6daea862ced7226a272ebad  packages/simulation/src/tile-trial-week.ts
+Worktree file SHA-256 fc903ffc3c01ec677cc2df30a9eeb5b40e0a03200ce6267524c82f3b49163b25  packages/simulation/src/workshop-operation.ts
+Worktree file SHA-256 1791ae0e32ffee720a550b9e6ea5ddeb798293e1c47fbf13f4b08736d5c2199f  scripts/p7b-road-balance.ts
+Worktree file SHA-256 3090d0fb7029d187afab559c37b332a33cca72c54ee8b0e7dd82448553032b87  packages/simulation/src/__tests__/difficulty-week.test.ts
+Worktree file SHA-256 9689bc0b9678d6de0bcf6650ca1ffb27e5605a75479022464fa9ed7d8fe17637  scripts/money-calibration.ts
+Applied approved law after SHA-256 c0c8d0a7ada6205a86ea35d346109fe24901032008e4d579a63420f833638867  packages/simulation/src/law-week.ts
+Verified all 3 recorded before/after blobs against live worktree and scratch in round3-data-bytes.json
+Verified all 3 recorded before/after blobs against live worktree and scratch in round3-levy-and-metric-byte-proposals.json
+Verified all 24 recorded before/after blobs against live worktree and scratch in round3-test-expectation-byte-proposals.json
+Verified all 11 recorded before/after blobs against live worktree and scratch in round3-scenario-bytes.json
+Evidence only. M1.2 remains uncommitted.

@@ -1,0 +1,38 @@
+Money M1 Builder 6.2 xhigh
+mcp:23b5599d-f172-4fb3-9119-e0af9c461461  completed  codex/gpt-6.2-sol
+
+[assistant]
+I’ll read the bound review and Correction 7, then reproduce the Warehouse mismatch on Normal and Easy. I’ll use the TDD and verification skills for the forecast fix and check the evidence text before re-sealing it.
+
+[assistant]
+I’ll use codebase-memory’s lookup workflow to trace what happens between worker release and spoilage, so the preview can use the engine’s result.
+
+[assistant]
+RED reproduced the mismatch on both difficulties: the preview showed **80**, while End Week released the Warehouse worker, spoiled **35,000 milli Wood**, and retained **40,000**. I’ll project the real week on a detached city and use the staffing it leaves at spoilage.
+
+[assistant]
+The focused run passed all 23 tests, and the full unit suite passed all 3,319. I committed the fix as `21956b6`. Both C6 evidence files now have the intended quotation marks and separator, and the exact-head gates have started.
+
+[assistant]
+Gates 1–7 passed on `21956b6`. The full 419-test CI smoke is running. CPU averaged **9.55% before gates** and **5.99% before smoke**. Both ports were free, and Windows keep-awake is active.
+
+[assistant]
+The full smoke passed the same-session End Week projection, both Goods storage cases, and the 1600-pixel accessibility checks. The remaining viewports are running with no failures reported so far.
+
+[assistant]
+The fulfillment case that timed out during Correction 6 passed on the first run in **55.9 seconds**, within its original 60-second timeout. The current smoke run still has no reported failures.
+
+[assistant]
+The smoke run has passed **174 of 419** cases so far, including the item, potion, and crafting checks. The tested head is still `21956b6`.
+
+[assistant]
+The smoke run has passed **341 of 419** cases so far. The stock ledger, checkpoint, and initial population round-trip checks passed. I’ll measure the bundle from this head’s build once the suite finishes.
+
+[assistant]
+Pushed `feat/money-difficulty` at **`21956b639f0f4a302968008f01bbea0654ed5438`** and verified that the remote tip matches. The worktree is clean. No PR was opened. [Remote verification](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c7-remote-head.txt)
+
+The storage preview now uses End Week’s staffing on a detached city. On both Normal and Easy, Astra’s seed-2026 fixture shows **40 capacity**. End Week releases the Warehouse worker, spoils **35,000 milli Wood**, and retains **40,000 milli Wood**. Both tests verify that the input session is byte-identical after projection. The simulation source is identical to `3f1467a`. [RED log](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c7-red.txt) · [GREEN log](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c7-green.txt)
+
+**Gates 1–7 passed**, including **3,319 unit tests**. The full `CI=1` smoke passed **419 of 419 on the first run**. CPU averaged **9.55% before gates** and **5.99% before smoke**. Both ports were free and Windows keep-awake was active. The bundle measured **175,036 gzip bytes**, leaving **24,964 bytes** under the limit. The End Week timings were carried forward because the diff contains only the UI forecast and its tests. [Gate evidence](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/M1.4-C7.md) · [Measurement carry proof](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c7-carry-scope.txt)
+
+I repaired the C6 report and generator, checked the new evidence for UTF-8 substitutions, and verified all **352** manifest entries. [UTF-8 audit](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/m1.4-c7-utf8-audit.txt) · [SHA-256 manifest](C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/SHA256SUMS.txt)

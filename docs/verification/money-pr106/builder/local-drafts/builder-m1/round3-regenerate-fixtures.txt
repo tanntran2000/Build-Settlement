@@ -1,0 +1,16 @@
+M1.1 HEAD 63d2b2627b57d172be8459c64989e42ff650f692, Round 3 scratch
+UTC start 2026-11-26T01:33:36.986875+00:00
+Command node node_modules/vitest/vitest.mjs run packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts
+Environment {'GENERATE_SOCIETY_FIXTURES': '1', 'GENERATE_CRISIS_FIXTURES': '1', 'GENERATE_CRIME_FIXTURES': '1', 'GENERATE_LAW_FIXTURE': '1'}
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM1/_scratch/tree
+
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  08:33:37
+   Duration  26.32s (transform 2.66s, setup 0ms, import 4.05s, tests 27.31s, environment 1ms)
+
+
+Exit 0
+UTC end 2026-11-26T01:34:04.011701+00:00

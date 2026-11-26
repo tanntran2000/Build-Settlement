@@ -1,0 +1,17 @@
+UTC 2026-11-26T06:18:43.598101+00:00
+HEAD 3f1467ac278ab1ad8379c7ca58bced6e121d9c4a
+Tree 5f0fb88334ed9f9cecea0d3ffb338562ce444768
+Parent fbad4d834689eb798c13bca27dccf5d16c1f6704
+
+Command git diff --stat fbad4d8..HEAD
+ .../core/src/trial/__tests__/difficulty.test.ts    | 11 ++++++--
+ .../persistence/src/__tests__/money-save.test.ts   | 11 ++++++--
+ packages/ui/src/CharacterLifeShell.svelte          |  5 ++--
+ packages/ui/src/TileManagement.svelte              |  2 +-
+ packages/ui/src/__tests__/items-view.test.ts       | 32 ++++++++++++++++++++++
+ packages/ui/src/__tests__/outside-view.test.ts     | 30 +++++++++++++++++++-
+ packages/ui/src/items-view.ts                      |  5 +++-
+ packages/ui/src/society-view.ts                    | 30 +++++++++++++-------
+ 8 files changed, 106 insertions(+), 20 deletions(-)
+Exit 0
+Only packages/ui/ and test files changed.

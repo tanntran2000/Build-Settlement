@@ -1,0 +1,7 @@
+Experimental Round 2 only
+UTC start 2026-11-25T16:25:06.702003+00:00
+Command node node_modules/vitest/vitest.mjs run --reporter=json --outputFile C:\Users\Admin\.t3\local-drafts\money-prM1\builder-m1\round2-unit-results.json
+JSON report written to C:/Users/Admin/.t3/local-drafts/money-prM1/builder-m1/round2-unit-results.json
+
+Exit 1
+UTC end 2026-11-25T16:26:14.502143+00:00
