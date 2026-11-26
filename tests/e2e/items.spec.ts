@@ -11,6 +11,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string,u
 }
 function funded(seed=82) {
   const s=makeLifeWithNpcs(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  s.player.purse.moneyMilli=1000000;
   stock.gold=1000000;stock.wood=1000000;stock.iron=1000000;stock.food=1000000;
   return s;
 }

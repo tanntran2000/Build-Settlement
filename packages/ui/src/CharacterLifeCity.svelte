@@ -11,6 +11,7 @@
   import { formatMilli as units } from './milli-format.js';
 
   export let state: TileTrialState;
+  export let purseMoneyMilli: number;
   export let npcs: WorldNpc[];
   export let selectedId: string;
   export let uiEpoch: number;
@@ -78,7 +79,7 @@
   }
 </script>
 
-  <InsideCity {state} {npcs} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
+  <InsideCity {state} {npcs} {purseMoneyMilli} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
   <LibraryPanel {state} {locked} {managementError} {oncommand} />
   <div class="layout">
     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />

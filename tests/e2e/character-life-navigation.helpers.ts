@@ -573,6 +573,23 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     actual.household = household;
   }
+  const purse = panel.getByTestId('purse-report');
+  if (expected.purse) {
+    await expect(purse).toBeVisible();
+    const amounts = await purse.locator('dd').allTextContents();
+    const levy = /^([+\d,.]+) Money · (\d+)% · ([\d,.]+) of ([\d,.]+) Gold paid(?: · ([\d,.]+) Gold shortfall)?$/.exec(amounts[0]);
+    const donated = /^(?:−([\d,.]+)|0) Money · (?:\+([\d,.]+)|0) Gold$/.exec(amounts[1]);
+    const balance = /^([\d,.]+) Money$/.exec(amounts[2]);
+    if (!levy || !donated || !balance) throw Error('Invalid purse report rows.');
+    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after']);
+    actual.purse = {
+      levyPercent: Number(levy[2]), levyDueMilli: milli(levy[4]), levyPaidMilli: milli(levy[3]),
+      donationsMilli: donated[1] ? milli(donated[1]) : 0,
+      donationGoldMilli: donated[2] ? milli(donated[2]) : 0, moneyAfterMilli: milli(balance[1]),
+    };
+    const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;
+    expect(levy[5] ? milli(levy[5]) : 0).toBe(shortfall);
+  } else await expect(purse).toHaveCount(0);
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
