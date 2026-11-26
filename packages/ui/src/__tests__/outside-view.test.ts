@@ -34,3 +34,34 @@ it.each([['easy', 1725], ['normal', 1500]] as const)('includes %s law income whe
   expect(storageView(city, session).find(row => row.good === 'Wood')).toStrictEqual({ good: 'Wood', amount: 75, capacity: 80 });
   expect(session).toStrictEqual(before);
 });
+
+it.each(['normal', 'easy'] as const)('drops %s Warehouse capacity when End Week releases its worker', difficulty => {
+  const made = createCharacterLifeSession(2026, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Ana' }, difficulty);
+  if (!made.success) throw Error(made.error.message);
+  const session = made.value, { city } = session;
+  const society = city.society!;
+  const tile = (id: string) => city.tiles.find(t => t.id === id)!;
+  const stocks = city.world.settlements[city.world.activeSettlementId!].inventory;
+  stocks.gold = 120000;
+  stocks.wood = 75000;
+  society.classes.free -= 30;
+  society.classes.makers.common += 30;
+  society.debtPressure.makers = 100;
+  for (const id of ['field-1', 'spec-1']) Object.assign(tile(id).building!, { enabled: false, workers: 0 });
+  tile('plain-1').building!.workers = 4;
+  tile('spec-2').building = { typeId: 'warehouse', level: 1, workers: 1, enabled: true };
+  tile('slum-1').building = { typeId: 'slave-quarters', level: 1, workers: 0, enabled: true };
+
+  const before = JSON.stringify(session);
+  const result = executeCharacterLifeCommand(session, {
+    type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: city.world.week,
+  });
+  if (!result.success) throw Error(result.error.message);
+  expect(result.next.city.society!.classes.makers.common).toBe(49);
+  expect(result.next.city.tiles.find(t => t.id === 'spec-2')!.building!.workers).toBe(0);
+  expect(result.report!.outside!.spoiledMilli.wood).toBe(35000);
+  expect(result.report!.after.wood).toBe(40000);
+  const preview = storageView(city, session).find(row => row.good === 'Wood');
+  expect(JSON.stringify(session)).toBe(before);
+  expect(preview).toStrictEqual({ good: 'Wood', amount: 75, capacity: result.report!.after.wood / 1000 });
+});

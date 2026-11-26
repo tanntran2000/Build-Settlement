@@ -85,6 +85,7 @@ export function workforceSummary(city:TileTrialState):string {
 import { buildItemWeekContext, OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
 import { resolveWorkshopOperation } from '@haven/simulation';
 import { payNpcWages } from '../../simulation/src/household-week.js';
+import { runTileTrialWeek } from '../../simulation/src/tile-trial-week.js';
 import { formatMilli } from './milli-format.js';
 export function outsideRings(city:TileTrialState) {
  return ([1,2,3] as const).map(ring=>({ring,locked:ring>city.society!.wallRing,plots:OUTSIDE_PLOTS.filter(p=>p.ring===ring).map(p=>{
@@ -95,25 +96,45 @@ export function outsideRings(city:TileTrialState) {
  deepShaftAllowed:ring<=city.society!.wallRing&&!o.wild&&!o.deepShaft&&o.depositMilli!>0&&!!b&&['mine','quarry'].includes(b.typeId)&&city.society!.research.completed.includes('deep-mining')};
  })}));
 }
+function workshopOpening(city: TileTrialState, session?: CharacterLifeSessionState) {
+  if (!session) return { city, context: undefined };
+  const opening = payNpcWages(session).session;
+  return { city: opening.city, context: buildItemWeekContext(opening) };
+}
 export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
   try {
-    if (!session) return resolveWorkshopOperation(city);
-    const opening = payNpcWages(session).session;
-    return resolveWorkshopOperation(opening.city, buildItemWeekContext(opening));
+    const opening = workshopOpening(city, session);
+    return resolveWorkshopOperation(opening.city, opening.context);
   } catch {
     // A valid checkpoint can still exceed safe arithmetic when the week is simulated.
     return undefined;
   }
 }
+function staffedWarehouses(city: TileTrialState) {
+  return city.tiles.filter(({ building }) =>
+    building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+}
+function storageCapacityMilli(city: TileTrialState, session?: CharacterLifeSessionState): number {
+  const warehouses = staffedWarehouses(city);
+  if (!warehouses.length) return O.storage.baseMilli;
+  try {
+    const opening = workshopOpening(city, session);
+    const { operatingIds } = resolveWorkshopOperation(opening.city, opening.context);
+    if (!warehouses.some(tile => operatingIds.has(tile.id))) return O.storage.baseMilli;
+
+    // The week can release a funded Warehouse's workers before it caps stocks.
+    const projected = structuredClone(opening.city);
+    runTileTrialWeek(projected, opening.context);
+    return staffedWarehouses(projected).reduce((capacity, tile) =>
+      capacity + (operatingIds.has(tile.id) ? O.storage.warehousePerLevelMilli * tile.building!.level : 0),
+      Number(O.storage.baseMilli));
+  } catch {
+    return O.storage.baseMilli;
+  }
+}
 export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
  const society=city.society!,settlement=city.world.settlements[city.world.activeSettlementId!],stocks=settlement.inventory;
- const warehouses = city.tiles.filter(({ building }) =>
-   building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
- const funded = warehouses.length ? forecastWorkshopOperation(city, session)?.operatingIds : undefined;
- let capacity: number = O.storage.baseMilli;
- for (const tile of warehouses) {
-   if (funded?.has(tile.id)) capacity += O.storage.warehousePerLevelMilli * tile.building!.level;
- }
+ const capacity = storageCapacityMilli(city, session);
  const amounts={Food:stocks.food,Wheat:stocks.wheat,Wood:stocks.wood,Iron:stocks.iron,Stone:society.stocksMilli.stone,Wool:society.stocksMilli.wool,Cloth:society.stocksMilli.cloth,Herbs:society.stocksMilli.herbs,Goods:city.goodsStock!.amountMilli,Luxury:society.luxuryStockMilli};
  return Object.entries(amounts).map(([good,amount])=>({good,amount:amount/1000,capacity:capacity/1000}));
 }
