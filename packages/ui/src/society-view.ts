@@ -82,8 +82,9 @@ export function workforceSummary(city:TileTrialState):string {
  const pools=staffPools(city);
  return Object.entries(pools).map(([id,p])=>`${id[0].toUpperCase()+id.slice(1)} ${p.assigned}/${p.available}`).join(' · ')+' WF assigned';
 }
-import { OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type TileTrialReport, TILE_TRIAL_BALANCE } from '@haven/core';
-import { FARM_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI } from '@haven/simulation';
+import { buildItemWeekContext, OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { resolveWorkshopOperation } from '@haven/simulation';
+import { payNpcWages } from '../../simulation/src/household-week.js';
 import { formatMilli } from './milli-format.js';
 export function outsideRings(city:TileTrialState) {
  return ([1,2,3] as const).map(ring=>({ring,locked:ring>city.society!.wallRing,plots:OUTSIDE_PLOTS.filter(p=>p.ring===ring).map(p=>{
@@ -94,15 +95,24 @@ export function outsideRings(city:TileTrialState) {
  deepShaftAllowed:ring<=city.society!.wallRing&&!o.wild&&!o.deepShaft&&o.depositMilli!>0&&!!b&&['mine','quarry'].includes(b.typeId)&&city.society!.research.completed.includes('deep-mining')};
  })}));
 }
-export function storageView(city:TileTrialState) {
+export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
+  try {
+    if (!session) return resolveWorkshopOperation(city);
+    const opening = payNpcWages(session).session;
+    return resolveWorkshopOperation(opening.city, buildItemWeekContext(opening));
+  } catch {
+    // A valid checkpoint can still exceed safe arithmetic when the week is simulated.
+    return undefined;
+  }
+}
+export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
  const society=city.society!,settlement=city.world.settlements[city.world.activeSettlementId!],stocks=settlement.inventory;
- const profile=difficultyProfile(society.difficulty);
- let gold=stocks.gold+applyDifficulty(settlement.cohorts.reduce((n,c)=>n+c.count,0)*TILE_TRIAL_BALANCE.taxGoldPerResident,profile.taxBps);
- let capacity:number=O.storage.baseMilli;
- for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];
- const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Math.floor(gold/FARM_GOLD_PER_BATCH_MILLI)):0;
- const debit=Math.max(applyDifficulty(d.upkeepMilli*b.level,profile.upkeepBps),batches*FARM_GOLD_PER_BATCH_MILLI);if(gold<debit)continue;gold-=debit;
- if(b.typeId==='warehouse'&&b.workers===buildingWorkerCap(b.typeId,b.level))capacity+=O.storage.warehousePerLevelMilli*b.level;
+ const warehouses = city.tiles.filter(({ building }) =>
+   building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+ const funded = warehouses.length ? forecastWorkshopOperation(city, session)?.operatingIds : undefined;
+ let capacity: number = O.storage.baseMilli;
+ for (const tile of warehouses) {
+   if (funded?.has(tile.id)) capacity += O.storage.warehousePerLevelMilli * tile.building!.level;
  }
  const amounts={Food:stocks.food,Wheat:stocks.wheat,Wood:stocks.wood,Iron:stocks.iron,Stone:society.stocksMilli.stone,Wool:society.stocksMilli.wool,Cloth:society.stocksMilli.cloth,Herbs:society.stocksMilli.herbs,Goods:city.goodsStock!.amountMilli,Luxury:society.luxuryStockMilli};
  return Object.entries(amounts).map(([good,amount])=>({good,amount:amount/1000,capacity:capacity/1000}));

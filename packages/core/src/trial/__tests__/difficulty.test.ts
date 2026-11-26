@@ -13,9 +13,14 @@ it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps'] as
   'rejects non-identity Normal %s at its catalog path', field => {
     const data = structuredClone(tuningJson);
     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
-    expect(() => validateTuning(data)).toThrow(
-      'tuning.json#DIFFICULTY_TRIAL.profiles.normal.' + field + ': must be 10000',
-    );
+    let message: string | undefined;
+    try {
+      validateTuning(data);
+    } catch (error) {
+      if (!(error instanceof Error)) throw error;
+      message = error.message;
+    }
+    expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.normal.' + field + ': must be 10000');
   },
 );
 

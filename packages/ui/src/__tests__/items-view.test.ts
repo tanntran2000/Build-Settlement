@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { ITEM_CATALOG, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type ItemWeekReport, type TileTrialReport } from '@haven/core';
+import { executeCharacterLifeCommand } from '@haven/simulation';
 import { reportLetters } from '../report-letters.js';
 
 async function view() {
@@ -104,4 +105,35 @@ describe('C2 shops, recovery and item letters',()=>{
     expect(letters.find(l=>l.id==='quartermaster')!.rows.some(row=>row.label==='Material lost')).toBe(true);
     for(const letter of letters)expect(letter.rows.length).toBeLessThanOrEqual(4);
   });
+});
+
+it.each([['easy', 2], ['normal', 1]] as const)('forecasts %s Hospital recovery using weekly funding', async (difficulty, regen) => {
+  const v = await view();
+  const made = createCharacterLifeSession(2026, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Ana' }, difficulty);
+  if (!made.success) throw Error(made.error.message);
+  const session = made.value, { city } = session;
+  const tile = (id: string) => city.tiles.find(t => t.id === id)!;
+  session.player.character.health = 50;
+  city.society!.classes.free -= 10;
+  city.society!.classes.luminaries.common += 10;
+  city.world.settlements[city.world.activeSettlementId!].inventory.gold = 900;
+  city.society!.stocksMilli.herbs = 10000;
+  tile('field-1').building!.workers = 1;
+  tile('plain-1').building!.workers = 1;
+  tile('spec-1').building!.enabled = false;
+  for (const [id, typeId] of [['forest-1', 'logging'], ['ore-1', 'mine'], ['forest-2', 'logging']] as const) {
+    tile(id).building = { typeId, level: 1, workers: 0, enabled: true };
+  }
+  tile('service-1').building = { typeId: 'hospital', level: 1, workers: 2, enabled: true };
+
+  const before = structuredClone(session);
+  const result = executeCharacterLifeCommand(session, {
+    type: 'END_WEEK', expectedRevision: city.revision, expectedWeek: city.world.week,
+  });
+  if (!result.success) throw Error(result.error.message);
+  expect(result.report!.items!.regen).toBe(regen);
+  expect(result.next.player.character.health).toBe(50 + regen);
+  expect(v.potionShop(city, 'service-1')).toBe(false);
+  expect(v.healthLine(session)).toBe('Health 50 / 100 · Regen +' + regen + '/week');
+  expect(session).toStrictEqual(before);
 });

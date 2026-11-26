@@ -1,6 +1,7 @@
 import { ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, buildingWorkerCap, TRIAL_BUILDINGS, OUTSIDE_TRIAL, type ItemDefinition, type ItemsState, type Slot, type CharacterLifeSessionState, type Skill, type TileTrialState, type ItemWeekReport } from '@haven/core';
 import { CRAFT_TRIAL, RECIPES, type WorldNpc } from '@haven/core';
 import { resolveWorkshopOperation } from '@haven/simulation';
+import { forecastWorkshopOperation } from './society-view.js';
 
 export const itemTitle = (s: string) => s.replace(/(^|[-_ ])\w/g, part => part.replace(/[-_]/g,' ').toUpperCase());
 const everyday: Slot[] = ['earrings','necklace','top','bottom','shoes','ring','weapon','hand'];
@@ -48,7 +49,9 @@ export function potionShop(state:TileTrialState,tileId:string):boolean {
   return b.typeId==='hospital'&&b.workers===buildingWorkerCap(b.typeId,b.level)&&gold>=TRIAL_BUILDINGS.hospital.upkeepMilli*b.level&&state.society!.stocksMilli.herbs>=OUTSIDE_TRIAL.hospitalHerbsPerLevelMilli*b.level;
 }
 export function healthLine(session:CharacterLifeSessionState):string {
-  const hospital=session.city.tiles.some(t=>t.building?.typeId==='hospital'&&potionShop(session.city,t.id));
+  const hospitals = session.city.tiles.filter(t => t.building?.enabled && t.building.typeId === 'hospital');
+  const operation = hospitals.length ? forecastWorkshopOperation(session.city, session) : undefined;
+  const hospital = hospitals.some(t => operation?.byTile[t.id]?.operating);
   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
 }
 export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;

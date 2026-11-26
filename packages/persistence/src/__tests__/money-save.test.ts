@@ -32,10 +32,17 @@ it('refuses v13 JSON and detached store rows without rewriting either', () => {
     if (row.table === 'city') (row.value as typeof staged.city).society.rulesetId = 'tile-society-13';
   }
   const before = structuredClone(rows);
-  expect(deserializeCharacterLifeSave(bytes)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
+  const refusal = {
+    success: false,
+    error: {
+      code: 'INCOMPATIBLE_SAVE',
+      message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.',
+    },
+  };
+  expect(deserializeCharacterLifeSave(bytes)).toStrictEqual(refusal);
   const decoded = recordsToSession(rows);
   expect(decoded).toStrictEqual(historical);
-  expect(serializeCharacterLifeSave(decoded)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
+  expect(serializeCharacterLifeSave(decoded)).toStrictEqual(refusal);
   expect(rows).toStrictEqual(before);
   expect(readFileSync(fixture, 'utf8')).toBe(bytes);
 });
