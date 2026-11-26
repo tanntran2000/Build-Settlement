@@ -283,6 +283,7 @@
     {#snippet session()}
   <section class="card" aria-label="Planning checkpoints">
     <h3>Planning checkpoint</h3>
+    <p>Difficulty: {state.society?.difficulty === 'easy' ? 'Easy' : 'Normal'}</p>
     <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
     <details><summary>About checkpoints</summary>
     <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Checkpoints from older versions of Haven cannot be played.</p>

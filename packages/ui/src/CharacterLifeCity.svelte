@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
@@ -23,6 +23,7 @@
   export let onworkersinput: () => void;
   export let onworkersinvalid: () => void = () => {};
   export let oncommand: (type: string, fields?: Record<string, unknown>) => boolean;
+  $: upkeepBps = difficultyProfile(state.society!.difficulty).upkeepBps;
   let managementHeading: HTMLHeadingElement | undefined;
   let moveDrafts: Record<string, string> = {};
   let moveContext = '';
@@ -87,7 +88,7 @@
       {#if selected.building && definition}
         <h3>{definition.name} · Level {selected.building.level}</h3>
         {#if home}
-          <p>Household upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week, paid after city operations. Skipped when Gold runs short.</p>
+          <p>Household upkeep: {units(applyDifficulty(definition.upkeepMilli * selected.building.level, upkeepBps))} Gold/week, paid after city operations. Skipped when Gold runs short.</p>
           <section aria-label="Home residents">
             <p>Beds used: {residents.length} / {bedCount}</p>
             {#if residents.length === 0}
@@ -130,7 +131,7 @@
             {/if}
           </section>
         {:else}
-        <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
+        <p>Upkeep: {units(applyDifficulty(definition.upkeepMilli * selected.building.level, upkeepBps))} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
         {/if}
         {#if fixedEstate}
           <p>This estate is fixed. You can only upgrade its building.</p>
@@ -169,7 +170,7 @@
       <select id="trial-type" bind:value={typeId} disabled={locked}>
         {#each options as option}<option value={option.typeId} disabled={!option.available}>{option.label}</option>{/each}
       </select>
-      {#if chosen}<p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>{/if}
+      {#if chosen}<p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(applyDifficulty(chosen.upkeepMilli, upkeepBps))} Gold/week at level 1.</p>{/if}
       <button disabled={locked || !chosen || !options.some(o=>o.typeId===typeId&&o.available)} aria-describedby={managementError?.action === 'BUILD' || managementError?.action === 'REPLACE' ? 'trial-management-error' : undefined}
         onclick={() => oncommand(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
       {/if}
