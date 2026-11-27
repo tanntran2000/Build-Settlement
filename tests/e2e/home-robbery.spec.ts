@@ -151,7 +151,7 @@ test('rejects a robbery card one milli above Money and preserves the session and
     name: 'unbacked-robbery.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(rejected)),
   });
   await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]'))
-    .toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+    .toHaveText('This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.');
   expect(await exportLife(page)).toStrictEqual(before);
   expect(await readStoredRecords(page)).toStrictEqual(records);
   expect(await storedSaveText(page)).toBe(saved.text);

@@ -74,7 +74,7 @@ test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue'
  await start(page);const initial=await exportLife(page);await save(page);
  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
- const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+ const message='This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
  await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
 });
@@ -123,7 +123,7 @@ for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outco
  await holdStoreCompletion(page,outcome==='success'?'readwrite':'readonly');if(outcome==='failure')await injectWriteAbort(page,'throw');
  await button(page,'Save locally').click();await waitStoreCompletion(page);
  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
- const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+ const message='This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
  await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
  expect(await exportLife(page)).toEqual(initial);
