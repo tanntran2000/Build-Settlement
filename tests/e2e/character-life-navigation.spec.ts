@@ -424,7 +424,7 @@ test('age-17 checkpoint rejection preserves the valid profile and open adult dis
     delete profile.private; delete profile.traits.intimacyKnowledge;
     await go(page, 'session'); const before = await lifeUiSnapshot(page);
     await putFile(page, JSON.stringify(invalid));
-    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText('This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.');
     await expectCheckpointRejectionPreservesUi(page, before, initial.city.world.week);
     expect(await handle.evaluate(el => el.isConnected && el.hasAttribute('open'))).toBe(true);
     await expect(page.getByText('RejectedMinor', { exact: false })).toHaveCount(0);

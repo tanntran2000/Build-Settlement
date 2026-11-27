@@ -4,6 +4,7 @@ import { createIndexedDbGameStore } from './indexeddb-store.js';
 import { prepareNpcWorldSessionLoad } from './world-npc-session.js';
 export const CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY = 'haven.character-life-session-society.checkpoint.v1';
 export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+export const DAMAGED_CHECKPOINT_MESSAGE = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
 export function isPlayableCheckpoint(state: CharacterLifeSessionState): boolean { return state.city.society?.rulesetId === SOCIETY_RULESET; }
 type Failure = { success: false; message: string };
 const fail = (message: string): Failure => ({ success: false,message });

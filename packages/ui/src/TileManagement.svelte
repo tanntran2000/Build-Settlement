@@ -16,7 +16,7 @@
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
-  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
   export let onexit:()=>void;
@@ -212,7 +212,11 @@
       const text = await file.text();
       if (ticket !== importRead) return;
       const result = deserializeCharacterLifeSave(text);
-      if (!result.success || !isPlayableCheckpoint(result.state)) { checkpointError(OLD_CHECKPOINT_MESSAGE); return; }
+      if (!result.success) {
+        checkpointError(result.error.code === 'INCOMPATIBLE_SAVE' ? OLD_CHECKPOINT_MESSAGE : DAMAGED_CHECKPOINT_MESSAGE);
+        return;
+      }
+      if (!isPlayableCheckpoint(result.state)) { checkpointError(OLD_CHECKPOINT_MESSAGE); return; }
       loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
