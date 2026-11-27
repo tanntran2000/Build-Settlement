@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## Money M3 (home robbery card) — PR #108 G6 (2026-11-27 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** Money PR M3 of 3 is merged; the Money plan (M1–M3) is complete. Nothing new starts until the owner picks the next item.
+
+- **Merge.** PR #108 (`feat: Money M3 home robbery card`) was merged under G5 at 2026-11-27T14:30:04Z (GitHub account `tanntran2000`; the owner reported "Dot đã merge, bạn kiểm tra G6").
+  - Merge/main commit: `bcd643fcd66a787904989051b08e85e4304608a2` (parents `0b2b3a6`, `772e983`).
+  - Accepted head: `772e98305c0efbe4fe107ca2c5245d7529c47559`. Base: `0b2b3a6` (Money M2 #107 merged).
+- **Trees.** The merge tree `0ac0120539e03a9a1ed2e1ab05ce7dbc63428095` is identical to the accepted head tree `0ac0120539e03a9a1ed2e1ab05ce7dbc63428095`. Claude checked this locally.
+- **Main CI.** Quality Gate run [46016483284](https://github.com/tanntran2000/Build-Settlement/actions/runs/46016483284), job 140564822807 (push, checkout at the exact merge SHA), SUCCESS at 2026-11-27T14:47:02Z: 3,419 unit tests (154 files) and 430/430 Chromium smoke (15.6 min); the dependency audit reported 0 vulnerabilities.
+- **Pre-merge, at `772e983`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,419 unit), full smoke 430/430 with `CI=1` on the first run (2026-11-27T13:10Z–13:55Z, quiet machine).
+  - PR CI: quality-gate run 46011428162 SUCCESS (430 smoke, 17.5 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:1f734c65`: round 1 at `57c0cbe` FAIL (2 P1 lost End Week export check and partial Market matcher; 4 P2 card above Money soft-lock, At risk understated after a donation, End Week timing not shown, gates not quiet) → correction 14; round 2 at `772e983` PASS (1 P3).
+  - Builder (Sol 6.2 xhigh, `mcp:ab05d32b`): Step 0 HOLD → correction 12 (robbery values, Easy safe amount doubled, Money above the safe amount held while a card waits); M3.2 HOLD → correction 13 (checkpoint text after autosave); calibration measurement only (Good Normal 5 % first above safe at W15 with 3–4 robberies in 40 weeks); isolated no-draw End Week cost 0.0001 ms, under the 0.05 ms owner rule.
+- **Evidence.** [`docs/verification/money-pr108/`](https://github.com/tanntran2000/Build-Settlement/tree/9f743028aa8e5d3e0a9f7625de22f3b3bcb3b73d/docs/verification/money-pr108) on branch `docs/money-difficulty-design`, at `9f74302`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Thiết kế Money"; "Duyệt thiết kế"; "Thẻ khủng hoảng có lựa chọn (Recommended)"; "Duyệt, giao M1"; "Start M3 Step 0";
+  - Plan corrections: 12 "Duyệt bộ số (Recommended)", "Easy an toàn gấp đôi", "Khóa phần bị đe dọa (Recommended)", "Duyệt tất cả (Recommended)"; 13 "Duyệt sửa 1 dòng (Recommended)"; 14 "Từ chối file lỗi (Recommended)", "Hiện số của thẻ (Recommended)", "Đo riêng rồi chấp nhận (Recommended)", "Duyệt sửa (Recommended)";
+  - Merge report: "Dot đã merge, bạn kiểm tra G6".
+- **Disclosed.**
+  - Astra failed once before the PASS. Correction 14 changed one earlier owner decision: the v14 reader now refuses a robbery card above Money ("keep the reader as it is" in correction 12); no ruleset bump, no existing save affected.
+  - Builder smoke at `57c0cbe` and `772e983` first ran 426/427 and 429/430 (fulfillment case `character-life-navigation.spec.ts:225` at its existing 60 s timeout), unchanged retries passed (50.2 s, 57.1 s); Claude's run and both CI runs passed first time. No timeout changed.
+  - The evidence branch has an empty commit `12fb40e` before `9f74302` (an index list written with CRLF was ignored); `9f74302` holds all 210 files.
+  - Easy still has more robberies than Normal with the doubled safe amount (197 vs 165 per 1,800 closes); measurement only, no retune.
+  - Open: Astra R2 P3, a refused current-version import shows the existing old-version alert; playtest risks R-026, R-028 (fulfillment smoke case up to 57.1 s of its 60 s timeout), R-031. Smoke runs on Chromium only. Large files and the T3 settings backup stay local, listed by SHA-256 in the evidence.
+
 ## Money M2 (Player Money purse, weekly levy, donations) — PR #107 G6 (2026-11-27 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** Money PR M2 of 3 is merged. Next in queue: M3 (home robbery), only when the owner starts it.
