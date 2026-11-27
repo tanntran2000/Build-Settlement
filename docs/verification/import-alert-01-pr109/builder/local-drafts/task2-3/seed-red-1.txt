@@ -1,0 +1,19 @@
+IMPORT-ALERT-01 seed-red UTC=2026-11-27T15:18:25+00:00
+HEAD bcd643fcd66a787904989051b08e85e4304608a2
+tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## HEAD (no branch)
+
+>>> git switch -c fix/import-alert-copy bcd643fcd66a787904989051b08e85e4304608a2
+UTC start 2026-11-27T15:18:26+00:00
+Switched to a new branch 'fix/import-alert-copy'
+
+<<< exit=0 elapsed_seconds=0.071 UTC end 2026-11-27T15:18:26+00:00
+RED input verified. Spec SHA-256 854c4c3ea378ed06b4c7821571a2dcbf3a1c5b2e83283c60b3824c2c89ba993c UTC=2026-11-27T15:18:26+00:00
+HEAD bcd643fcd66a787904989051b08e85e4304608a2
+tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## fix/import-alert-copy
+?? tests/e2e/import-alert.spec.ts

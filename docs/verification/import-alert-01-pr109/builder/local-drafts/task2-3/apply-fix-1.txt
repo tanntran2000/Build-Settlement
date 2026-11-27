@@ -1,0 +1,24 @@
+IMPORT-ALERT-01 apply-fix UTC=2026-11-27T15:19:39+00:00
+HEAD bcd643fcd66a787904989051b08e85e4304608a2
+tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## fix/import-alert-copy
+?? tests/e2e/import-alert.spec.ts
+packages/ui/src/TileManagement.svelte proposed canonical SHA-256 9829d762d88455e44621aaf67c4570ee2b79ab1a6e859a1f22840dcb8e738034
+packages/ui/src/character-life-session.ts proposed canonical SHA-256 5613dead3f2a147f74bd7a925da7f4d69209942706f73a42fcd8c965f964ff65
+tests/e2e/home-robbery.spec.ts proposed canonical SHA-256 10f7c3155b88b46cffa2f219b2b637b5167a52bd1b1efce052204e6a8eea735b
+tests/e2e/character-life-navigation.spec.ts proposed canonical SHA-256 982a502a4e50355b6e0ff81912f24edf4cba50f4e47999086f2860d580f7053e
+tests/e2e/storage.spec.ts proposed canonical SHA-256 79848192816b1416e33909ad16c9f3bb7cd74d3ed1f1c617eef7d92c851572d3
+GREEN packet applied and verified. UTC=2026-11-27T15:19:40+00:00
+HEAD bcd643fcd66a787904989051b08e85e4304608a2
+tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## fix/import-alert-copy
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/character-life-session.ts
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/home-robbery.spec.ts
+ M tests/e2e/storage.spec.ts
+?? tests/e2e/import-alert.spec.ts

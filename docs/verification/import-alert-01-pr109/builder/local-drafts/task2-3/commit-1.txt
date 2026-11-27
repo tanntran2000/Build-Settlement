@@ -1,0 +1,50 @@
+IMPORT-ALERT-01 commit UTC=2026-11-27T15:27:43+00:00
+HEAD bcd643fcd66a787904989051b08e85e4304608a2
+tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## fix/import-alert-copy
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/character-life-session.ts
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/home-robbery.spec.ts
+ M tests/e2e/storage.spec.ts
+?? tests/e2e/import-alert.spec.ts
+
+>>> git add -- packages/ui/src/TileManagement.svelte packages/ui/src/character-life-session.ts tests/e2e/home-robbery.spec.ts tests/e2e/character-life-navigation.spec.ts tests/e2e/storage.spec.ts tests/e2e/import-alert.spec.ts
+UTC start 2026-11-27T15:27:43+00:00
+warning: in the working copy of 'tests/e2e/home-robbery.spec.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/import-alert.spec.ts', LF will be replaced by CRLF the next time Git touches it
+
+<<< exit=0 elapsed_seconds=0.077 UTC end 2026-11-27T15:27:43+00:00
+
+>>> git diff --cached --check
+UTC start 2026-11-27T15:27:44+00:00
+
+<<< exit=0 elapsed_seconds=0.067 UTC end 2026-11-27T15:27:44+00:00
+
+>>> git diff --cached --stat
+UTC start 2026-11-27T15:27:44+00:00
+ packages/ui/src/TileManagement.svelte       |   8 ++-
+ packages/ui/src/character-life-session.ts   |   1 +
+ tests/e2e/character-life-navigation.spec.ts |   2 +-
+ tests/e2e/home-robbery.spec.ts              |   2 +-
+ tests/e2e/import-alert.spec.ts              | 101 ++++++++++++++++++++++++++++
+ tests/e2e/storage.spec.ts                   |   4 +-
+ 6 files changed, 112 insertions(+), 6 deletions(-)
+
+<<< exit=0 elapsed_seconds=0.064 UTC end 2026-11-27T15:27:44+00:00
+
+>>> git commit -m "fix(ui): import alert for damaged checkpoints"
+UTC start 2026-11-27T15:27:44+00:00
+[fix/import-alert-copy d1753a4] fix(ui): import alert for damaged checkpoints
+ 6 files changed, 112 insertions(+), 6 deletions(-)
+ create mode 100644 tests/e2e/import-alert.spec.ts
+
+<<< exit=0 elapsed_seconds=1.097 UTC end 2026-11-27T15:27:45+00:00
+Commit verified against accepted packet. UTC=2026-11-27T15:27:46+00:00
+HEAD d1753a41e3c9c8ddcb12b651edc861de30290067
+tree 17ba075806d8551634e9c3cea18e85b8f72ef59c
+origin/main bcd643fcd66a787904989051b08e85e4304608a2
+git status --short --branch
+## fix/import-alert-copy

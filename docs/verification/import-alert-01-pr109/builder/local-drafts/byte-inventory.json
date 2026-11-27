@@ -1,0 +1,286 @@
+{
+  "workPackage": "IMPORT-ALERT-01",
+  "phase": "Task 1 Step 0 HOLD",
+  "baseCommit": "bcd643fcd66a787904989051b08e85e4304608a2",
+  "baseTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095",
+  "bindingPlan": {
+    "file": "binding-plan-a486150.md",
+    "commit": "a486150",
+    "sha256": "d6cb743778bff9e6a6c0275d3fbf2fd10cd19264b4e1bd4f8f78b5c384402fef"
+  },
+  "encoding": "UTF-8 with LF for canonical Git blobs. Original BOM and worktree line endings are recorded per file. The proposed edits preserve every existing BOM.",
+  "byteOffsetBasis": "Zero-based offsets in the canonical base Git blob. Each beforeUtf8 and afterUtf8 value is the exact byte sequence when encoded as UTF-8. Copy all other base bytes unchanged. For an added file, afterUtf8 is the entire proposed blob.",
+  "files": [
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "operation": "modify",
+      "allowlist": "Explicit product file.",
+      "gitBlobEol": "LF",
+      "utf8Bom": false,
+      "observedWorktreeEol": "CRLF",
+      "baseGitBlob": "b5b7a3312855b1187e9e9061d800d9b8b49d7c16",
+      "base": {
+        "bytes": 21319,
+        "sha256": "6c77e6c3c6c48ba2bb22d5e947f584ed0344fad27db4f6fecf1c988780663d9c"
+      },
+      "proposed": {
+        "bytes": 21503,
+        "sha256": "9829d762d88455e44621aaf67c4570ee2b79ab1a6e859a1f22840dcb8e738034"
+      },
+      "edits": [
+        {
+          "baseLine": 19,
+          "reason": "Import the named alert constant beside OLD_CHECKPOINT_MESSAGE.",
+          "baseByteOffset": 1231,
+          "before": {
+            "bytes": 204,
+            "sha256": "c43e02a5347d708c7b61d46b9b3703f14250e05ea6e7d64b5d83ddeb8bf6947a"
+          },
+          "after": {
+            "bytes": 232,
+            "sha256": "e6b94f4d3fb0d4967d608f4c0bba39447a60c3133540187dc119020cfc7bd428"
+          },
+          "beforeUtf8": "  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';\n",
+          "afterUtf8": "  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';\n"
+        },
+        {
+          "baseLine": 215,
+          "reason": "Map rejected decoder results by code and keep the separate playability refusal.",
+          "baseByteOffset": 12475,
+          "before": {
+            "bytes": 119,
+            "sha256": "62c3e9d54b9ae8f01c5e3fd615512ac323a8d44b9be5130f57979c89e262da9f"
+          },
+          "after": {
+            "bytes": 275,
+            "sha256": "5c62b7ce3c2661daecad9b2425ef81ebaf3ff605162e57ea26726b3dd19b5a33"
+          },
+          "beforeUtf8": "      if (!result.success || !isPlayableCheckpoint(result.state)) { checkpointError(OLD_CHECKPOINT_MESSAGE); return; }\n",
+          "afterUtf8": "      if (!result.success) {\n        checkpointError(result.error.code === 'INCOMPATIBLE_SAVE' ? OLD_CHECKPOINT_MESSAGE : DAMAGED_CHECKPOINT_MESSAGE);\n        return;\n      }\n      if (!isPlayableCheckpoint(result.state)) { checkpointError(OLD_CHECKPOINT_MESSAGE); return; }\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/character-life-session.ts",
+      "operation": "modify",
+      "allowlist": "Explicit product file.",
+      "gitBlobEol": "LF",
+      "utf8Bom": true,
+      "observedWorktreeEol": "CRLF",
+      "baseGitBlob": "1004ff6356043d56701384c59c5b8ef200bc0ef2",
+      "base": {
+        "bytes": 6804,
+        "sha256": "3d71510829620e63aeb7b849eee387f6089d87d279e4e35b874c62a7fe24eb96"
+      },
+      "proposed": {
+        "bytes": 6943,
+        "sha256": "5613dead3f2a147f74bd7a925da7f4d69209942706f73a42fcd8c965f964ff65"
+      },
+      "edits": [
+        {
+          "baseLine": 6,
+          "reason": "Export the exact approved sentence beside the existing old-version constant.",
+          "baseByteOffset": 558,
+          "before": {
+            "bytes": 138,
+            "sha256": "20d9dac1b5f0d71288a943534c30a40df97754c5261a030fdd7e41553f949d28"
+          },
+          "after": {
+            "bytes": 277,
+            "sha256": "c4463242e6bb3b456ca784708ac6fa21a68b24a4f2cc238a8ed70cf8be6f93a4"
+          },
+          "beforeUtf8": "export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';\n",
+          "afterUtf8": "export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';\nexport const DAMAGED_CHECKPOINT_MESSAGE = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/home-robbery.spec.ts",
+      "operation": "modify",
+      "allowlist": "Explicit e2e line.",
+      "gitBlobEol": "LF",
+      "utf8Bom": false,
+      "observedWorktreeEol": "LF",
+      "baseGitBlob": "88aa1844dfb21ac7e6c8f8852bcc9c2a35d1e5d4",
+      "base": {
+        "bytes": 14615,
+        "sha256": "e575b45dab57b48a9dfe8350a34e4107f3542c2b0d4492489e001659248c7087"
+      },
+      "proposed": {
+        "bytes": 14612,
+        "sha256": "10f7c3155b88b46cffa2f219b2b637b5167a52bd1b1efce052204e6a8eea735b"
+      },
+      "edits": [
+        {
+          "baseLine": 154,
+          "reason": "Current-version purse state returns INVALID_SAVE_STATE.",
+          "baseByteOffset": 8574,
+          "before": {
+            "bytes": 117,
+            "sha256": "8b9b1012acc9183358d5806b52c2896e6f72f2f27de9dbf8a3b548e5fa490005"
+          },
+          "after": {
+            "bytes": 114,
+            "sha256": "dbb741eea97a349caab89ab105ed2c57a96ac28751c30e1c20047b998731e3eb"
+          },
+          "beforeUtf8": "    .toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');\n",
+          "afterUtf8": "    .toHaveText('This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.');\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.spec.ts",
+      "operation": "modify",
+      "allowlist": "WP conditional clause for a proven in-game assertion of a non-INCOMPATIBLE_SAVE refusal.",
+      "gitBlobEol": "LF",
+      "utf8Bom": false,
+      "observedWorktreeEol": "CRLF",
+      "baseGitBlob": "1eabd5324f0bec9938c4bb3d68a26b2de9c68411",
+      "base": {
+        "bytes": 107758,
+        "sha256": "5bde22901a5268d3edde1877cdf888fc4cecc2a5cf52ac63457660c9af48c9ee"
+      },
+      "proposed": {
+        "bytes": 107755,
+        "sha256": "982a502a4e50355b6e0ff81912f24edf4cba50f4e47999086f2860d580f7053e"
+      },
+      "edits": [
+        {
+          "baseLine": 427,
+          "reason": "Current-version Player/NPC age-17 state returns INVALID_SAVE_STATE.",
+          "baseByteOffset": 30985,
+          "before": {
+            "bytes": 204,
+            "sha256": "6b37ee86ffd2d946b2dc79ca102e1c6381466142713fcaa30784e4c5d5c14c6d"
+          },
+          "after": {
+            "bytes": 201,
+            "sha256": "fcc17781017b894701308655d7b33f6d3496d39e9e4d5ac0d9cd8d1e2e599a30"
+          },
+          "beforeUtf8": "    await expect(page.getByTestId('life-shell').locator('[data-life-error][role=\"alert\"]')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');\n",
+          "afterUtf8": "    await expect(page.getByTestId('life-shell').locator('[data-life-error][role=\"alert\"]')).toHaveText('This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.');\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/storage.spec.ts",
+      "operation": "modify",
+      "allowlist": "WP conditional clause for proven in-game assertions of a non-INCOMPATIBLE_SAVE refusal.",
+      "gitBlobEol": "LF",
+      "utf8Bom": false,
+      "observedWorktreeEol": "CRLF",
+      "baseGitBlob": "df1db975c2990e320d2678dc58e4fed4118b7a53",
+      "base": {
+        "bytes": 21348,
+        "sha256": "5a12d81ff8f2ea64d15669a86ab1df65273bea1332f4c6cf5afaa7b5797ab6ce"
+      },
+      "proposed": {
+        "bytes": 21342,
+        "sha256": "79848192816b1416e33909ad16c9f3bb7cd74d3ed1f1c617eef7d92c851572d3"
+      },
+      "edits": [
+        {
+          "baseLine": 77,
+          "reason": "Malformed JSON returns INVALID_SAVE in the pending Continue test. This literal is read by lines 78 and 79.",
+          "baseByteOffset": 10164,
+          "before": {
+            "bytes": 115,
+            "sha256": "95d47a8d2d6cd11523deb80da214165e5277be984f29c165c4bb0c52d632b5a9"
+          },
+          "after": {
+            "bytes": 112,
+            "sha256": "5de2664289fc9a485d324f135c6d791f64b8448dd37a3c3148dda488eac4b8de"
+          },
+          "beforeUtf8": " const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';\n",
+          "afterUtf8": " const message='This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';\n"
+        },
+        {
+          "baseLine": 126,
+          "reason": "Malformed JSON returns INVALID_SAVE in both pending Save outcomes. This literal is read by lines 127 and 128.",
+          "baseByteOffset": 14577,
+          "before": {
+            "bytes": 115,
+            "sha256": "95d47a8d2d6cd11523deb80da214165e5277be984f29c165c4bb0c52d632b5a9"
+          },
+          "after": {
+            "bytes": 112,
+            "sha256": "5de2664289fc9a485d324f135c6d791f64b8448dd37a3c3148dda488eac4b8de"
+          },
+          "beforeUtf8": " const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';\n",
+          "afterUtf8": " const message='This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/import-alert.spec.ts",
+      "operation": "add",
+      "allowlist": "One new e2e case file for Review Focus 1–3.",
+      "gitBlobEol": "LF",
+      "utf8Bom": false,
+      "base": null,
+      "proposed": {
+        "bytes": 4697,
+        "sha256": "854c4c3ea378ed06b4c7821571a2dcbf3a1c5b2e83283c60b3824c2c89ba993c"
+      },
+      "afterUtf8": "import { readFile } from 'node:fs/promises';\nimport { expect, test, type Page } from '@playwright/test';\nimport { go, importLife, makeLife } from './character-life-navigation.helpers.ts';\nimport { readStoredRecords, storedSaveText } from './storage.helpers.ts';\n\nconst oldMessage = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';\nconst damagedMessage = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';\nconst checkpointInput = (page: Page) => page.getByLabel('Import checkpoint', { exact: true });\nconst importAlert = (page: Page) => page.getByTestId('life-shell').locator('[data-life-error][role=\"alert\"]');\n\ntest.use({ viewport: { width: 1280, height: 900 } });\n\ntest.beforeEach(async ({ page }) => {\n  const session = makeLife(40);\n  session.player.purse.moneyMilli = 4000;\n  await page.goto('/');\n  await expect(page.getByRole('heading', { name: 'HAVEN', exact: true })).toBeVisible();\n  await importLife(page, session);\n  await go(page, 'session');\n  await page.getByRole('button', { name: 'Save locally', exact: true }).click();\n  await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toHaveText('Saved in this browser.');\n});\n\nasync function exportCheckpointText(page: Page) {\n  const pending = page.waitForEvent('download');\n  await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();\n  const download = await pending;\n  return readFile((await download.path())!, 'utf8');\n}\n\nfor (const { title, file, message } of [\n  {\n    title: 'in-game import of a real v13 checkpoint keeps the older-version alert',\n    file: () => readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json', import.meta.url)),\n    message: oldMessage,\n  },\n  {\n    title: 'in-game import of malformed JSON explains that the game was preserved',\n    file: () => Buffer.from('{'),\n    message: damagedMessage,\n  },\n  {\n    title: 'in-game import of a robbery card one milli above Money explains that the game was preserved',\n    file: (before: string) => {\n      const invalid = JSON.parse(before);\n      const purse = invalid.state.player.purse;\n      purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: purse.moneyMilli + 1 };\n      return Buffer.from(JSON.stringify(invalid));\n    },\n    message: damagedMessage,\n  },\n  {\n    title: 'in-game import of a file over 1 MiB keeps the size alert',\n    file: () => Buffer.alloc(1024 * 1024 + 1, 0x20),\n    message: 'Checkpoint exceeds the 1 MiB limit.',\n  },\n]) {\n  test(title, async ({ page }) => {\n    const before = await exportCheckpointText(page);\n    const records = await readStoredRecords(page);\n    const storedText = await storedSaveText(page);\n    expect(storedText).not.toBeNull();\n\n    const input = checkpointInput(page);\n    await expect(input).toBeEnabled();\n    await input.setInputFiles({ name: 'rejected.json', mimeType: 'application/json', buffer: await file(before) });\n    await expect(importAlert(page)).toHaveText(message);\n\n    expect(await exportCheckpointText(page)).toBe(before);\n    expect(await readStoredRecords(page)).toStrictEqual(records);\n    expect(await storedSaveText(page)).toBe(storedText);\n  });\n}\n\ntest('in-game import during Report keeps the phase alert', async ({ page }) => {\n  const before = await exportCheckpointText(page);\n  const records = await readStoredRecords(page);\n  const storedText = await storedSaveText(page);\n  expect(storedText).not.toBeNull();\n\n  await page.getByTestId('life-end-week').click();\n  const shell = page.getByTestId('life-shell');\n  const report = shell.locator('[data-life-view=\"reports\"]');\n  await expect(report).toBeVisible();\n  const reportText = await report.textContent();\n  const revision = await shell.getAttribute('data-revision');\n\n  await go(page, 'session');\n  const input = checkpointInput(page);\n  await expect(input).toBeDisabled();\n  // Exercise the handler guard behind the disabled Report-phase control.\n  await input.evaluate(element => { (element as HTMLInputElement).disabled = false; });\n  await input.setInputFiles({ name: 'planning.json', mimeType: 'application/json', buffer: Buffer.from(before) });\n  await expect(importAlert(page)).toHaveText('Choose Plan next week before importing.');\n  await expect(page.getByRole('button', { name: 'Export checkpoint', exact: true })).toBeDisabled();\n  expect(await shell.getAttribute('data-revision')).toBe(revision);\n  await go(page, 'reports');\n  expect(await report.textContent()).toBe(reportText);\n  expect(await readStoredRecords(page)).toStrictEqual(records);\n  expect(await storedSaveText(page)).toBe(storedText);\n});\n"
+    }
+  ],
+  "existingChangedExpectationLines": [
+    "tests/e2e/home-robbery.spec.ts:154",
+    "tests/e2e/character-life-navigation.spec.ts:427",
+    "tests/e2e/storage.spec.ts:77",
+    "tests/e2e/storage.spec.ts:126"
+  ],
+  "outsideAllowlist": [],
+  "oldFixture": {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json",
+    "bytes": 17422,
+    "sha256": "835f61f3deb075a0542227e2810565a810fe18184b4fb8764c2913dd28149c97",
+    "format": "haven.character-life-session.save",
+    "schemaVersion": 1,
+    "envelopeRuleset": "tile-society-13",
+    "cityRuleset": "tile-society-13"
+  },
+  "expectedRed": {
+    "baseCommit": "bcd643fcd66a787904989051b08e85e4304608a2",
+    "execution": "predicted only",
+    "failedCases": [
+      "malformed JSON (INVALID_SAVE)",
+      "robbery excess +1 milli (INVALID_SAVE_STATE)"
+    ],
+    "expected": "This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.",
+    "received": "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+  },
+  "syntaxChecks": [
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "scope": "script block",
+      "exitCode": 0
+    },
+    {
+      "path": "packages/ui/src/character-life-session.ts",
+      "scope": "whole file",
+      "exitCode": 0
+    },
+    {
+      "path": "tests/e2e/home-robbery.spec.ts",
+      "scope": "whole file",
+      "exitCode": 0
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.spec.ts",
+      "scope": "whole file",
+      "exitCode": 0
+    },
+    {
+      "path": "tests/e2e/storage.spec.ts",
+      "scope": "whole file",
+      "exitCode": 0
+    },
+    {
+      "path": "tests/e2e/import-alert.spec.ts",
+      "scope": "whole file",
+      "exitCode": 0
+    }
+  ]
+}

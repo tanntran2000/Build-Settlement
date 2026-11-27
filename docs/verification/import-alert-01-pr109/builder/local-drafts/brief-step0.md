@@ -1,0 +1,17 @@
+IMPORT-ALERT-01 Builder: Task 1 Step 0 preflight only (in-game checkpoint import alert copy). No product or test edit, no commit, push, PR or merge in this turn.
+
+Context: you are the IMPORT-ALERT-01 Builder (Sol 6.2). Claude is Orchestrator and Tester; Astra 6.2 reviews; only dot or the owner merges. Money M3 (#108) is merged: main bcd643fcd66a787904989051b08e85e4304608a2 (tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095), main CI green (3,419 unit, 430 smoke, audit 0). Astra's M3 round 2 P3: an in-game import refused for a damaged or edited current-version file shows OLD_CHECKPOINT_MESSAGE ("This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.") although the session is kept.
+
+Owner (Tân), verbatim: "Fix import alert"; copy choice "Câu ngắn rõ (Recommended)"; WP approval "Duyệt, giao Builder".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, detached at bcd643f (clean). Read only for Step 0: do not switch or create branches or worktrees, install, build or start servers. `git fetch origin` is fine. No smoke in Step 0. graphify-out/ there is a code graph of 0b2b3a6 (older than main; callers only, never proof).
+
+Binding WP (read fully): C:/Users/Admin/.t3/local-drafts/import-alert-01/binding-plan-a486150.md (SHA-256 d6cb743778bff9e6a6c0275d3fbf2fd10cd19264b4e1bd4f8f78b5c384402fef), committed as docs/superpowers/plans/2026-11-27-import-alert-copy.md at a486150 on docs/money-difficulty-design. Decision: in `importCheckpoint` (packages/ui/src/TileManagement.svelte:215) keep OLD_CHECKPOINT_MESSAGE for `INCOMPATIBLE_SAVE` and for a read that fails `isPlayableCheckpoint`; every other failure shows exactly `This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.` as a named constant in packages/ui/src/character-life-session.ts. Out of scope: title screen import, Continue, persistence messages. Also read AGENTS.md (Hard Laws, §4 anti-loop, §6 evidence).
+
+Task 1 — list, each with file:line and current text:
+1. Every path from the in-game Import checkpoint control to an alert, with each failure code `deserializeCharacterLifeSave` can return (packages/persistence/src/character-life-save.ts) and which message the Decision gives it. Confirm the existing Report-phase and over-1-MiB messages stay as they are.
+2. Every e2e and unit assertion of OLD_CHECKPOINT_MESSAGE or its literal text (grep shows about 30 lines across tests/e2e and packages/*/__tests__) that is reached through the in-game import, the failure code behind it, and whether it changes. For each changed line give the exact after-text. Lines reached through the title screen, Continue or persistence directly do not change; say so per line.
+3. The exact proposed bytes for the two product files and the new e2e cases (Review Focus 1–3 of the WP, desktop 1280, exact `toHaveText` on the alert the existing import tests read; session export, IndexedDB records and stored checkpoint text compared before and after), and the RED you expect on bcd643f.
+4. Any file outside the WP allowlist and why.
+
+Then HOLD once with C:/Users/Admin/.t3/local-drafts/import-alert-01/STEP0-HOLD.md (UTF-8, no `?` in place of non-ASCII characters) plus a JSON byte inventory, README and SHA256SUMS.txt. Put any owner decision in one numbered section at the top with options and your recommendation. Reply with a short summary and the path. Anti-loop: anything still failing after 2 attempts is a HOLD; a queued message never overrides a HOLD.

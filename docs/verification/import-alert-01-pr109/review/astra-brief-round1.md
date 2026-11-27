@@ -1,0 +1,27 @@
+IMPORT-ALERT-01 Astra 6.2: independent review of the in-game import alert fix (damaged or changed checkpoint files no longer show the old-version alert). Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch fix/import-alert-copy (pushed, no PR yet), head d1753a41e3c9c8ddcb12b651edc861de30290067, tree 17ba075806d8551634e9c3cea18e85b8f72ef59c, one commit `fix(ui): import alert for damaged checkpoints` on main bcd643fcd66a787904989051b08e85e4304608a2 (tree 0ac0120539e03a9a1ed2e1ab05ce7dbc63428095). 6 files, +112/−6.
+- Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first.
+
+Origin: your own Money M3 round 2 P3 (C:/Users/Admin/.t3/local-drafts/money-prM3/astra-review/astra-round2.md).
+
+Owner (Tân), verbatim: "Fix import alert"; copy choice "Câu ngắn rõ (Recommended)"; WP approval "Duyệt, giao Builder".
+
+Binding documents (read fully)
+- WP: C:/Users/Admin/.t3/local-drafts/import-alert-01/binding-plan-a486150.md (SHA-256 d6cb743778bff9e6a6c0275d3fbf2fd10cd19264b4e1bd4f8f78b5c384402fef), committed as docs/superpowers/plans/2026-11-27-import-alert-copy.md at a486150.
+- Step 0 packet: STEP0-HOLD.md (f348e6f5dc2f43c7c50a0e07a1830a905d8a854385bd96ee12ec640951bc449f), byte-inventory.json (de1f918983586f650f2c80cd5fb0d8ac6ebca94f67857360ce4a74641c465bed), and the Orchestrator answer step0-answer.md, all in C:/Users/Admin/.t3/local-drafts/import-alert-01/.
+- Builder evidence: C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/ — README.md (da2d8296c0cc1535d6e59ba56685837b6ff7d8f1263affb39793a32ad61442f3), SHA256SUMS.txt (0a72b68068979deaf6e8dad5de2de92ae3f7ac1939d14007013f20d8c30dbac1, 133 entries), red-1.txt, green-1.txt, gates-1.txt, push-1.txt.
+- AGENTS.md.
+
+Check, at minimum
+1. Scope: the six paths match the byte inventory and the WP allowlist; nothing else changed; no loosened assertion, removed case, partial matcher, new timeout or skip.
+2. Mapping: in `importCheckpoint`, INCOMPATIBLE_SAVE and a non-playable read keep OLD_CHECKPOINT_MESSAGE exactly; INVALID_SAVE, INVALID_SAVE_STATE and SAVE_TOO_LARGE give exactly "This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved."; the Report-phase, over-1-MiB `File.size`, thrown-read and post-decode load messages are unchanged. Is any real old-version file now told it is damaged, or any damaged current file still told it is old?
+3. The four changed existing lines (home-robbery:154, character-life-navigation:427, storage:77 and :126) are in-game imports of INVALID_SAVE / INVALID_SAVE_STATE and still test what they were written for; every other OLD assertion (title screen, Continue, INCOMPATIBLE imports) is untouched.
+4. New tests/e2e/import-alert.spec.ts: five 1280 cases with exact toHaveText; the session export, IndexedDB records and stored checkpoint text are compared exactly before and after; the Report case's forced handler entry is a fair test of the guard; RED on bcd643f failed only the two DAMAGED cases at toHaveText.
+5. Out of scope stays out: title-screen import and Continue keep their current text; English only; no game names; LAW-02 (UI only) and LAW-06 (refused import leaves session and stored save unchanged).
+6. Evidence: gates 1–7 exit 0 at d1753a4 (3,419 unit), full CI=1 smoke 435/435 in a quiet window; logs name head and tree; SHA256SUMS.txt matches.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/import-alert-01/astra-review/astra-round1.md (UTF-8, no `?` in place of non-ASCII characters): head and tree checked, per-file ledger, findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.

@@ -1,0 +1,40 @@
+IMPORT-ALERT-01 Builder 6.2 xhigh
+mcp:82ded759-92ee-4717-a194-4f6610e45d32  completed  codex/gpt-6.2-sol
+
+[assistant]
+RED matched the packet on `bcd643f`. Malformed JSON and the edited robbery card both failed at `toHaveText` because the alert still said the checkpoint was old. The v13, Report, and oversized-file cases passed. I’ll apply the packed fix and run the four affected specs.
+
+[assistant]
+The fix and four expectation updates match the accepted byte inventory. The focused Chromium run has 104 cases across the four specs. So far, the age-17 checkpoint rejection and the navigation cases for malformed JSON and incompatible schema have passed.
+
+[assistant]
+All 104 focused Chromium cases passed, including all five new cases and the storage race assertions. I’ll commit the six verified files now, then measure CPU load before starting the gates on that commit.
+
+[assistant]
+Gates 1–7 passed on `d1753a4`, including all 3,419 unit tests. CPU averaged 3.88% before the gates and 4.31% before smoke, with both peaks below 20%. The full 435-case Chromium run is underway.
+
+[assistant]
+Full smoke has passed the Character Life boundary test and the 1600 px and 1280 px accessibility baselines. The smaller-viewport baselines are still running, and the suite has reported no failures so far.
+
+[assistant]
+All four viewport accessibility baselines passed. Full smoke is now in the navigation cases, with no failures reported so far. The tested head is still `d1753a4`.
+
+[assistant]
+All five new import-alert cases passed again in full smoke, along with the existing robbery regression. The suite has completed 184 of 435 cases with no failures reported.
+
+[assistant]
+Full smoke is past 289 of 435 cases. The storage race tests passed, including the checks that a pending Save or Continue can’t overwrite the newer import alert.
+
+[assistant]
+Full smoke passed all 435 cases on `d1753a4`. I’ll push that verified commit to `origin/fix/import-alert-copy`, confirm the remote SHA, and seal the evidence.
+
+[assistant]
+Pushed `fix/import-alert-copy` at commit `d1753a41e3c9c8ddcb12b651edc861de30290067`, tree `17ba075806d8551634e9c3cea18e85b8f72ef59c`. The remote SHA matches, the worktree is clean, and all six committed files match the approved byte inventory. [Push log](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/push-1.txt)
+
+| Verification | Result |
+| --- | --- |
+| RED on `bcd643f` | Malformed JSON and the edited robbery card failed at `toHaveText` as expected. Both received the older-version alert. The v13, Report, and oversized-file cases passed. [RED log](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/red-1.txt) |
+| Focused GREEN | All 104 Chromium cases passed across the four affected specs. [GREEN log](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/green-1.txt) |
+| Committed-head verification | Gates 1–7 and full `CI=1` smoke passed, with **3,419 unit tests** and **435 smoke tests**. CPU mean and peak were 3.88% and 10.22% before the gates, and 4.31% and 7.24% before smoke. [Gate log](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/gates-1.txt) |
+
+Playwright artifacts were written inside the evidence folder to preserve the existing results. The evidence package is sealed and its checksums verified. [README](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/README.md) · [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/import-alert-01/task2-3/SHA256SUMS.txt)
