@@ -1,0 +1,6 @@
+Current HEAD and tree:
+8e329508f0cf86c6d9ba68d7c30fdc30e757b779
+10ee8f58e85136d5943495c4bf6a1b5f10cd1bd0
+CI=1 node scripts/money-calibration.ts C:/Users/Admin/.t3/local-drafts/money-prM3/correction12/calibration-raw.json
+Start UTC 2026-11-27T06:31:54.365559+00:00
+Exit 0 | end UTC 2026-11-27T06:33:29.492783+00:00

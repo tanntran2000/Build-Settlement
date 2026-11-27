@@ -1,0 +1,19 @@
+Current HEAD and tree:
+8e329508f0cf86c6d9ba68d7c30fdc30e757b779
+10ee8f58e85136d5943495c4bf6a1b5f10cd1bd0
+CI=1 npm test -- --maxWorkers=1 packages/ui/src/__tests__/home-robbery-view.test.ts packages/ui/src/__tests__/purse-view.test.ts packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts
+Start UTC 2026-11-27T06:31:46.612390+00:00
+
+> build-settlement@0.1.0 test
+> vitest run --maxWorkers=1 packages/ui/src/__tests__/home-robbery-view.test.ts packages/ui/src/__tests__/purse-view.test.ts packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  198 passed (198)
+   Start at  13:31:48
+   Duration  5.39s (transform 1.35s, setup 0ms, import 2.51s, tests 1.10s, environment 1ms)
+
+Exit 0 | end UTC 2026-11-27T06:31:54.197914+00:00

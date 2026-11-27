@@ -1,0 +1,24 @@
+35 worktree files match the amended packet byte-for-byte. No staged changes.
+HEAD and tree
+8e329508f0cf86c6d9ba68d7c30fdc30e757b779
+10ee8f58e85136d5943495c4bf6a1b5f10cd1bd0
+## feat/money-robbery
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/CharacterLifeShell.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/ItemCard.svelte
+ M packages/ui/src/MarketPanel.svelte
+ M packages/ui/src/PotionPanel.svelte
+ M packages/ui/src/PursePanel.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/WorkshopPanel.svelte
+ M packages/ui/src/purse-view.ts
+ M packages/ui/src/report-letters.ts
+ M scripts/money-calibration.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/purse.spec.ts
+?? packages/ui/src/HomeRobberyCard.svelte
+?? packages/ui/src/__tests__/home-robbery-view.test.ts
+?? tests/e2e/home-robbery.spec.ts

@@ -1,0 +1,40 @@
+Money M3 Builder 6.2 xhigh
+mcp:ab05d32b-a9a3-420d-a238-880c97339bcc  completed  codex/gpt-6.2-sol
+
+[assistant]
+The smoke run has passed the desktop accessibility checks completed so far and is working through the narrow layout cases. The production JS and CSS total 180,730 bytes gzip. A pending robbery card added 51 bytes to each 100-NPC sample save.
+
+[assistant]
+The fulfillment case hit its existing 60-second timeout in the first full smoke run. The rest of the suite is still running. Once it finishes, I’ll rerun all seven gates and full smoke on the same commit with the same test settings.
+
+[assistant]
+All eight home-robbery browser cases passed in the full run, including the rejected import, the post-donation At risk amount, and the matched Market purchase. The fulfillment timeout is the only failure reported so far.
+
+[assistant]
+The fulfillment trace shows all ten new End Week assertions completed successfully, taking 154 ms in total. The case itself exceeded 60 seconds. I’ve preserved the trace for the unchanged retry.
+
+[assistant]
+The first smoke run finished with 429 passes and the one fulfillment timeout. The retry is running at the same head. It started the gates at 6.97% mean CPU and 9.23% peak, with both Playwright ports free.
+
+[assistant]
+All seven gates passed again. The second full smoke run started at 5.43% mean CPU and 6.53% peak, with both ports free. It’s through the first desktop accessibility group with no failures so far.
+
+[assistant]
+The fulfillment case passed on retry in 57.1 seconds under the original 60-second timeout. The full run is continuing with no reported failures so far.
+
+[assistant]
+The retry has reached 279 of 430 cases with no failures. The checkpoint, Purse, and Market regressions passed again. I’ll verify the recorded head and evidence after the remaining cases finish.
+
+[assistant]
+All 430 smoke cases passed on the unchanged retry. The logs verify the same commit for all seven gates, the full smoke suite, and both End Week measurements. I’ll push the feature branch and confirm the remote SHA.
+
+[assistant]
+Pushed Correction 14 to `origin/feat/money-robbery` and verified the remote at `772e98305c0efbe4fe107ca2c5245d7529c47559`. The worktree is clean.
+
+The checkpoint reader now rejects a robbery card whose held amount exceeds the Money balance. Rejected imports preserve the live session and local save. A pending card makes Purse **At risk** show the card’s exact held amount. The browser tests pin both End Week lock states, the full Market shelf count, and the same-balance purchase with and without the hold.
+
+All seven gates passed at the pushed commit, including **3,419 unit tests** and **154 architecture tests**. The first full smoke run passed 429 cases and hit the existing 60-second fulfillment timeout. The unchanged retry passed **all 430 cases**, with fulfillment finishing in **57.1 seconds**.
+
+With 100 NPCs, the isolated End Week median was **0.0001 ms** on both Normal and Easy, below the **0.05 ms** threshold. Paired dispatch median deltas ranged from **−0.50 to +2.44 ms**. Production JS and CSS totaled **180,730 bytes gzip**, and a pending card added **51 bytes** to each measured save.
+
+The logs, raw samples, and traces are sealed in the [Correction 14 evidence README](C:/Users/Admin/.t3/local-drafts/money-prM3/correction14/README.md) and [SHA-256 manifest](C:/Users/Admin/.t3/local-drafts/money-prM3/correction14/SHA256SUMS.txt).

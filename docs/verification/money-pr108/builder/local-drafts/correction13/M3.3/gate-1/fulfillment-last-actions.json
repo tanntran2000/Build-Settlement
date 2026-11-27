@@ -1,0 +1,160 @@
+[
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152861.523,
+    "durationMs": 0.03,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152861.987,
+    "durationMs": 0.03,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152862.412,
+    "durationMs": 0.03,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152862.871,
+    "durationMs": 0.03,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toHaveText\"",
+    "startMs": 1152863.623,
+    "durationMs": 92.41,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Close context",
+    "startMs": 1152955.101,
+    "durationMs": 15.49,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152956.616,
+    "durationMs": 0.04,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152957.054,
+    "durationMs": 0.04,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152957.458,
+    "durationMs": 0.02,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152957.818,
+    "durationMs": 0.02,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toBe\"",
+    "startMs": 1152958.184,
+    "durationMs": 0.02,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Expect \"toHaveText\"",
+    "startMs": 1152958.591,
+    "durationMs": 8.33,
+    "source": null,
+    "error": {
+      "name": "",
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/)\nExpected: \u001b[32m\"Tax: 24 Gold. Upkeep covered: 0 Gold; unfunded: 0 Gold (no debt). Farm batch payment: 0 Gold; extra Farm upkeep: 0 Gold.\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/)\u001b[22m\n\u001b[2m  - Protocol error (Runtime.callFunctionOn): Internal server error, session closed.\u001b[22m\n",
+      "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/)\nExpected: \u001b[32m\"Tax: 24 Gold. Upkeep covered: 0 Gold; unfunded: 0 Gold (no debt). Farm batch payment: 0 Gold; extra Farm upkeep: 0 Gold.\"\u001b[39m\nReceived: \u001b[31m\"\"\u001b[39m\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-life-view=\"reports\"][data-life-window=\"report\"] [aria-label=\"Weekly city report\"]').getByText(/^Tax:/)\u001b[22m\n\u001b[2m  - Protocol error (Runtime.callFunctionOn): Internal server error, session closed.\u001b[22m\n\n    at expectReport (C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts:382:21)\n    at C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.spec.ts:240:5"
+    }
+  },
+  {
+    "api": "Attach \"error-context\"",
+    "startMs": 1152976.841,
+    "durationMs": 0.01,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"baseURL\"",
+    "startMs": 1152978.044,
+    "durationMs": 0.03,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"userAgent\"",
+    "startMs": 1152978.11,
+    "durationMs": 0.01,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"viewport\"",
+    "startMs": 1152978.413,
+    "durationMs": 0.01,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"isMobile\"",
+    "startMs": 1152980.183,
+    "durationMs": 0.02,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"hasTouch\"",
+    "startMs": 1152980.992,
+    "durationMs": 0.01,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"deviceScaleFactor\"",
+    "startMs": 1152981.534,
+    "durationMs": 0.01,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Worker Cleanup",
+    "startMs": 1152984.101,
+    "durationMs": 798.9,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"browser\"",
+    "startMs": 1152985.876,
+    "durationMs": 795.12,
+    "source": null,
+    "error": null
+  },
+  {
+    "api": "Fixture \"defaultBrowserType\"",
+    "startMs": 1153781.819,
+    "durationMs": 0.02,
+    "source": null,
+    "error": null
+  }
+]

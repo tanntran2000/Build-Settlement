@@ -1,0 +1,67 @@
+Current HEAD and tree:
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+CI=1 npm test -- packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts
+Start UTC 2026-11-27T11:08:31.049700+00:00
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts (5 tests | 1 failed) 59ms
+   × accepts a fully backed robbery card and refuses one milli more than Money 17ms
+ ❯ packages/ui/src/__tests__/home-robbery-view.test.ts (5 tests | 1 failed) 17ms
+   × shows the card excess as At risk after a donation changes Money minus safe 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > accepts a fully backed robbery card and refuses one milli more than Money
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:32:46
+     30|   expect(isCharacterLifeSessionState(state)).toBe(true);
+     31|   state.player.purse.robbery.excessMilli = 4001;
+     32|   expect(isCharacterLifeSessionState(state)).toBe(false);
+       |                                              ^
+     33| });
+     34|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/src/__tests__/home-robbery-view.test.ts > shows the card excess as At risk after a donation changes Money minus safe
+AssertionError: expected { safeMilli: 21250, atRiskMilli: 9088 } to strictly equal { Object (safeMilli, atRiskMilli) }
+
+- Expected
++ Received
+
+  {
+-   "atRiskMilli": 30088,
++   "atRiskMilli": 9088,
+    "safeMilli": 21250,
+  }
+
+ ❯ packages/ui/src/__tests__/home-robbery-view.test.ts:39:6
+     37|   expect(purseRisk(30338, 25, 'normal')).toStrictEqual({ safeMilli: 21…
+     38|   expect(purseRisk(30338, 25, 'normal', { id: 'home-robbery-w1', week:…
+     39|     .toStrictEqual({ safeMilli: 21250, atRiskMilli: 30088 });
+       |      ^
+     40| });
+     41|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 23 passed (25)
+   Start at  18:08:33
+   Duration  2.53s (transform 1.78s, setup 0ms, import 2.56s, tests 1.04s, environment 0ms)
+
+Exit 1 | end UTC 2026-11-27T11:08:35.713289+00:00

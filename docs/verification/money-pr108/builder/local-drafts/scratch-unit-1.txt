@@ -1,0 +1,81 @@
+HEAD 0b2b3a6088d003301d48b460202327fb53546ede; tree 75ec12d1a9c537f5e9788ac0ec52d3ff68db620c; composed candidate; npm test; 2026-11-27T04:48:18.2998198Z
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 D:/QI Technology/Temp/money-m3-step0-fcb36268
+
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts (8 tests | 1 failed) 4204ms
+   × opens both cards, preserves both across checkpoint reload, and resolves crisis first 95ms
+ ❯ packages/core/src/__tests__/purse-tuning.test.ts (6 tests | 1 failed) 65ms
+   × publishes every purse tuning key in the frozen whole-catalog view 40ms
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/purse-tuning.test.ts > publishes every purse tuning key in the frozen whole-catalog 
+view
+AssertionError: expected [ 'marker', 'levyMaxPercent', …(12) ] to deeply equal [ 'marker', 'levyMaxPercent', …(4) ]
+
+- Expected
++ Received
+
+@@ -3,6 +3,14 @@
+    "levyMaxPercent",
+    "levyFreePercent",
+    "levySatisfactionBpsPerPoint",
+    "donateSatisfactionPerGoldMilli",
+    "donateSatisfactionCapPerWeek",
++   "robberySafeBaseMilli",
++   "robberySafePerSecurityMilli",
++   "robberyChanceBpsPerGold",
++   "robberyChanceCapBps",
++   "robberyRansomBps",
++   "robberyLossBps",
++   "robberyChaseSecurityMin",
++   "robberyChaseSuccessBpsPerSecurity",
+  ]
+
+ ❯ packages/core/src/__tests__/purse-tuning.test.ts:7:36
+      5|
+      6| it('publishes every purse tuning key in the frozen whole-catalog view'…
+      7|   expect(Object.keys(PURSE_TRIAL)).toEqual([
+       |                                    ^
+      8|     'marker', 'levyMaxPercent', 'levyFreePercent', 'levySatisfactionBp…
+      9|     'donateSatisfactionPerGoldMilli', 'donateSatisfactionCapPerWeek',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > opens both cards, preserves both across checkpoint 
+reload, and resolves crisis first
+AssertionError: expected null to be 'demand' // Object.is equality
+
+- Expected:
+"demand"
+
++ Received:
+null
+
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts:132:42
+    131|     const building = s.city.tiles.find(tile => tile.id === id)!.buildi…
+    132|     building.workers = 0;
+    133|     building.enabled = false;
+       |                ^
+    134|   }
+    135|   s.player.purse.moneyMilli = 50001;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 152 passed (154)
+      Tests  2 failed | 3401 passed (3403)
+   Start at  11:48:20
+   Duration  93.04s (transform 11.49s, setup 0ms, import 75.83s, tests 282.17s, environment 80ms)
+
+Exit code 1

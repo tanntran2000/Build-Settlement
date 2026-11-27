@@ -1,0 +1,8 @@
+Base HEAD 0b2b3a6088d003301d48b460202327fb53546ede tree 75ec12d1a9c537f5e9788ac0ec52d3ff68db620c
+D:\QI Technology\Temp\money-m3-step0-fcb36268
+npm run lint  | started 2026-11-27T06:17:52.200513+00:00
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+exit 0 | ended 2026-11-27T06:18:07.182407+00:00

@@ -1,0 +1,92 @@
+Base HEAD 57c0cbe7b2862bbc148a528444dcad64e58d35b9
+Base tree 38420881e654cc19299d07f2ee0d63becd116545
+Disposable scratch composition D:\QI Technology\Temp\money-m3-step0-fcb36268
+CI=1 cmd /d /c npm test -- packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts
+Start UTC 2026-11-27T11:11:16.191601+00:00
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts
+
+
+ RUN  v4.1.12 D:/QI Technology/Temp/money-m3-step0-fcb36268
+
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts (5 tests | 1 failed) 107ms
+   × accepts a fully backed robbery card and refuses one milli more than Money 33ms
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts (15 tests | 6 failed) 1604ms
+   × answers pay after reloading a card backed by exactly its excess 14ms
+   × answers let-go after reloading a card backed by exactly its excess 8ms
+   × reserves exactly the outstanding excess for DONATE_MONEY, including one milli below the boundary 21ms
+   × reserves exactly the outstanding excess for BUY_ITEM, including one milli below the boundary 27ms
+   × reserves exactly the outstanding excess for BUY_POTION, including one milli below the boundary 26ms
+   × reserves exactly the outstanding excess for PLACE_CRAFT_ORDER, including one milli below the boundary 26ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > answers pay after reloading a card backed by exactly its excess
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > answers let-go after reloading a card backed by exactly its excess
+Error: Checkpoint must contain a valid complete Character Life session in Planning.
+ ❯ reload packages/simulation/src/__tests__/home-robbery.test.ts:36:29
+     34| function reload(s: CharacterLifeSessionState) {
+     35|   const saved = serializeCharacterLifeSave(s);
+     36|   if (!saved.success) throw Error(saved.error.message);
+       |                             ^
+     37|   const decoded = deserializeCharacterLifeSave(saved.text);
+     38|   expect(decoded).toStrictEqual({ success: true, state: s });
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts:151:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > reserves exactly the outstanding excess for DONATE_MONEY, including one milli below the boundary
+Error: EXECUTION_ERROR: The action failed validation; the original session was preserved.
+ ❯ act packages/simulation/src/__tests__/home-robbery.test.ts:21:30
+     19| function act(s: CharacterLifeSessionState, type: string, fields: Recor…
+     20|   const result = dispatch(s, type, fields);
+     21|   if (!result.success) throw Error(result.error.code + ': ' + result.e…
+       |                              ^
+     22|   return result;
+     23| }
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts:235:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > reserves exactly the outstanding excess for BUY_ITEM, including one milli below the boundary
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > reserves exactly the outstanding excess for BUY_POTION, including one milli below the boundary
+ FAIL  packages/simulation/src/__tests__/home-robbery.test.ts > reserves exactly the outstanding excess for PLACE_CRAFT_ORDER, including one milli below the boundary
+Error: FORBIDDEN: FORBIDDEN
+ ❯ act packages/simulation/src/__tests__/home-robbery.test.ts:21:30
+     19| function act(s: CharacterLifeSessionState, type: string, fields: Recor…
+     20|   const result = dispatch(s, type, fields);
+     21|   if (!result.success) throw Error(result.error.code + ': ' + result.e…
+       |                              ^
+     22|   return result;
+     23| }
+ ❯ packages/simulation/src/__tests__/home-robbery.test.ts:235:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  packages/core/src/character/__tests__/purse-shape.test.ts > accepts a fully backed robbery card and refuses one milli more than Money
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/core/src/character/__tests__/purse-shape.test.ts:30:46
+     28|   state.player.purse.moneyMilli = 4000;
+     29|   state.player.purse.robbery = { id: 'home-robbery-w1', week: 1, exces…
+     30|   expect(isCharacterLifeSessionState(state)).toBe(true);
+       |                                              ^
+     31|   state.player.purse.robbery.excessMilli = 4001;
+     32|   expect(isCharacterLifeSessionState(state)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  7 failed | 13 passed (20)
+   Start at  18:11:17
+   Duration  3.05s (transform 1.21s, setup 0ms, import 1.76s, tests 1.71s, environment 0ms)
+
+Exit 1 | End UTC 2026-11-27T11:11:20.804889+00:00

@@ -1,0 +1,49 @@
+{
+  "node": "v24.19.0",
+  "warmupPerDifficulty": 16000,
+  "thresholdMedianMs": 0.05,
+  "sourceFiles": [
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "sha256": "6ff39e7ec9758d6358ff9c9cca536d4ce405fbd99da8a5d11e821e6de5d8866d"
+    },
+    {
+      "path": "packages/simulation/src/purse-week.ts",
+      "sha256": "fc8171150c94902abc1f837b1b400eb5961bd91f75aacf4b1f3e23304be275f6"
+    }
+  ],
+  "fragments": {
+    "blocked": "  if (type === 'END_WEEK' && session.player.purse.robbery && Object.getOwnPropertyDescriptor(raw as object, 'expectedRevision')?.value === session.city.revision) {\n    return fail('CARD_PENDING', session.city.society?.pendingCard ? 'Answer the crisis first.' : 'Answer the robbery first.');\n  }",
+    "wageGuard": "type === 'END_WEEK' && session.city.phase === 'planning' && !session.city.society?.pendingCard && !session.player.purse.robbery",
+    "robberyCheck": "const robbery = runHomeRobberyCheck(next, report.week);",
+    "reportSelect": "robbery ? Object.freeze({ ...purse, robbery }) : purse"
+  },
+  "results": [
+    {
+      "difficulty": "normal",
+      "fixtureSHA256": "a8a279d72faa0ea90f88664a70b3f62dfe957ff8c112bd6cde60a38b759d91ee",
+      "npcCount": 100,
+      "security": 25,
+      "moneyMilli": 1337,
+      "safeMilli": 21250,
+      "samples": 20000,
+      "minMs": 0.0001,
+      "medianMs": 0.0001,
+      "p95Ms": 0.0002,
+      "maxMs": 0.0775
+    },
+    {
+      "difficulty": "easy",
+      "fixtureSHA256": "b9a60499be39b0b3591ed9d8dc8ac551a28b9c8483a9057186b93192120542e2",
+      "npcCount": 100,
+      "security": 25,
+      "moneyMilli": 2854,
+      "safeMilli": 42500,
+      "samples": 20000,
+      "minMs": 0,
+      "medianMs": 0.0001,
+      "p95Ms": 0.0002,
+      "maxMs": 0.0747
+    }
+  ]
+}

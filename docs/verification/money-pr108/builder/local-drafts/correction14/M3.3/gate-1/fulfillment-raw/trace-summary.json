@@ -1,0 +1,60 @@
+{
+  "traceSHA256": "72546a69446a038da4bfa5a112898f734bddeb28718f6c20db662399f687bb43",
+  "checks": [
+    {
+      "callId": "expect@48",
+      "error": null,
+      "ms": 17.372
+    },
+    {
+      "callId": "expect@824",
+      "error": null,
+      "ms": 20.651
+    },
+    {
+      "callId": "expect@872",
+      "error": null,
+      "ms": 13.47
+    },
+    {
+      "callId": "expect@1604",
+      "error": null,
+      "ms": 20.767
+    },
+    {
+      "callId": "expect@1653",
+      "error": null,
+      "ms": 14.567
+    },
+    {
+      "callId": "expect@2393",
+      "error": null,
+      "ms": 15.489
+    },
+    {
+      "callId": "expect@2442",
+      "error": null,
+      "ms": 13.488
+    },
+    {
+      "callId": "expect@3174",
+      "error": null,
+      "ms": 18.498
+    },
+    {
+      "callId": "expect@3223",
+      "error": null,
+      "ms": 14.233
+    },
+    {
+      "callId": "expect@3960",
+      "error": null,
+      "ms": 5.764
+    }
+  ],
+  "maxMs": 20.767,
+  "totalMs": 154.299,
+  "errors": [
+    "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+  ]
+}

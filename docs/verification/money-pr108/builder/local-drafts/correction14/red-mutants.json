@@ -1,0 +1,68 @@
+{
+  "head": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+  "tree": "38420881e654cc19299d07f2ee0d63becd116545",
+  "scratch": "D:\\QI Technology\\Temp\\money-m3-step0-fcb36268",
+  "files": [
+    {
+      "path": "packages/core/src/character/validate.ts",
+      "beforeSHA256": "9b0d8e1fa465d78c7fc426dbf83595bb42bd529441cb7d0362a9f1d9c990a0b5",
+      "afterSHA256": "fadc815154518b64d926c3409b1343e181c10158dc3ce38d595086e2777a2285",
+      "replacements": [
+        [
+          "int(robbery.excessMilli, balanceRange));",
+          "int(robbery.excessMilli, balanceRange) && (robbery.excessMilli as number) < (purse.moneyMilli as number));"
+        ]
+      ]
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeShell.svelte",
+      "beforeSHA256": "5a7abc6b7e883a48939f1d537574a657eda073cd413e25634d8d5828388b860f",
+      "afterSHA256": "a0695ef9d958ff036c9593903364f0a48ed4e19235defde31b82c2488ce497f1",
+      "replacements": [
+        [
+          "aria-disabled={locked || !!endWeekReason}",
+          "aria-disabled={storageSession.player.purse.moneyMilli === 1000 ? true : storageSession.player.purse.moneyMilli === 22500 ? false : locked || !!endWeekReason}"
+        ]
+      ]
+    },
+    {
+      "path": "packages/ui/src/MarketPanel.svelte",
+      "beforeSHA256": "06d6c8e68aa41c77a2a86529e98bac4f5441ce2aee398226289627dcb3aa6f9b",
+      "afterSHA256": "6192de11ccba23adc788a46b07e2b235204f56fdcc89467eb1326d59121c0d9e",
+      "replacements": [
+        [
+          "{#each items.market as offer,index}",
+          "{#each (purse.moneyMilli === 4999 ? items.market.slice(0, 1) : items.market) as offer,index}"
+        ],
+        [
+          "holdNotice&&!canSpendMoney(purse,offer.priceMilli)",
+          "holdNotice&&purse.moneyMilli<offer.priceMilli"
+        ],
+        [
+          "canSpendMoney, ITEM_CATALOG",
+          "ITEM_CATALOG"
+        ]
+      ]
+    },
+    {
+      "path": "packages/core/src/character/__tests__/purse-shape.test.ts",
+      "scratchSHA256": "bf94285463cf75783dc496e5ec0caac630f57e6666e3256583666ab71b121925"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/home-robbery.test.ts",
+      "scratchSHA256": "be370f3ab265e6db5eb83146ef50214b2eaefa9a8ecc3d5416f239fbcf4bc426"
+    },
+    {
+      "path": "packages/ui/src/__tests__/home-robbery-view.test.ts",
+      "scratchSHA256": "ec0123453dcffc21e946829465aa16d378c9378e8afa95dbda59bd539146b8f1"
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "scratchSHA256": "0cfc5a052d2caca32e6bc9632c6ec9cc8d7daa9419c5720ed7fac73ae24ca8b6"
+    },
+    {
+      "path": "tests/e2e/home-robbery.spec.ts",
+      "scratchSHA256": "e9bc97472c7a197983a8a7a343171174717083242d9cc21315c291cef5e6378d"
+    }
+  ]
+}

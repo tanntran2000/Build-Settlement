@@ -1,0 +1,53 @@
+{
+  "reviewed": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+  "head": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+  "tree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095",
+  "base": "0b2b3a6088d003301d48b460202327fb53546ede",
+  "patchSHA256": "2c6795495acb053fabddae56e3c269fe6cd35efaed4394a871d9adadcc0c95ff",
+  "paths": [
+    {
+      "path": "packages/core/src/character/__tests__/purse-shape.test.ts",
+      "beforeSHA256": "1fb74c49cfc47849681b7494f5d8b67da09f49560d16dc65c1a2f49ad136fec8",
+      "afterSHA256": "bf94285463cf75783dc496e5ec0caac630f57e6666e3256583666ab71b121925"
+    },
+    {
+      "path": "packages/core/src/character/validate.ts",
+      "beforeSHA256": "81e9b8c51102d88fe2911bd09f578d5804cff555f3424a956a05b842338f37b3",
+      "afterSHA256": "ec1729d030399733c9ed854e34feb61fd1a40a8929f2a4c2f7162dad4d7f4311"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/home-robbery.test.ts",
+      "beforeSHA256": "9bed067c534b269b42bf09cd2ab4fa06b532a9a3e630044978a2b10eb21bee0a",
+      "afterSHA256": "be370f3ab265e6db5eb83146ef50214b2eaefa9a8ecc3d5416f239fbcf4bc426"
+    },
+    {
+      "path": "packages/ui/src/PursePanel.svelte",
+      "beforeSHA256": "980aca1123570d3ccdd5fcda9aff8ab41b0a6ee6ad31731d96ddc8be7b35065d",
+      "afterSHA256": "a9301677b66bbbcd3f302c1ebd2ebd836e42e0b80e99555ad76fc828f8562379"
+    },
+    {
+      "path": "packages/ui/src/__tests__/home-robbery-view.test.ts",
+      "beforeSHA256": "910f609e634a593469f3978abad0515ab35f72c5a6a92973441d02dca69b1e99",
+      "afterSHA256": "ec0123453dcffc21e946829465aa16d378c9378e8afa95dbda59bd539146b8f1"
+    },
+    {
+      "path": "packages/ui/src/purse-view.ts",
+      "beforeSHA256": "2bb0181037a87060054f94aa7043a18f5e80317e60c80774a72de0785581b1f4",
+      "afterSHA256": "1d39014377d7fe0736f1a6ccecd0f8eebbe18238ab4e5ca9041a147c08216685"
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "beforeSHA256": "42c76611961b0aceccae37c81f68bacd74b58fabcae982dcd4879a6c5811155e",
+      "afterSHA256": "a68df8af5093a4045be7caf0f9004eab9785ef323522fac7464e5f967dc5ae2a"
+    },
+    {
+      "path": "tests/e2e/home-robbery.spec.ts",
+      "beforeSHA256": "20b945c7dd473dd5e61c7867a33810ebe8b590571339fc008b3e709cdae857d9",
+      "afterSHA256": "e575b45dab57b48a9dfe8350a34e4107f3542c2b0d4492489e001659248c7087"
+    }
+  ],
+  "documents": {
+    "binding-plan-7946251.md": "7d084026289ea35cb0acaf42ecf35070abf77156664ff0b15fb752b7fefcd628",
+    "astra-review/astra-round1.md": "aa051497d0723a7d4b5dc85cab03f9c6864ec730ef97cb5c4f497ea79eec5463"
+  }
+}

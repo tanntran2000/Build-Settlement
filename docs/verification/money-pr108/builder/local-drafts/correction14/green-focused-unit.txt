@@ -1,0 +1,19 @@
+Current HEAD and tree:
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+CI=1 npm test -- packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts
+Start UTC 2026-11-27T11:13:36.164866+00:00
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/character/__tests__/purse-shape.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  18:13:37
+   Duration  3.51s (transform 2.36s, setup 0ms, import 3.42s, tests 1.83s, environment 4ms)
+
+Exit 0 | end UTC 2026-11-27T11:13:41.162531+00:00

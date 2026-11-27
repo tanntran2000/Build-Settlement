@@ -1,0 +1,1163 @@
+--- a/packages/core/src/__tests__/catalog-data.test.ts
++++ b/packages/core/src/__tests__/catalog-data.test.ts
+@@ -28,6 +28,14 @@
+         levySatisfactionBpsPerPoint: PURSE_TRIAL.levySatisfactionBpsPerPoint,
+         donateSatisfactionPerGoldMilli: PURSE_TRIAL.donateSatisfactionPerGoldMilli,
+         donateSatisfactionCapPerWeek: PURSE_TRIAL.donateSatisfactionCapPerWeek,
++        robberySafeBaseMilli: PURSE_TRIAL.robberySafeBaseMilli,
++        robberySafePerSecurityMilli: PURSE_TRIAL.robberySafePerSecurityMilli,
++        robberyChanceBpsPerGold: PURSE_TRIAL.robberyChanceBpsPerGold,
++        robberyChanceCapBps: PURSE_TRIAL.robberyChanceCapBps,
++        robberyRansomBps: PURSE_TRIAL.robberyRansomBps,
++        robberyLossBps: PURSE_TRIAL.robberyLossBps,
++        robberyChaseSecurityMin: PURSE_TRIAL.robberyChaseSecurityMin,
++        robberyChaseSuccessBpsPerSecurity: PURSE_TRIAL.robberyChaseSuccessBpsPerSecurity,
+       },
+     }),
+     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
+--- a/packages/core/src/__tests__/purse-tuning.test.ts
++++ b/packages/core/src/__tests__/purse-tuning.test.ts
+@@ -7,6 +7,8 @@
+   expect(Object.keys(PURSE_TRIAL)).toEqual([
+     'marker', 'levyMaxPercent', 'levyFreePercent', 'levySatisfactionBpsPerPoint',
+     'donateSatisfactionPerGoldMilli', 'donateSatisfactionCapPerWeek',
++    'robberySafeBaseMilli', 'robberySafePerSecurityMilli', 'robberyChanceBpsPerGold', 'robberyChanceCapBps',
++    'robberyRansomBps', 'robberyLossBps', 'robberyChaseSecurityMin', 'robberyChaseSuccessBpsPerSecurity',
+   ]);
+   expect(PURSE_TRIAL).toStrictEqual(tuning.PURSE_TRIAL);
+   expect(Object.isFrozen(PURSE_TRIAL)).toBe(true);
+--- /dev/null
++++ b/packages/core/src/character/__tests__/home-robbery-tuning.test.ts
+@@ -0,0 +1,22 @@
++import { expect, it } from 'vitest';
++import tuning from '../../data/tuning.json' with { type: 'json' };
++import { validateTuning } from '../../data/validate.js';
++
++it.each([
++  ['robberySafeBaseMilli', -1, 'expected integer >= 0'],
++  ['robberySafePerSecurityMilli', 0.5, 'expected integer >= 0'],
++  ['robberySafePerSecurityMilli', Number.MAX_SAFE_INTEGER, 'expected a safe integer amount at Security 100'],
++  ['robberyChanceBpsPerGold', 0, 'expected integer in [1, 10000]'],
++  ['robberyChanceCapBps', 10001, 'expected integer in [1, 10000]'],
++  ['robberyRansomBps', 6000, 'expected less than robberyLossBps'],
++  ['robberyLossBps', 0, 'expected integer in [1, 10000]'],
++  ['robberyChaseSecurityMin', 101, 'expected integer in [0, 100]'],
++  ['robberyChaseSuccessBpsPerSecurity', 10001, 'expected integer in [1, 10000]'],
++] as const)('rejects %s = %s with exact catalog error', (key, value, rule) => {
++  const copy = structuredClone(tuning);
++  Object.assign(copy.PURSE_TRIAL, { [key]: value });
++  let message: string | undefined;
++  try { validateTuning(copy); }
++  catch (error) { if (error instanceof Error) message = error.message; }
++  expect(message).toBe('tuning.json#PURSE_TRIAL.' + key + ': ' + rule);
++});
+--- a/packages/core/src/character/purse.ts
++++ b/packages/core/src/character/purse.ts
+@@ -1,6 +1,9 @@
+ import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ import { applyDifficulty, difficultyProfile, type DifficultyId } from '../trial/difficulty.js';
++
++import { mixSeed } from '../trial/crime.js';
++import { createSeededRandom } from '../world/random.js';
+ 
+ export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
+ 
+@@ -21,3 +24,33 @@
+   if (amountMilli === 0 || levyMoneyBps === 10000) return amountMilli;
+   return Number(BigInt(amountMilli) * 10000n / BigInt(levyMoneyBps));
+ }
++
++export type HomeRobberyOption = 'pay' | 'chase' | 'let-go';
++
++const homeRobberySalts = { 'home-robbery': 0x48524f42, 'home-robbery-chase': 0x48524348 } as const;
++
++export function homeRobberyRoll(seed: number, week: number, stream: keyof typeof homeRobberySalts): number {
++  return createSeededRandom(mixSeed(mixSeed(seed, week), homeRobberySalts[stream]))() * 10000;
++}
++
++export function safeAmountMilli(security: number): number {
++  return PURSE_TRIAL.robberySafeBaseMilli + security * PURSE_TRIAL.robberySafePerSecurityMilli;
++}
++
++export function homeRobberyChanceBps(excessMilli: number): number {
++  if (excessMilli <= 0) return 0;
++  const { robberyChanceBpsPerGold: rate, robberyChanceCapBps: cap } = PURSE_TRIAL;
++  if (excessMilli >= Math.ceil(cap * 1000 / rate)) return cap;
++  return Math.floor(excessMilli * rate / 1000);
++}
++
++export function homeRobberyChaseChanceBps(security: number): number {
++  return Math.min(10000, security * PURSE_TRIAL.robberyChaseSuccessBpsPerSecurity);
++}
++
++export function homeRobberyLossMilli(
++  excessMilli: number, moneyMilli: number, security: number, option: 'pay' | 'let-go',
++): number {
++  const rate = option === 'pay' ? PURSE_TRIAL.robberyRansomBps : PURSE_TRIAL.robberyLossBps;
++  return Math.min(applyDifficulty(excessMilli, rate), Math.max(0, moneyMilli - safeAmountMilli(security)));
++}
+--- a/packages/core/src/data/tuning.json
++++ b/packages/core/src/data/tuning.json
+@@ -190,7 +190,15 @@
+     "levyFreePercent": 2,
+     "levySatisfactionBpsPerPoint": 12000,
+     "donateSatisfactionPerGoldMilli": 0.001,
+-    "donateSatisfactionCapPerWeek": 2
++    "donateSatisfactionCapPerWeek": 2,
++    "robberySafeBaseMilli": 15000,
++    "robberySafePerSecurityMilli": 250,
++    "robberyChanceBpsPerGold": 120,
++    "robberyChanceCapBps": 2500,
++    "robberyRansomBps": 2500,
++    "robberyLossBps": 6000,
++    "robberyChaseSecurityMin": 15,
++    "robberyChaseSuccessBpsPerSecurity": 250
+   },
+   "SOCIETY_TRIAL": {
+     "rulesetId": "tile-society-14",
+--- a/packages/core/src/data/validate.ts
++++ b/packages/core/src/data/validate.ts
+@@ -428,6 +428,14 @@
+         levySatisfactionBpsPerPoint: number;
+         donateSatisfactionPerGoldMilli: number;
+         donateSatisfactionCapPerWeek: number;
++        robberySafeBaseMilli: number;
++        robberySafePerSecurityMilli: number;
++        robberyChanceBpsPerGold: number;
++        robberyChanceCapBps: number;
++        robberyRansomBps: number;
++        robberyLossBps: number;
++        robberyChaseSecurityMin: number;
++        robberyChaseSuccessBpsPerSecurity: number;
+     }>;
+     SOCIETY_TRIAL: SOCIETY_TRIALData;
+     GOODS_STOCK_TRIAL: GOODS_STOCK_TRIALData;
+@@ -599,6 +607,14 @@
+         levySatisfactionBpsPerPoint: nonnegative,
+         donateSatisfactionPerGoldMilli: probability,
+         donateSatisfactionCapPerWeek: integerInRange(0, 100),
++        robberySafeBaseMilli: nonnegative,
++        robberySafePerSecurityMilli: nonnegative,
++        robberyChanceBpsPerGold: integerInRange(1, 10000),
++        robberyChanceCapBps: integerInRange(1, 10000),
++        robberyRansomBps: integerInRange(0, 10000),
++        robberyLossBps: integerInRange(1, 10000),
++        robberyChaseSecurityMin: integerInRange(0, 100),
++        robberyChaseSuccessBpsPerSecurity: integerInRange(1, 10000),
+     }),
+     "ORDER_TRIAL": object({
+         "newGame": object({
+@@ -877,6 +893,11 @@
+     for (const [id, rule] of Object.entries(tuningSchemas))
+         rule(data[id], `tuning.json#${id}`, '');
+     const tuning = data as unknown as TuningCatalog;
++    const purse = tuning.PURSE_TRIAL;
++    if (!Number.isSafeInteger(purse.robberySafeBaseMilli + 100 * purse.robberySafePerSecurityMilli))
++        fail('tuning.json#PURSE_TRIAL', 'robberySafePerSecurityMilli', 'expected a safe integer amount at Security 100');
++    if (purse.robberyRansomBps >= purse.robberyLossBps)
++        fail('tuning.json#PURSE_TRIAL', 'robberyRansomBps', 'expected less than robberyLossBps');
+     if (!Number.isSafeInteger(tuning.OUTSIDE_TRIAL.wallRing3StoneMilli * tuning.RING4_TRIAL.stoneFactor))
+         fail('tuning.json#RING4_TRIAL', 'stoneFactor', 'expected a safe integer Stone cost');
+     return tuning;
+--- a/packages/core/src/index.ts
++++ b/packages/core/src/index.ts
+@@ -21,7 +21,10 @@
+ export * from "./character/types.js";
+ export * from "./character/catalog.js";
+ export * from "./character/validate.js";
+-export { levySatisfactionCost, levyDueMilli, donationGoldMilli } from "./character/purse.js";
++export {
++  levySatisfactionCost, levyDueMilli, donationGoldMilli, safeAmountMilli, homeRobberyChanceBps,
++  homeRobberyRoll, homeRobberyChaseChanceBps, homeRobberyLossMilli, type HomeRobberyOption,
++} from "./character/purse.js";
+ export * from "./character/describe.js";
+ export * from "./character/session.js";
+ export * from './trial/goods-stock.js';
+--- a/packages/core/src/trial/types.ts
++++ b/packages/core/src/trial/types.ts
+@@ -40,7 +40,13 @@
+  event:null | {kind:'robbery'|'smear'|'raid'|'assassination';severity:'minor'|'serious'|'severe';target?:keyof OrderReport['theftMilli'];lossMilli?:number;soldiersKilled?:number;outcome?:'foiled'|'wounded'|'killed';standingLoss?:number;authorityLoss?:number};
+  lordHealthLoss:number;
+ }
++export type HomeRobberyReport =
++  | { outcome: 'pending'; excessMilli: number }
++  | { outcome: 'pay' | 'chase-success' | 'chase-failure' | 'let-go'; excessMilli: number; lossMilli: number };
++export type HomeRobberyResolution = Exclude<HomeRobberyReport, { outcome: 'pending' }> & { week: number };
++
+ export interface PurseWeekReport {
++  robbery?: Readonly<HomeRobberyReport>;
+   levyPercent: number;
+   levyDueMilli: number;
+   levyPaidMilli: number;
+--- /dev/null
++++ b/packages/simulation/src/__tests__/home-robbery.test.ts
+@@ -0,0 +1,176 @@
++import { expect, it } from 'vitest';
++import {
++  createCharacterLifeSession, CRISIS_TRIAL, DEFAULT_PLAYER_DRAFT, homeRobberyChanceBps,
++  type CharacterLifeSessionState, type DifficultyId, type TileTrialReport,
++} from '@haven/core';
++import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
++import { executeCharacterLifeCommand } from '../character-life-command.js';
++
++function make(seed = 40, difficulty: DifficultyId = 'normal') {
++  const made = createCharacterLifeSession(seed, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, difficulty);
++  if (!made.success) throw Error(made.error.message);
++  return made.value;
++}
++const stocks = (s: CharacterLifeSessionState) => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
++
++function dispatch(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
++  return executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
++}
++function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
++  const result = dispatch(s, type, fields);
++  if (!result.success) throw Error(result.error.code + ': ' + result.error.message);
++  return result;
++}
++function close(s: CharacterLifeSessionState) {
++  const closed = act(s, 'END_WEEK', { expectedWeek: s.city.world.week });
++  if (!closed.report) throw Error('Expected weekly report.');
++  return { ...closed, report: closed.report as Readonly<TileTrialReport> };
++}
++function refusal(s: CharacterLifeSessionState, code: string, message: string, type: string, fields: Record<string, unknown> = {}) {
++  const before = structuredClone(s);
++  expect(dispatch(s, type, fields)).toStrictEqual({ success: false, error: { code, message } });
++  expect(s).toStrictEqual(before);
++}
++function reload(s: CharacterLifeSessionState) {
++  const saved = serializeCharacterLifeSave(s);
++  if (!saved.success) throw Error(saved.error.message);
++  const decoded = deserializeCharacterLifeSave(saved.text);
++  expect(decoded).toStrictEqual({ success: true, state: s });
++  if (!decoded.success) throw Error(decoded.error.message);
++  expect(serializeCharacterLifeSave(decoded.state)).toStrictEqual(saved);
++  return decoded.state;
++}
++
++it('never robs at the exact post-levy safe amount against the same funded route', () => {
++  const atSafe = make();
++  atSafe.player.purse.moneyMilli = 19913;
++  atSafe.player.purse.levyPercent = 5;
++  const below = structuredClone(atSafe);
++  below.player.purse.moneyMilli--;
++  const control = close(below), exact = close(atSafe);
++  expect(exact.next.city.society!.order.security).toBe(25);
++  expect(exact.report.purse).toStrictEqual({
++    levyPercent: 5, levyDueMilli: 1337, levyPaidMilli: 1337, donationsMilli: 0,
++    donationGoldMilli: 0, moneyAfterMilli: 21250,
++  });
++  expect(exact.next.player.purse).toStrictEqual({
++    moneyMilli: 21250, levyPercent: 5, donatedThisWeekMilli: 0, robbery: null,
++  });
++  expect(exact).toStrictEqual({
++    ...control, next: { ...control.next, player: { ...control.next.player, purse: exact.next.player.purse } },
++    report: { ...control.report, purse: exact.report.purse },
++  });
++});
++
++it('floors fractional exposure and caps the exact basis-point calculation', () => {
++  expect([homeRobberyChanceBps(0), homeRobberyChanceBps(8), homeRobberyChanceBps(9),
++    homeRobberyChanceBps(20833), homeRobberyChanceBps(20834), homeRobberyChanceBps(Number.MAX_SAFE_INTEGER)])
++    .toStrictEqual([0, 0, 1, 2499, 2500, 2500]);
++});
++
++it.each([
++  ['normal', 51338, 30088, 7522, 18052],
++  ['easy', 52855, 31605, 7901, 18963],
++] as const)('keeps the %s hit and exact losses across reload', (difficulty, balance, excess, ransom, loss) => {
++  for (const [seed, option, outcome, debit] of [
++    [40, 'pay', 'pay', ransom],
++    [40, 'chase', 'chase-failure', loss],
++    [93, 'chase', 'chase-success', 0],
++    [40, 'let-go', 'let-go', loss],
++  ] as const) {
++    const s = make(seed, difficulty);
++    s.player.purse.moneyMilli = 50001;
++    s.player.purse.levyPercent = 5;
++    const closed = close(s);
++    expect(close(reload(s))).toStrictEqual(closed);
++    expect(closed.report.purse?.robbery).toStrictEqual({ outcome: 'pending', excessMilli: excess });
++    expect(closed.next.player.purse.robbery).toStrictEqual({ id: 'home-robbery-w1', week: 1, excessMilli: excess });
++    refusal(closed.next, 'FORBIDDEN', 'Choose Plan next week to answer.', 'ANSWER_ROBBERY', { option });
++    const planning = act(closed.next, 'NEXT_WEEK').next;
++    refusal(planning, 'CARD_PENDING', 'Answer the robbery first.', 'END_WEEK', { expectedWeek: 2 });
++    const answer = act(planning, 'ANSWER_ROBBERY', { option });
++    expect(act(reload(planning), 'ANSWER_ROBBERY', { option })).toStrictEqual(answer);
++    expect(answer.robberyResolution).toStrictEqual({ week: 1, outcome, excessMilli: excess, lossMilli: debit });
++    const expected = structuredClone(planning);
++    expected.city.revision++;
++    expected.player.purse.moneyMilli = balance - debit;
++    expected.player.purse.robbery = null;
++    expect(answer.next).toStrictEqual(expected);
++    expect(stocks(answer.next).gold).toBe(stocks(planning).gold);
++    expect(close(answer.next).report.week).toBe(2);
++  }
++});
++
++it('checks Money after levy and donations and then resets the donation tally', () => {
++  const s = make();
++  s.player.purse.moneyMilli = 20750;
++  s.player.purse.levyPercent = 5;
++  const donated = act(s, 'DONATE_MONEY', { amountMilli: 1000 }).next;
++  const unchanged = structuredClone(s);
++  stocks(unchanged).gold += 1000;
++  const control = close(unchanged);
++  expect(control.report.purse?.robbery).toStrictEqual({ outcome: 'pending', excessMilli: 837 });
++  const result = close(donated);
++  expect(result.report.purse).toStrictEqual({
++    levyPercent: 5, levyDueMilli: 1337, levyPaidMilli: 1337, donationsMilli: 1000,
++    donationGoldMilli: 1000, moneyAfterMilli: 21087,
++  });
++  expect(result.next.player.purse).toStrictEqual({ moneyMilli: 21087, levyPercent: 5, donatedThisWeekMilli: 0, robbery: null });
++  expect(stocks(result.next)).toStrictEqual(stocks(control.next));
++});
++
++it('opens both cards, preserves both across checkpoint reload, and resolves crisis first', () => {
++  const s = make();
++  const society = s.city.society!;
++  society.crisis.stage = 'warning';
++  society.crisis.hungerStreak = CRISIS_TRIAL.demandHungerWeeks - 1;
++  for (const key of ['free', 'makers', 'luminaries', 'merchants', 'bound'] as const) society.satisfaction[key] = 0;
++  stocks(s).food = 0;
++  stocks(s).wheat = 0;
++  for (const id of ['field-1', 'plain-1']) {
++    const building = s.city.tiles.find(tile => tile.id === id)!.building!;
++    building.workers = 0;
++  }
++  s.player.purse.moneyMilli = 50001;
++  const week = close(s);
++  expect(week.report.crisis?.cardOpened).toBe('demand');
++  const planning = reload(act(week.next, 'NEXT_WEEK').next);
++  const card = planning.city.society!.pendingCard;
++  expect(card).toStrictEqual({ id: 'crisis-demand-w2', kind: 'demand', source: 'crisis', week: 2 });
++  expect(planning.player.purse.robbery?.id).toBe('home-robbery-w1');
++  refusal(planning, 'CARD_PENDING', 'Answer the crisis first.', 'END_WEEK', { expectedWeek: 2 });
++  refusal(planning, 'CARD_PENDING', 'Answer the crisis first.', 'ANSWER_ROBBERY', { option: 'pay' });
++  const answered = reload(act(planning, 'CHOOSE_CARD_OPTION', { cardId: card!.id, option: 'refuse' }).next);
++  expect(answered.player.purse.robbery).toStrictEqual(planning.player.purse.robbery);
++  refusal(answered, 'CARD_PENDING', 'Answer the robbery first.', 'END_WEEK', { expectedWeek: 2 });
++  expect(act(answered, 'ANSWER_ROBBERY', { option: 'pay' }).next.player.purse.robbery).toBeNull();
++});
++
++it('rejects exact invalid command shapes and unavailable chase without mutating state', () => {
++  const s = make();
++  refusal(s, 'UNKNOWN_CARD', 'No home robbery is pending.', 'ANSWER_ROBBERY', { option: 'pay' });
++  s.player.purse = { moneyMilli: 22500, levyPercent: 0, donatedThisWeekMilli: 0,
++    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4000 } };
++  s.city.society!.order.security = 14;
++  refusal(s, 'CHASE_UNAVAILABLE', 'Needs Security 15.', 'ANSWER_ROBBERY', { option: 'chase' });
++  refusal(s, 'UNKNOWN_OPTION', 'Choose Pay, Chase or Let go.', 'ANSWER_ROBBERY', { option: 'send-guard' });
++  refusal(s, 'INVALID_COMMAND', 'Command must contain plain data fields.', 'ANSWER_ROBBERY');
++  refusal(s, 'INVALID_COMMAND', 'Command must contain plain data fields.', 'ANSWER_ROBBERY', { option: 'pay', extra: 1 });
++  refusal(s, 'STALE_COMMAND', 'The purse changed. Try again.', 'ANSWER_ROBBERY', { option: 'pay', expectedRevision: -1 });
++  s.city.society!.order.security = 15;
++  expect(act(s, 'ANSWER_ROBBERY', { option: 'chase' }).robberyResolution)
++    .toStrictEqual({ week: 1, outcome: 'chase-failure', excessMilli: 4000, lossMilli: 2400 });
++});
++
++it('preserves the safe balance when a permitted Planning donation changes exposure', () => {
++  const s = make();
++  s.player.purse = { moneyMilli: 26500, levyPercent: 0, donatedThisWeekMilli: 0,
++    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4000 } };
++  const donated = act(s, 'DONATE_MONEY', { amountMilli: 3000 }).next;
++  const outcome = act(donated, 'ANSWER_ROBBERY', { option: 'let-go' });
++  expect(outcome.robberyResolution).toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 1000 });
++  expect(outcome.next.player.purse).toStrictEqual({
++    moneyMilli: 22500, levyPercent: 0, donatedThisWeekMilli: 3000, robbery: null,
++  });
++  expect(stocks(outcome.next)).toStrictEqual(stocks(donated));
++});
+--- a/packages/simulation/src/__tests__/lord-health.test.ts
++++ b/packages/simulation/src/__tests__/lord-health.test.ts
+@@ -71,7 +71,7 @@
+ it('CITY_FALLEN blocks every later city, NPC and item command without mutation', () => {
+   const s = wound(); s.player.character.health = 20;
+   const fallen = command(s,'END_WEEK',{expectedWeek:1}).next, before = structuredClone(fallen);
+-  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT','SET_LEVY','DONATE_MONEY',...ITEM_COMMAND_TYPES]) {
++  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT','SET_LEVY','DONATE_MONEY','ANSWER_ROBBERY',...ITEM_COMMAND_TYPES]) {
+     expect(executeCharacterLifeCommand(fallen,{type,expectedRevision:fallen.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
+   }
+   expect(fallen).toEqual(before);
+--- a/packages/simulation/src/character-life-command.ts
++++ b/packages/simulation/src/character-life-command.ts
+@@ -1,18 +1,18 @@
+-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
++import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, type CharacterLifeSessionState, type HomeRobberyResolution, type TileTrialReport } from '@haven/core';
+ import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
+ import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
+ import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
+ import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';
+ 
+ import { executePurseCommand, PURSE_COMMAND_TYPES, type PurseCommandType } from './purse-command.js';
+-import { runLevyWeek } from './purse-week.js';
++import { runHomeRobberyCheck, runLevyWeek } from './purse-week.js';
+ import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment } from './household-week.js';
+ 
+ export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
+   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
+   | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType | PurseCommandType;
+ export type CharacterLifeCommandResult =
+-  | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
++  | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport>; robberyResolution?: Readonly<HomeRobberyResolution> }
+   | { success: false; error: { code: string; message: string } };
+ 
+ const fail = (code: string, message: string): CharacterLifeCommandResult => ({ success: false, error: { code, message } });
+@@ -48,9 +48,12 @@
+   if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+ 
+   if (type === 'ANSWER_NOTICE') return answerNotice(session, raw);
++  if (type === 'END_WEEK' && session.player.purse.robbery && Object.getOwnPropertyDescriptor(raw as object, 'expectedRevision')?.value === session.city.revision) {
++    return fail('CARD_PENDING', session.city.society?.pendingCard ? 'Answer the crisis first.' : 'Answer the robbery first.');
++  }
+ 
+   try {
+-    const wages = type === 'END_WEEK' && session.city.phase === 'planning' && !session.city.society?.pendingCard
++    const wages = type === 'END_WEEK' && session.city.phase === 'planning' && !session.city.society?.pendingCard && !session.player.purse.robbery
+       ? payNpcWages(session) : undefined;
+     const opening = wages?.session ?? session;
+     const world = { city: opening.city, outside: opening.outside, npcs: opening.npcs };
+@@ -109,11 +112,11 @@
+         Object.freeze(report.household!.released); Object.freeze(report.household!.lotsToRivals);
+       } else if (market) report = Object.freeze({ ...report, household: market });
+       const purse = runLevyWeek(next, report.taxMilli + report.goods.revenueMilli + (report.laws?.incomeMilli ?? 0));
+-      // M3 inserts the home robbery check here, before the weekly donation reset.
++      const robbery = runHomeRobberyCheck(next, report.week);
+       next.player.purse.donatedThisWeekMilli = 0;
+       const after = purse.levyPaidMilli > 0
+         ? Object.freeze({ ...report.after, gold: report.after.gold - purse.levyPaidMilli }) : report.after;
+-      report = Object.freeze({ ...report, after, purse });
++      report = Object.freeze({ ...report, after, purse: robbery ? Object.freeze({ ...purse, robbery }) : purse });
+       next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);
+     } else if (type === 'BUILD' || type === 'REPLACE' || type === 'SET_ENABLED') {
+       const { week, worldMetadata: { worldSeed } } = next.city.world;
+--- a/packages/simulation/src/character-life-observation.ts
++++ b/packages/simulation/src/character-life-observation.ts
+@@ -101,15 +101,22 @@
+   const held = new Set(session.npcs.map(n => n.postTileId));
+   const freeManagerSlots = managerSlotTileIds(city).filter(id => !held.has(id)).map(tileId => ({ tileId, label: slotLabel(tileId) }));
+   const disabledReasons: string[] = [];
++  const crisis = city.society?.pendingCard;
++  const robbery = session.player.purse.robbery;
++  if (crisis || robbery) disabledReasons.push(crisis ? 'Answer the crisis first.' : 'Answer the robbery first.');
+   if (city.phase === 'report') disabledReasons.push('Choose Plan next week before saving, continuing, exporting or importing.');
+   if (freeManagerSlots.length === 0 && session.npcs.some(n => n.postTileId === null)) {
+     disabledReasons.push('No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.');
+   }
+   return {
+     week: city.world.week, phase: city.phase, revision: city.revision,
+-    actionTypes: city.phase === 'report' ? ['NEXT_WEEK']
+-      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC',
+-        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING', ...PURSE_COMMAND_TYPES] as const : []),
++    actionTypes: city.phase === 'report'
++      ? ['NEXT_WEEK', ...(crisis ? ['CHOOSE_CARD_OPTION'] as const : [])]
++      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED',
++        ...(crisis || robbery ? [] : ['END_WEEK'] as const), 'ASSIGN_NPC', 'UNASSIGN_NPC',
++        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING', ...PURSE_COMMAND_TYPES.filter(type =>
++          type !== 'ANSWER_ROBBERY' || (robbery && !crisis))] as const : []),
++        ...(crisis ? ['CHOOSE_CARD_OPTION'] as const : []),
+         ...(acquisitionEnabled(city, 'guild') || acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BUY_NPC'] as const : []),
+         ...(acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BID_NPC', 'WITHDRAW_BID'] as const : []),
+         ...(acquisitionEnabled(city, 'slave-market') && session.npcs.length ? ['SELL_NPC'] as const : []),
+--- a/packages/simulation/src/purse-command.ts
++++ b/packages/simulation/src/purse-command.ts
+@@ -1,13 +1,13 @@
+ import {
+-  donationGoldMilli, hasWeeklyKeys, isLiveCharacterLifeSessionState, PURSE_TRIAL,
+-  type CharacterLifeSessionState,
++  donationGoldMilli, hasWeeklyKeys, homeRobberyChaseChanceBps, homeRobberyLossMilli, homeRobberyRoll,
++  isLiveCharacterLifeSessionState, PURSE_TRIAL, type CharacterLifeSessionState, type HomeRobberyResolution,
+ } from '@haven/core';
+ import type { CharacterLifeCommandResult } from './character-life-command.js';
+ 
+-export const PURSE_COMMAND_TYPES = ['SET_LEVY', 'DONATE_MONEY'] as const;
++export const PURSE_COMMAND_TYPES = ['SET_LEVY', 'DONATE_MONEY', 'ANSWER_ROBBERY'] as const;
+ export type PurseCommandType = typeof PURSE_COMMAND_TYPES[number];
+ 
+-const fields: Record<PurseCommandType, string> = { SET_LEVY: 'percent', DONATE_MONEY: 'amountMilli' };
++const fields: Record<PurseCommandType, string> = { SET_LEVY: 'percent', DONATE_MONEY: 'amountMilli', ANSWER_ROBBERY: 'option' };
+ const fail = (code: string, message: string): CharacterLifeCommandResult => ({ success: false, error: { code, message } });
+ const whole = (n: unknown): n is number => typeof n === 'number' && Number.isSafeInteger(n);
+ 
+@@ -15,7 +15,9 @@
+   session: CharacterLifeSessionState, type: PurseCommandType, raw: unknown,
+ ): CharacterLifeCommandResult {
+   if (session.city.phase !== 'planning')
+-    return fail('FORBIDDEN', 'Plan next week before changing the purse.');
++    return type === 'ANSWER_ROBBERY'
++      ? fail('FORBIDDEN', 'Choose Plan next week to answer.')
++      : fail('FORBIDDEN', 'Plan next week before changing the purse.');
+   if (!hasWeeklyKeys(raw, ['type', 'expectedRevision', fields[type]]))
+     return fail('INVALID_COMMAND', 'Command must contain plain data fields.');
+   if (raw.expectedRevision !== session.city.revision)
+@@ -23,7 +25,29 @@
+ 
+   const next = structuredClone(session);
+   const purse = next.player.purse;
+-  if (type === 'SET_LEVY') {
++  let robberyResolution: Readonly<HomeRobberyResolution> | undefined;
++  if (type === 'ANSWER_ROBBERY') {
++    const { option } = raw;
++    if (option !== 'pay' && option !== 'chase' && option !== 'let-go')
++      return fail('UNKNOWN_OPTION', 'Choose Pay, Chase or Let go.');
++    const card = purse.robbery;
++    if (!card) return fail('UNKNOWN_CARD', 'No home robbery is pending.');
++    const { society, world } = next.city;
++    if (society!.pendingCard) return fail('CARD_PENDING', 'Answer the crisis first.');
++    const { security } = society!.order;
++    if (option === 'chase' && security < PURSE_TRIAL.robberyChaseSecurityMin)
++      return fail('CHASE_UNAVAILABLE', 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.');
++    const chased = option === 'chase' &&
++      homeRobberyRoll(world.worldMetadata.worldSeed, card.week, 'home-robbery-chase') < homeRobberyChaseChanceBps(security);
++    const lossMilli = chased ? 0 :
++      homeRobberyLossMilli(card.excessMilli, purse.moneyMilli, security, option === 'pay' ? 'pay' : 'let-go');
++    purse.moneyMilli -= lossMilli;
++    purse.robbery = null;
++    robberyResolution = Object.freeze({
++      week: card.week, excessMilli: card.excessMilli, lossMilli,
++      outcome: option === 'chase' ? (chased ? 'chase-success' : 'chase-failure') : option,
++    });
++  } else if (type === 'SET_LEVY') {
+     const percent = raw.percent;
+     if (!whole(percent) || percent < 0 || percent > PURSE_TRIAL.levyMaxPercent)
+       return fail('INVALID_AMOUNT', 'Enter a whole levy percent from 0 to ' + PURSE_TRIAL.levyMaxPercent + '.');
+@@ -45,5 +69,5 @@
+   next.city.revision++;
+   if (!isLiveCharacterLifeSessionState(next))
+     return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.');
+-  return { success: true, next };
++  return { success: true, next, ...(robberyResolution ? { robberyResolution } : {}) };
+ }
+--- a/packages/simulation/src/purse-week.ts
++++ b/packages/simulation/src/purse-week.ts
+@@ -1,5 +1,6 @@
+ import {
+-  applyDifficulty, difficultyProfile, donationGoldMilli, levyDueMilli, type CharacterLifeSessionState, type PurseWeekReport,
++  applyDifficulty, difficultyProfile, donationGoldMilli, levyDueMilli, homeRobberyChanceBps, homeRobberyRoll, safeAmountMilli,
++  type CharacterLifeSessionState, type HomeRobberyReport, type PurseWeekReport,
+ } from '@haven/core';
+ import { trialSafe } from './workshop-operation.js';
+ 
+@@ -19,3 +20,15 @@
+     donationGoldMilli: donationGoldMilli(purse.donatedThisWeekMilli, society!.difficulty), moneyAfterMilli,
+   });
+ }
++
++export function runHomeRobberyCheck(session: CharacterLifeSessionState, week: number): Readonly<HomeRobberyReport> | undefined {
++  const { world, society } = session.city;
++  const purse = session.player.purse;
++  if (society!.crisis.stage === 'fallen') return;
++  const excessMilli = purse.moneyMilli - safeAmountMilli(society!.order.security);
++  if (excessMilli <= 0) return;
++  const chanceBps = homeRobberyChanceBps(excessMilli);
++  if (chanceBps === 0 || homeRobberyRoll(world.worldMetadata.worldSeed, week, 'home-robbery') >= chanceBps) return;
++  purse.robbery = { id: 'home-robbery-w' + week, week, excessMilli };
++  return Object.freeze({ outcome: 'pending', excessMilli });
++}
+--- a/packages/ui/src/CharacterLifeShell.svelte
++++ b/packages/ui/src/CharacterLifeShell.svelte
+@@ -1,9 +1,10 @@
+ <script lang="ts">
+   import './ledger-theme.css';
+   import { tick, type Snippet } from 'svelte';
+-  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport } from '@haven/core';
++  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport, type HomeRobberyOption } from '@haven/core';
+   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
+   import CrisisCard from './CrisisCard.svelte';
++  import HomeRobberyCard from './HomeRobberyCard.svelte';
+   import PursePanel from './PursePanel.svelte';
+   import SocietyPopulation from './SocietyPopulation.svelte';
+   import OptionsDialog from './OptionsDialog.svelte';
+@@ -21,6 +22,7 @@
+   export let status: string;
+   export let unapplied: { id: string; label: string; onopen: () => void }[];
+   export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
++  export let onanswerrobbery: (option: HomeRobberyOption) => void;
+   export let onendweek: (opener: HTMLButtonElement) => void;
+   export let onmainmenu: () => void;
+   export let onpurse: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
+@@ -65,6 +67,16 @@
+   }
+   $: settlement = state.world.settlements[state.world.activeSettlementId!];
+   $: locked = state.phase === 'report';
++  $: robbery = storageSession.player.purse.robbery;
++  $: endWeekReason = state.society?.pendingCard ? 'Answer the crisis first.' : robbery ? 'Answer the robbery first.' : '';
++
++  async function chooseCrisis(cardId: string, option: import('@haven/core').CardOption) {
++    onchoose(cardId, option);
++    if (robbery) {
++      await tick();
++      if (!state.society?.pendingCard) document.getElementById('home-robbery-title')?.focus();
++    }
++  }
+   $: views = [
+     { id: 'city' as const, label: 'City', content: city },
+     { id: 'characters' as const, label: 'Characters', content: characters },
+@@ -73,6 +85,13 @@
+     { id: 'help' as const, label: 'Help', content: help },
+   ];
+ </script>
++
++{#snippet urgentLetter()}
++  <CrisisCard {state} onchoose={chooseCrisis} />
++  {#if !state.society?.pendingCard && robbery}
++    <HomeRobberyCard purse={storageSession.player.purse} security={state.society!.order.security} {locked} onanswer={onanswerrobbery} />
++  {/if}
++{/snippet}
+ 
+ <main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision} onclickcapture={guardEndWeekRepeat} onmousedowncapture={guardEndWeekMouseDown}>
+   <aside aria-label="Life status and navigation">
+@@ -85,7 +104,7 @@
+       <span class="balance-gold">Gold {formatMilli(settlement.inventory.gold)}</span>
+       <span class="balance-money" data-testid="purse-money">Money {formatMilli(storageSession.player.purse.moneyMilli)}</span>
+     </div>
+-    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
++    <button class="ledger-wax" data-testid="life-end-week" disabled={!!endWeekReason} aria-disabled={locked || !!endWeekReason} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{endWeekReason || (locked ? 'Report open — Plan next week in Report' : 'End Week')}</button>
+     {#if unapplied.length}
+       <p>Unapplied changes ({unapplied.length})</p>
+       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
+@@ -130,7 +149,7 @@
+             {#if report.goods.demandMilli > report.goods.servedMilli}<p>Last week: Goods unmet {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}</p>{/if}
+             {#if report.unpaidUpkeepMilli}<p>Last week: Unfunded upkeep {formatMilli(report.unpaidUpkeepMilli)}</p>{/if}
+           {/if}
+-          {#if destination === 'reports' && activeWindow !== 'information'}<CrisisCard {state} {onchoose} />{/if}
++          {#if destination === 'reports' && activeWindow !== 'information'}{@render urgentLetter()}{/if}
+         {/if}
+         {@render view.content()}
+       </section>
+@@ -157,11 +176,11 @@
+       </div>
+       </div>
+     </section>
+-    {#if activeWindow === 'information'}<CrisisCard {state} {onchoose} />{/if}
++    {#if activeWindow === 'information'}{@render urgentLetter()}{/if}
+     <section hidden={activeWindow !== 'player'}>
+       {@render playerInfo()}
+       {#if activeWindow === 'player'}
+-        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} {locked} oncommand={onpurse} />
++        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} security={state.society!.order.security} {locked} oncommand={onpurse} />
+       {/if}
+     </section>
+     <section hidden={activeWindow !== 'population'}>
+--- /dev/null
++++ b/packages/ui/src/HomeRobberyCard.svelte
+@@ -0,0 +1,49 @@
++<script lang="ts">
++  import type { HomeRobberyOption, PlayerCharacter } from '@haven/core';
++  import { formatMilli } from './milli-format.js';
++  import { homeRobberyOptions } from './purse-view.js';
++
++  export let purse: PlayerCharacter['purse'];
++  export let security: number;
++  export let locked: boolean;
++  export let onanswer: (option: HomeRobberyOption) => void;
++
++  $: options = homeRobberyOptions(purse, security, locked);
++</script>
++
++<section class="card urgent-letter" data-testid="home-robbery-card" aria-labelledby="home-robbery-title">
++  <p aria-hidden="true">Urgent letter</p>
++  <p class="ledger-seal urgent-seal">Answer before End Week</p>
++  <div class="image-slot" aria-hidden="true"></div>
++  <h3 id="home-robbery-title" tabindex="-1">Robbers at the Mansion</h3>
++  {#each options as option (option.option)}
++    <div>
++      <button type="button" class="ledger-plaque" data-robbery-option={option.option}
++        aria-disabled={!!option.reason}
++        aria-describedby={'home-robbery-' + option.option + '-amount' + (option.reason ? ' home-robbery-' + option.option + '-reason' : '')}
++        onclick={() => { if (!option.reason) onanswer(option.option); }}>{option.label}</button>
++      <p id={'home-robbery-' + option.option + '-amount'}>
++        {option.option === 'chase' ? 'Success: lose 0 Money. Failure: lose ' : 'Lose '}{formatMilli(option.lossMilli)} Money.
++      </p>
++      {#if option.reason}<p id={'home-robbery-' + option.option + '-reason'}>{option.reason}</p>{/if}
++    </div>
++  {/each}
++</section>
++
++<style>
++  .urgent-letter {
++    background: var(--wood-dark);
++    color: var(--wax-text);
++    --text-main: var(--wax-text);
++    --text-muted: var(--wax-text);
++    border: calc(2 * var(--px)) solid var(--wax);
++    padding: 16px;
++    min-width: 0;
++    overflow-wrap: anywhere;
++  }
++  .urgent-seal { display: inline-block; padding: 8px; }
++  .image-slot { min-height: 120px; }
++  button { font: inherit; min-height: 44px; max-width: 100%; padding: 10px; }
++  p { margin: 8px 0; }
++  section > div { margin-bottom: 12px; }
++</style>
+--- a/packages/ui/src/PursePanel.svelte
++++ b/packages/ui/src/PursePanel.svelte
+@@ -1,15 +1,17 @@
+ <script lang="ts">
+   import type { DifficultyId, PlayerCharacter } from '@haven/core';
+   import { formatMilli } from './milli-format.js';
+-  import { purseControls } from './purse-view.js';
++  import { purseControls, purseRisk } from './purse-view.js';
+ 
+   export let purse: PlayerCharacter['purse'];
+   export let locked: boolean;
++  export let security: number;
+   export let difficulty: DifficultyId;
+   export let oncommand: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
+ 
+   let input = '';
+   $: controls = purseControls(purse, input, locked, difficulty);
++  $: risk = purseRisk(purse.moneyMilli, security);
+ 
+   function donate(event: SubmitEvent) {
+     event.preventDefault();
+@@ -36,7 +38,7 @@
+     Happiness cost: {controls.happinessCost ? '−' : ''}{controls.happinessCost} a week{controls.donationOffset
+       ? ` (levy −${controls.levyCost}, donation +${controls.donationOffset})` : ''}
+   </p>
+-  <p>Safe amount — · At risk —</p>
++  <p data-testid="purse-risk">Safe amount {formatMilli(risk.safeMilli)} Money · At risk {formatMilli(risk.atRiskMilli)} Money</p>
+   <form onsubmit={donate}>
+     <label for="purse-donate-amount">Donation amount in Money</label>
+     <input id="purse-donate-amount" type="text" inputmode="numeric" bind:value={input}
+--- a/packages/ui/src/TileManagement.svelte
++++ b/packages/ui/src/TileManagement.svelte
+@@ -8,6 +8,7 @@
+   import CharacterLifeCity from './CharacterLifeCity.svelte';
+   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
+   import SoloWeekReport from './SoloWeekReport.svelte';
++  import { homeRobberyReportText } from './report-letters.js';
+   import type { LifeDestination, LifeWindow, PostDraftEntry } from './character-life-navigation.js';
+   import { type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
+   import { executeCharacterLifeCommand } from '@haven/simulation';
+@@ -78,7 +79,7 @@
+       return false;
+     }
+     if (!result.success) {
+-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE'];
++      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
+       if (!known.includes(result.error.code)) {
+         error = 'The action failed. Download the error log for review.';
+         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
+@@ -96,6 +97,13 @@
+       report = result.report;
+       reportNpcs = report.npcLife ? npcs ?? [] : [];
+     }
++    if (result.robberyResolution) {
++      const { week, ...robbery } = result.robberyResolution;
++      if (report?.purse?.robbery?.outcome === 'pending' && report.week === week) {
++        report = Object.freeze({ ...report, purse: Object.freeze({ ...report.purse, robbery: Object.freeze(robbery) }) });
++      }
++      lifeStatus = 'Robbery · ' + homeRobberyReportText(robbery);
++    }
+     ({ city: state, outside, npcs, player, profiles } = result.next);
+     // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
+     if (type === 'LOAD_TRIAL') report = null;
+@@ -105,7 +113,7 @@
+     return true;
+   }
+   async function endLifeWeek(opener: HTMLButtonElement): Promise<void> {
+-    if (state.phase !== 'planning' || state.society?.pendingCard) return;
++    if (state.phase !== 'planning' || state.society?.pendingCard || player?.purse.robbery) return;
+     if (command('END_WEEK', { expectedWeek: state.world.week })) {
+       lifeStatus = '';
+       const resolvedRevision = state.revision, resolvedReport = report;
+@@ -145,6 +153,11 @@
+     await tick();
+     const post = document.getElementById(`npc-slot-${npcId}`) as HTMLSelectElement | null;
+     (post && !post.disabled ? post : document.getElementById(`profile-${npcId}-tab-work`))?.focus();
++  }
++  async function focusLifeReport(): Promise<void> {
++    await tick();
++    const id = activeWindow === 'information' ? 'life-window-heading' : 'life-reports-heading';
++    document.getElementById(id)?.focus();
+   }
+   async function focusLifeCityNavigation(): Promise<void> {
+     await tick();
+@@ -230,7 +243,7 @@
+ {#if state.society?.crisis.stage === 'fallen'}
+   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
+ {:else if lifeMode && outside && npcs && player && profiles}
+-  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu} onpurse={command}>
++  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onanswerrobbery={option => { if (command('ANSWER_ROBBERY', { option })) void focusLifeReport(); }} onendweek={endLifeWeek} onmainmenu={mainMenu} onpurse={command}>
+     {#snippet playerInfo()}
+       <p>{player!.character.name}</p><p>Leader of Haven</p>
+     {/snippet}
+--- /dev/null
++++ b/packages/ui/src/__tests__/home-robbery-view.test.ts
+@@ -0,0 +1,30 @@
++import { expect, it } from 'vitest';
++import { homeRobberyOptions, purseRisk } from '../purse-view.js';
++import { purseReportRows } from '../report-letters.js';
++
++it('shows exact exposure, option costs and chase restriction', () => {
++  expect(purseRisk(22500, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 0 });
++  expect(purseRisk(26501, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 4001 });
++  const purse = { moneyMilli: 26501, levyPercent: 0, donatedThisWeekMilli: 0,
++    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4001 } };
++  expect(homeRobberyOptions(purse, 14, false)).toStrictEqual([
++    { option: 'pay', label: 'Pay', lossMilli: 1000, reason: '' },
++    { option: 'chase', label: 'Chase', lossMilli: 2400, reason: 'Needs Security 15.' },
++    { option: 'let-go', label: 'Let go', lossMilli: 2400, reason: '' },
++  ]);
++  expect(homeRobberyOptions(purse, 30, true).map(view => view.reason))
++    .toStrictEqual(Array(3).fill('Choose Plan next week to answer.'));
++});
++
++it.each(['normal', 'easy'] as const)('renders the %s Robbery row independently from the levy rate', difficulty => {
++  const purse = { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0,
++    donationGoldMilli: 0, moneyAfterMilli: 26501 };
++  expect(purseReportRows({ ...purse, robbery: { outcome: 'pending', excessMilli: 4001 } }, difficulty)).toStrictEqual([
++    { label: 'Levy', value: '0 Money · 0% · 0 of 0 Gold paid' },
++    { label: 'Donation', value: '0 Money · 0 Gold' },
++    { label: 'Money after', value: '26.501 Money' },
++    { label: 'Robbery', value: 'Awaiting answer · 4.001 Money at risk' },
++  ]);
++  expect(purseReportRows({ ...purse, robbery: { outcome: 'pay', excessMilli: 4001, lossMilli: 1000 } }, difficulty).at(-1))
++    .toStrictEqual({ label: 'Robbery', value: 'Paid · −1 Money · 4.001 Money at risk' });
++});
+--- a/packages/ui/src/purse-view.ts
++++ b/packages/ui/src/purse-view.ts
+@@ -1,4 +1,4 @@
+-import { donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, type DifficultyId, type PlayerCharacter } from '@haven/core';
++import { donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type PlayerCharacter } from '@haven/core';
+ 
+ export function parseDonationMilli(text: string): number | null {
+   if (!/^[0-9]+$/.test(text)) return null;
+@@ -24,3 +24,22 @@
+       amountMilli > purse.moneyMilli ? 'Not enough Money.' : ''),
+   };
+ }
++
++export function purseRisk(moneyMilli: number, security: number) {
++  const safeMilli = safeAmountMilli(security);
++  return { safeMilli, atRiskMilli: Math.max(0, moneyMilli - safeMilli) };
++}
++
++export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {
++  const excess = purse.robbery?.excessMilli ?? 0;
++  const pay = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'pay');
++  const loss = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'let-go');
++  const reportReason = locked ? 'Choose Plan next week to answer.' : '';
++  const chaseReason = reportReason || (security < PURSE_TRIAL.robberyChaseSecurityMin
++    ? 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.' : '');
++  return [
++    { option: 'pay', label: 'Pay', lossMilli: pay, reason: reportReason },
++    { option: 'chase', label: 'Chase', lossMilli: loss, reason: chaseReason },
++    { option: 'let-go', label: 'Let go', lossMilli: loss, reason: reportReason },
++  ] satisfies { option: HomeRobberyOption; label: string; lossMilli: number; reason: string }[];
++}
+--- a/packages/ui/src/report-letters.ts
++++ b/packages/ui/src/report-letters.ts
+@@ -252,6 +252,14 @@
+   ];
+ }
+ import { itemReportRows } from './items-view.js';
++import type { HomeRobberyReport } from '@haven/core';
++
++const robberyOutcomeText = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' } as const;
++export function homeRobberyReportText(robbery: Readonly<HomeRobberyReport>): string {
++  if (robbery.outcome === 'pending') return 'Awaiting answer · ' + formatMilli(robbery.excessMilli) + ' Money at risk';
++  return robberyOutcomeText[robbery.outcome] + ' · ' + signedMilli(-robbery.lossMilli) + ' Money · ' +
++    formatMilli(robbery.excessMilli) + ' Money at risk';
++}
+ 
+ export function purseReportRows(purse: Readonly<PurseWeekReport>, difficulty: DifficultyId) {
+   const { levyPercent, levyDueMilli, levyPaidMilli, donationsMilli, donationGoldMilli, moneyAfterMilli } = purse;
+@@ -263,5 +271,6 @@
+       (shortfall ? ' · ' + formatMilli(shortfall) + ' Gold shortfall' : '') },
+     { label: 'Donation', value: `${signedMilli(-donationsMilli)} Money · ${signedMilli(donationGoldMilli)} Gold` },
+     { label: 'Money after', value: formatMilli(moneyAfterMilli) + ' Money' },
+-  ];
+-}
++    ...(purse.robbery ? [{ label: 'Robbery', value: homeRobberyReportText(purse.robbery) }] : []),
++  ];
++}
+--- a/scripts/money-calibration.ts
++++ b/scripts/money-calibration.ts
+@@ -3,7 +3,7 @@
+ import { writeFileSync } from 'node:fs';
+ import type { CharacterLifeSessionState, DifficultyId, TileTrialReport } from '@haven/core';
+ 
+-const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation } = await import('@haven/core');
++const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation, safeAmountMilli, homeRobberyChanceBps } = await import('@haven/core');
+ const { executeCharacterLifeCommand, resolveWorkshopOperation, societyWorkforce } = await import('@haven/simulation');
+ const styles = ['good', 'average', 'bad'] as const;
+ const difficulties: DifficultyId[] = ['normal', 'easy'];
+@@ -18,6 +18,8 @@
+   planningNet: number; crisisCost: number; closeAfterAnswer: number; goods: number; sold: number;
+   foodDemand: number; foodConsumed: number; happiness: number; netPer100: number | null; grossPer100: number | null;
+   levyPercent: number; levyDueMilli: number; levyPaidMilli: number; levyMoneyMilli: number; moneyAfterMilli: number;
++  security: number; safeMoneyMilli: number; robberyExcessMilli: number; robberyChanceBps: number;
++  robberyHit: boolean; robberyLossMilli: number; moneyAfterAnswerMilli: number;
+   crisisStage: string; tension: number; hungry: boolean;
+   failure: string | null; fallen: boolean;
+ }
+@@ -109,6 +111,16 @@
+       act('CHOOSE_CARD_OPTION',{cardId:card.id,option});
+     }
+     const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';
++    const security = report.order!.after.security;
++    const safeMoneyMilli = safeAmountMilli(security);
++    const robberyExcessMilli = Math.max(0, report.purse.moneyAfterMilli - safeMoneyMilli);
++    const robberyHit = report.purse.robbery?.outcome === 'pending';
++    let robberyLossMilli = 0;
++    if (robberyHit) {
++      act('NEXT_WEEK');
++      act('ANSWER_ROBBERY', { option: 'pay' });
++      robberyLossMilli = report.purse.moneyAfterMilli - state.player.purse.moneyMilli;
++    }
+     rows.push({ seed,difficulty,style,week,residents,start,end,net,gross,tax,goodsRevenue,lawPay,wages,operations,
+       farmBatch:report.farmBatchGoldMilli,scheduledUpkeepPaid:report.upkeepPaidMilli,scheduledUpkeepUnfunded:report.unpaidUpkeepMilli,
+       homes,homeUpkeepUnfunded,lawCosts,training,securityTheft,crimeTheft,luxury,planningNet:start-prePlan,crisisCost:end-closeAfterAnswer,
+@@ -117,10 +129,13 @@
+       grossPer100:residents?gross*100/residents:null,
+       levyPercent, levyDueMilli: report.purse.levyDueMilli, levyPaidMilli: report.purse.levyPaidMilli,
+       levyMoneyMilli: report.purse.moneyAfterMilli - opening.player.purse.moneyMilli,
+-      moneyAfterMilli: report.purse.moneyAfterMilli, crisisStage: report.crisis?.stageAfter ?? 'unavailable',
++      moneyAfterMilli: report.purse.moneyAfterMilli, security, safeMoneyMilli, robberyExcessMilli,
++      robberyChanceBps: fallen ? 0 : homeRobberyChanceBps(robberyExcessMilli), robberyHit,
++      robberyLossMilli, moneyAfterAnswerMilli: state.player.purse.moneyMilli,
++      crisisStage: report.crisis?.stageAfter ?? 'unavailable',
+       tension: report.crisis?.tensionAfter ?? society.tension, hungry: report.crisis?.hungry ?? false, failure,fallen });
+     if (fallen || week === weeks) break;
+-    act('NEXT_WEEK');
++    if (!robberyHit) act('NEXT_WEEK');
+   }
+   return rows;
+ }
+@@ -144,6 +159,9 @@
+       firstAtOrBelowWarningHappiness:run.find(row=>row.happiness<=CRISIS_TRIAL.happinessBelow)?.week??null,
+       firstBelowWarningHappiness:run.find(row=>row.happiness<CRISIS_TRIAL.happinessBelow)?.week??null,
+       firstCrisis:run.find(row=>!['none','unavailable'].includes(row.crisisStage))?.week??null,
++      firstAboveSafe:run.find(row=>row.robberyExcessMilli>0)?.week??null,
++      robberies:run.filter(row=>row.robberyHit).length,
++      robberyLossMilli:run.reduce((sum,row)=>sum+row.robberyLossMilli,0),
+       first15Money:run.find(row=>row.moneyAfterMilli>=15000)?.week??null,
+       totalLevyPaidMilli:run.reduce((sum,row)=>sum+row.levyPaidMilli,0),
+       totalLevyMoneyMilli:run.reduce((sum,row)=>sum+row.levyMoneyMilli,0),
+@@ -152,5 +170,5 @@
+       firstZero:run.find(row=>row.end===0)?.week??null,goods:run.reduce((sum,row)=>sum+row.goods,0),
+       firstFailure:run.find(row=>row.failure)?.failure??null,fallen:run.some(row=>row.fallen)};
+   }))));
+-  writeFileSync(path,JSON.stringify({schemaVersion:2,levyColumns,rows,summary},null,2)+'\n','utf8');
++  writeFileSync(path,JSON.stringify({schemaVersion:3,levyColumns,rows,summary},null,2)+'\n','utf8');
+ }
+--- a/tests/e2e/character-life-navigation.helpers.ts
++++ b/tests/e2e/character-life-navigation.helpers.ts
+@@ -155,10 +155,11 @@
+ }
+ 
+ export async function exportLife(page: Page): Promise<CharacterLifeSessionState> {
+-  expect(await page.getByTestId('life-end-week').getAttribute('aria-disabled')).toBe('false');
+   await go(page, 'session');
++  const button = page.getByRole('button', { name: 'Export checkpoint', exact: true });
++  await expect(button).toBeEnabled();
+   const pending = page.waitForEvent('download');
+-  await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();
++  await button.click();
+   const download = await pending;
+   expect(download.suggestedFilename()).toMatch(/^haven-world-life-week-\d+\.json$/);
+   const state = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
+@@ -585,12 +586,31 @@
+     if (!levy || !donated || !balance) throw Error('Invalid purse report rows.');
+     const credit = expected.purse.levyPaidMilli * (difficulty === 'easy' ? 2 : 1);
+     expect(levy[1]).toBe(credit === 0 ? '0' : `+${u(credit)}`);
+-    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after']);
++    const robbery = expected.purse.robbery;
++    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after', ...(robbery ? ['Robbery'] : [])]);
+     actual.purse = {
+       levyPercent: Number(levy[2]), levyDueMilli: milli(levy[4]), levyPaidMilli: milli(levy[3]),
+       donationsMilli: donated[1] ? milli(donated[1]) : 0,
+       donationGoldMilli: donated[2] ? milli(donated[2]) : 0, moneyAfterMilli: milli(balance[1]),
+     };
++    if (robbery) {
++      const atRisk = u(robbery.excessMilli) + ' Money at risk';
++      const labels = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' };
++      const row = purse.locator('dt:text-is("Robbery") + dd');
++      const loss = robbery.outcome === 'pending' ? '' : robbery.lossMilli ? '−' + u(robbery.lossMilli) : '0';
++      await expect(row).toHaveText(robbery.outcome === 'pending'
++        ? 'Awaiting answer · ' + atRisk : labels[robbery.outcome] + ' · ' + loss + ' Money · ' + atRisk);
++      const parsed = (await row.textContent())!.split(' · ');
++      const excessMilli = milli(parsed.at(-1)!.replace(' Money at risk', ''));
++      if (parsed[0] === 'Awaiting answer') actual.purse.robbery = { outcome: 'pending', excessMilli };
++      else {
++        const entry = Object.entries(labels).find(([, label]) => label === parsed[0]);
++        if (!entry) throw Error('Invalid Robbery report outcome.');
++        actual.purse.robbery = { outcome: entry[0] as keyof typeof labels, excessMilli,
++          lossMilli: milli(parsed[1].replace(/^−/, '').replace(' Money', '')) };
++      }
++      expect(actual.purse.robbery).toStrictEqual(robbery);
++    }
+     const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;
+     expect(levy[5] ? milli(levy[5]) : 0).toBe(shortfall);
+   } else await expect(purse).toHaveCount(0);
+--- a/tests/e2e/crafting.spec.ts
++++ b/tests/e2e/crafting.spec.ts
+@@ -11,7 +11,7 @@
+ }
+ function supplied(buildSmithy = true) {
+   const s = makeLifeWithNpcs(42), stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+-  s.player.purse.moneyMilli = 1000000;
++  s.player.purse.moneyMilli = 12000;
+   Object.assign(stock, { gold: 1000000, food: 1000000, wood: 1000000, iron: 1000000 });
+   s.city.society!.classes.free = 37; s.city.society!.classes.makers.common = 30; s.city.society!.classes.luminaries.common = 20;
+   s.city.society!.stocksMilli.herbs = 10000;
+--- /dev/null
++++ b/tests/e2e/home-robbery.spec.ts
+@@ -0,0 +1,131 @@
++import { expect, test, type Page } from '@playwright/test';
++import { CRISIS_TRIAL, type CharacterLifeSessionState } from '@haven/core';
++import { executeCharacterLifeCommand } from '@haven/simulation';
++import { expectReport, exportLife, go, importLife, keyActivate, makeLife, tabTo } from './character-life-navigation.helpers.ts';
++
++function close(s: CharacterLifeSessionState) {
++  const r = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedWeek: 1, expectedRevision: s.city.revision });
++  if (!r.success || !r.report) throw Error('Expected End Week report.');
++  return { next: r.next, report: r.report };
++}
++const card = (page: Page) => page.getByRole('region', { name: 'Robbers at the Mansion', exact: true });
++const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
++const row = (page: Page) => page.getByTestId('purse-report').locator('dt:text-is("Robbery") + dd');
++
++for (const [width, difficulty, excess, ransom, loss, rest] of [
++  [1280, 'normal', '30.088', '7.522', '18.052', '43.816'],
++  [1600, 'easy', '31.605', '7.901', '18.963', '44.954'],
++] as const) {
++  test('renders and answers the ' + difficulty + ' home robbery at ' + width, async ({ page }) => {
++    await page.setViewportSize({ width, height: 900 });
++    const s = makeLife(40);
++    s.city.society!.difficulty = difficulty;
++    s.player.purse.moneyMilli = 50001;
++    s.player.purse.levyPercent = 5;
++    const expected = close(s);
++    await page.goto('/');
++    await importLife(page, s);
++    await page.locator('#life-nav-player').click();
++    await expect(page.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 27.501 Money');
++    await page.keyboard.press('Escape');
++    const end = page.getByTestId('life-end-week');
++    await keyActivate(page, end);
++    await expect(end).toBeDisabled();
++    await expect(end).toHaveText('Answer the robbery first.');
++    const robbery = card(page);
++    await expect(robbery).toBeVisible();
++    await expect(robbery.getByRole('button')).toHaveText(['Pay', 'Chase', 'Let go']);
++    await expect(robbery.locator('#home-robbery-pay-amount')).toHaveText('Lose ' + ransom + ' Money.');
++    await expect(robbery.locator('#home-robbery-chase-amount')).toHaveText('Success: lose 0 Money. Failure: lose ' + loss + ' Money.');
++    await expect(robbery.locator('#home-robbery-let-go-amount')).toHaveText('Lose ' + loss + ' Money.');
++    for (const name of ['pay', 'chase', 'let-go']) {
++      const disabled = robbery.locator('[data-robbery-option="' + name + '"]');
++      await expect(disabled).toHaveAttribute('aria-disabled', 'true');
++      await expect(disabled).toHaveAttribute('aria-describedby', 'home-robbery-' + name + '-amount home-robbery-' + name + '-reason');
++      await expect(robbery.locator('#home-robbery-' + name + '-reason')).toHaveText('Choose Plan next week to answer.');
++      await disabled.press('Enter');
++      await expect(row(page)).toHaveText('Awaiting answer · ' + excess + ' Money at risk');
++    }
++    await expectReport(page, expected.report, difficulty);
++    await keyActivate(page, button(page, 'Plan next week'));
++    await expect(end).toBeDisabled();
++    const pay = robbery.getByRole('button', { name: 'Pay', exact: true });
++    await tabTo(page, pay);
++    await keyActivate(page, pay);
++    await expect(robbery).toHaveCount(0);
++    await expect(end).toBeEnabled();
++    await expect(row(page)).toHaveText('Paid · −' + ransom + ' Money · ' + excess + ' Money at risk');
++    await expect(page.getByTestId('purse-money')).toHaveText('Money ' + rest);
++    await expect(page.locator('#life-reports-heading')).toBeFocused();
++
++    const low = makeLife(40);
++    low.city.society!.difficulty = difficulty;
++    low.city.society!.order.security = 14;
++    low.player.purse.moneyMilli = 22500;
++    low.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++    await importLife(page, low);
++    await go(page, 'reports');
++    const chase = card(page).getByRole('button', { name: 'Chase', exact: true });
++    await tabTo(page, chase);
++    await expect(chase).toHaveAttribute('aria-disabled', 'true');
++    await expect(chase).toHaveAttribute('aria-describedby', 'home-robbery-chase-amount home-robbery-chase-reason');
++    await expect(card(page).locator('#home-robbery-chase-reason')).toHaveText('Needs Security 15.');
++    await chase.press('Space');
++    expect((await exportLife(page)).player.purse).toStrictEqual(low.player.purse);
++
++    await go(page, 'reports');
++    for (const narrow of [320, 375]) {
++      await page.setViewportSize({ width: narrow, height: 812 });
++      await expect(card(page)).toBeVisible();
++      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
++      expect(await card(page).getByRole('button').evaluateAll(nodes =>
++        nodes.every(node => node.getBoundingClientRect().height >= 44 && node.getBoundingClientRect().right <= innerWidth))).toBe(true);
++    }
++  });
++}
++
++test('shows crisis first and resumes between the two answers from IndexedDB and JSON', async ({ page }) => {
++  const s = makeLife(40);
++  const society = s.city.society!;
++  society.crisis.stage = 'warning';
++  society.crisis.hungerStreak = CRISIS_TRIAL.demandHungerWeeks - 1;
++  for (const key of ['free', 'makers', 'luminaries', 'merchants', 'bound'] as const) society.satisfaction[key] = 0;
++  const stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
++  stock.food = 0;
++  stock.wheat = 0;
++  for (const id of ['field-1', 'plain-1']) {
++    const building = s.city.tiles.find(tile => tile.id === id)!.building!;
++    building.workers = 0;
++  }
++  s.player.purse.moneyMilli = 50001;
++  await page.goto('/');
++  await importLife(page, s);
++  await keyActivate(page, page.getByTestId('life-end-week'));
++  await expect(page.getByTestId('crisis-card')).toBeVisible();
++  await expect(card(page)).toHaveCount(0);
++  await expect(page.getByTestId('life-end-week')).toHaveText('Answer the crisis first.');
++  await keyActivate(page, button(page, 'Plan next week'));
++  const both = await exportLife(page);
++  expect(both.city.society!.pendingCard).toStrictEqual({ id: 'crisis-demand-w2', source: 'crisis', kind: 'demand', week: 2 });
++  expect(both.player.purse.robbery?.id).toBe('home-robbery-w1');
++  await button(page, 'Save locally').click();
++  await expect(page.getByText('Saved in this browser.', { exact: true })).toBeVisible();
++  await page.reload();
++  await button(page, 'Continue').click();
++  expect((await exportLife(page)).player.purse).toStrictEqual(both.player.purse);
++  await go(page, 'reports');
++  const refuse = page.getByTestId('crisis-card').getByRole('button', { name: 'Refuse', exact: true });
++  await keyActivate(page, refuse);
++  await expect(card(page).getByRole('heading')).toBeFocused();
++  await expect(page.getByTestId('life-end-week')).toHaveText('Answer the robbery first.');
++  const between = await exportLife(page);
++  expect(between.city.society!.pendingCard).toBeNull();
++  expect(between.player.purse).toStrictEqual(both.player.purse);
++  await importLife(page, between);
++  await go(page, 'reports');
++  await expect(page.getByTestId('crisis-card')).toHaveCount(0);
++  await keyActivate(page, card(page).getByRole('button', { name: 'Let go', exact: true }));
++  await expect(page.getByTestId('life-shell').getByRole('status').filter({ hasText: 'Robbery · Let go · −17.25 Money · 28.751 Money at risk' })).toHaveText('Robbery · Let go · −17.25 Money · 28.751 Money at risk');
++  await expect(page.getByTestId('life-end-week')).toBeEnabled();
++  expect((await exportLife(page)).player.purse.robbery).toBeNull();
++});
+--- a/tests/e2e/items.spec.ts
++++ b/tests/e2e/items.spec.ts
+@@ -119,7 +119,7 @@
+ });
+ function crowdedReport(){
+   let seed=1;while(seed<200&&(!drawItemRarity(ITEM_TRIAL.materialOddsBps,itemRandom(seed,1,'material'))||!drawItemRarity(ITEM_TRIAL.findOddsBps,itemRandom(seed,1,'find'))))seed++;
+-  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.npcs[0].character.skills.management=40;s.npcs[0].character.skills.combat=30;s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
++  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.player.purse.moneyMilli=12000;s.npcs[0].character.skills.management=40;s.npcs[0].character.skills.combat=30;s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
+   const i=s.city.society!.items;i.inventory=Array.from({length:50},(_,k)=>({id:k+1,defId:'common-ring'}));i.storage=Array.from({length:10},(_,k)=>({item:{id:k+51,defId:'rare-ring'},expiresWeek:k===0?1:99}));i.nextItemId=61;i.materials={iron:999,silver:999,gold:999,ruby:999};i.goals.rebellionSeen=true;i.goals.authorityStreak=3;s.city.society!.order.authority=100;return s;
+ }
+ test('C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards',async({page})=>{
+--- a/tests/e2e/purse.spec.ts
++++ b/tests/e2e/purse.spec.ts
+@@ -20,7 +20,7 @@
+     await tabTo(page, player);
+     await keyActivate(page, player);
+     const purse = page.getByRole('region', { name: 'Purse', exact: true });
+-    await expect(purse.getByText('Safe amount — · At risk —', { exact: true })).toBeVisible();
++    await expect(purse.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 0 Money');
+     const levy = purse.getByRole('group', { name: 'Weekly levy', exact: true });
+     const percent = levy.locator('span');
+     const decrease = levy.getByRole('button', { name: 'Decrease weekly levy', exact: true });

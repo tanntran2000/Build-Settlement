@@ -1,0 +1,19 @@
+[
+  {
+    "utc": "2026-11-27T11:18:53.638674+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:18:59.770516+00:00",
+      "twoSecondCpuPercent": [
+        4.98,
+        4.3,
+        5.06
+      ],
+      "meanCpuPercent": 4.78
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  }
+]

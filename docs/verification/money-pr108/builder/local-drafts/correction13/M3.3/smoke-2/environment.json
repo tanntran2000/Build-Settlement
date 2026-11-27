@@ -1,0 +1,59 @@
+{
+  "portsInUse": [],
+  "topProcesses": [
+    {
+      "Name": "powershell",
+      "CPUSeconds": 1.453
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.328
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.25
+    },
+    {
+      "Name": "codex",
+      "CPUSeconds": 0.078
+    },
+    {
+      "Name": "claude",
+      "CPUSeconds": 0.031
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.031
+    },
+    {
+      "Name": "codebase-memory-mcp",
+      "CPUSeconds": 0.016
+    },
+    {
+      "Name": "codebase-memory-mcp",
+      "CPUSeconds": 0.016
+    },
+    {
+      "Name": "codebase-memory-mcp",
+      "CPUSeconds": 0.016
+    },
+    {
+      "Name": "node",
+      "CPUSeconds": 0
+    }
+  ],
+  "cpu": {
+    "utc": "2026-11-27T07:44:00.827403+00:00",
+    "twoSecondCpuPercent": [
+      4.6,
+      3.81,
+      5.92
+    ],
+    "meanCpuPercent": 4.78
+  },
+  "logicalCpus": 8,
+  "systemRequired": true,
+  "node": "v24.19.0",
+  "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+  "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+}

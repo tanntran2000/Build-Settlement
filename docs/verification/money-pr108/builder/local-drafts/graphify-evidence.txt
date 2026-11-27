@@ -1,0 +1,299 @@
+graphify affected pendingCard
+Affected nodes for PendingCard
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- SocietyState [references] packages/core/src/trial/society.ts:L29
+- society.ts [imports] packages/core/src/trial/society.ts:L5
+- TileTrialState [references] packages/core/src/trial/types.ts:L25
+- SocietyWeekInput [references] packages/simulation/src/society-week.ts:L16
+- SocietyWeekResult [references] packages/simulation/src/society-week.ts:L26
+- law.ts [imports] packages/core/src/trial/law.ts:L5
+- trial/types.ts [imports] packages/core/src/trial/types.ts:L4
+- society-week.ts [imports] packages/simulation/src/society-week.ts:L1
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L28
+- world/session.ts [re_exports] packages/core/src/world/session.ts:L13
+- character/validate.ts [imports_from] packages/core/src/character/validate.ts:L5
+- society-world-integrity.test.ts [imports_from] packages/core/src/__tests__/society-world-integrity.test.ts:L3
+- weekly.test.ts [imports_from] packages/core/src/__tests__/weekly.test.ts:L2
+- state.ts [imports_from] packages/core/src/trial/state.ts:L8
+- items.test.ts [imports_from] packages/core/src/trial/__tests__/items.test.ts:L4
+- law.test.ts [imports_from] packages/core/src/trial/__tests__/law.test.ts:L2
+- society.test.ts [imports_from] packages/core/src/trial/__tests__/society.test.ts:L3
+- generate.ts [imports_from] packages/core/src/world/generate.ts:L2
+- scenario.ts [imports_from] packages/core/src/world/scenario.ts:L1
+- generate.test.ts [imports_from] packages/core/src/world/__tests__/generate.test.ts:L3
+- npc.test.ts [imports_from] packages/core/src/world/__tests__/npc.test.ts:L3
+- world/__tests__/session.test.ts [imports_from] packages/core/src/world/__tests__/session.test.ts:L2
+exit 0
+graphify affected runLevyWeek
+Affected nodes for runLevyWeek()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- executeCharacterLifeCommand() [calls] packages/simulation/src/character-life-command.ts:L111
+- character-life-command.ts [imports] packages/simulation/src/character-life-command.ts:L8
+- purse-week.test.ts [imports] packages/simulation/src/__tests__/purse-week.test.ts:L6
+- command() [calls] packages/simulation/src/__tests__/acquisition-fixture.ts:L14
+- rejection() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L89
+- act() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L26
+- act() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L30
+- refuse() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L36
+- end() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L10
+- findCrimeFixture() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L16
+- crisisFixture() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L21
+- fixtureStep() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L9
+- end() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L31
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/item-command.test.ts:L10
+- command() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L121
+- action() [calls] packages/simulation/src/__tests__/law-fixture.test.ts:L9
+- action() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L22
+- command() [calls] packages/simulation/src/__tests__/lord-health.test.ts:L19
+- command() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L69
+- action() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L42
+- dispatch() [calls] packages/simulation/src/__tests__/purse-command.test.ts:L14
+- refused() [calls] packages/simulation/src/__tests__/purse-command.test.ts:L31
+- close() [calls] packages/simulation/src/__tests__/purse-week.test.ts:L22
+- start() [calls] packages/simulation/src/__tests__/purse-week.test.ts:L15
+- step() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L9
+- run() [calls] packages/ui/src/EquipmentView.svelte:L19
+- act() [calls] tests/e2e/acquisition.spec.ts:L11
+- act() [calls] tests/e2e/crafting.spec.ts:L8
+- resolveReport() [calls] tests/e2e/crafting.spec.ts:L150
+- act() [calls] tests/e2e/items.spec.ts:L9
+- act() [calls] tests/e2e/society-command.helpers.ts:L12
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L4
+- acquisition-fixture.ts [imports] packages/simulation/src/__tests__/acquisition-fixture.ts:L2
+- character-life-command.test.ts [imports] packages/simulation/src/__tests__/character-life-command.test.ts:L8
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L7
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L8
+- crime-fixtures.test.ts [imports] packages/simulation/src/__tests__/crime-fixtures.test.ts:L6
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L4
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L3
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L4
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L5
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L4
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L7
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L4
+- law-fixture.test.ts [imports] packages/simulation/src/__tests__/law-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L4
+- lord-health.test.ts [imports] packages/simulation/src/__tests__/lord-health.test.ts:L5
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L10
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L8
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L4
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L3
+- purse-command.test.ts [imports] packages/simulation/src/__tests__/purse-command.test.ts:L5
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L3
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L3
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L5
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L5
+- EquipmentView.svelte [imports] packages/ui/src/EquipmentView.svelte:L4
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L3
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L11
+- character-life-navigation-accessibility.spec.ts [imports] tests/e2e/character-life-navigation-accessibility.spec.ts:L2
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L4
+- character-life.spec.ts [imports] tests/e2e/character-life.spec.ts:L5
+- crafting.spec.ts [imports] tests/e2e/crafting.spec.ts:L3
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L5
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L5
+- error-log.spec.ts [imports] tests/e2e/error-log.spec.ts:L5
+- garrison.spec.ts [imports] tests/e2e/garrison.spec.ts:L4
+- goods-stock.spec.ts [imports] tests/e2e/goods-stock.spec.ts:L3
+- items.spec.ts [imports] tests/e2e/items.spec.ts:L5
+- laws.spec.ts [imports] tests/e2e/laws.spec.ts:L4
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L5
+- npc-homes.spec.ts [imports] tests/e2e/npc-homes.spec.ts:L3
+- npc-sheet.spec.ts [imports] tests/e2e/npc-sheet.spec.ts:L4
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L2
+- outside.spec.ts [imports] tests/e2e/outside.spec.ts:L1
+- smoke.spec.ts [imports] tests/e2e/smoke.spec.ts:L2
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L3
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L6
+- tile-feedback-precision.spec.ts [imports] tests/e2e/tile-feedback-precision.spec.ts:L4
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L4
+- tile-population.spec.ts [imports] tests/e2e/tile-population.spec.ts:L4
+- tile-save.spec.ts [imports] tests/e2e/tile-save.spec.ts:L4
+- tile-trial.spec.ts [imports] tests/e2e/tile-trial.spec.ts:L4
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L4
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L4
+- character-life-observation.test.ts [indirect_call] packages/simulation/src/__tests__/character-life-observation.test.ts:L129
+- answer() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L60
+- release() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L71
+- run() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L81
+- command() [calls] packages/ui/src/TileManagement.svelte:L74
+- society-guard.test.ts [indirect_call] packages/simulation/src/__tests__/society-guard.test.ts:L19
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L4
+- character-life-observation.ts [imports_from] packages/simulation/src/character-life-observation.ts:L8
+exit 0
+graphify affected CrisisCard
+exit 3
+graphify affected expectReport
+Affected nodes for expectReport()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- reportParity() [calls] tests/e2e/character-life-boundary.spec.ts:L136
+- act() [calls] tests/e2e/society-command.helpers.ts:L24
+- acquisition.spec.ts [imports] tests/e2e/acquisition.spec.ts:L8
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L14
+- character-life-navigation-accessibility.spec.ts [imports] tests/e2e/character-life-navigation-accessibility.spec.ts:L5
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L8
+- crafting.spec.ts [imports] tests/e2e/crafting.spec.ts:L5
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L7
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L7
+- garrison.spec.ts [imports] tests/e2e/garrison.spec.ts:L5
+- goods-stock.spec.ts [imports] tests/e2e/goods-stock.spec.ts:L4
+- household.spec.ts [imports] tests/e2e/household.spec.ts:L4
+- items.spec.ts [imports] tests/e2e/items.spec.ts:L6
+- laws.spec.ts [imports] tests/e2e/laws.spec.ts:L5
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L8
+- npc-sheet.spec.ts [imports] tests/e2e/npc-sheet.spec.ts:L5
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L4
+- purse.spec.ts [imports] tests/e2e/purse.spec.ts:L3
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L5
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L6
+- tile-population.spec.ts [imports] tests/e2e/tile-population.spec.ts:L6
+- tile-save.spec.ts [imports] tests/e2e/tile-save.spec.ts:L3
+- tile-trial.spec.ts [imports] tests/e2e/tile-trial.spec.ts:L3
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L6
+- uiParity() [calls] tests/e2e/character-life-boundary.spec.ts:L276
+- week() [calls] tests/e2e/society-command.helpers.ts:L27
+- storage.spec.ts [imports] tests/e2e/storage.spec.ts:L6
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L5
+exit 0
+graphify affected HomeRobberyCard
+Affected nodes for HomeRobberyCard
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+No affected nodes found.
+exit 0
+graphify explain executeCharacterLifeCommand
+Node: executeCharacterLifeCommand()
+  ID:        packages_simulation_src_character_life_command_executecharacterlifecommand
+  Source:    packages/simulation/src/character-life-command.ts L20
+  Type:      code
+  Community: executeCharacterLifeCommand
+  Degree:    114
+
+Connections (114):
+  <-- character-life-command.ts [contains] [EXTRACTED] packages/simulation/src/character-life-command.ts:L20
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L24
+  <-- character-life-navigation.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation.spec.ts:L4
+  <-- character-life-observation.test.ts [indirect_call] [INFERRED 0.85] packages/simulation/src/__tests__/character-life-observation.test.ts:L129
+  <-- craft-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/craft-week.test.ts:L8
+  <-- npc-homes.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/npc-homes.test.ts:L10
+  <-- character-life-boundary.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-boundary.spec.ts:L11
+  <-- character-life.spec.ts [imports] [EXTRACTED] tests/e2e/character-life.spec.ts:L5
+  <-- world-session.spec.ts [imports] [EXTRACTED] tests/e2e/world-session.spec.ts:L4
+  <-- tile-local-checkpoint.spec.ts [imports] [EXTRACTED] tests/e2e/tile-local-checkpoint.spec.ts:L4
+  <-- character-life-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/character-life-command.test.ts:L8
+  <-- items.spec.ts [imports] [EXTRACTED] tests/e2e/items.spec.ts:L5
+  <-- npc-life-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/npc-life-week.test.ts:L8
+  <-- npc-sheet.spec.ts [imports] [EXTRACTED] tests/e2e/npc-sheet.spec.ts:L4
+  <-- craft-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/craft-command.test.ts:L7
+  <-- society.spec.ts [imports] [EXTRACTED] tests/e2e/society.spec.ts:L6
+  <-- character-life-navigation-accessibility.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation-accessibility.spec.ts:L2
+  <-- crafting.spec.ts [imports] [EXTRACTED] tests/e2e/crafting.spec.ts:L3
+  <-- src/__tests__/society-stock-integrity.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L5
+  <-- item-effects.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/item-effects.test.ts:L7
+  <-- crisis.spec.ts [imports] [EXTRACTED] tests/e2e/crisis.spec.ts:L5
+  <-- acquisition.spec.ts [imports] [EXTRACTED] tests/e2e/acquisition.spec.ts:L3
+  <-- ledger.spec.ts [imports] [EXTRACTED] tests/e2e/ledger.spec.ts:L5
+  <-- world-npc-session.spec.ts [imports] [EXTRACTED] tests/e2e/world-npc-session.spec.ts:L4
+  --> isLiveCharacterLifeSessionState() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L21
+  <-- crime.spec.ts [imports] [EXTRACTED] tests/e2e/crime.spec.ts:L5
+  <-- society-command.helpers.ts [imports] [EXTRACTED] tests/e2e/society-command.helpers.ts:L3
+  <-- lord-health.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/lord-health.test.ts:L5
+  <-- acquisition-fixture.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/acquisition-fixture.ts:L2
+  --> executeAcquisitionCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L41
+  <-- order-commands.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/order-commands.test.ts:L4
+  <-- EquipmentView.svelte [imports] [EXTRACTED] packages/ui/src/EquipmentView.svelte:L4
+  <-- purse-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/purse-command.test.ts:L5
+  <-- tile-feedback-precision.spec.ts [imports] [EXTRACTED] tests/e2e/tile-feedback-precision.spec.ts:L4
+  <-- item-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/item-command.test.ts:L4
+  <-- outside.spec.ts [imports] [EXTRACTED] tests/e2e/outside.spec.ts:L1
+  <-- legendary-pending.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/legendary-pending.test.ts:L4
+  <-- law-fixture.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/law-fixture.test.ts:L5
+  <-- tile-save.spec.ts [imports] [EXTRACTED] tests/e2e/tile-save.spec.ts:L4
+  <-- crime-fixtures.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/crime-fixtures.test.ts:L6
+  <-- crisis-commands.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/crisis-commands.test.ts:L4
+  <-- tile-population.spec.ts [imports] [EXTRACTED] tests/e2e/tile-population.spec.ts:L4
+  --> executeWorldNpcCityCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L59
+  <-- crisis-fixture-helper.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L3
+  <-- purse-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/purse-week.test.ts:L5
+  <-- society-life.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-life.test.ts:L3
+  <-- error-log.spec.ts [imports] [EXTRACTED] tests/e2e/error-log.spec.ts:L5
+  <-- src/__tests__/items-canonical.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/items-canonical.test.ts:L4
+  <-- exhausted-materials.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/exhausted-materials.test.ts:L4
+  <-- npc-homes.spec.ts [imports] [EXTRACTED] tests/e2e/npc-homes.spec.ts:L3
+  --> executeWorldNpcCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L58
+  <-- garrison.spec.ts [imports] [EXTRACTED] tests/e2e/garrison.spec.ts:L4
+  <-- goods-stock.spec.ts [imports] [EXTRACTED] tests/e2e/goods-stock.spec.ts:L3
+  <-- laws.spec.ts [imports] [EXTRACTED] tests/e2e/laws.spec.ts:L4
+  <-- society-guard.test.ts [indirect_call] [INFERRED 0.85] packages/simulation/src/__tests__/society-guard.test.ts:L19
+  <-- make-catalog-golden.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L5
+  <-- law-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/law-command.test.ts:L4
+  <-- order.spec.ts [imports] [EXTRACTED] tests/e2e/order.spec.ts:L2
+  --> drawAcquisition() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L117
+  --> executeItemCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L33
+  <-- tile-trial.spec.ts [imports] [EXTRACTED] tests/e2e/tile-trial.spec.ts:L4
+  <-- act() [calls] [EXTRACTED] tests/e2e/society-command.helpers.ts:L12
+  --> buildItemWeekContext() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L59
+  --> donationGoldMilli() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L61
+  <-- society-run-fixture.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-run-fixture.test.ts:L5
+  <-- smoke.spec.ts [imports] [EXTRACTED] tests/e2e/smoke.spec.ts:L2
+  --> emptyHouseholdReport() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L106
+  --> runLevyWeek() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L111
+  --> executePurseCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L37
+  --> levySatisfactionCost() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L60
+  <-- command() [calls] [EXTRACTED] packages/simulation/src/__tests__/acquisition-fixture.ts:L14
+  <-- outside-session.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/outside-session.test.ts:L3
+  --> payNpcWages() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L54
+  --> acquisitionWeekReport() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L98
+  <-- crisisFixture() [calls] [EXTRACTED] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L21
+  <-- runCatalogScenario() [calls] [EXTRACTED] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+  <-- society-factory-determinism.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L3
+  --> isAcquisitionCommand() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L39
+  --> answerNotice() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L50
+  --> runHouseholdWeek() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L92
+  <-- rejection() [calls] [EXTRACTED] packages/simulation/src/__tests__/character-life-command.test.ts:L89
+  <-- fixtureStep() [calls] [EXTRACTED] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L9
+  <-- resolveReport() [calls] [EXTRACTED] tests/e2e/crafting.spec.ts:L150
+  <-- command() [calls] [INFERRED 0.85] packages/ui/src/TileManagement.svelte:L74
+  --> recordNpcLifeEvent() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L71
+  --> runNpcLifeWeek() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L85
+  <-- findCrimeFixture() [calls] [EXTRACTED] packages/simulation/src/__tests__/crime-fixtures.test.ts:L16
+  <-- action() [calls] [EXTRACTED] packages/simulation/src/__tests__/item-command.test.ts:L10
+  <-- command() [calls] [EXTRACTED] packages/simulation/src/__tests__/npc-homes.test.ts:L69
+  <-- run() [calls] [EXTRACTED] packages/ui/src/EquipmentView.svelte:L19
+  <-- act() [calls] [EXTRACTED] tests/e2e/items.spec.ts:L9
+  --> settleDepartingEquipment() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L96
+  <-- act() [calls] [EXTRACTED] packages/simulation/src/__tests__/character-life-observation.test.ts:L26
+  <-- end() [calls] [EXTRACTED] packages/simulation/src/__tests__/crime-fixtures.test.ts:L10
+  <-- action() [calls] [EXTRACTED] packages/simulation/src/__tests__/law-fixture.test.ts:L9
+  <-- action() [calls] [EXTRACTED] packages/simulation/src/__tests__/legendary-pending.test.ts:L22
+  <-- command() [calls] [EXTRACTED] packages/simulation/src/__tests__/lord-health.test.ts:L19
+  <-- action() [calls] [EXTRACTED] packages/simulation/src/__tests__/npc-life-week.test.ts:L42
+  <-- dispatch() [calls] [EXTRACTED] packages/simulation/src/__tests__/purse-command.test.ts:L14
+  <-- start() [calls] [EXTRACTED] packages/simulation/src/__tests__/purse-week.test.ts:L15
+  <-- act() [calls] [EXTRACTED] tests/e2e/acquisition.spec.ts:L11
+  <-- act() [calls] [EXTRACTED] tests/e2e/crafting.spec.ts:L8
+  <-- answer() [calls] [INFERRED 0.85] packages/ui/src/CharacterLifeCharacters.svelte:L60
+  <-- release() [calls] [INFERRED 0.85] packages/ui/src/CharacterLifeCharacters.svelte:L71
+  <-- run() [calls] [INFERRED 0.85] packages/ui/src/CharacterLifeCharacters.svelte:L81
+  --> fail() [calls] [EXTRACTED] packages/simulation/src/character-life-command.ts:L21
+  <-- act() [calls] [EXTRACTED] packages/simulation/src/__tests__/craft-command.test.ts:L30
+  <-- refuse() [calls] [EXTRACTED] packages/simulation/src/__tests__/craft-command.test.ts:L36
+  <-- end() [calls] [EXTRACTED] packages/simulation/src/__tests__/exhausted-materials.test.ts:L31
+  <-- action() [calls] [EXTRACTED] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+  <-- command() [calls] [EXTRACTED] packages/simulation/src/__tests__/item-effects.test.ts:L121
+  <-- refused() [calls] [EXTRACTED] packages/simulation/src/__tests__/purse-command.test.ts:L31
+  <-- close() [calls] [EXTRACTED] packages/simulation/src/__tests__/purse-week.test.ts:L22
+  <-- step() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-run-fixture.test.ts:L9
+exit 0
+graphify affected packages_ui_src_crisiscard
+Affected nodes for CrisisCard.svelte
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- CharacterLifeShell.svelte [imports_from] packages/ui/src/CharacterLifeShell.svelte:L6
+- TileManagement.svelte [imports_from] packages/ui/src/TileManagement.svelte:L7
+exit 0

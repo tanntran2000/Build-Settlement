@@ -1,0 +1,219 @@
+Base HEAD 57c0cbe7b2862bbc148a528444dcad64e58d35b9
+Base tree 38420881e654cc19299d07f2ee0d63becd116545
+Disposable scratch composition D:\QI Technology\Temp\money-m3-step0-fcb36268
+CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/purse.spec.ts tests/e2e/home-robbery.spec.ts --grep "uses the Player purse, reports both transactions and round-trips at 1280|renders and answers the normal home robbery at 1280|describes all controls blocked|blocks a 5 Money Market purchase"
+Start UTC 2026-11-27T11:11:16.183358+00:00
+[WebServer] (node:4268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] (node:22636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 5 tests using 1 worker
+
+(node:32848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 (15.9s)
+(node:976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1280 (7.0s)
+(node:1148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1600 (6.7s)
+(node:26068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\home-robbery.spec.ts:181:1 › blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold (6.4s)
+(node:41508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1280 (9.6s)
+
+
+  1) [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('life-end-week')
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('life-end-week') with timeout 5000ms
+      - waiting for getByTestId('life-end-week')
+        14 × locator resolved to <button disabled aria-disabled="false" data-testid="life-end-week" class="ledger-wax svelte-w9sbey">Answer the robbery first.</button>
+           - unexpected value "false"
+
+
+       at character-life-navigation.helpers.ts:168
+
+      166 |   expect(isCharacterLifeSessionState(state)).toBe(true);
+      167 |   expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
+    > 168 |   await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled',
+          |                                                   ^
+      169 |     state.city.society?.pendingCard || state.player.purse.robbery ? 'true' : 'false');
+      170 |   return state;
+      171 | }
+        at exportLife (D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\character-life-navigation.helpers.ts:168:51)
+        at D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\home-robbery.spec.ts:78:13
+
+    Error Context: test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1280 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true })
+    Expected: 8
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true }) with timeout 5000ms
+      - waiting for getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      112 |     await button(page, 'Select spec-1').click();
+      113 |     const market = page.getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true });
+    > 114 |     await expect(market).toHaveCount(s.city.society!.items.market.length);
+          |                          ^
+      115 |     for (const buy of await market.all()) {
+      116 |       await expect(buy).toBeDisabled();
+      117 |       await expect(buy).toHaveAccessibleDescription(notice);
+        at D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\home-robbery.spec.ts:114:26
+
+    Error Context: test-results\home-robbery-describes-all-8f4ac-y-the-Money-reserve-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-describes-all-8f4ac-y-the-Money-reserve-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-describes-all-8f4ac-y-the-Money-reserve-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1600 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true })
+    Expected: 8
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true }) with timeout 5000ms
+      - waiting for getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      112 |     await button(page, 'Select spec-1').click();
+      113 |     const market = page.getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true });
+    > 114 |     await expect(market).toHaveCount(s.city.society!.items.market.length);
+          |                          ^
+      115 |     for (const buy of await market.all()) {
+      116 |       await expect(buy).toBeDisabled();
+      117 |       await expect(buy).toHaveAccessibleDescription(notice);
+        at D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\home-robbery.spec.ts:114:26
+
+    Error Context: test-results\home-robbery-describes-all-88734-y-the-Money-reserve-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-describes-all-88734-y-the-Money-reserve-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-describes-all-88734-y-the-Money-reserve-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\home-robbery.spec.ts:181:1 › blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true }).first()
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true }).first() with timeout 5000ms
+      - waiting for getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true }).first()
+        14 × locator resolved to <button class="svelte-pnvkyi">Buy</button>
+           - unexpected value "enabled"
+
+
+      199 |   const before = await exportLife(page);
+      200 |   const blocked = await openMarket();
+    > 201 |   await expect(blocked).toBeDisabled();
+          |                         ^
+      202 |   await expect(blocked).toHaveAccessibleDescription('4 Money is held until the robbery is answered.');
+      203 |   await blocked.press('Enter');
+      204 |   expect(await exportLife(page)).toStrictEqual(before);
+        at D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\home-robbery.spec.ts:201:25
+
+    Error Context: test-results\home-robbery-blocks-a-5-Mo-2c3a0-nce-includes-a-4-Money-hold-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-blocks-a-5-Mo-2c3a0-nce-includes-a-4-Money-hold-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-blocks-a-5-Mo-2c3a0-nce-includes-a-4-Money-hold-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1280 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('life-end-week')
+    Expected: "false"
+    Received: "true"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('life-end-week') with timeout 5000ms
+      - waiting for getByTestId('life-end-week')
+        14 × locator resolved to <button aria-disabled="true" data-testid="life-end-week" class="ledger-wax svelte-w9sbey">End Week</button>
+           - unexpected value "true"
+
+
+       at character-life-navigation.helpers.ts:168
+
+      166 |   expect(isCharacterLifeSessionState(state)).toBe(true);
+      167 |   expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
+    > 168 |   await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled',
+          |                                                   ^
+      169 |     state.city.society?.pendingCard || state.player.purse.robbery ? 'true' : 'false');
+      170 |   return state;
+      171 | }
+        at exportLife (D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\character-life-navigation.helpers.ts:168:51)
+        at D:\QI Technology\Temp\money-m3-step0-fcb36268\tests\e2e\purse.spec.ts:65:20
+
+    Error Context: test-results\purse-uses-the-Player-purs-a884b-ons-and-round-trips-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\purse-uses-the-Player-purs-a884b-ons-and-round-trips-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\purse-uses-the-Player-purs-a884b-ons-and-round-trips-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 
+    [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1280 
+    [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1600 
+    [chromium] › tests\e2e\home-robbery.spec.ts:181:1 › blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold 
+    [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1280 
+Exit 1 | End UTC 2026-11-27T11:12:23.725526+00:00

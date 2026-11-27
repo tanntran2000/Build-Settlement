@@ -1,0 +1,72 @@
+update(U+'purse-view.ts','Project the profile safe amount and explain reserved Money with the same debit guard as simulation.',
+    ('import { donationGoldMilli,','import { canSpendMoney, donationGoldMilli,'),
+    ("from '@haven/core';\n", "from '@haven/core';\nimport { formatMilli } from './milli-format.js';\n"),
+    ("amountMilli > purse.moneyMilli ? 'Not enough Money.' : ''),",
+     "canSpendMoney(purse, amountMilli) ? '' : (heldMoneyNotice(purse) || 'Not enough Money.')),"),
+    ("""export function purseRisk(moneyMilli: number, security: number) {
+  const safeMilli = safeAmountMilli(security);""",
+     """export function heldMoneyNotice(purse: PlayerCharacter['purse']): string {
+  const held = purse.robbery?.excessMilli ?? 0;
+  return held > 0 ? formatMilli(held) + ' Money is held until the robbery is answered.' : '';
+}
+
+export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId) {
+  const safeMilli = safeAmountMilli(security, difficulty);"""),
+    ("homeRobberyLossMilli(excess, purse.moneyMilli, security, 'pay')", "homeRobberyLossMilli(excess, 'pay')"),
+    ("homeRobberyLossMilli(excess, purse.moneyMilli, security, 'let-go')", "homeRobberyLossMilli(excess, 'let-go')"))
+update(U+'PursePanel.svelte','Show the hold while the card is pending and describe blocked donations with the exact reserve reason.',
+    ('import { purseControls, purseRisk }', 'import { heldMoneyNotice, purseControls, purseRisk }'),
+    ('  $: risk = purseRisk(purse.moneyMilli, security);',
+     '  $: risk = purseRisk(purse.moneyMilli, security, difficulty);\n  $: holdNotice = heldMoneyNotice(purse);'),
+    ('  <form onsubmit={donate}>',
+     '  {#if holdNotice}<p data-testid="purse-held-money">{holdNotice}</p>{/if}\n  <form onsubmit={donate}>'))
+update(U+'TileManagement.svelte','Pass the immutable purse view through the city route.',
+    ('purseMoneyMilli={player!.purse.moneyMilli}', 'purse={player!.purse}'))
+update(U+'CharacterLifeCity.svelte','Forward the purse including its saved reserve.',
+    ('type TileTrialState, type WorldNpc', 'type PlayerCharacter, type TileTrialState, type WorldNpc'),
+    ('export let purseMoneyMilli: number;', "export let purse: PlayerCharacter['purse'];"),
+    ('{state} {npcs} {purseMoneyMilli}', '{state} {npcs} {purse}'))
+update(U+'InsideCity.svelte','Pass the same purse into market, potions and workshops.',
+    ('type TileTrialState, type SocietyGroupKey', 'type PlayerCharacter, type TileTrialState, type SocietyGroupKey'),
+    ('export let purseMoneyMilli:number;', "export let purse:PlayerCharacter['purse'];"),
+    ('<MarketPanel {state} {locked}', '<MarketPanel {state} {purse} {locked}'),
+    ('<WorkshopPanel {state} {npcs} {purseMoneyMilli}', '<WorkshopPanel {state} {npcs} {purse}'),
+    ('<PotionPanel {state} {npcs} {purseMoneyMilli}', '<PotionPanel {state} {npcs} {purse}'))
+update(U+'MarketPanel.svelte','Keep existing Buy behavior when no hold exists, and disable reserved-money purchases with the visible reason.',
+    ('ITEM_CATALOG, ITEM_TRIAL, type TileTrialState', 'canSpendMoney, ITEM_CATALOG, ITEM_TRIAL, type PlayerCharacter, type TileTrialState'),
+    (" import { formatMilli }", " import { heldMoneyNotice } from './purse-view.js';\n import { formatMilli }"),
+    (' export let state:TileTrialState;', " export let state:TileTrialState;\n export let purse:PlayerCharacter['purse'];"),
+    (' $: items=state.society!.items;', ' $: items=state.society!.items;\n $: holdNotice=heldMoneyNotice(purse);'),
+    (' <div role="group" aria-label="Weekly offers">', ' {#if holdNotice}<p id="market-robbery-hold">{holdNotice}</p>{/if}\n <div role="group" aria-label="Weekly offers">'),
+    ('priceMilli={offer.priceMilli} onbuy=', 'priceMilli={offer.priceMilli} buyReasonId={holdNotice&&!canSpendMoney(purse,offer.priceMilli)?\'market-robbery-hold\':undefined} onbuy='))
+update(U+'ItemCard.svelte','Make a blocked Buy focusable and described without dispatching it.',
+    ('  export let onbuy:', '  export let buyReasonId:string|undefined=undefined;\n  export let onbuy:'),
+    ('    {#if onbuy}<button disabled={locked} onclick={onbuy}>Buy</button>{/if}',
+     """    {#if onbuy}<button disabled={locked} aria-disabled={buyReasonId?true:undefined} aria-describedby={buyReasonId}
+      onclick={() => { if (!buyReasonId) onbuy?.(); }}>Buy</button>{/if}"""))
+update(U+'PotionPanel.svelte','Disable potion purchases against the same reserve and forward it into Brew.',
+    ('ITEM_CATALOG, ITEM_TRIAL, type TileTrialState', 'canSpendMoney, ITEM_CATALOG, ITEM_TRIAL, type PlayerCharacter, type TileTrialState'),
+    (" import { formatMilli }", " import { heldMoneyNotice } from './purse-view.js';\n import { formatMilli }"),
+    (' export let purseMoneyMilli:number;', " export let purse:PlayerCharacter['purse'];"),
+    (' $: selling=potionShop(state,tileId);', ' $: selling=potionShop(state,tileId);\n $: holdNotice=heldMoneyNotice(purse);'),
+    (" <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}",
+     """ {#if holdNotice}<p id="potion-robbery-hold">{holdNotice}</p>{/if}
+ <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}{@const held=!!holdNotice&&!canSpendMoney(purse,ITEM_TRIAL.potionPricesMilli[key])}"""),
+    ("<button disabled={locked} onclick={()=>oncommand('BUY_POTION',{tileId,potion:tier})}>",
+     """<button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'potion-robbery-hold':undefined}
+   onclick={()=>{if(!held)oncommand('BUY_POTION',{tileId,potion:tier});}}>"""),
+    ('<WorkshopPanel {state} {npcs} {purseMoneyMilli}', '<WorkshopPanel {state} {npcs} {purse}'))
+update(U+'WorkshopPanel.svelte','Leave otherwise available recipes visible and describe fees that would spend the reserve.',
+    ('CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type TileTrialState', 'canSpendMoney, CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState'),
+    ("  import { formatMilli }", "  import { heldMoneyNotice } from './purse-view.js';\n  import { formatMilli }"),
+    ('  export let purseMoneyMilli:number;', "  export let purse:PlayerCharacter['purse'];"),
+    ('  $: recipes=craftingRecipes(state,tileId,purseMoneyMilli);',
+     '  $: recipes=craftingRecipes(state,tileId,purse.moneyMilli);\n  $: holdNotice=heldMoneyNotice(purse);'),
+    ('      <div id={\x60recipes-\${tileId}\x60} hidden={!expanded}>'.replace('\\$', '$'),
+     '      <div id={\x60recipes-\${tileId}\x60} hidden={!expanded}>\n        {#if holdNotice}<p id="workshop-robbery-hold">{holdNotice}</p>{/if}'.replace('\\$', '$')),
+    ('{#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}',
+     '{#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}\n              {@const held=!!holdNotice&&!canSpendMoney(purse,recipe.feeMilli)}'),
+    ("<button disabled={locked} onclick={event=>run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget)}>",
+     """<button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'workshop-robbery-hold':undefined}
+                  onclick={event=>{if(!held)void run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget);}}>"""))
+

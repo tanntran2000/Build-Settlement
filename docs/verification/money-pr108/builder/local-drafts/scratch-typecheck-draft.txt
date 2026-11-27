@@ -1,0 +1,303 @@
+Base HEAD 0b2b3a6088d003301d48b460202327fb53546ede, initial scratch UI dependencies incomplete.
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+node.exe : Error while loading config at  d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error while loa...velte.config.js:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI 
+Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Loading svelte-check in workspace: d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui
+Getting Svelte diagnostics...
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterCreation.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import {
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\ErrorLog.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { errorLog } from './error-log.js';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\OptionsDialog.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\TitleScreen.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount, tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CityFallen.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import './ledger-theme.css';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CrisisCard.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { crisisOptions, societyPopulation, CRISIS_TRIAL, type TileTrialState, type CardOption } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\HomeRobberyCard.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { HomeRobberyOption, PlayerCharacter } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\PursePanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { DifficultyId, PlayerCharacter } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\SocietyPopulation.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { societyPopulation, type TileTrialState, type SocietyGroupKey } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterLifeShell.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import './ledger-theme.css';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\OutsideCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import {TRIAL_BUILDINGS,type TileTrialState,type WorldNpc} from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CouncilPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { LAW_IDS, LAW_CATALOG, previewLawVote, lawVoteWeights, type LawId, type LobbyOption, type SocietyClassKey, type TileTrialState } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\LibraryPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import {OUTSIDE_TRIAL,RESEARCH_TOPICS,type TileTrialState,type ResearchTopic} from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\ItemCard.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { ITEM_TRIAL, type ItemDefinition } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\MarketPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\AcquisitionPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\WorkshopPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\PotionPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState, type WorldNpc } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\InsideCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import MarketPanel from './MarketPanel.svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\HouseholdNotice.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterLifeCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\EquipmentView.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { tick } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\NpcSheet.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { WorldNpc } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterProfile.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterLifeCharacters.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import EquipmentView from './EquipmentView.svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\ReportLetter.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\SocietyReport.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import type { TileTrialReport } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\SoloWeekReport.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type DifficultyId, type TileTrialReport, type WorldNpc } from '@haven/core';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\TileManagement.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import CityFallen from './CityFallen.svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\CharacterLifeApp.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\DataInspector.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\main.ts:1:23
+Error: Cannot find type definition file for 'vite/client'. 
+/// <reference types="vite/client" />
+import './app.css';
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\main.ts:7:35
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+
+const inspectorMode = import.meta.env.DEV && new URLSearchParams(window.location.search).get('mode') === 'data-inspector';
+let app;
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\main.ts:10:19
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+if (inspectorMode) {
+  if (import.meta.env.DEV) {
+    const { default: DataInspector } = await import('./DataInspector.svelte');
+
+d:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui\src\__tests__\npc-sheet-view.test.ts:5:29
+Error: Property 'glob' does not exist on type 'ImportMeta'. 
+
+const modules = import.meta.glob<typeof import('../npc-sheet-view.js')>('../npc-sheet-view.ts', { eager: true });
+
+====================================
+svelte-check found 35 errors and 0 warnings in 33 files
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path D:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui
+npm error workspace @haven/ui@0.1.0
+npm error location D:\QI Technology\Temp\money-m3-step0-fcb36268\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c svelte-check --tsconfig ./tsconfig.json
+
+Exit code 1

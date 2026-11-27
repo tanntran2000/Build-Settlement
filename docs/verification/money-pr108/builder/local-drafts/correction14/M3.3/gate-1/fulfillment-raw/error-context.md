@@ -1,0 +1,439 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: character-life-navigation.spec.ts >> fulfillment states match strip and report
+- Location: tests\e2e\character-life-navigation.spec.ts:225:1
+
+# Error details
+
+```
+Test timeout of 60000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- main [ref=e3]:
+  - complementary "Life status and navigation" [ref=e4]:
+    - navigation "Main" [ref=e5]:
+      - generic [ref=e6]:
+        - heading "Character Life" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Week 2 · Year 1 · Planning
+        - paragraph [ref=e9]: Health 100 / 100 · Regen +1/week
+        - generic [ref=e10]:
+          - generic [ref=e11]: Gold 138
+          - generic [ref=e12]: Money 0
+        - button "End Week" [ref=e13] [cursor=pointer]
+        - status [ref=e14]: Planning Week 2 · Year 1. Previous report retained.
+        - button "Information" [ref=e15] [cursor=pointer]
+      - generic [ref=e16]:
+        - button "Player" [ref=e17] [cursor=pointer]
+        - button "Population" [ref=e18] [cursor=pointer]
+      - generic [ref=e19]:
+        - button "Session" [ref=e20] [cursor=pointer]
+        - button "Help" [ref=e21] [cursor=pointer]
+        - button "Options" [ref=e22] [cursor=pointer]
+        - button "Main menu" [ref=e23] [cursor=pointer]
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - heading "City" [level=2] [ref=e26]
+      - navigation "Views" [ref=e27]:
+        - button "City" [active] [ref=e28] [cursor=pointer]
+        - button "Characters" [ref=e29] [cursor=pointer]
+        - button "Report" [ref=e30] [cursor=pointer]
+    - region "City" [ref=e31]:
+      - region "City Requirements" [ref=e32]:
+        - generic [ref=e33]:
+          - heading "City Requirements" [level=3] [ref=e34]
+          - paragraph [ref=e35]: "Last resolved week: Week 1 · Year 1"
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]:
+              - heading "Food" [level=4] [ref=e39]
+              - paragraph [ref=e40]: 4 / 4 · 100%
+            - group [ref=e43]:
+              - generic "Food requirements" [ref=e44] [cursor=pointer]
+              - heading "Current inventory" [level=3] [ref=e45]
+              - generic [ref=e47]:
+                - term [ref=e48]: Food stock
+                - definition [ref=e49]: "36"
+          - generic [ref=e50]:
+            - generic [ref=e51]:
+              - heading "Goods" [level=4] [ref=e52]
+              - paragraph [ref=e53]: 0 / 1.45 · 0%
+            - group [ref=e55]:
+              - generic "Goods requirements" [ref=e56] [cursor=pointer]
+      - region "Inside City" [ref=e57]:
+        - heading "Inside City" [level=3] [ref=e58]
+        - paragraph [ref=e59]: "Wall: Ring 1 of 4 · 10 / 43 plots open"
+        - button "Extend wall to Ring 2" [ref=e60] [cursor=pointer]
+        - paragraph [ref=e61]: "Needs an operating Builders' Yard. Cost: 30 Gold, 20 Wood, 10 Iron."
+        - generic [ref=e62]: Training target
+        - combobox "Training target" [ref=e63]:
+          - option "None" [selected]
+          - option "Makers"
+          - option "Luminaries"
+          - option "Merchants"
+        - button "Set training" [ref=e64] [cursor=pointer]
+        - paragraph [ref=e65]: "Current target: None. Each operating Academy level trains up to 2 Free residents per week for 1 Gold each, while the target has housing room."
+        - region "Estates" [ref=e66]:
+          - heading "Estates" [level=4] [ref=e67]
+          - generic [ref=e68]:
+            - button "Select estate-1" [ref=e69] [cursor=pointer]:
+              - strong [ref=e70]: estate-1
+              - generic [ref=e71]: Mansion
+              - generic [ref=e73]: Level 1 · 0 WF · No staff
+              - generic [ref=e74]: Enabled
+              - generic [ref=e75]: 10 NPC beds
+            - button "Select estate-2" [ref=e76] [cursor=pointer]:
+              - strong [ref=e77]: estate-2
+              - generic [ref=e78]: Retainers' Hall
+              - generic [ref=e80]: Level 1 · 0 WF · No staff
+              - generic [ref=e81]: Enabled
+              - generic [ref=e82]: 25 NPC beds
+        - region "Housing" [ref=e83]:
+          - heading "Housing" [level=4] [ref=e84]
+          - generic [ref=e85]:
+            - button "Select house-1" [ref=e86] [cursor=pointer]:
+              - strong [ref=e87]: house-1
+              - generic [ref=e88]: Common Housing
+              - generic [ref=e90]: Level 3 · 0 WF · No staff
+              - generic [ref=e91]: Paused
+              - generic [ref=e92]: Houses 70 Free residents
+            - button "Select house-2" [ref=e93] [cursor=pointer]:
+              - strong [ref=e94]: house-2
+              - generic [ref=e95]: Makers' Rowhouses
+              - generic [ref=e97]: Level 2 · 0 WF · No staff
+              - generic [ref=e98]: Paused
+              - generic [ref=e99]: Houses 25 Makers
+            - button "Select house-3" [ref=e100] [cursor=pointer]:
+              - strong [ref=e101]: house-3
+              - generic [ref=e102]: Scholars' Quarters
+              - generic [ref=e104]: Level 2 · 0 WF · No staff
+              - generic [ref=e105]: Paused
+              - generic [ref=e106]: Houses 18 Luminaries
+            - button "Select house-4" [ref=e107] [cursor=pointer]:
+              - strong [ref=e108]: house-4
+              - generic [ref=e109]: Merchant Townhouses
+              - generic [ref=e111]: Level 1 · 0 WF · No staff
+              - generic [ref=e112]: Paused
+              - generic [ref=e113]: Houses 15 Merchants
+            - generic [ref=e114]:
+              - strong [ref=e115]: house-5
+              - paragraph [ref=e116]: Locked · opens with Ring 2
+            - generic [ref=e117]:
+              - strong [ref=e118]: house-6
+              - paragraph [ref=e119]: Locked · opens with Ring 2
+            - generic [ref=e120]:
+              - strong [ref=e121]: house-7
+              - paragraph [ref=e122]: Locked · opens with Ring 2
+            - generic [ref=e123]:
+              - strong [ref=e124]: house-8
+              - paragraph [ref=e125]: Locked · opens with Ring 2
+            - generic [ref=e126]:
+              - strong [ref=e127]: house-9
+              - paragraph [ref=e128]: Locked · opens with Ring 3
+            - generic [ref=e129]:
+              - strong [ref=e130]: house-10
+              - paragraph [ref=e131]: Locked · opens with Ring 3
+            - generic [ref=e132]:
+              - strong [ref=e133]: house-11
+              - paragraph [ref=e134]: Locked · opens with Ring 3
+            - generic [ref=e135]:
+              - strong [ref=e136]: house-12
+              - paragraph [ref=e137]: Locked · opens with Ring 4
+            - generic [ref=e138]:
+              - strong [ref=e139]: house-13
+              - paragraph [ref=e140]: Locked · opens with Ring 4
+            - generic [ref=e141]:
+              - strong [ref=e142]: house-14
+              - paragraph [ref=e143]: Locked · opens with Ring 4
+        - region "Services" [ref=e144]:
+          - heading "Services" [level=4] [ref=e145]
+          - generic [ref=e146]:
+            - button "Select service-1" [ref=e147] [cursor=pointer]:
+              - strong [ref=e148]: service-1
+              - generic [ref=e149]: Empty
+            - button "Select service-2" [ref=e150] [cursor=pointer]:
+              - strong [ref=e151]: service-2
+              - generic [ref=e152]: Empty
+            - generic [ref=e153]:
+              - strong [ref=e154]: service-3
+              - paragraph [ref=e155]: Locked · opens with Ring 2
+            - generic [ref=e156]:
+              - strong [ref=e157]: service-4
+              - paragraph [ref=e158]: Locked · opens with Ring 2
+            - generic [ref=e159]:
+              - strong [ref=e160]: service-5
+              - paragraph [ref=e161]: Locked · opens with Ring 3
+            - generic [ref=e162]:
+              - strong [ref=e163]: service-6
+              - paragraph [ref=e164]: Locked · opens with Ring 3
+            - generic [ref=e165]:
+              - strong [ref=e166]: service-7
+              - paragraph [ref=e167]: Locked · opens with Ring 4
+            - generic [ref=e168]:
+              - strong [ref=e169]: service-8
+              - paragraph [ref=e170]: Locked · opens with Ring 4
+        - region "Specialist" [ref=e171]:
+          - heading "Specialist" [level=4] [ref=e172]
+          - generic [ref=e173]:
+            - button "Select spec-1" [ref=e174] [cursor=pointer]:
+              - strong [ref=e175]: spec-1
+              - generic [ref=e176]: Market
+              - generic [ref=e178]: Level 1 · 0 WF · Merchants
+              - generic [ref=e179]: Paused
+              - generic [ref=e180]: Distributes up to 2 Goods per week
+            - button "Select spec-2" [ref=e181] [cursor=pointer]:
+              - strong [ref=e182]: spec-2
+              - generic [ref=e183]: Empty
+            - button "Select spec-3" [ref=e184] [cursor=pointer]:
+              - strong [ref=e185]: spec-3
+              - generic [ref=e186]: Empty
+            - generic [ref=e187]:
+              - strong [ref=e188]: spec-4
+              - paragraph [ref=e189]: Locked · opens with Ring 2
+            - generic [ref=e190]:
+              - strong [ref=e191]: spec-5
+              - paragraph [ref=e192]: Locked · opens with Ring 2
+            - generic [ref=e193]:
+              - strong [ref=e194]: spec-6
+              - paragraph [ref=e195]: Locked · opens with Ring 2
+            - generic [ref=e196]:
+              - strong [ref=e197]: spec-7
+              - paragraph [ref=e198]: Locked · opens with Ring 2
+            - generic [ref=e199]:
+              - strong [ref=e200]: spec-8
+              - paragraph [ref=e201]: Locked · opens with Ring 3
+            - generic [ref=e202]:
+              - strong [ref=e203]: spec-9
+              - paragraph [ref=e204]: Locked · opens with Ring 3
+            - generic [ref=e205]:
+              - strong [ref=e206]: spec-10
+              - paragraph [ref=e207]: Locked · opens with Ring 3
+            - generic [ref=e208]:
+              - strong [ref=e209]: spec-11
+              - paragraph [ref=e210]: Locked · opens with Ring 4
+            - generic [ref=e211]:
+              - strong [ref=e212]: spec-12
+              - paragraph [ref=e213]: Locked · opens with Ring 4
+        - region "Slum" [ref=e214]:
+          - heading "Slum" [level=4] [ref=e215]
+          - generic [ref=e216]:
+            - button "Select slum-1" [ref=e217] [cursor=pointer]:
+              - strong [ref=e218]: slum-1
+              - generic [ref=e219]: Empty
+            - generic [ref=e220]:
+              - strong [ref=e221]: slum-2
+              - paragraph [ref=e222]: Locked · opens with Ring 2
+            - generic [ref=e223]:
+              - strong [ref=e224]: slum-3
+              - paragraph [ref=e225]: Locked · opens with Ring 2
+            - generic [ref=e226]:
+              - strong [ref=e227]: slum-4
+              - paragraph [ref=e228]: Locked · opens with Ring 3
+            - generic [ref=e229]:
+              - strong [ref=e230]: slum-5
+              - paragraph [ref=e231]: Locked · opens with Ring 3
+            - generic [ref=e232]:
+              - strong [ref=e233]: slum-6
+              - paragraph [ref=e234]: Locked · opens with Ring 3
+            - generic [ref=e235]:
+              - strong [ref=e236]: slum-7
+              - paragraph [ref=e237]: Locked · opens with Ring 4
+            - generic [ref=e238]:
+              - strong [ref=e239]: slum-8
+              - paragraph [ref=e240]: Locked · opens with Ring 4
+            - generic [ref=e241]:
+              - strong [ref=e242]: slum-9
+              - paragraph [ref=e243]: Locked · opens with Ring 4
+      - region "Library" [ref=e244]:
+        - heading "Library" [level=3] [ref=e245]
+        - generic [ref=e246]: Research topic
+        - combobox "Research topic" [ref=e247]:
+          - option "None" [selected]
+          - option "Deep Mining"
+          - option "Watch Patrols"
+          - option "Barracks Drill"
+        - button "Set research" [ref=e248] [cursor=pointer]
+        - paragraph [ref=e249]: "Completed topics: None"
+      - generic [ref=e250]:
+        - region "Outside tiles" [ref=e251]:
+          - heading "Outside tiles" [level=3] [ref=e252]
+          - region "Outside Ring 1" [ref=e253]:
+            - heading "Ring 1" [level=4] [ref=e254]
+            - generic [ref=e255]:
+              - button "Select field-1" [ref=e257] [cursor=pointer]:
+                - generic [ref=e258]: fertile
+                - strong [ref=e259]: field-1
+                - generic [ref=e260]: Farm
+                - generic [ref=e261]: Level 1 · 0 WF · Paused
+                - generic [ref=e262]: Unassigned
+              - button "Select plain-1" [ref=e264] [cursor=pointer]:
+                - generic [ref=e265]: plain
+                - strong [ref=e266]: plain-1
+                - generic [ref=e267]: Food Processor
+                - generic [ref=e268]: Level 1 · 0 WF · Paused
+                - generic [ref=e269]: Unassigned
+              - generic [ref=e270]:
+                - button "Select forest-1" [pressed] [ref=e271] [cursor=pointer]:
+                  - generic [ref=e272]: forest
+                  - strong [ref=e273]: forest-1
+                  - generic [ref=e274]: Empty
+                  - generic [ref=e275]: No manager post
+                - paragraph [ref=e276]: Wood 60 / 60
+              - generic [ref=e277]:
+                - button "Select ore-1" [ref=e278] [cursor=pointer]:
+                  - generic [ref=e279]: ore
+                  - strong [ref=e280]: ore-1
+                  - generic [ref=e281]: Empty
+                  - generic [ref=e282]: No manager post
+                - paragraph [ref=e283]: Iron 80 / 80
+              - button "Select plain-2" [ref=e285] [cursor=pointer]:
+                - generic [ref=e286]: plain
+                - strong [ref=e287]: plain-2
+                - generic [ref=e288]: Empty
+                - generic [ref=e289]: No manager post
+              - button "Select plain-3" [ref=e291] [cursor=pointer]:
+                - generic [ref=e292]: plain
+                - strong [ref=e293]: plain-3
+                - generic [ref=e294]: Empty
+                - generic [ref=e295]: No manager post
+              - generic [ref=e296]:
+                - button "Select forest-2" [ref=e297] [cursor=pointer]:
+                  - generic [ref=e298]: forest
+                  - strong [ref=e299]: forest-2
+                  - generic [ref=e300]: Empty
+                  - generic [ref=e301]: No manager post
+                - paragraph [ref=e302]: Wood 60 / 60
+              - generic [ref=e303]:
+                - button "Select ore-2" [ref=e304] [cursor=pointer]:
+                  - generic [ref=e305]: ore
+                  - strong [ref=e306]: ore-2
+                  - generic [ref=e307]: Empty
+                  - generic [ref=e308]: No manager post
+                - paragraph [ref=e309]: Iron 80 / 80
+              - button "Select field-2" [ref=e311] [cursor=pointer]:
+                - generic [ref=e312]: fertile
+                - strong [ref=e313]: field-2
+                - generic [ref=e314]: Empty
+                - generic [ref=e315]: No manager post
+              - button "Select plain-4" [ref=e317] [cursor=pointer]:
+                - generic [ref=e318]: plain
+                - strong [ref=e319]: plain-4
+                - generic [ref=e320]: Empty
+                - generic [ref=e321]: No manager post
+          - region "Outside Ring 2" [ref=e322]:
+            - heading "Ring 2" [level=4] [ref=e323]
+            - generic [ref=e324]:
+              - generic [ref=e325]:
+                - strong [ref=e326]: field-3
+                - paragraph [ref=e327]: fertile
+                - paragraph [ref=e328]: Locked · opens with Ring 2
+              - generic [ref=e329]:
+                - strong [ref=e330]: field-4
+                - paragraph [ref=e331]: fertile
+                - paragraph [ref=e332]: Locked · opens with Ring 2
+              - generic [ref=e333]:
+                - strong [ref=e334]: pasture-1
+                - paragraph [ref=e335]: pasture
+                - paragraph [ref=e336]: Locked · opens with Ring 2
+              - generic [ref=e337]:
+                - strong [ref=e338]: pasture-2
+                - paragraph [ref=e339]: pasture
+                - paragraph [ref=e340]: Locked · opens with Ring 2
+              - generic [ref=e341]:
+                - strong [ref=e342]: meadow-1
+                - paragraph [ref=e343]: meadow
+                - paragraph [ref=e344]: Locked · opens with Ring 2
+              - generic [ref=e345]:
+                - strong [ref=e346]: meadow-2
+                - paragraph [ref=e347]: meadow
+                - paragraph [ref=e348]: Locked · opens with Ring 2
+              - generic [ref=e349]:
+                - strong [ref=e350]: forest-3
+                - paragraph [ref=e351]: forest
+                - paragraph [ref=e352]: Locked · opens with Ring 2
+              - generic [ref=e353]:
+                - strong [ref=e354]: rock-1
+                - paragraph [ref=e355]: rock
+                - paragraph [ref=e356]: Locked · opens with Ring 2
+              - generic [ref=e357]:
+                - strong [ref=e358]: rock-2
+                - paragraph [ref=e359]: rock
+                - paragraph [ref=e360]: Locked · opens with Ring 2
+              - generic [ref=e361]:
+                - strong [ref=e362]: plain-5
+                - paragraph [ref=e363]: plain
+                - paragraph [ref=e364]: Locked · opens with Ring 2
+          - region "Outside Ring 3" [ref=e365]:
+            - heading "Ring 3" [level=4] [ref=e366]
+            - generic [ref=e367]:
+              - generic [ref=e368]:
+                - strong [ref=e369]: field-5
+                - paragraph [ref=e370]: fertile
+                - paragraph [ref=e371]: Locked · opens with Ring 3
+              - generic [ref=e372]:
+                - strong [ref=e373]: pasture-3
+                - paragraph [ref=e374]: pasture
+                - paragraph [ref=e375]: Locked · opens with Ring 3
+              - generic [ref=e376]:
+                - strong [ref=e377]: meadow-3
+                - paragraph [ref=e378]: meadow
+                - paragraph [ref=e379]: Locked · opens with Ring 3
+              - generic [ref=e380]:
+                - strong [ref=e381]: forest-4
+                - paragraph [ref=e382]: forest
+                - paragraph [ref=e383]: Locked · opens with Ring 3
+              - generic [ref=e384]:
+                - strong [ref=e385]: forest-5
+                - paragraph [ref=e386]: forest
+                - paragraph [ref=e387]: Locked · opens with Ring 3
+              - generic [ref=e388]:
+                - strong [ref=e389]: ore-3
+                - paragraph [ref=e390]: ore
+                - paragraph [ref=e391]: Locked · opens with Ring 3
+              - generic [ref=e392]:
+                - strong [ref=e393]: ore-4
+                - paragraph [ref=e394]: ore
+                - paragraph [ref=e395]: Locked · opens with Ring 3
+              - generic [ref=e396]:
+                - strong [ref=e397]: rock-3
+                - paragraph [ref=e398]: rock
+                - paragraph [ref=e399]: Locked · opens with Ring 3
+              - generic [ref=e400]:
+                - strong [ref=e401]: plain-6
+                - paragraph [ref=e402]: plain
+                - paragraph [ref=e403]: Locked · opens with Ring 3
+              - generic [ref=e404]:
+                - strong [ref=e405]: plain-7
+                - paragraph [ref=e406]: plain
+                - paragraph [ref=e407]: Locked · opens with Ring 3
+        - region "Manage tile" [ref=e408]:
+          - heading "forest-1 · forest" [level=3] [ref=e409]
+          - paragraph [ref=e410]: Empty tile. Choose a compatible building.
+          - paragraph [ref=e411]: Replace pays full cost and resets level and workers; no refund
+          - generic [ref=e412]: Building type
+          - combobox "Building type" [ref=e413]:
+            - option "Sheep Pasture"
+            - option "Herb Garden"
+            - option "Quarry"
+            - option "Weaver"
+            - option "Farm"
+            - option "Food Processor"
+            - option "Logging Camp" [selected]
+            - option "Iron Mine"
+            - option "Goods Workshop"
+          - paragraph [ref=e414]: "Requires forest terrain. Cost: 2 Gold, 0 Wood, 0 Iron. Upkeep: 7.5 Gold/week at level 1."
+          - button "Build" [ref=e415] [cursor=pointer]
+      - group [ref=e416]:
+        - generic "Planning settings" [ref=e417] [cursor=pointer]
+      - region "Outside world" [ref=e418]:
+        - group [ref=e419]:
+          - generic "Outside world" [ref=e420] [cursor=pointer]
+```

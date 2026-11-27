@@ -1,0 +1,382 @@
+
+def tests():
+    update(C+"__tests__/purse-tuning.test.ts", "Extend the exact key order in the existing PURSE_TRIAL export test.",
+        ("    'donateSatisfactionPerGoldMilli', 'donateSatisfactionCapPerWeek',",
+         """    'donateSatisfactionPerGoldMilli', 'donateSatisfactionCapPerWeek',
+    'robberySafeBaseMilli', 'robberySafePerSecurityMilli', 'robberyChanceBpsPerGold', 'robberyChanceCapBps',
+    'robberyRansomBps', 'robberyLossBps', 'robberyChaseSecurityMin', 'robberyChaseSuccessBpsPerSecurity',"""))
+    update(E+"crafting.spec.ts", "W1 seed 42 would trigger from the synthetic 1,000-Money allocation. Keep crafting-only runs funded and below safe.",
+        ("  s.player.purse.moneyMilli = 1000000;", "  s.player.purse.moneyMilli = 12000;"))
+    update(E+"items.spec.ts", "Only the crowded W1 seed (2) reaches the robbery draw bound. Isolate that visual/loot fixture from home robbery.",
+        ("if(seed===200)throw Error('No seeded item report');let s=funded(seed);", "if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.player.purse.moneyMilli=12000;"))
+    generate(S+"__tests__/home-robbery.test.ts", "Pin per-difficulty seeded actions, strict refusals and matched boundary cases through the dispatcher.", """
+import { expect, it } from 'vitest';
+import {
+  createCharacterLifeSession, CRISIS_TRIAL, DEFAULT_PLAYER_DRAFT, homeRobberyChanceBps,
+  type CharacterLifeSessionState, type DifficultyId, type TileTrialReport,
+} from '@haven/core';
+import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
+import { executeCharacterLifeCommand } from '../character-life-command.js';
+
+function make(seed = 40, difficulty: DifficultyId = 'normal') {
+  const made = createCharacterLifeSession(seed, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, difficulty);
+  if (!made.success) throw Error(made.error.message);
+  return made.value;
+}
+const stocks = (s: CharacterLifeSessionState) => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+
+function dispatch(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
+  return executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
+}
+function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
+  const result = dispatch(s, type, fields);
+  if (!result.success) throw Error(result.error.code + ': ' + result.error.message);
+  return result;
+}
+function close(s: CharacterLifeSessionState) {
+  const closed = act(s, 'END_WEEK', { expectedWeek: s.city.world.week });
+  if (!closed.report) throw Error('Expected weekly report.');
+  return { ...closed, report: closed.report as Readonly<TileTrialReport> };
+}
+function refusal(s: CharacterLifeSessionState, code: string, message: string, type: string, fields: Record<string, unknown> = {}) {
+  const before = structuredClone(s);
+  expect(dispatch(s, type, fields)).toStrictEqual({ success: false, error: { code, message } });
+  expect(s).toStrictEqual(before);
+}
+function reload(s: CharacterLifeSessionState) {
+  const saved = serializeCharacterLifeSave(s);
+  if (!saved.success) throw Error(saved.error.message);
+  const decoded = deserializeCharacterLifeSave(saved.text);
+  expect(decoded).toStrictEqual({ success: true, state: s });
+  if (!decoded.success) throw Error(decoded.error.message);
+  expect(serializeCharacterLifeSave(decoded.state)).toStrictEqual(saved);
+  return decoded.state;
+}
+
+it('never robs at the exact post-levy safe amount against the same funded route', () => {
+  const atSafe = make();
+  atSafe.player.purse.moneyMilli = 19913;
+  atSafe.player.purse.levyPercent = 5;
+  const below = structuredClone(atSafe);
+  below.player.purse.moneyMilli--;
+  const control = close(below), exact = close(atSafe);
+  expect(exact.next.city.society!.order.security).toBe(25);
+  expect(exact.report.purse).toStrictEqual({
+    levyPercent: 5, levyDueMilli: 1337, levyPaidMilli: 1337, donationsMilli: 0,
+    donationGoldMilli: 0, moneyAfterMilli: 21250,
+  });
+  expect(exact.next.player.purse).toStrictEqual({
+    moneyMilli: 21250, levyPercent: 5, donatedThisWeekMilli: 0, robbery: null,
+  });
+  expect(exact).toStrictEqual({
+    ...control, next: { ...control.next, player: { ...control.next.player, purse: exact.next.player.purse } },
+    report: { ...control.report, purse: exact.report.purse },
+  });
+});
+
+it('floors fractional exposure and caps the exact basis-point calculation', () => {
+  expect([homeRobberyChanceBps(0), homeRobberyChanceBps(8), homeRobberyChanceBps(9),
+    homeRobberyChanceBps(20833), homeRobberyChanceBps(20834), homeRobberyChanceBps(Number.MAX_SAFE_INTEGER)])
+    .toStrictEqual([0, 0, 1, 2499, 2500, 2500]);
+});
+
+it.each([
+  ['normal', 51338, 30088, 7522, 18052],
+  ['easy', 52855, 31605, 7901, 18963],
+] as const)('keeps the %s hit and exact losses across reload', (difficulty, balance, excess, ransom, loss) => {
+  for (const [seed, option, outcome, debit] of [
+    [40, 'pay', 'pay', ransom],
+    [40, 'chase', 'chase-failure', loss],
+    [93, 'chase', 'chase-success', 0],
+    [40, 'let-go', 'let-go', loss],
+  ] as const) {
+    const s = make(seed, difficulty);
+    s.player.purse.moneyMilli = 50001;
+    s.player.purse.levyPercent = 5;
+    const closed = close(s);
+    expect(close(reload(s))).toStrictEqual(closed);
+    expect(closed.report.purse?.robbery).toStrictEqual({ outcome: 'pending', excessMilli: excess });
+    expect(closed.next.player.purse.robbery).toStrictEqual({ id: 'home-robbery-w1', week: 1, excessMilli: excess });
+    refusal(closed.next, 'FORBIDDEN', 'Choose Plan next week to answer.', 'ANSWER_ROBBERY', { option });
+    const planning = act(closed.next, 'NEXT_WEEK').next;
+    refusal(planning, 'CARD_PENDING', 'Answer the robbery first.', 'END_WEEK', { expectedWeek: 2 });
+    const answer = act(planning, 'ANSWER_ROBBERY', { option });
+    expect(act(reload(planning), 'ANSWER_ROBBERY', { option })).toStrictEqual(answer);
+    expect(answer.robberyResolution).toStrictEqual({ week: 1, outcome, excessMilli: excess, lossMilli: debit });
+    const expected = structuredClone(planning);
+    expected.city.revision++;
+    expected.player.purse.moneyMilli = balance - debit;
+    expected.player.purse.robbery = null;
+    expect(answer.next).toStrictEqual(expected);
+    expect(stocks(answer.next).gold).toBe(stocks(planning).gold);
+    expect(close(answer.next).report.week).toBe(2);
+  }
+});
+
+it('checks Money after levy and donations and then resets the donation tally', () => {
+  const s = make();
+  s.player.purse.moneyMilli = 20750;
+  s.player.purse.levyPercent = 5;
+  const donated = act(s, 'DONATE_MONEY', { amountMilli: 1000 }).next;
+  const unchanged = structuredClone(s);
+  stocks(unchanged).gold += 1000;
+  const control = close(unchanged);
+  expect(control.report.purse?.robbery).toStrictEqual({ outcome: 'pending', excessMilli: 837 });
+  const result = close(donated);
+  expect(result.report.purse).toStrictEqual({
+    levyPercent: 5, levyDueMilli: 1337, levyPaidMilli: 1337, donationsMilli: 1000,
+    donationGoldMilli: 1000, moneyAfterMilli: 21087,
+  });
+  expect(result.next.player.purse).toStrictEqual({ moneyMilli: 21087, levyPercent: 5, donatedThisWeekMilli: 0, robbery: null });
+  expect(stocks(result.next)).toStrictEqual(stocks(control.next));
+});
+
+it('opens both cards, preserves both across checkpoint reload, and resolves crisis first', () => {
+  const s = make();
+  const society = s.city.society!;
+  society.crisis.stage = 'warning';
+  society.crisis.hungerStreak = CRISIS_TRIAL.demandHungerWeeks - 1;
+  for (const key of ['free', 'makers', 'luminaries', 'merchants', 'bound'] as const) society.satisfaction[key] = 0;
+  stocks(s).food = 0;
+  stocks(s).wheat = 0;
+  for (const id of ['field-1', 'plain-1']) {
+    const building = s.city.tiles.find(tile => tile.id === id)!.building!;
+    building.workers = 0;
+  }
+  s.player.purse.moneyMilli = 50001;
+  const week = close(s);
+  expect(week.report.crisis?.cardOpened).toBe('demand');
+  const planning = reload(act(week.next, 'NEXT_WEEK').next);
+  const card = planning.city.society!.pendingCard;
+  expect(card).toStrictEqual({ id: 'crisis-demand-w2', kind: 'demand', source: 'crisis', week: 2 });
+  expect(planning.player.purse.robbery?.id).toBe('home-robbery-w1');
+  refusal(planning, 'CARD_PENDING', 'Answer the crisis first.', 'END_WEEK', { expectedWeek: 2 });
+  refusal(planning, 'CARD_PENDING', 'Answer the crisis first.', 'ANSWER_ROBBERY', { option: 'pay' });
+  const answered = reload(act(planning, 'CHOOSE_CARD_OPTION', { cardId: card!.id, option: 'refuse' }).next);
+  expect(answered.player.purse.robbery).toStrictEqual(planning.player.purse.robbery);
+  refusal(answered, 'CARD_PENDING', 'Answer the robbery first.', 'END_WEEK', { expectedWeek: 2 });
+  expect(act(answered, 'ANSWER_ROBBERY', { option: 'pay' }).next.player.purse.robbery).toBeNull();
+});
+
+it('rejects exact invalid command shapes and unavailable chase without mutating state', () => {
+  const s = make();
+  refusal(s, 'UNKNOWN_CARD', 'No home robbery is pending.', 'ANSWER_ROBBERY', { option: 'pay' });
+  s.player.purse = { moneyMilli: 22500, levyPercent: 0, donatedThisWeekMilli: 0,
+    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4000 } };
+  s.city.society!.order.security = 14;
+  refusal(s, 'CHASE_UNAVAILABLE', 'Needs Security 15.', 'ANSWER_ROBBERY', { option: 'chase' });
+  refusal(s, 'UNKNOWN_OPTION', 'Choose Pay, Chase or Let go.', 'ANSWER_ROBBERY', { option: 'send-guard' });
+  refusal(s, 'INVALID_COMMAND', 'Command must contain plain data fields.', 'ANSWER_ROBBERY');
+  refusal(s, 'INVALID_COMMAND', 'Command must contain plain data fields.', 'ANSWER_ROBBERY', { option: 'pay', extra: 1 });
+  refusal(s, 'STALE_COMMAND', 'The purse changed. Try again.', 'ANSWER_ROBBERY', { option: 'pay', expectedRevision: -1 });
+  s.city.society!.order.security = 15;
+  expect(act(s, 'ANSWER_ROBBERY', { option: 'chase' }).robberyResolution)
+    .toStrictEqual({ week: 1, outcome: 'chase-failure', excessMilli: 4000, lossMilli: 2400 });
+});
+
+it('preserves the safe balance when a permitted Planning donation changes exposure', () => {
+  const s = make();
+  s.player.purse = { moneyMilli: 26500, levyPercent: 0, donatedThisWeekMilli: 0,
+    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4000 } };
+  const donated = act(s, 'DONATE_MONEY', { amountMilli: 3000 }).next;
+  const outcome = act(donated, 'ANSWER_ROBBERY', { option: 'let-go' });
+  expect(outcome.robberyResolution).toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 1000 });
+  expect(outcome.next.player.purse).toStrictEqual({
+    moneyMilli: 22500, levyPercent: 0, donatedThisWeekMilli: 3000, robbery: null,
+  });
+  expect(stocks(outcome.next)).toStrictEqual(stocks(donated));
+});
+""")
+    generate(C+"character/__tests__/home-robbery-tuning.test.ts", "Pin exact field-specific messages, strict ransom order, and safe-integer bounds.", """
+import { expect, it } from 'vitest';
+import tuning from '../../data/tuning.json' with { type: 'json' };
+import { validateTuning } from '../../data/validate.js';
+
+it.each([
+  ['robberySafeBaseMilli', -1, 'expected integer >= 0'],
+  ['robberySafePerSecurityMilli', 0.5, 'expected integer >= 0'],
+  ['robberySafePerSecurityMilli', Number.MAX_SAFE_INTEGER, 'expected a safe integer amount at Security 100'],
+  ['robberyChanceBpsPerGold', 0, 'expected integer in [1, 10000]'],
+  ['robberyChanceCapBps', 10001, 'expected integer in [1, 10000]'],
+  ['robberyRansomBps', 6000, 'expected less than robberyLossBps'],
+  ['robberyLossBps', 0, 'expected integer in [1, 10000]'],
+  ['robberyChaseSecurityMin', 101, 'expected integer in [0, 100]'],
+  ['robberyChaseSuccessBpsPerSecurity', 10001, 'expected integer in [1, 10000]'],
+] as const)('rejects %s = %s with exact catalog error', (key, value, rule) => {
+  const copy = structuredClone(tuning);
+  Object.assign(copy.PURSE_TRIAL, { [key]: value });
+  let message: string | undefined;
+  try { validateTuning(copy); }
+  catch (error) { if (error instanceof Error) message = error.message; }
+  expect(message).toBe('tuning.json#PURSE_TRIAL.' + key + ': ' + rule);
+});
+""")
+    generate(U+"__tests__/home-robbery-view.test.ts", "Assert exact preview fields and the rendered row model.",
+        """
+import { expect, it } from 'vitest';
+import { homeRobberyOptions, purseRisk } from '../purse-view.js';
+import { purseReportRows } from '../report-letters.js';
+
+it('shows exact exposure, option costs and chase restriction', () => {
+  expect(purseRisk(22500, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 0 });
+  expect(purseRisk(26501, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 4001 });
+  const purse = { moneyMilli: 26501, levyPercent: 0, donatedThisWeekMilli: 0,
+    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4001 } };
+  expect(homeRobberyOptions(purse, 14, false)).toStrictEqual([
+    { option: 'pay', label: 'Pay', lossMilli: 1000, reason: '' },
+    { option: 'chase', label: 'Chase', lossMilli: 2400, reason: 'Needs Security 15.' },
+    { option: 'let-go', label: 'Let go', lossMilli: 2400, reason: '' },
+  ]);
+  expect(homeRobberyOptions(purse, 30, true).map(view => view.reason))
+    .toStrictEqual(Array(3).fill('Choose Plan next week to answer.'));
+});
+
+it.each(['normal', 'easy'] as const)('renders the %s Robbery row independently from the levy rate', difficulty => {
+  const purse = { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0,
+    donationGoldMilli: 0, moneyAfterMilli: 26501 };
+  expect(purseReportRows({ ...purse, robbery: { outcome: 'pending', excessMilli: 4001 } }, difficulty)).toStrictEqual([
+    { label: 'Levy', value: '0 Money · 0% · 0 of 0 Gold paid' },
+    { label: 'Donation', value: '0 Money · 0 Gold' },
+    { label: 'Money after', value: '26.501 Money' },
+    { label: 'Robbery', value: 'Awaiting answer · 4.001 Money at risk' },
+  ]);
+  expect(purseReportRows({ ...purse, robbery: { outcome: 'pay', excessMilli: 4001, lossMilli: 1000 } }, difficulty).at(-1))
+    .toStrictEqual({ label: 'Robbery', value: 'Paid · −1 Money · 4.001 Money at risk' });
+});
+""")
+
+
+    generate(E+"home-robbery.spec.ts", "Pin exact card, keyboard, report, both difficulty paths and save/load priority at desktop widths and narrow reflow.", """
+import { expect, test, type Page } from '@playwright/test';
+import { CRISIS_TRIAL, type CharacterLifeSessionState } from '@haven/core';
+import { executeCharacterLifeCommand } from '@haven/simulation';
+import { expectReport, exportLife, go, importLife, keyActivate, makeLife, tabTo } from './character-life-navigation.helpers.ts';
+
+function close(s: CharacterLifeSessionState) {
+  const r = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedWeek: 1, expectedRevision: s.city.revision });
+  if (!r.success || !r.report) throw Error('Expected End Week report.');
+  return { next: r.next, report: r.report };
+}
+const card = (page: Page) => page.getByRole('region', { name: 'Robbers at the Mansion', exact: true });
+const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
+const row = (page: Page) => page.getByTestId('purse-report').locator('dt:text-is("Robbery") + dd');
+
+for (const [width, difficulty, excess, ransom, loss, rest] of [
+  [1280, 'normal', '30.088', '7.522', '18.052', '43.816'],
+  [1600, 'easy', '31.605', '7.901', '18.963', '44.954'],
+] as const) {
+  test('renders and answers the ' + difficulty + ' home robbery at ' + width, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    const s = makeLife(40);
+    s.city.society!.difficulty = difficulty;
+    s.player.purse.moneyMilli = 50001;
+    s.player.purse.levyPercent = 5;
+    const expected = close(s);
+    await page.goto('/');
+    await importLife(page, s);
+    await page.locator('#life-nav-player').click();
+    await expect(page.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 27.501 Money');
+    await page.keyboard.press('Escape');
+    const end = page.getByTestId('life-end-week');
+    await keyActivate(page, end);
+    await expect(end).toBeDisabled();
+    await expect(end).toHaveText('Answer the robbery first.');
+    const robbery = card(page);
+    await expect(robbery).toBeVisible();
+    await expect(robbery.getByRole('button')).toHaveText(['Pay', 'Chase', 'Let go']);
+    await expect(robbery.locator('#home-robbery-pay-amount')).toHaveText('Lose ' + ransom + ' Money.');
+    await expect(robbery.locator('#home-robbery-chase-amount')).toHaveText('Success: lose 0 Money. Failure: lose ' + loss + ' Money.');
+    await expect(robbery.locator('#home-robbery-let-go-amount')).toHaveText('Lose ' + loss + ' Money.');
+    for (const name of ['pay', 'chase', 'let-go']) {
+      const disabled = robbery.locator('[data-robbery-option="' + name + '"]');
+      await expect(disabled).toHaveAttribute('aria-disabled', 'true');
+      await expect(disabled).toHaveAttribute('aria-describedby', 'home-robbery-' + name + '-amount home-robbery-' + name + '-reason');
+      await expect(robbery.locator('#home-robbery-' + name + '-reason')).toHaveText('Choose Plan next week to answer.');
+      await disabled.press('Enter');
+      await expect(row(page)).toHaveText('Awaiting answer · ' + excess + ' Money at risk');
+    }
+    await expectReport(page, expected.report, difficulty);
+    await keyActivate(page, button(page, 'Plan next week'));
+    await expect(end).toBeDisabled();
+    const pay = robbery.getByRole('button', { name: 'Pay', exact: true });
+    await tabTo(page, pay);
+    await keyActivate(page, pay);
+    await expect(robbery).toHaveCount(0);
+    await expect(end).toBeEnabled();
+    await expect(row(page)).toHaveText('Paid · −' + ransom + ' Money · ' + excess + ' Money at risk');
+    await expect(page.getByTestId('purse-money')).toHaveText('Money ' + rest);
+    await expect(page.locator('#life-reports-heading')).toBeFocused();
+
+    const low = makeLife(40);
+    low.city.society!.difficulty = difficulty;
+    low.city.society!.order.security = 14;
+    low.player.purse.moneyMilli = 22500;
+    low.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
+    await importLife(page, low);
+    await go(page, 'reports');
+    const chase = card(page).getByRole('button', { name: 'Chase', exact: true });
+    await tabTo(page, chase);
+    await expect(chase).toHaveAttribute('aria-disabled', 'true');
+    await expect(chase).toHaveAttribute('aria-describedby', 'home-robbery-chase-amount home-robbery-chase-reason');
+    await expect(card(page).locator('#home-robbery-chase-reason')).toHaveText('Needs Security 15.');
+    await chase.press('Space');
+    expect((await exportLife(page)).player.purse).toStrictEqual(low.player.purse);
+
+    await go(page, 'reports');
+    for (const narrow of [320, 375]) {
+      await page.setViewportSize({ width: narrow, height: 812 });
+      await expect(card(page)).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      expect(await card(page).getByRole('button').evaluateAll(nodes =>
+        nodes.every(node => node.getBoundingClientRect().height >= 44 && node.getBoundingClientRect().right <= innerWidth))).toBe(true);
+    }
+  });
+}
+
+test('shows crisis first and resumes between the two answers from IndexedDB and JSON', async ({ page }) => {
+  const s = makeLife(40);
+  const society = s.city.society!;
+  society.crisis.stage = 'warning';
+  society.crisis.hungerStreak = CRISIS_TRIAL.demandHungerWeeks - 1;
+  for (const key of ['free', 'makers', 'luminaries', 'merchants', 'bound'] as const) society.satisfaction[key] = 0;
+  const stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  stock.food = 0;
+  stock.wheat = 0;
+  for (const id of ['field-1', 'plain-1']) {
+    const building = s.city.tiles.find(tile => tile.id === id)!.building!;
+    building.workers = 0;
+  }
+  s.player.purse.moneyMilli = 50001;
+  await page.goto('/');
+  await importLife(page, s);
+  await keyActivate(page, page.getByTestId('life-end-week'));
+  await expect(page.getByTestId('crisis-card')).toBeVisible();
+  await expect(card(page)).toHaveCount(0);
+  await expect(page.getByTestId('life-end-week')).toHaveText('Answer the crisis first.');
+  await keyActivate(page, button(page, 'Plan next week'));
+  const both = await exportLife(page);
+  expect(both.city.society!.pendingCard).toStrictEqual({ id: 'crisis-demand-w2', source: 'crisis', kind: 'demand', week: 2 });
+  expect(both.player.purse.robbery?.id).toBe('home-robbery-w1');
+  await button(page, 'Save locally').click();
+  await expect(page.getByText('Saved in this browser.', { exact: true })).toBeVisible();
+  await page.reload();
+  await button(page, 'Continue').click();
+  expect((await exportLife(page)).player.purse).toStrictEqual(both.player.purse);
+  await go(page, 'reports');
+  const refuse = page.getByTestId('crisis-card').getByRole('button', { name: 'Refuse', exact: true });
+  await keyActivate(page, refuse);
+  await expect(card(page).getByRole('heading')).toBeFocused();
+  await expect(page.getByTestId('life-end-week')).toHaveText('Answer the robbery first.');
+  const between = await exportLife(page);
+  expect(between.city.society!.pendingCard).toBeNull();
+  expect(between.player.purse).toStrictEqual(both.player.purse);
+  await importLife(page, between);
+  await go(page, 'reports');
+  await expect(page.getByTestId('crisis-card')).toHaveCount(0);
+  await keyActivate(page, card(page).getByRole('button', { name: 'Let go', exact: true }));
+  await expect(page.getByTestId('life-shell').getByRole('status').filter({ hasText: 'Robbery · Let go · −17.25 Money · 28.751 Money at risk' })).toHaveText('Robbery · Let go · −17.25 Money · 28.751 Money at risk');
+  await expect(page.getByTestId('life-end-week')).toBeEnabled();
+  expect((await exportLife(page)).player.purse.robbery).toBeNull();
+});
+""")
+

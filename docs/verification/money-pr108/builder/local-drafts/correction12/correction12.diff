@@ -1,0 +1,729 @@
+--- step0/packages/core/src/character/__tests__/home-robbery-tuning.test.ts
++++ correction12/packages/core/src/character/__tests__/home-robbery-tuning.test.ts
+@@ -6,6 +6,7 @@
+   ['robberySafeBaseMilli', -1, 'expected integer >= 0'],
+   ['robberySafePerSecurityMilli', 0.5, 'expected integer >= 0'],
+   ['robberySafePerSecurityMilli', Number.MAX_SAFE_INTEGER, 'expected a safe integer amount at Security 100'],
++  ['robberySafePerSecurityMilli', 50_000_000_000_000, 'expected a safe integer amount at Security 100'],
+   ['robberyChanceBpsPerGold', 0, 'expected integer in [1, 10000]'],
+   ['robberyChanceCapBps', 10001, 'expected integer in [1, 10000]'],
+   ['robberyRansomBps', 6000, 'expected less than robberyLossBps'],
+--- step0/packages/core/src/character/purse.ts
++++ correction12/packages/core/src/character/purse.ts
+@@ -4,6 +4,7 @@
+ 
+ import { mixSeed } from '../trial/crime.js';
+ import { createSeededRandom } from '../world/random.js';
++import type { PlayerCharacter } from './types.js';
+ 
+ export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
+ 
+@@ -33,8 +34,13 @@
+   return createSeededRandom(mixSeed(mixSeed(seed, week), homeRobberySalts[stream]))() * 10000;
+ }
+ 
+-export function safeAmountMilli(security: number): number {
+-  return PURSE_TRIAL.robberySafeBaseMilli + security * PURSE_TRIAL.robberySafePerSecurityMilli;
++export function safeAmountMilli(security: number, difficulty: DifficultyId): number {
++  const base = PURSE_TRIAL.robberySafeBaseMilli + security * PURSE_TRIAL.robberySafePerSecurityMilli;
++  return applyDifficulty(base, difficultyProfile(difficulty).robberySafeBps);
++}
++
++export function canSpendMoney(purse: PlayerCharacter['purse'], amountMilli: number): boolean {
++  return purse.moneyMilli - amountMilli >= (purse.robbery?.excessMilli ?? 0);
+ }
+ 
+ export function homeRobberyChanceBps(excessMilli: number): number {
+@@ -49,8 +55,8 @@
+ }
+ 
+ export function homeRobberyLossMilli(
+-  excessMilli: number, moneyMilli: number, security: number, option: 'pay' | 'let-go',
++  excessMilli: number, option: 'pay' | 'let-go',
+ ): number {
+   const rate = option === 'pay' ? PURSE_TRIAL.robberyRansomBps : PURSE_TRIAL.robberyLossBps;
+-  return Math.min(applyDifficulty(excessMilli, rate), Math.max(0, moneyMilli - safeAmountMilli(security)));
++  return applyDifficulty(excessMilli, rate);
+ }
+--- step0/packages/core/src/data/tuning.json
++++ correction12/packages/core/src/data/tuning.json
+@@ -180,8 +180,8 @@
+   "DIFFICULTY_TRIAL": {
+     "marker": "TRIAL",
+     "profiles": {
+-      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000, "levyMoneyBps": 10000 },
+-      "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000 }
++      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000, "levyMoneyBps": 10000, "robberySafeBps": 10000 },
++      "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000, "robberySafeBps": 20000 }
+     }
+   },
+   "PURSE_TRIAL": {
+--- step0/packages/core/src/data/validate.ts
++++ correction12/packages/core/src/data/validate.ts
+@@ -418,7 +418,7 @@
+     DIFFICULTY_TRIAL: Readonly<{
+         marker: "TRIAL";
+         profiles: Readonly<Record<'normal' | 'easy', Readonly<{
+-            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number;
++            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number; robberySafeBps: number;
+         }>>>;
+     }>;
+     PURSE_TRIAL: Readonly<{
+@@ -593,12 +593,12 @@
+ const normalDifficultyBps: Rule = (value, ref, field) => {
+     if (value !== 10000) fail(ref, field, 'must be 10000');
+ };
+-const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps): Rule =>
+-    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps });
++const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps, robberySafeBps: Rule = bps): Rule =>
++    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps, robberySafeBps });
+ const tuningSchemas: Record<string, Rule> = {
+     DIFFICULTY_TRIAL: object({
+         marker: literal("TRIAL"),
+-        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive) })
++        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive, integerInRange(1, 100000)) })
+     }),
+     PURSE_TRIAL: object({
+         marker: literal("TRIAL"),
+@@ -894,7 +894,10 @@
+         rule(data[id], `tuning.json#${id}`, '');
+     const tuning = data as unknown as TuningCatalog;
+     const purse = tuning.PURSE_TRIAL;
+-    if (!Number.isSafeInteger(purse.robberySafeBaseMilli + 100 * purse.robberySafePerSecurityMilli))
++    const maxSafeBps = Math.max(tuning.DIFFICULTY_TRIAL.profiles.normal.robberySafeBps,
++        tuning.DIFFICULTY_TRIAL.profiles.easy.robberySafeBps);
++    const safeAt100 = BigInt(purse.robberySafeBaseMilli) + 100n * BigInt(purse.robberySafePerSecurityMilli);
++    if (safeAt100 * BigInt(maxSafeBps) / 10000n > BigInt(Number.MAX_SAFE_INTEGER))
+         fail('tuning.json#PURSE_TRIAL', 'robberySafePerSecurityMilli', 'expected a safe integer amount at Security 100');
+     if (purse.robberyRansomBps >= purse.robberyLossBps)
+         fail('tuning.json#PURSE_TRIAL', 'robberyRansomBps', 'expected less than robberyLossBps');
+--- step0/packages/core/src/index.ts
++++ correction12/packages/core/src/index.ts
+@@ -23,7 +23,7 @@
+ export * from "./character/validate.js";
+ export {
+   levySatisfactionCost, levyDueMilli, donationGoldMilli, safeAmountMilli, homeRobberyChanceBps,
+-  homeRobberyRoll, homeRobberyChaseChanceBps, homeRobberyLossMilli, type HomeRobberyOption,
++  homeRobberyRoll, homeRobberyChaseChanceBps, homeRobberyLossMilli, canSpendMoney, type HomeRobberyOption,
+ } from "./character/purse.js";
+ export * from "./character/describe.js";
+ export * from "./character/session.js";
+--- step0/packages/core/src/trial/__tests__/difficulty.test.ts
++++ correction12/packages/core/src/trial/__tests__/difficulty.test.ts
+@@ -5,11 +5,11 @@
+ 
+ it('keeps each Normal multiplier at 10000 bps', () => {
+   expect(difficultyProfile('normal')).toStrictEqual({
+-    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000, levyMoneyBps: 10000,
++    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000, levyMoneyBps: 10000, robberySafeBps: 10000,
+   });
+ });
+ 
+-it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps'] as const)(
++it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps', 'robberySafeBps'] as const)(
+   'rejects non-identity Normal %s at its catalog path', field => {
+     const data = structuredClone(tuningJson);
+     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
+@@ -41,6 +41,23 @@
+   expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.easy.levyMoneyBps: expected integer > 0');
+ });
+ 
++it('doubles the Easy safe amount', () => {
++  expect(difficultyProfile('easy').robberySafeBps).toBe(20000);
++});
++
++it.each([0, 100001, 1.5])('refuses Easy robberySafeBps %s at its catalog path', robberySafeBps => {
++  const data = structuredClone(tuningJson);
++  data.DIFFICULTY_TRIAL.profiles.easy.robberySafeBps = robberySafeBps;
++  let message: string | undefined;
++  try {
++    validateTuning(data);
++  } catch (error) {
++    if (!(error instanceof Error)) throw error;
++    message = error.message;
++  }
++  expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.easy.robberySafeBps: expected integer in [1, 100000]');
++});
++
+ it('floors the scaled milli amount and keeps Normal exact', () => {
+   expect(applyDifficulty(1001, 15000)).toBe(1501);
+   expect(applyDifficulty(Number.MAX_SAFE_INTEGER, 10000)).toBe(Number.MAX_SAFE_INTEGER);
+--- step0/packages/simulation/src/__tests__/home-robbery.test.ts
++++ correction12/packages/simulation/src/__tests__/home-robbery.test.ts
+@@ -62,6 +62,28 @@
+   });
+ });
+ 
++it('leaves Easy unrobbed at the exact doubled post-levy safe amount', () => {
++  const exact = make(40, 'easy');
++  exact.player.purse.moneyMilli = 39646;
++  exact.player.purse.levyPercent = 5;
++  const below = structuredClone(exact);
++  below.player.purse.moneyMilli--;
++  const result = close(exact);
++  expect(result.next.city.society!.order.security).toBe(25);
++  expect(result.report.purse).toStrictEqual({
++    levyPercent: 5, levyDueMilli: 1427, levyPaidMilli: 1427, donationsMilli: 0,
++    donationGoldMilli: 0, moneyAfterMilli: 42500,
++  });
++  expect(result.next.player.purse).toStrictEqual({
++    moneyMilli: 42500, levyPercent: 5, donatedThisWeekMilli: 0, robbery: null,
++  });
++  const control = close(below);
++  expect(result).toStrictEqual({
++    ...control, next: { ...control.next, player: { ...control.next.player, purse: result.next.player.purse } },
++    report: { ...control.report, purse: result.report.purse },
++  });
++});
++
+ it('floors fractional exposure and caps the exact basis-point calculation', () => {
+   expect([homeRobberyChanceBps(0), homeRobberyChanceBps(8), homeRobberyChanceBps(9),
+     homeRobberyChanceBps(20833), homeRobberyChanceBps(20834), homeRobberyChanceBps(Number.MAX_SAFE_INTEGER)])
+@@ -70,7 +92,7 @@
+ 
+ it.each([
+   ['normal', 51338, 30088, 7522, 18052],
+-  ['easy', 52855, 31605, 7901, 18963],
++  ['easy', 52855, 10355, 2588, 6213],
+ ] as const)('keeps the %s hit and exact losses across reload', (difficulty, balance, excess, ransom, loss) => {
+   for (const [seed, option, outcome, debit] of [
+     [40, 'pay', 'pay', ransom],
+@@ -162,15 +184,50 @@
+     .toStrictEqual({ week: 1, outcome: 'chase-failure', excessMilli: 4000, lossMilli: 2400 });
+ });
+ 
+-it('preserves the safe balance when a permitted Planning donation changes exposure', () => {
++it('preserves the exact robbery loss when a permitted Planning donation changes Money', () => {
+   const s = make();
+   s.player.purse = { moneyMilli: 26500, levyPercent: 0, donatedThisWeekMilli: 0,
+     robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4000 } };
+   const donated = act(s, 'DONATE_MONEY', { amountMilli: 3000 }).next;
+   const outcome = act(donated, 'ANSWER_ROBBERY', { option: 'let-go' });
+-  expect(outcome.robberyResolution).toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 1000 });
++  expect(outcome.robberyResolution).toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 2400 });
+   expect(outcome.next.player.purse).toStrictEqual({
+-    moneyMilli: 22500, levyPercent: 0, donatedThisWeekMilli: 3000, robbery: null,
++    moneyMilli: 21100, levyPercent: 0, donatedThisWeekMilli: 3000, robbery: null,
+   });
+   expect(stocks(outcome.next)).toStrictEqual(stocks(donated));
+ });
++
++it.each(['DONATE_MONEY', 'BUY_ITEM', 'BUY_POTION', 'PLACE_CRAFT_ORDER'] as const)(
++  'reserves exactly the outstanding excess for %s, including one milli below the boundary', type => {
++    const s = make();
++    const items = s.city.society!.items;
++    s.city.tiles.find(tile => tile.id === 'slum-1')!.building =
++      { typeId: 'drug-store', level: 1, workers: 0, enabled: true };
++    items.materials['green-leaf'] = 2;
++    const actions = {
++      DONATE_MONEY: { fields: { amountMilli: 1000 }, cost: 1000, message: 'Not enough Money.' },
++      BUY_ITEM: { fields: { offerIndex: 0 }, cost: items.market[0].priceMilli, message: 'NOT_ENOUGH_MONEY' },
++      BUY_POTION: { fields: { tileId: 'slum-1', potion: 1 }, cost: 3000, message: 'NOT_ENOUGH_MONEY' },
++      PLACE_CRAFT_ORDER: { fields: { tileId: 'slum-1', recipeId: 'brew-heal-potion-1' }, cost: 1000, message: 'NOT_ENOUGH_MONEY' },
++    };
++    const { fields, cost, message } = actions[type];
++    const card = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++    s.player.purse = { moneyMilli: 3999 + cost, levyPercent: 0, donatedThisWeekMilli: 0, robbery: card };
++    refusal(s, 'NOT_ENOUGH_MONEY', message, type, fields);
++    s.player.purse.moneyMilli++;
++    const spent = act(s, type, fields).next;
++    expect(spent.player.purse).toStrictEqual({
++      moneyMilli: 4000, levyPercent: 0, donatedThisWeekMilli: type === 'DONATE_MONEY' ? 1000 : 0, robbery: card,
++    });
++    expect(act(spent, 'ANSWER_ROBBERY', { option: 'let-go' }).robberyResolution)
++      .toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 2400 });
++    if (type === 'PLACE_CRAFT_ORDER') {
++      const refund = act(spent, 'CANCEL_CRAFT_ORDER', { tileId: 'slum-1', index: 0 }).next;
++      expect(refund.player.purse).toStrictEqual({
++        moneyMilli: 5000, levyPercent: 0, donatedThisWeekMilli: 0, robbery: card,
++      });
++      expect(act(refund, 'ANSWER_ROBBERY', { option: 'let-go' }).robberyResolution)
++        .toStrictEqual({ week: 1, outcome: 'let-go', excessMilli: 4000, lossMilli: 2400 });
++    }
++  },
++);
+--- step0/packages/simulation/src/item-command.ts
++++ correction12/packages/simulation/src/item-command.ts
+@@ -1,5 +1,5 @@
+ import {
+-  hasWeeklyKeys, isLiveCharacterLifeSessionState, isItemsState, isOpenItemSlot, isWearable,
++  canSpendMoney, hasWeeklyKeys, isLiveCharacterLifeSessionState, isItemsState, isOpenItemSlot, isWearable,
+   ITEM_CATALOG, ITEM_TRIAL, CRAFT_TRIAL, RECIPES, buildingWorkerCap, trialBuilding, OUTSIDE_TRIAL,
+   type CharacterLifeSessionState, type ItemInstance, type Slot,
+ } from '@haven/core';
+@@ -36,7 +36,7 @@
+     list.push(item);list.sort((a,b)=>a.id-b.id);return true;
+   };
+   const purchase=(defId:string,price:number):CharacterLifeCommandResult|null=>{
+-    if(purse.moneyMilli<price)return fail('NOT_ENOUGH_MONEY');
++    if(!canSpendMoney(purse,price))return fail('NOT_ENOUGH_MONEY');
+     if(!receive({id:s.nextItemId,defId}))return fail('INVENTORY_FULL');
+     s.nextItemId=safe(s.nextItemId+1);purse.moneyMilli-=price;return null;
+   };
+@@ -61,7 +61,7 @@
+     }
+     const workshop=s.workshops&&Object.hasOwn(s.workshops,tileId as string)?s.workshops[tileId as string]:{orders:[],ready:[]};
+     if(workshop.orders.length>=CRAFT_TRIAL.queueCap)return fail('QUEUE_FULL');
+-    if(purse.moneyMilli<recipe.feeMilli)return fail('NOT_ENOUGH_MONEY');
++    if(!canSpendMoney(purse,recipe.feeMilli))return fail('NOT_ENOUGH_MONEY');
+     for(const item of heldItems){const found=locate(item.id)!;found.list.splice(found.index,1);}
+     for(const [id,n] of Object.entries(materials)){s.materials[id]-=n;if(!s.materials[id])delete s.materials[id];}
+     purse.moneyMilli-=recipe.feeMilli;
+--- step0/packages/simulation/src/purse-command.ts
++++ correction12/packages/simulation/src/purse-command.ts
+@@ -1,5 +1,5 @@
+ import {
+-  donationGoldMilli, hasWeeklyKeys, homeRobberyChaseChanceBps, homeRobberyLossMilli, homeRobberyRoll,
++  canSpendMoney, donationGoldMilli, hasWeeklyKeys, homeRobberyChaseChanceBps, homeRobberyLossMilli, homeRobberyRoll,
+   isLiveCharacterLifeSessionState, PURSE_TRIAL, type CharacterLifeSessionState, type HomeRobberyResolution,
+ } from '@haven/core';
+ import type { CharacterLifeCommandResult } from './character-life-command.js';
+@@ -40,7 +40,7 @@
+     const chased = option === 'chase' &&
+       homeRobberyRoll(world.worldMetadata.worldSeed, card.week, 'home-robbery-chase') < homeRobberyChaseChanceBps(security);
+     const lossMilli = chased ? 0 :
+-      homeRobberyLossMilli(card.excessMilli, purse.moneyMilli, security, option === 'pay' ? 'pay' : 'let-go');
++      homeRobberyLossMilli(card.excessMilli, option === 'pay' ? 'pay' : 'let-go');
+     purse.moneyMilli -= lossMilli;
+     purse.robbery = null;
+     robberyResolution = Object.freeze({
+@@ -56,7 +56,7 @@
+     const amount = raw.amountMilli;
+     if (!whole(amount) || amount <= 0 || amount % 1000 !== 0)
+       return fail('INVALID_AMOUNT', 'Enter a positive whole amount.');
+-    if (amount > purse.moneyMilli) return fail('NOT_ENOUGH_MONEY', 'Not enough Money.');
++    if (!canSpendMoney(purse, amount)) return fail('NOT_ENOUGH_MONEY', 'Not enough Money.');
+     const { world, society } = next.city;
+     const stock = world.settlements[world.activeSettlementId!].inventory;
+     const gold = donationGoldMilli(amount, society!.difficulty);
+--- step0/packages/simulation/src/purse-week.ts
++++ correction12/packages/simulation/src/purse-week.ts
+@@ -25,7 +25,7 @@
+   const { world, society } = session.city;
+   const purse = session.player.purse;
+   if (society!.crisis.stage === 'fallen') return;
+-  const excessMilli = purse.moneyMilli - safeAmountMilli(society!.order.security);
++  const excessMilli = purse.moneyMilli - safeAmountMilli(society!.order.security, society!.difficulty);
+   if (excessMilli <= 0) return;
+   const chanceBps = homeRobberyChanceBps(excessMilli);
+   if (chanceBps === 0 || homeRobberyRoll(world.worldMetadata.worldSeed, week, 'home-robbery') >= chanceBps) return;
+--- step0/packages/ui/src/CharacterLifeCity.svelte
++++ correction12/packages/ui/src/CharacterLifeCity.svelte
+@@ -1,6 +1,6 @@
+ <script lang="ts">
+   import { tick } from 'svelte';
+-  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
++  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
+   import OutsideCity from './OutsideCity.svelte';
+   import CouncilPanel from './CouncilPanel.svelte';
+@@ -11,7 +11,7 @@
+   import { formatMilli as units } from './milli-format.js';
+ 
+   export let state: TileTrialState;
+-  export let purseMoneyMilli: number;
++  export let purse: PlayerCharacter['purse'];
+   export let npcs: WorldNpc[];
+   export let selectedId: string;
+   export let uiEpoch: number;
+@@ -79,7 +79,7 @@
+   }
+ </script>
+ 
+-  <InsideCity {state} {npcs} {purseMoneyMilli} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
++  <InsideCity {state} {npcs} {purse} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
+   <LibraryPanel {state} {locked} {managementError} {oncommand} />
+   <div class="layout">
+     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />
+--- step0/packages/ui/src/InsideCity.svelte
++++ correction12/packages/ui/src/InsideCity.svelte
+@@ -3,10 +3,10 @@
+  import AcquisitionPanel from './AcquisitionPanel.svelte';
+  import PotionPanel from './PotionPanel.svelte';
+  import WorkshopPanel from './WorkshopPanel.svelte';
+- import { TRIAL_BUILDINGS, isAcquisitionSource, societyStaff, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
++ import { TRIAL_BUILDINGS, isAcquisitionSource, societyStaff, type PlayerCharacter, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
+  import { insideTiers, wallStatus, TOWN_PLOT_COUNT, buildingColour, effectLine, CLASS_LABELS } from './society-view.js';
+  export let state:TileTrialState;
+- export let purseMoneyMilli:number;
++ export let purse:PlayerCharacter['purse'];
+  export let npcs:WorldNpc[]=[];
+  export let selectedId:string;
+  export let uiEpoch:number;
+@@ -53,15 +53,15 @@
+   {/each}</div></section>
+  {/each}
+  {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='town-market'&&state.tiles.find(t=>t.id===selectedId)?.building?.enabled}
+-  <MarketPanel {state} {locked} {managementError} {oncommand} />
++  <MarketPanel {state} {purse} {locked} {managementError} {oncommand} />
+  {/if}
+- {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='smithy'}<WorkshopPanel {state} {npcs} {purseMoneyMilli} tileId={selectedId} {locked} {managementError} {oncommand} />{/if}
++ {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='smithy'}<WorkshopPanel {state} {npcs} {purse} tileId={selectedId} {locked} {managementError} {oncommand} />{/if}
+  {#if source}
+   {#key `${selectedId}:${uiEpoch}`}
+    <AcquisitionPanel {state} {npcs} {source} tileId={selectedId} {locked} {managementError} {oncommand} />
+   {/key}
+  {/if}
+- <PotionPanel {state} {npcs} {purseMoneyMilli} tileId={selectedId} {locked} {managementError} {oncommand} />
++ <PotionPanel {state} {npcs} {purse} tileId={selectedId} {locked} {managementError} {oncommand} />
+ </section>
+ <style>
+  section{min-width:0;margin-bottom:16px}p{margin:8px 0}.plots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin:12px 0}.plots button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:12px;background:var(--bg-secondary)}.selected{outline:2px solid var(--accent-green)}.plots>*{min-width:0;overflow-wrap:anywhere}label{display:block;margin-top:12px}
+--- step0/packages/ui/src/ItemCard.svelte
++++ correction12/packages/ui/src/ItemCard.svelte
+@@ -9,6 +9,7 @@
+   export let ondestroy:(()=>void)|undefined=undefined;
+   export let onclaim:(()=>void)|undefined=undefined;
+   export let onsell:(()=>void)|undefined=undefined;
++  export let buyReasonId:string|undefined=undefined;
+   export let onbuy:(()=>void)|undefined=undefined;
+   export let priceMilli:number|undefined=undefined;
+   $: look=itemPresentation(definition);
+@@ -28,7 +29,8 @@
+   <div class="actions">
+     {#if onequip}<button disabled={locked} onclick={onequip}>Equip</button>{/if}
+     {#if onclaim}<button disabled={locked} onclick={onclaim}>Claim</button>{/if}
+-    {#if onbuy}<button disabled={locked} onclick={onbuy}>Buy</button>{/if}
++    {#if onbuy}<button disabled={locked} aria-disabled={buyReasonId?true:undefined} aria-describedby={buyReasonId}
++      onclick={() => { if (!buyReasonId) onbuy?.(); }}>Buy</button>{/if}
+     {#if onsell}<button disabled={locked} onclick={onsell}>Sell</button>{/if}
+     {#if ondestroy}<button disabled={locked} onclick={ondestroy}>Destroy</button>{/if}
+   </div>
+--- step0/packages/ui/src/MarketPanel.svelte
++++ correction12/packages/ui/src/MarketPanel.svelte
+@@ -1,14 +1,17 @@
+ <script lang="ts">
+- import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState } from '@haven/core';
++ import { canSpendMoney, ITEM_CATALOG, ITEM_TRIAL, type PlayerCharacter, type TileTrialState } from '@haven/core';
+  import ItemCard from './ItemCard.svelte';
+  import { materialRows, parseItemCount } from './items-view.js';
++ import { heldMoneyNotice } from './purse-view.js';
+  import { formatMilli } from './milli-format.js';
+  export let state:TileTrialState;
++ export let purse:PlayerCharacter['purse'];
+  export let locked:boolean;
+  export let managementError:{action:string;message:string}|null;
+  export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
+  let counts:Record<string,string>={},error='';
+  $: items=state.society!.items;
++ $: holdNotice=heldMoneyNotice(purse);
+  function input(id:string,event:Event){const el=event.currentTarget as HTMLInputElement;if(/^\d*$/.test(el.value))counts={...counts,[id]:el.value};else el.value=counts[id]??'1';}
+  function sell(id:string){const count=parseItemCount(counts[id]??'1',items.materials[id]);error=count===null?'Enter a whole count from 1 to the available stack.':'';if(count!==null)oncommand('SELL_MATERIAL',{materialId:id,count});}
+  const price=(id:string)=>Math.floor(ITEM_CATALOG[id].basePriceMilli*ITEM_TRIAL.resaleBps/10000);
+@@ -16,7 +19,8 @@
+ <section aria-label="Item Market" class="market-panel">
+  <header><h4>Item Market</h4><p>Shared weekly offers · purchases leave the shelf until next week.</p></header>
+  {#if error}<p role="alert">{error}</p>{:else if managementError&&['BUY_ITEM','SELL_ITEM','SELL_MATERIAL'].includes(managementError.action)}<p role="alert">{managementError.message}</p>{/if}
+- <div role="group" aria-label="Weekly offers"><h5>Weekly offers · {items.market.length} remaining</h5><div class="cards">{#each items.market as offer,index}<ItemCard definition={ITEM_CATALOG[offer.defId]} {locked} priceMilli={offer.priceMilli} onbuy={()=>{error='';oncommand('BUY_ITEM',{offerIndex:index});}} />{:else}<p>No offers remain. Return after End Week.</p>{/each}</div></div>
++ {#if holdNotice}<p id="market-robbery-hold">{holdNotice}</p>{/if}
++ <div role="group" aria-label="Weekly offers"><h5>Weekly offers · {items.market.length} remaining</h5><div class="cards">{#each items.market as offer,index}<ItemCard definition={ITEM_CATALOG[offer.defId]} {locked} priceMilli={offer.priceMilli} buyReasonId={holdNotice&&!canSpendMoney(purse,offer.priceMilli)?'market-robbery-hold':undefined} onbuy={()=>{error='';oncommand('BUY_ITEM',{offerIndex:index});}} />{:else}<p>No offers remain. Return after End Week.</p>{/each}</div></div>
+  <div role="group" aria-label="Sell inventory"><h5>Sell inventory</h5><p>Resale is {ITEM_TRIAL.resaleBps/100}% of base price. Legendary items cannot be sold.</p><div class="cards">{#each [...items.inventory,...items.consumables] as item (item.id)}<ItemCard definition={ITEM_CATALOG[item.defId]} {locked} priceMilli={ITEM_CATALOG[item.defId].rarity==='legendary'?undefined:price(item.defId)} onsell={ITEM_CATALOG[item.defId].rarity==='legendary'?undefined:()=>{error='';oncommand('SELL_ITEM',{itemId:item.id});}} />{:else}<p>No items to sell.</p>{/each}</div></div>
+  <h5>Sell materials</h5><div class="material-scroll"><table><caption>Materials for sale</caption><thead><tr><th scope="col">Material</th><th scope="col">Rarity</th><th scope="col">Count</th><th scope="col">Each</th><th scope="col">Sale</th></tr></thead><tbody>{#each materialRows(items) as row}<tr><th scope="row">{row.name}</th><td>{row.rarity}</td><td>{row.count}</td><td>{ITEM_CATALOG[row.id].rarity==='legendary'?'Not for sale':`${formatMilli(price(row.id))} Money`}</td><td>{#if ITEM_CATALOG[row.id].rarity!=='legendary'}<input type="text" inputmode="numeric" pattern="[0-9]*" aria-label={`Sell ${row.name} count`} value={counts[row.id]??'1'} disabled={locked} oninput={event=>input(row.id,event)} /><button disabled={locked} onclick={()=>sell(row.id)}>Sell material</button>{:else}Legendary · kept{/if}</td></tr>{/each}</tbody></table></div>
+ </section>
+--- step0/packages/ui/src/PotionPanel.svelte
++++ correction12/packages/ui/src/PotionPanel.svelte
+@@ -1,9 +1,10 @@
+ <script lang="ts">
+- import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState, type WorldNpc } from '@haven/core';
++ import { canSpendMoney, ITEM_CATALOG, ITEM_TRIAL, type PlayerCharacter, type TileTrialState, type WorldNpc } from '@haven/core';
+  import { potionShop } from './items-view.js';
++ import { heldMoneyNotice } from './purse-view.js';
+  import { formatMilli } from './milli-format.js';
+  import WorkshopPanel from './WorkshopPanel.svelte';
+- export let purseMoneyMilli:number;
++ export let purse:PlayerCharacter['purse'];
+  export let state:TileTrialState;
+  export let npcs:WorldNpc[]=[];
+  export let tileId:string;
+@@ -11,6 +12,7 @@
+  export let managementError:{action:string;message:string}|null;
+  export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
+  $: selling=potionShop(state,tileId);
++ $: holdNotice=heldMoneyNotice(purse);
+  $: items=state.society!.items;
+  $: building=state.tiles.find(t=>t.id===tileId)?.building;
+  let active:'Buy'|'Brew'='Buy';
+@@ -30,10 +32,12 @@
+  </div>
+  {#if active==='Buy'}<div role="tabpanel" id={`potion-panel-${tileId}-Buy`} aria-labelledby={`potion-${tileId}-Buy`}>
+ {#if selling}<section aria-label="Potion shop" class="potion-panel"><h4>Potion shop</h4><p>{state.tiles.find(t=>t.id===tileId)!.building!.typeId==='hospital'?'The Hospital is staffed and supplied.':'The Drug Store sells without workers.'}</p>
+- <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}<li><strong>{ITEM_CATALOG[`heal-potion-${tier}`].name}</strong><span>Restore {ITEM_TRIAL.potionHeal[key]} health · {formatMilli(ITEM_TRIAL.potionPricesMilli[key])} Money</span><button disabled={locked} onclick={()=>oncommand('BUY_POTION',{tileId,potion:tier})}>Buy {ITEM_CATALOG[`heal-potion-${tier}`].name}</button></li>{/each}</ul>
++ {#if holdNotice}<p id="potion-robbery-hold">{holdNotice}</p>{/if}
++ <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}{@const held=!!holdNotice&&!canSpendMoney(purse,ITEM_TRIAL.potionPricesMilli[key])}<li><strong>{ITEM_CATALOG[`heal-potion-${tier}`].name}</strong><span>Restore {ITEM_TRIAL.potionHeal[key]} health · {formatMilli(ITEM_TRIAL.potionPricesMilli[key])} Money</span><button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'potion-robbery-hold':undefined}
++   onclick={()=>{if(!held)oncommand('BUY_POTION',{tileId,potion:tier});}}>Buy {ITEM_CATALOG[`heal-potion-${tier}`].name}</button></li>{/each}</ul>
+  {#if managementError?.action==='BUY_POTION'}<p role="alert">{managementError.message}</p>{/if}
+ </section>{:else if state.tiles.find(t=>t.id===tileId)?.building?.typeId==='hospital'}<p>A Hospital sells potions when enabled, fully staffed, and supplied with Herbs and upkeep.</p>{/if}
+- </div>{:else}<div role="tabpanel" id={`potion-panel-${tileId}-Brew`} aria-labelledby={`potion-${tileId}-Brew`}><WorkshopPanel {state} {npcs} {purseMoneyMilli} {tileId} {locked} {managementError} {oncommand} /></div>{/if}
++ </div>{:else}<div role="tabpanel" id={`potion-panel-${tileId}-Brew`} aria-labelledby={`potion-${tileId}-Brew`}><WorkshopPanel {state} {npcs} {purse} {tileId} {locked} {managementError} {oncommand} /></div>{/if}
+ </section>
+ {/if}
+ {#if items.consumables.length}<section aria-label="Potion inventory" class="potion-panel"><h4>Potion inventory · {items.consumables.length} / {ITEM_TRIAL.consumableCap}</h4><p>Use while Planning to restore the Player's health, up to 100.</p><ul>{#each items.consumables as item (item.id)}<li><strong>{ITEM_CATALOG[item.defId].name}</strong><button disabled={locked} onclick={()=>oncommand('USE_CONSUMABLE',{itemId:item.id})}>Use {ITEM_CATALOG[item.defId].name}</button></li>{/each}</ul>{#if managementError?.action==='USE_CONSUMABLE'}<p role="alert">{managementError.message}</p>{/if}</section>{/if}
+--- step0/packages/ui/src/PursePanel.svelte
++++ correction12/packages/ui/src/PursePanel.svelte
+@@ -1,7 +1,7 @@
+ <script lang="ts">
+   import type { DifficultyId, PlayerCharacter } from '@haven/core';
+   import { formatMilli } from './milli-format.js';
+-  import { purseControls, purseRisk } from './purse-view.js';
++  import { heldMoneyNotice, purseControls, purseRisk } from './purse-view.js';
+ 
+   export let purse: PlayerCharacter['purse'];
+   export let locked: boolean;
+@@ -11,7 +11,8 @@
+ 
+   let input = '';
+   $: controls = purseControls(purse, input, locked, difficulty);
+-  $: risk = purseRisk(purse.moneyMilli, security);
++  $: risk = purseRisk(purse.moneyMilli, security, difficulty);
++  $: holdNotice = heldMoneyNotice(purse);
+ 
+   function donate(event: SubmitEvent) {
+     event.preventDefault();
+@@ -39,6 +40,7 @@
+       ? ` (levy −${controls.levyCost}, donation +${controls.donationOffset})` : ''}
+   </p>
+   <p data-testid="purse-risk">Safe amount {formatMilli(risk.safeMilli)} Money · At risk {formatMilli(risk.atRiskMilli)} Money</p>
++  {#if holdNotice}<p data-testid="purse-held-money">{holdNotice}</p>{/if}
+   <form onsubmit={donate}>
+     <label for="purse-donate-amount">Donation amount in Money</label>
+     <input id="purse-donate-amount" type="text" inputmode="numeric" bind:value={input}
+--- step0/packages/ui/src/TileManagement.svelte
++++ correction12/packages/ui/src/TileManagement.svelte
+@@ -278,7 +278,7 @@
+         </div>
+       </section>
+       {#if npcs && outside}
+-      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purseMoneyMilli={player!.purse.moneyMilli} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
++      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purse={player!.purse} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
+         onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} />
+       {/if}
+     {/snippet}
+--- step0/packages/ui/src/WorkshopPanel.svelte
++++ correction12/packages/ui/src/WorkshopPanel.svelte
+@@ -1,14 +1,15 @@
+ <script lang="ts">
+   import { tick } from 'svelte';
+-  import { CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc } from '@haven/core';
++  import { canSpendMoney, CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc } from '@haven/core';
+   import { craftingRecipes, workshopForecast } from './items-view.js';
++  import { heldMoneyNotice } from './purse-view.js';
+   import { formatMilli } from './milli-format.js';
+   import ItemCard from './ItemCard.svelte';
+ 
+   export let state:TileTrialState;
+   export let npcs:WorldNpc[]=[];
+   export let tileId:string;
+-  export let purseMoneyMilli:number;
++  export let purse:PlayerCharacter['purse'];
+   export let locked:boolean;
+   export let managementError:{action:string;message:string}|null;
+   export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
+@@ -19,7 +20,8 @@
+   $: name=building?TRIAL_BUILDINGS[building.typeId].name:'';
+   $: workshop=state.society!.items.workshops?.[tileId];
+   $: orders=workshop?.orders??[];
+-  $: recipes=craftingRecipes(state,tileId,purseMoneyMilli);
++  $: recipes=craftingRecipes(state,tileId,purse.moneyMilli);
++  $: holdNotice=heldMoneyNotice(purse);
+   $: forecast=workshopForecast(state,npcs,tileId);
+   $: capacity=forecast.capacity;
+   $: failure=managementError&&['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(managementError.action)?managementError.message:'';
+@@ -43,18 +45,21 @@
+     <div>
+       <button bind:this={recipeToggle} class="recipe-toggle" aria-expanded={expanded} aria-controls={`recipes-${tileId}`} onclick={()=>expanded=!expanded}>Available recipes</button>
+       <div id={`recipes-${tileId}`} hidden={!expanded}>
++        {#if holdNotice}<p id="workshop-robbery-hold">{holdNotice}</p>{/if}
+         {#if orders.length>=CRAFT_TRIAL.queueCap}<p>The workshop queue is full. Cancel an order to make room.</p>{/if}
+         {#if !recipes.length}<p>No recipes can be placed now. Check owned inputs, Money and queue space.</p>{/if}
+         {#each ['Refine','Upgrade','Brew'] as group}
+           {#if recipes.some(recipe=>recipe.group===group)}<section class="recipe-group" aria-label={`${group} recipes`}><h5>{group}</h5>
+             {#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}
++              {@const held=!!holdNotice&&!canSpendMoney(purse,recipe.feeMilli)}
+               <div class="recipe" data-craft-recipe={recipe.recipeId}>
+                 <h6>{ITEM_CATALOG[recipe.output].name}</h6>
+                 <p>Inputs: {recipe.inputs.map(input=>`${input.count} ${ITEM_CATALOG[input.defId].name}`).join(' + ')}</p>
+                 <p>Fee: {formatMilli(recipe.feeMilli)} Money</p>
+                 {#if recipe.before}<p class="comparison">Before → After</p><div class="upgrade-cards"><ItemCard definition={ITEM_CATALOG[recipe.before]} /><ItemCard definition={ITEM_CATALOG[recipe.output]} /></div>
+                 {:else}<ItemCard definition={ITEM_CATALOG[recipe.output]} />{/if}
+-                <button disabled={locked} onclick={event=>run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget)}>Place {ITEM_CATALOG[recipe.output].name}</button>
++                <button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'workshop-robbery-hold':undefined}
++                  onclick={event=>{if(!held)void run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget);}}>Place {ITEM_CATALOG[recipe.output].name}</button>
+               </div>
+             {/each}
+           </section>{/if}
+--- step0/packages/ui/src/__tests__/home-robbery-view.test.ts
++++ correction12/packages/ui/src/__tests__/home-robbery-view.test.ts
+@@ -1,10 +1,11 @@
+ import { expect, it } from 'vitest';
+-import { homeRobberyOptions, purseRisk } from '../purse-view.js';
++import { heldMoneyNotice, homeRobberyOptions, purseControls, purseRisk } from '../purse-view.js';
+ import { purseReportRows } from '../report-letters.js';
+ 
+ it('shows exact exposure, option costs and chase restriction', () => {
+-  expect(purseRisk(22500, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 0 });
+-  expect(purseRisk(26501, 30)).toStrictEqual({ safeMilli: 22500, atRiskMilli: 4001 });
++  expect(purseRisk(22500, 30, 'normal')).toStrictEqual({ safeMilli: 22500, atRiskMilli: 0 });
++  expect(purseRisk(26501, 30, 'normal')).toStrictEqual({ safeMilli: 22500, atRiskMilli: 4001 });
++  expect(purseRisk(49001, 30, 'easy')).toStrictEqual({ safeMilli: 45000, atRiskMilli: 4001 });
+   const purse = { moneyMilli: 26501, levyPercent: 0, donatedThisWeekMilli: 0,
+     robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4001 } };
+   expect(homeRobberyOptions(purse, 14, false)).toStrictEqual([
+@@ -14,6 +15,22 @@
+   ]);
+   expect(homeRobberyOptions(purse, 30, true).map(view => view.reason))
+     .toStrictEqual(Array(3).fill('Choose Plan next week to answer.'));
++});
++
++it('describes the held amount and keeps the same losses after a debit or credit', () => {
++  const held = { moneyMilli: 5001, levyPercent: 0, donatedThisWeekMilli: 0,
++    robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 4001 } };
++  const notice = '4.001 Money is held until the robbery is answered.';
++  expect(heldMoneyNotice(held)).toBe(notice);
++  expect(purseControls(held, '2', false, 'normal').donateReason).toBe(notice);
++  expect(purseControls(held, '1', false, 'normal').donateReason).toBe('');
++  expect(homeRobberyOptions({ ...held, moneyMilli: 4001 }, 30, false)).toStrictEqual([
++    { option: 'pay', label: 'Pay', lossMilli: 1000, reason: '' },
++    { option: 'chase', label: 'Chase', lossMilli: 2400, reason: '' },
++    { option: 'let-go', label: 'Let go', lossMilli: 2400, reason: '' },
++  ]);
++  expect(homeRobberyOptions({ ...held, moneyMilli: 25001 }, 30, false))
++    .toStrictEqual(homeRobberyOptions(held, 30, false));
+ });
+ 
+ it.each(['normal', 'easy'] as const)('renders the %s Robbery row independently from the levy rate', difficulty => {
+--- step0/packages/ui/src/purse-view.ts
++++ correction12/packages/ui/src/purse-view.ts
+@@ -1,4 +1,5 @@
+-import { donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type PlayerCharacter } from '@haven/core';
++import { canSpendMoney, donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type PlayerCharacter } from '@haven/core';
++import { formatMilli } from './milli-format.js';
+ 
+ export function parseDonationMilli(text: string): number | null {
+   if (!/^[0-9]+$/.test(text)) return null;
+@@ -21,19 +22,24 @@
+     decreaseReason: lockReason || (purse.levyPercent === 0 ? 'Weekly levy is at its minimum.' : ''),
+     increaseReason: lockReason || (purse.levyPercent === PURSE_TRIAL.levyMaxPercent ? 'Weekly levy is at its maximum.' : ''),
+     donateReason: lockReason || (amountMilli === null ? 'Enter a positive whole amount.' :
+-      amountMilli > purse.moneyMilli ? 'Not enough Money.' : ''),
++      canSpendMoney(purse, amountMilli) ? '' : (heldMoneyNotice(purse) || 'Not enough Money.')),
+   };
+ }
+ 
+-export function purseRisk(moneyMilli: number, security: number) {
+-  const safeMilli = safeAmountMilli(security);
++export function heldMoneyNotice(purse: PlayerCharacter['purse']): string {
++  const held = purse.robbery?.excessMilli ?? 0;
++  return held > 0 ? formatMilli(held) + ' Money is held until the robbery is answered.' : '';
++}
++
++export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId) {
++  const safeMilli = safeAmountMilli(security, difficulty);
+   return { safeMilli, atRiskMilli: Math.max(0, moneyMilli - safeMilli) };
+ }
+ 
+ export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {
+   const excess = purse.robbery?.excessMilli ?? 0;
+-  const pay = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'pay');
+-  const loss = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'let-go');
++  const pay = homeRobberyLossMilli(excess, 'pay');
++  const loss = homeRobberyLossMilli(excess, 'let-go');
+   const reportReason = locked ? 'Choose Plan next week to answer.' : '';
+   const chaseReason = reportReason || (security < PURSE_TRIAL.robberyChaseSecurityMin
+     ? 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.' : '');
+--- step0/scripts/money-calibration.ts
++++ correction12/scripts/money-calibration.ts
+@@ -112,7 +112,7 @@
+     }
+     const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';
+     const security = report.order!.after.security;
+-    const safeMoneyMilli = safeAmountMilli(security);
++    const safeMoneyMilli = safeAmountMilli(security, difficulty);
+     const robberyExcessMilli = Math.max(0, report.purse.moneyAfterMilli - safeMoneyMilli);
+     const robberyHit = report.purse.robbery?.outcome === 'pending';
+     let robberyLossMilli = 0;
+--- step0/tests/e2e/home-robbery.spec.ts
++++ correction12/tests/e2e/home-robbery.spec.ts
+@@ -14,7 +14,7 @@
+ 
+ for (const [width, difficulty, excess, ransom, loss, rest] of [
+   [1280, 'normal', '30.088', '7.522', '18.052', '43.816'],
+-  [1600, 'easy', '31.605', '7.901', '18.963', '44.954'],
++  [1600, 'easy', '10.355', '2.588', '6.213', '50.267'],
+ ] as const) {
+   test('renders and answers the ' + difficulty + ' home robbery at ' + width, async ({ page }) => {
+     await page.setViewportSize({ width, height: 900 });
+@@ -26,7 +26,9 @@
+     await page.goto('/');
+     await importLife(page, s);
+     await page.locator('#life-nav-player').click();
+-    await expect(page.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 27.501 Money');
++    await expect(page.getByTestId('purse-risk')).toHaveText(difficulty === 'easy'
++      ? 'Safe amount 45 Money · At risk 5.001 Money'
++      : 'Safe amount 22.5 Money · At risk 27.501 Money');
+     await page.keyboard.press('Escape');
+     const end = page.getByTestId('life-end-week');
+     await keyActivate(page, end);
+@@ -82,6 +84,52 @@
+         nodes.every(node => node.getBoundingClientRect().height >= 44 && node.getBoundingClientRect().right <= innerWidth))).toBe(true);
+     }
+   });
++
++  test('describes all controls blocked by the Money reserve at ' + width, async ({ page }) => {
++    await page.setViewportSize({ width, height: 900 });
++    const s = makeLife(40);
++    s.city.society!.difficulty = difficulty;
++    s.city.tiles.find(tile => tile.id === 'slum-1')!.building =
++      { typeId: 'drug-store', level: 1, workers: 0, enabled: true };
++    s.city.society!.items.materials['green-leaf'] = 2;
++    s.player.purse.moneyMilli = 4999;
++    s.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++    const notice = '4 Money is held until the robbery is answered.';
++    await page.goto('/');
++    await importLife(page, s);
++    const before = await exportLife(page);
++    await page.locator('#life-nav-player').click();
++    await expect(page.getByTestId('purse-held-money')).toHaveText(notice);
++    await page.getByLabel('Donation amount in Money', { exact: true }).fill('1');
++    const donate = button(page, 'Donate');
++    await expect(donate).toBeDisabled();
++    await expect(donate).toHaveAccessibleDescription(notice);
++    await donate.press('Enter');
++    await page.keyboard.press('Escape');
++    await go(page, 'city');
++    await button(page, 'Select spec-1').click();
++    const market = page.getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true });
++    expect(await market.count()).toBeGreaterThan(0);
++    for (const buy of await market.all()) {
++      await expect(buy).toBeDisabled();
++      await expect(buy).toHaveAccessibleDescription(notice);
++    }
++    await market.first().press('Enter');
++    await button(page, 'Select slum-1').click();
++    const potions = page.getByRole('region', { name: 'Potion shop', exact: true }).getByRole('button', { name: /^Buy / });
++    await expect(potions).toHaveCount(3);
++    for (const buy of await potions.all()) {
++      await expect(buy).toBeDisabled();
++      await expect(buy).toHaveAccessibleDescription(notice);
++    }
++    await potions.first().press('Enter');
++    await page.getByRole('tab', { name: 'Brew', exact: true }).click();
++    const brew = page.locator('[data-craft-recipe="brew-heal-potion-1"]').getByRole('button', { name: 'Place Heal Potion I', exact: true });
++    await expect(brew).toBeDisabled();
++    await expect(brew).toHaveAccessibleDescription(notice);
++    await brew.press('Enter');
++    expect(await exportLife(page)).toStrictEqual(before);
++  });
+ }
+ 
+ test('shows crisis first and resumes between the two answers from IndexedDB and JSON', async ({ page }) => {
+--- step0/tests/e2e/purse.spec.ts
++++ correction12/tests/e2e/purse.spec.ts
+@@ -20,7 +20,7 @@
+     await tabTo(page, player);
+     await keyActivate(page, player);
+     const purse = page.getByRole('region', { name: 'Purse', exact: true });
+-    await expect(purse.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 0 Money');
++    await expect(purse.getByTestId('purse-risk')).toHaveText(easy ? 'Safe amount 45 Money · At risk 0 Money' : 'Safe amount 22.5 Money · At risk 0 Money');
+     const levy = purse.getByRole('group', { name: 'Weekly levy', exact: true });
+     const percent = levy.locator('span');
+     const decrease = levy.getByRole('button', { name: 'Decrease weekly levy', exact: true });

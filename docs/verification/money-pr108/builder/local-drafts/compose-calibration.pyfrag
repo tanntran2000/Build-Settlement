@@ -1,0 +1,65 @@
+
+def calibration():
+    update("scripts/money-calibration.ts", "Keep current routes and Gold reconciliation, measure end-of-week exposure and answer hits by a fixed pay policy.",
+        ("crisisStage: string; tension: number; hungry: boolean;",
+         """security: number; safeMoneyMilli: number; robberyExcessMilli: number; robberyChanceBps: number;
+  robberyHit: boolean; robberyLossMilli: number; moneyAfterAnswerMilli: number;
+  crisisStage: string; tension: number; hungry: boolean;"""),
+        ("buildItemWeekContext, crisisOptions, societyPopulation }", "buildItemWeekContext, crisisOptions, societyPopulation, safeAmountMilli, homeRobberyChanceBps }"),
+        ("    const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';",
+         """    const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';
+    const security = report.order!.after.security;
+    const safeMoneyMilli = safeAmountMilli(security);
+    const robberyExcessMilli = Math.max(0, report.purse.moneyAfterMilli - safeMoneyMilli);
+    const robberyHit = report.purse.robbery?.outcome === 'pending';
+    let robberyLossMilli = 0;
+    if (robberyHit) {
+      act('NEXT_WEEK');
+      act('ANSWER_ROBBERY', { option: 'pay' });
+      robberyLossMilli = report.purse.moneyAfterMilli - state.player.purse.moneyMilli;
+    }"""),
+        ("moneyAfterMilli: report.purse.moneyAfterMilli, crisisStage:", """moneyAfterMilli: report.purse.moneyAfterMilli, security, safeMoneyMilli, robberyExcessMilli,
+      robberyChanceBps: fallen ? 0 : homeRobberyChanceBps(robberyExcessMilli), robberyHit,
+      robberyLossMilli, moneyAfterAnswerMilli: state.player.purse.moneyMilli,
+      crisisStage:"""),
+        ("    act('NEXT_WEEK');\n  }", "    if (!robberyHit) act('NEXT_WEEK');\n  }"),
+        ("      first15Money:run.find", """      firstAboveSafe:run.find(row=>row.robberyExcessMilli>0)?.week??null,
+      robberies:run.filter(row=>row.robberyHit).length,
+      robberyLossMilli:run.reduce((sum,row)=>sum+row.robberyLossMilli,0),
+      first15Money:run.find"""),
+        ("JSON.stringify({schemaVersion:2,", "JSON.stringify({schemaVersion:3,"))
+
+def seal():
+    files = []
+    generated = []
+    diff = ''
+    for path, after in sorted({**changes, **new}.items()):
+        f = root / path
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_bytes(after)
+        before = (main / path).read_bytes() if path in changes else b''
+        text = after.decode('utf-8')
+        data = dict(path=path, why=reasons[path], afterSha256=sha256(after).hexdigest(),
+                    afterUtf8=text, afterBase64=b64encode(after).decode(), afterBytes=len(after))
+        if path in changes:
+            data.update(beforeSha256=sha256(before).hexdigest(), beforeBytes=len(before))
+        (files if path in changes else generated).append(data)
+        diff += ''.join(unified_diff(before.decode().splitlines(keepends=True), text.splitlines(keepends=True),
+                                    fromfile='a/'+path if before else '/dev/null', tofile='b/'+path)).replace('\r\n','\n')
+    for name, entries in [('existing-file-replacements', files), ('generated-byte-proposals', generated)]:
+        (draft/(name+'.json')).write_bytes((json.dumps({'base':'0b2b3a6088d003301d48b460202327fb53546ede','files':entries},
+                                                       indent=2, ensure_ascii=False)+'\n').encode())
+    (draft/'change-index.diff').write_bytes(diff.encode())
+
+core()
+simulation()
+exec((draft/'compose-ui.pyfrag').read_text(encoding='utf-8'))
+ui()
+exec((draft/'compose-calibration.pyfrag').read_text(encoding='utf-8').split('\ncore()\n')[0])
+calibration()
+test_file = draft/'compose-tests.pyfrag'
+if test_file.exists():
+    exec(test_file.read_text(encoding='utf-8'))
+    tests()
+seal()
+

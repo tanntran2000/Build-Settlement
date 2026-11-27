@@ -1,0 +1,23 @@
+Base HEAD 57c0cbe7b2862bbc148a528444dcad64e58d35b9
+Base tree 38420881e654cc19299d07f2ee0d63becd116545
+Disposable scratch composition D:\QI Technology\Temp\money-m3-step0-fcb36268
+CI=1 cmd /d /c npm run build
+Start UTC 2026-11-27T11:09:49.474280+00:00
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+src/character/validate.ts(97,84): error TS18046: 'robbery.excessMilli' is of type 'unknown'.
+src/character/validate.ts(97,106): error TS18046: 'purse.moneyMilli' is of type 'unknown'.
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path D:\QI Technology\Temp\money-m3-step0-fcb36268\packages\core
+npm error workspace @haven/core@0.1.0
+npm error location D:\QI Technology\Temp\money-m3-step0-fcb36268\packages\core
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c tsc
+Exit 2 | End UTC 2026-11-27T11:10:01.070958+00:00

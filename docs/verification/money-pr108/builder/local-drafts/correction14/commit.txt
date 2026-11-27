@@ -1,0 +1,8 @@
+Current HEAD and tree:
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+CI=1 git commit -m "fix: robbery card reader limit, at-risk amount and strict tests"
+Start UTC 2026-11-27T11:15:42.700636+00:00
+[feat/money-robbery 772e983] fix: robbery card reader limit, at-risk amount and strict tests
+ 8 files changed, 126 insertions(+), 5 deletions(-)
+Exit 0 | end UTC 2026-11-27T11:15:42.943168+00:00

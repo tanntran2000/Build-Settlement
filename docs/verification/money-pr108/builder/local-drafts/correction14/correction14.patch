@@ -1,0 +1,232 @@
+diff --git a/packages/core/src/character/__tests__/purse-shape.test.ts b/packages/core/src/character/__tests__/purse-shape.test.ts
+index 58b939f..da1c51f 100644
+--- a/packages/core/src/character/__tests__/purse-shape.test.ts
++++ b/packages/core/src/character/__tests__/purse-shape.test.ts
+@@ -22,3 +22,12 @@ it.each([['moneyMilli', -1], ['levyPercent', 21], ['donatedThisWeekMilli', 1.5]]
+     expect(isCharacterLifeSessionState(state)).toBe(false);
+   },
+ );
++
++it('accepts a fully backed robbery card and refuses one milli more than Money', () => {
++  const state = create();
++  state.player.purse.moneyMilli = 4000;
++  state.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++  expect(isCharacterLifeSessionState(state)).toBe(true);
++  state.player.purse.robbery.excessMilli = 4001;
++  expect(isCharacterLifeSessionState(state)).toBe(false);
++});
+diff --git a/packages/core/src/character/validate.ts b/packages/core/src/character/validate.ts
+index 645b597..b3d6bd2 100644
+--- a/packages/core/src/character/validate.ts
++++ b/packages/core/src/character/validate.ts
+@@ -94,7 +94,8 @@ export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
+     const robbery = purse.robbery;
+     return robbery === null || (keysOf(robbery, ['id', 'week', 'excessMilli']) &&
+       typeof robbery.id === 'string' && robbery.id !== '' && robbery.id.trim() === robbery.id &&
+-      int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange));
++      int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange) &&
++      (robbery.excessMilli as number) <= (purse.moneyMilli as number));
+   } catch { return false; }
+ }
+ 
+diff --git a/packages/simulation/src/__tests__/home-robbery.test.ts b/packages/simulation/src/__tests__/home-robbery.test.ts
+index c266755..ab49849 100644
+--- a/packages/simulation/src/__tests__/home-robbery.test.ts
++++ b/packages/simulation/src/__tests__/home-robbery.test.ts
+@@ -141,6 +141,23 @@ it('checks Money after levy and donations and then resets the donation tally', (
+   expect(stocks(result.next)).toStrictEqual(stocks(control.next));
+ });
+ 
++it.each([
++  ['pay', 1000, 3000],
++  ['let-go', 2400, 1600],
++] as const)('answers %s after reloading a card backed by exactly its excess', (option, lossMilli, remainingMilli) => {
++  const s = make();
++  s.player.purse.moneyMilli = 4000;
++  s.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++  const answer = act(reload(s), 'ANSWER_ROBBERY', { option });
++  const next = structuredClone(s);
++  next.city.revision++;
++  next.player.purse.moneyMilli = remainingMilli;
++  next.player.purse.robbery = null;
++  expect(answer).toStrictEqual({
++    success: true, next, robberyResolution: { week: 1, outcome: option, excessMilli: 4000, lossMilli },
++  });
++});
++
+ it('opens both cards, preserves both across checkpoint reload, and resolves crisis first', () => {
+   const s = make();
+   const society = s.city.society!;
+diff --git a/packages/ui/src/PursePanel.svelte b/packages/ui/src/PursePanel.svelte
+index 57b3c8d..881f7fb 100644
+--- a/packages/ui/src/PursePanel.svelte
++++ b/packages/ui/src/PursePanel.svelte
+@@ -11,7 +11,7 @@
+ 
+   let input = '';
+   $: controls = purseControls(purse, input, locked, difficulty);
+-  $: risk = purseRisk(purse.moneyMilli, security, difficulty);
++  $: risk = purseRisk(purse.moneyMilli, security, difficulty, purse.robbery);
+   $: holdNotice = heldMoneyNotice(purse);
+ 
+   function donate(event: SubmitEvent) {
+diff --git a/packages/ui/src/__tests__/home-robbery-view.test.ts b/packages/ui/src/__tests__/home-robbery-view.test.ts
+index 07ba7b1..c3cb2aa 100644
+--- a/packages/ui/src/__tests__/home-robbery-view.test.ts
++++ b/packages/ui/src/__tests__/home-robbery-view.test.ts
+@@ -33,6 +33,12 @@ it('describes the held amount and keeps the same losses after a debit or credit'
+     .toStrictEqual(homeRobberyOptions(held, 30, false));
+ });
+ 
++it('shows the card excess as At risk after a donation changes Money minus safe', () => {
++  expect(purseRisk(30338, 25, 'normal')).toStrictEqual({ safeMilli: 21250, atRiskMilli: 9088 });
++  expect(purseRisk(30338, 25, 'normal', { id: 'home-robbery-w1', week: 1, excessMilli: 30088 }))
++    .toStrictEqual({ safeMilli: 21250, atRiskMilli: 30088 });
++});
++
+ it.each(['normal', 'easy'] as const)('renders the %s Robbery row independently from the levy rate', difficulty => {
+   const purse = { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0,
+     donationGoldMilli: 0, moneyAfterMilli: 26501 };
+diff --git a/packages/ui/src/purse-view.ts b/packages/ui/src/purse-view.ts
+index 6dd2de8..0a73897 100644
+--- a/packages/ui/src/purse-view.ts
++++ b/packages/ui/src/purse-view.ts
+@@ -31,9 +31,10 @@ export function heldMoneyNotice(purse: PlayerCharacter['purse']): string {
+   return held > 0 ? formatMilli(held) + ' Money is held until the robbery is answered.' : '';
+ }
+ 
+-export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId) {
++export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId,
++  robbery: PlayerCharacter['purse']['robbery'] = null) {
+   const safeMilli = safeAmountMilli(security, difficulty);
+-  return { safeMilli, atRiskMilli: Math.max(0, moneyMilli - safeMilli) };
++  return { safeMilli, atRiskMilli: robbery?.excessMilli ?? Math.max(0, moneyMilli - safeMilli) };
+ }
+ 
+ export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {
+diff --git a/tests/e2e/character-life-navigation.helpers.ts b/tests/e2e/character-life-navigation.helpers.ts
+index 28d6eba..5b047d6 100644
+--- a/tests/e2e/character-life-navigation.helpers.ts
++++ b/tests/e2e/character-life-navigation.helpers.ts
+@@ -165,6 +165,8 @@ export async function exportLife(page: Page): Promise<CharacterLifeSessionState>
+   const state = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
+   expect(isCharacterLifeSessionState(state)).toBe(true);
+   expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
++  await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled',
++    state.city.society?.pendingCard || state.player.purse.robbery ? 'true' : 'false');
+   return state;
+ }
+ 
+diff --git a/tests/e2e/home-robbery.spec.ts b/tests/e2e/home-robbery.spec.ts
+index 333511f..88aa184 100644
+--- a/tests/e2e/home-robbery.spec.ts
++++ b/tests/e2e/home-robbery.spec.ts
+@@ -1,7 +1,9 @@
+ import { expect, test, type Page } from '@playwright/test';
+ import { CRISIS_TRIAL, type CharacterLifeSessionState } from '@haven/core';
++import { serializeCharacterLifeSave } from '@haven/persistence';
+ import { executeCharacterLifeCommand } from '@haven/simulation';
+ import { expectReport, exportLife, go, importLife, keyActivate, makeLife, tabTo } from './character-life-navigation.helpers.ts';
++import { readStoredRecords, storedSaveText } from './storage.helpers.ts';
+ 
+ function close(s: CharacterLifeSessionState) {
+   const r = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedWeek: 1, expectedRevision: s.city.revision });
+@@ -109,7 +111,7 @@ for (const [width, difficulty, excess, ransom, loss, rest] of [
+     await go(page, 'city');
+     await button(page, 'Select spec-1').click();
+     const market = page.getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true });
+-    expect(await market.count()).toBeGreaterThan(0);
++    await expect(market).toHaveCount(s.city.society!.items.market.length);
+     for (const buy of await market.all()) {
+       await expect(buy).toBeDisabled();
+       await expect(buy).toHaveAccessibleDescription(notice);
+@@ -132,6 +134,89 @@ for (const [width, difficulty, excess, ransom, loss, rest] of [
+   });
+ }
+ 
++test('rejects a robbery card one milli above Money and preserves the session and local checkpoint', async ({ page }) => {
++  const s = makeLife(40);
++  s.player.purse.moneyMilli = 4000;
++  await page.goto('/');
++  await importLife(page, s);
++  const before = await exportLife(page);
++  await button(page, 'Save locally').click();
++  const saved = serializeCharacterLifeSave(before);
++  if (!saved.success) throw Error(saved.error.message);
++  await expect.poll(() => storedSaveText(page)).toBe(saved.text);
++  const records = await readStoredRecords(page);
++  const rejected = JSON.parse(saved.text);
++  rejected.state.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4001 };
++  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({
++    name: 'unbacked-robbery.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(rejected)),
++  });
++  await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]'))
++    .toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
++  expect(await exportLife(page)).toStrictEqual(before);
++  expect(await readStoredRecords(page)).toStrictEqual(records);
++  expect(await storedSaveText(page)).toBe(saved.text);
++});
++
++test('shows the exact card exposure and option losses after a permitted donation', async ({ page }) => {
++  const s = makeLife(40);
++  s.player.purse.moneyMilli = 50001;
++  s.player.purse.levyPercent = 5;
++  await page.goto('/');
++  await importLife(page, s);
++  await keyActivate(page, page.getByTestId('life-end-week'));
++  await expect(row(page)).toHaveText('Awaiting answer · 30.088 Money at risk');
++  await keyActivate(page, button(page, 'Plan next week'));
++  await page.locator('#life-nav-player').click();
++  await page.getByLabel('Donation amount in Money', { exact: true }).fill('21');
++  const donate = button(page, 'Donate');
++  await expect(donate).toBeEnabled();
++  await donate.click();
++  await expect(page.getByRole('region', { name: 'Purse', exact: true }).getByText('Money 30.338', { exact: true })).toBeVisible();
++  await expect(page.getByTestId('purse-risk')).toHaveText('Safe amount 21.25 Money · At risk 30.088 Money');
++  await go(page, 'reports');
++  await expect(card(page).locator('#home-robbery-pay-amount')).toHaveText('Lose 7.522 Money.');
++  await expect(card(page).locator('#home-robbery-let-go-amount')).toHaveText('Lose 18.052 Money.');
++});
++
++test('blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold', async ({ page }) => {
++  const s = makeLife(40);
++  s.player.purse.moneyMilli = 8999;
++  s.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
++  const offers = s.city.society!.items.market;
++  const offerIndex = offers.findIndex(offer => offer.priceMilli === 5000);
++  expect(offers[offerIndex].priceMilli).toBe(5000);
++  const openMarket = async () => {
++    await go(page, 'city');
++    await button(page, 'Select spec-1').click();
++    const market = page.getByRole('group', { name: 'Weekly offers', exact: true });
++    const buys = market.getByRole('button', { name: 'Buy', exact: true });
++    await expect(buys).toHaveCount(offers.length);
++    await expect(market.getByRole('article').nth(offerIndex).getByText('5 Money', { exact: true })).toBeVisible();
++    return buys.nth(offerIndex);
++  };
++  await page.goto('/');
++  await importLife(page, s);
++  const before = await exportLife(page);
++  const blocked = await openMarket();
++  await expect(blocked).toBeDisabled();
++  await expect(blocked).toHaveAccessibleDescription('4 Money is held until the robbery is answered.');
++  await blocked.press('Enter');
++  expect(await exportLife(page)).toStrictEqual(before);
++
++  const cleared = structuredClone(s);
++  cleared.player.purse.robbery = null;
++  await importLife(page, cleared);
++  const ready = await exportLife(page);
++  expect(ready.player.purse).toStrictEqual({ ...before.player.purse, robbery: null });
++  expect(ready.city.society!.items).toStrictEqual(before.city.society!.items);
++  const enabled = await openMarket();
++  await expect(enabled).toBeEnabled();
++  await enabled.click();
++  const bought = await exportLife(page);
++  expect(bought.player.purse.moneyMilli).toBe(3999);
++  expect(bought.city.society!.items.market).toStrictEqual(offers.filter((_, i) => i !== offerIndex));
++});
++
+ test('shows crisis first and resumes between the two answers from IndexedDB and JSON', async ({ page }) => {
+   const s = makeLife(40);
+   const society = s.city.society!;

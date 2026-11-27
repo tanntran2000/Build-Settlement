@@ -1,0 +1,181 @@
+
+def ui():
+    update(U+"purse-view.ts", "Expose exact safe/exposed amounts and the option costs using the dispatcher’s math.",
+        ("PURSE_TRIAL, type DifficultyId, type PlayerCharacter", "PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type PlayerCharacter"))
+    changes[U+"purse-view.ts"] += ("""
+export function purseRisk(moneyMilli: number, security: number) {
+  const safeMilli = safeAmountMilli(security);
+  return { safeMilli, atRiskMilli: Math.max(0, moneyMilli - safeMilli) };
+}
+
+export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {
+  const excess = purse.robbery?.excessMilli ?? 0;
+  const pay = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'pay');
+  const loss = homeRobberyLossMilli(excess, purse.moneyMilli, security, 'let-go');
+  const reportReason = locked ? 'Choose Plan next week to answer.' : '';
+  const chaseReason = reportReason || (security < PURSE_TRIAL.robberyChaseSecurityMin
+    ? 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.' : '');
+  return [
+    { option: 'pay', label: 'Pay', lossMilli: pay, reason: reportReason },
+    { option: 'chase', label: 'Chase', lossMilli: loss, reason: chaseReason },
+    { option: 'let-go', label: 'Let go', lossMilli: loss, reason: reportReason },
+  ] satisfies { option: HomeRobberyOption; label: string; lossMilli: number; reason: string }[];
+}
+""".replace("\n", "\r\n" if b"\r\n" in changes[U+"purse-view.ts"] else "\n")).encode()
+    # The prefix is the common portion of the two controls function calls.
+    update(U+"PursePanel.svelte", "Replace the M2 placeholders with shared Money formatting.",
+        ("import { purseControls }", "import { purseControls, purseRisk }"),
+        ("  export let locked: boolean;", "  export let locked: boolean;\n  export let security: number;"),
+        ("  $: controls = purseControls(purse, input, locked, difficulty);",
+         "  $: controls = purseControls(purse, input, locked, difficulty);\n  $: risk = purseRisk(purse.moneyMilli, security);"),
+        ("  <p>Safe amount — · At risk —</p>",
+         '  <p data-testid="purse-risk">Safe amount {formatMilli(risk.safeMilli)} Money · At risk {formatMilli(risk.atRiskMilli)} Money</p>'))
+    generate(U+"HomeRobberyCard.svelte", "Render an urgent letter using native buttons, focusable disabled reasons, and the dispatcher preview.", """
+<script lang="ts">
+  import type { HomeRobberyOption, PlayerCharacter } from '@haven/core';
+  import { formatMilli } from './milli-format.js';
+  import { homeRobberyOptions } from './purse-view.js';
+
+  export let purse: PlayerCharacter['purse'];
+  export let security: number;
+  export let locked: boolean;
+  export let onanswer: (option: HomeRobberyOption) => void;
+
+  $: options = homeRobberyOptions(purse, security, locked);
+</script>
+
+<section class="card urgent-letter" data-testid="home-robbery-card" aria-labelledby="home-robbery-title">
+  <p aria-hidden="true">Urgent letter</p>
+  <p class="ledger-seal urgent-seal">Answer before End Week</p>
+  <div class="image-slot" aria-hidden="true"></div>
+  <h3 id="home-robbery-title" tabindex="-1">Robbers at the Mansion</h3>
+  {#each options as option (option.option)}
+    <div>
+      <button type="button" class="ledger-plaque" data-robbery-option={option.option}
+        aria-disabled={!!option.reason}
+        aria-describedby={'home-robbery-' + option.option + '-amount' + (option.reason ? ' home-robbery-' + option.option + '-reason' : '')}
+        onclick={() => { if (!option.reason) onanswer(option.option); }}>{option.label}</button>
+      <p id={'home-robbery-' + option.option + '-amount'}>
+        {option.option === 'chase' ? 'Success: lose 0 Money. Failure: lose ' : 'Lose '}{formatMilli(option.lossMilli)} Money.
+      </p>
+      {#if option.reason}<p id={'home-robbery-' + option.option + '-reason'}>{option.reason}</p>{/if}
+    </div>
+  {/each}
+</section>
+
+<style>
+  .urgent-letter {
+    background: var(--wood-dark);
+    color: var(--wax-text);
+    --text-main: var(--wax-text);
+    --text-muted: var(--wax-text);
+    border: calc(2 * var(--px)) solid var(--wax);
+    padding: 16px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .urgent-seal { display: inline-block; padding: 8px; }
+  .image-slot { min-height: 120px; }
+  button { font: inherit; min-height: 44px; max-width: 100%; padding: 10px; }
+  p { margin: 8px 0; }
+  section > div { margin-bottom: 12px; }
+</style>
+""")
+    update(U+"CharacterLifeShell.svelte", "Share crisis-first mounting between Report and Information, and lock the top-bar button.",
+        ("type TileTrialReport }", "type TileTrialReport, type HomeRobberyOption }"),
+        ("  import CrisisCard from './CrisisCard.svelte';", "  import CrisisCard from './CrisisCard.svelte';\n  import HomeRobberyCard from './HomeRobberyCard.svelte';"),
+        ("  export let onendweek:", "  export let onanswerrobbery: (option: HomeRobberyOption) => void;\n  export let onendweek:"),
+        ("  $: locked = state.phase === 'report';", """  $: locked = state.phase === 'report';
+  $: robbery = storageSession.player.purse.robbery;
+  $: endWeekReason = state.society?.pendingCard ? 'Answer the crisis first.' : robbery ? 'Answer the robbery first.' : '';
+
+  async function chooseCrisis(cardId: string, option: import('@haven/core').CardOption) {
+    onchoose(cardId, option);
+    if (robbery) {
+      await tick();
+      if (!state.society?.pendingCard) document.getElementById('home-robbery-title')?.focus();
+    }
+  }"""),
+        ("<main class=", """{#snippet urgentLetter()}
+  <CrisisCard {state} onchoose={chooseCrisis} />
+  {#if !state.society?.pendingCard && robbery}
+    <HomeRobberyCard purse={storageSession.player.purse} security={state.society!.order.security} {locked} onanswer={onanswerrobbery} />
+  {/if}
+{/snippet}
+
+<main class="""),
+        ("disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard}", "disabled={!!endWeekReason} aria-disabled={locked || !!endWeekReason}"),
+        ("{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}", "{endWeekReason || (locked ? 'Report open — Plan next week in Report' : 'End Week')}"),
+        ("{#if destination === 'reports' && activeWindow !== 'information'}<CrisisCard {state} {onchoose} />{/if}", "{#if destination === 'reports' && activeWindow !== 'information'}{@render urgentLetter()}{/if}"),
+        ("{#if activeWindow === 'information'}<CrisisCard {state} {onchoose} />{/if}", "{#if activeWindow === 'information'}{@render urgentLetter()}{/if}"),
+        ("difficulty={state.society!.difficulty} {locked} oncommand={onpurse}", "difficulty={state.society!.difficulty} security={state.society!.order.security} {locked} oncommand={onpurse}"))
+    update(U+"report-letters.ts", "Render an optional, independently parseable Robbery report row.",
+        ("import { itemReportRows } from './items-view.js';\n\nexport function purseReportRows", """import { itemReportRows } from './items-view.js';
+import type { HomeRobberyReport } from '@haven/core';
+
+const robberyOutcomeText = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' } as const;
+export function homeRobberyReportText(robbery: Readonly<HomeRobberyReport>): string {
+  if (robbery.outcome === 'pending') return 'Awaiting answer · ' + formatMilli(robbery.excessMilli) + ' Money at risk';
+  return robberyOutcomeText[robbery.outcome] + ' · ' + signedMilli(-robbery.lossMilli) + ' Money · ' +
+    formatMilli(robbery.excessMilli) + ' Money at risk';
+}
+
+export function purseReportRows"""),
+        ("    { label: 'Money after', value: formatMilli(moneyAfterMilli) + ' Money' },",
+         """    { label: 'Money after', value: formatMilli(moneyAfterMilli) + ' Money' },
+    ...(purse.robbery ? [{ label: 'Robbery', value: homeRobberyReportText(purse.robbery) }] : []),"""))
+    update(U+"TileManagement.svelte", "Guard the actual handler, handle chase refusals, and retain the resolution on the matching report or announce it after load.",
+        ("  import SoloWeekReport from './SoloWeekReport.svelte';", "  import SoloWeekReport from './SoloWeekReport.svelte';\n  import { homeRobberyReportText } from './report-letters.js';"),
+        ("'NOTICE_MISSING', 'NOTICE_CHOICE'];", "'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];"),
+        ("    ({ city: state, outside, npcs, player, profiles } = result.next);", """    if (result.robberyResolution) {
+      const { week, ...robbery } = result.robberyResolution;
+      if (report?.purse?.robbery?.outcome === 'pending' && report.week === week) {
+        report = Object.freeze({ ...report, purse: Object.freeze({ ...report.purse, robbery: Object.freeze(robbery) }) });
+      }
+      lifeStatus = 'Robbery · ' + homeRobberyReportText(robbery);
+    }
+    ({ city: state, outside, npcs, player, profiles } = result.next);"""),
+        ("    if (state.phase !== 'planning' || state.society?.pendingCard) return;", "    if (state.phase !== 'planning' || state.society?.pendingCard || player?.purse.robbery) return;"),
+        (" onendweek={endLifeWeek} onmainmenu=", " onanswerrobbery={option => { if (command('ANSWER_ROBBERY', { option })) void focusLifeReport(); }} onendweek={endLifeWeek} onmainmenu="),
+        ("  async function focusLifeCityNavigation(): Promise<void> {", """  async function focusLifeReport(): Promise<void> {
+    await tick();
+    const id = activeWindow === 'information' ? 'life-window-heading' : 'life-reports-heading';
+    document.getElementById(id)?.focus();
+  }
+  async function focusLifeCityNavigation(): Promise<void> {"""))
+    update(E+"purse.spec.ts", "Pin the exact opening Security 30 preview at both desktop widths.",
+        ("purse.getByText('Safe amount — · At risk —', { exact: true })).toBeVisible()",
+         "purse.getByTestId('purse-risk')).toHaveText('Safe amount 22.5 Money · At risk 0 Money')"))
+    update(E+"character-life-navigation.helpers.ts", "Check export phase through the export control and independently read exact optional Robbery row text.",
+        ("""  expect(await page.getByTestId('life-end-week').getAttribute('aria-disabled')).toBe('false');
+  await go(page, 'session');
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();""",
+         """  await go(page, 'session');
+  const button = page.getByRole('button', { name: 'Export checkpoint', exact: true });
+  await expect(button).toBeEnabled();
+  const pending = page.waitForEvent('download');
+  await button.click();"""),
+        ("""    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after']);""",
+         """    const robbery = expected.purse.robbery;
+    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after', ...(robbery ? ['Robbery'] : [])]);"""),
+        ("    const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;", """    if (robbery) {
+      const atRisk = u(robbery.excessMilli) + ' Money at risk';
+      const labels = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' };
+      const row = purse.locator('dt:text-is("Robbery") + dd');
+      const loss = robbery.outcome === 'pending' ? '' : robbery.lossMilli ? '−' + u(robbery.lossMilli) : '0';
+      await expect(row).toHaveText(robbery.outcome === 'pending'
+        ? 'Awaiting answer · ' + atRisk : labels[robbery.outcome] + ' · ' + loss + ' Money · ' + atRisk);
+      const parsed = (await row.textContent())!.split(' · ');
+      const excessMilli = milli(parsed.at(-1)!.replace(' Money at risk', ''));
+      if (parsed[0] === 'Awaiting answer') actual.purse.robbery = { outcome: 'pending', excessMilli };
+      else {
+        const entry = Object.entries(labels).find(([, label]) => label === parsed[0]);
+        if (!entry) throw Error('Invalid Robbery report outcome.');
+        actual.purse.robbery = { outcome: entry[0] as keyof typeof labels, excessMilli,
+          lossMilli: milli(parsed[1].replace(/^−/, '').replace(' Money', '')) };
+      }
+      expect(actual.purse.robbery).toStrictEqual(robbery);
+    }
+    const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;"""))
+

@@ -1,0 +1,11 @@
+Current HEAD and tree:
+8e329508f0cf86c6d9ba68d7c30fdc30e757b779
+10ee8f58e85136d5943495c4bf6a1b5f10cd1bd0
+CI=1 git commit -m "feat(ui): home robbery card"
+Start UTC 2026-11-27T06:49:24.789277+00:00
+[feat/money-robbery 57c0cbe] feat(ui): home robbery card
+ 19 files changed, 440 insertions(+), 42 deletions(-)
+ create mode 100644 packages/ui/src/HomeRobberyCard.svelte
+ create mode 100644 packages/ui/src/__tests__/home-robbery-view.test.ts
+ create mode 100644 tests/e2e/home-robbery.spec.ts
+Exit 0 | end UTC 2026-11-27T06:49:24.985711+00:00

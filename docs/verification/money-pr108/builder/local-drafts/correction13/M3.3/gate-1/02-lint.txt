@@ -1,0 +1,10 @@
+HEAD 57c0cbe7b2862bbc148a528444dcad64e58d35b9
+Tree 38420881e654cc19299d07f2ee0d63becd116545
+Base 0b2b3a6088d003301d48b460202327fb53546ede
+CI=1 npm run lint
+Start UTC 2026-11-27T06:49:53.293289+00:00
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+Exit 0 | End UTC 2026-11-27T06:50:11.349037+00:00

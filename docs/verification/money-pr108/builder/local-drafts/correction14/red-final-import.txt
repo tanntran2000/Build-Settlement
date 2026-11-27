@@ -1,0 +1,53 @@
+Current HEAD and tree:
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/home-robbery.spec.ts --grep "rejects a robbery card"
+Start UTC 2026-11-27T11:12:42.805105+00:00
+[WebServer] (node:12328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:36296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\home-robbery.spec.ts:137:1 › rejects a robbery card one milli above Money and preserves the session and local checkpoint (6.7s)
+
+
+  1) [chromium] › tests\e2e\home-robbery.spec.ts:137:1 › rejects a robbery card one milli above Money and preserves the session and local checkpoint 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('life-shell').locator('[data-life-error][role="alert"]')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByTestId('life-shell').locator('[data-life-error][role="alert"]') with timeout 5000ms
+      - waiting for getByTestId('life-shell').locator('[data-life-error][role="alert"]')
+
+
+      152 |   });
+      153 |   await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]'))
+    > 154 |     .toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+          |      ^
+      155 |   expect(await exportLife(page)).toStrictEqual(before);
+      156 |   expect(await readStoredRecords(page)).toStrictEqual(records);
+      157 |   expect(await storedSaveText(page)).toBe(saved.text);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\home-robbery.spec.ts:154:6
+
+    Error Context: test-results\home-robbery-rejects-a-rob-86072-ession-and-local-checkpoint-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-rejects-a-rob-86072-ession-and-local-checkpoint-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-rejects-a-rob-86072-ession-and-local-checkpoint-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\home-robbery.spec.ts:137:1 › rejects a robbery card one milli above Money and preserves the session and local checkpoint 
+Exit 1 | end UTC 2026-11-27T11:12:59.242782+00:00

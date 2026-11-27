@@ -1,0 +1,59 @@
+{
+  "portsInUse": [],
+  "topProcesses": [
+    {
+      "Name": "powershell",
+      "CPUSeconds": 1.531
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.422
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.344
+    },
+    {
+      "Name": "Zalo",
+      "CPUSeconds": 0.328
+    },
+    {
+      "Name": "codex",
+      "CPUSeconds": 0.109
+    },
+    {
+      "Name": "audiodg",
+      "CPUSeconds": 0.094
+    },
+    {
+      "Name": "cloudflared",
+      "CPUSeconds": 0.078
+    },
+    {
+      "Name": "codebase-memory-mcp",
+      "CPUSeconds": 0.062
+    },
+    {
+      "Name": "Zalo",
+      "CPUSeconds": 0.062
+    },
+    {
+      "Name": "browser",
+      "CPUSeconds": 0.047
+    }
+  ],
+  "cpu": {
+    "utc": "2026-11-27T06:49:53.132172+00:00",
+    "twoSecondCpuPercent": [
+      18.51,
+      38.18,
+      64.79
+    ],
+    "meanCpuPercent": 40.49
+  },
+  "logicalCpus": 8,
+  "systemRequired": true,
+  "node": "v24.19.0",
+  "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+  "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+}

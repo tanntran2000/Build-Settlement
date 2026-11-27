@@ -1,0 +1,50 @@
+Base HEAD 0b2b3a6088d003301d48b460202327fb53546ede tree 75ec12d1a9c537f5e9788ac0ec52d3ff68db620c
+D:\QI Technology\Temp\money-m3-step0-fcb36268
+npm test | started 2026-11-27T04:56:25.677158+00:00
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 D:/QI Technology/Temp/money-m3-step0-fcb36268
+
+ ❯ packages/core/src/world/__tests__/npc.test.ts (41 tests | 1 failed) 8695ms
+     × resolves three distinct English full names from the seeded fixture keys 6533ms
+ ❯ packages/simulation/src/__tests__/law-fixture.test.ts (33 tests | 1 failed) 100675ms
+   × matches preview on life-laws for 'guild-charters' with Free undefined and every remaining lobby combination 5548ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'guild-charters' with Free undefined and every remaining lobby combination
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/law-fixture.test.ts:39:67
+     37| });
+     38| const options=[undefined,'pay','promise','force'];
+     39| it.each(LAW_IDS.flatMap(lawId=>options.map(free=>({lawId,free}))))('ma…
+       |                                                                   ^
+     40|  const decoded=deserializeCharacterLifeSave(readFileSync(url,'utf8'));…
+     41|  const s=decoded.state;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc.test.ts > createNpcWorldSession > resolves three distinct English full names from the seeded fixture keys
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/core/src/world/__tests__/npc.test.ts:46:3
+     44|     expect(again).toEqual(before);
+     45|   });
+     46|   it('resolves three distinct English full names from the seeded fixtu…
+       |   ^
+     47|     const { cultures, originCulture } = NPC_GENERATOR_CATALOG;
+     48|     for (let seed = 0; seed < 200; seed++) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 152 passed (154)
+      Tests  2 failed | 3401 passed (3403)
+   Start at  11:56:27
+   Duration  120.75s (transform 20.41s, setup 0ms, import 94.61s, tests 442.28s, environment 77ms)
+
+exit 1 | ended 2026-11-27T04:58:28.084322+00:00

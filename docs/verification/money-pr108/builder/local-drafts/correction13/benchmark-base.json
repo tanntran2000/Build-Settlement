@@ -1,0 +1,21 @@
+{
+  "command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "--output=D:\\QI Technology\\Temp\\money-m3-baseline-7bwb_9n0\\baseline.tar",
+    "0b2b3a6088d003301d48b460202327fb53546ede",
+    "packages/core/src",
+    "packages/simulation/src",
+    "packages/persistence/src",
+    "packages/content/src"
+  ],
+  "base": "0b2b3a6088d003301d48b460202327fb53546ede",
+  "root": "D:\\QI Technology\\Temp\\money-m3-baseline-7bwb_9n0",
+  "archiveSha256": "b0840342b2aeaa8ff88f4118fe047efd02f857bba59f9766ec9c5d6e5a6f244d",
+  "fixtureSha256": {
+    "normal": "a8a279d72faa0ea90f88664a70b3f62dfe957ff8c112bd6cde60a38b759d91ee",
+    "easy": "b9a60499be39b0b3591ed9d8dc8ac551a28b9c8483a9057186b93192120542e2"
+  },
+  "utc": "2026-11-27T06:49:29.867032+00:00"
+}

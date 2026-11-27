@@ -1,0 +1,70 @@
+[
+  {
+    "utc": "2026-11-27T11:15:52.505304+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:15:58.654715+00:00",
+      "twoSecondCpuPercent": [
+        19.04,
+        31.74,
+        35.58
+      ],
+      "meanCpuPercent": 28.79
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:16:02.702728+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:16:08.843801+00:00",
+      "twoSecondCpuPercent": [
+        18.75,
+        16.11,
+        18.07
+      ],
+      "meanCpuPercent": 17.64
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:16:12.885680+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:16:19.009492+00:00",
+      "twoSecondCpuPercent": [
+        19.32,
+        11.71,
+        6.35
+      ],
+      "meanCpuPercent": 12.46
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:16:23.045820+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:16:29.148092+00:00",
+      "twoSecondCpuPercent": [
+        9.56,
+        7.15,
+        7.14
+      ],
+      "meanCpuPercent": 7.95
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  }
+]

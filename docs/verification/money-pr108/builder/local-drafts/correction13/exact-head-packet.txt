@@ -1,0 +1,9 @@
+Current HEAD and tree:
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+CI=1 python C:/Users/Admin/.t3/local-drafts/money-prM3/correction13/verify-packet.py head
+Start UTC 2026-11-27T06:49:25.198122+00:00
+Verified all 35 paths against the packet plus the single approved assertion.
+57c0cbe7b2862bbc148a528444dcad64e58d35b9
+38420881e654cc19299d07f2ee0d63becd116545
+Exit 0 | end UTC 2026-11-27T06:49:28.844925+00:00

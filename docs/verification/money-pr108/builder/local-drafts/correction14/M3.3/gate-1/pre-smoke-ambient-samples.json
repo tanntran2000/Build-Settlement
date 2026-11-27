@@ -1,0 +1,87 @@
+[
+  {
+    "utc": "2026-11-27T11:23:13.082025+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:23:19.515855+00:00",
+      "twoSecondCpuPercent": [
+        94.73,
+        100.0,
+        99.8
+      ],
+      "meanCpuPercent": 98.18
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:23:23.619358+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:23:29.737081+00:00",
+      "twoSecondCpuPercent": [
+        17.29,
+        14.84,
+        11.04
+      ],
+      "meanCpuPercent": 14.39
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:23:33.775364+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:23:40.715158+00:00",
+      "twoSecondCpuPercent": [
+        86.43,
+        87.99,
+        88.66
+      ],
+      "meanCpuPercent": 87.69
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:23:44.851681+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:23:51.014294+00:00",
+      "twoSecondCpuPercent": [
+        46.97,
+        22.95,
+        30.86
+      ],
+      "meanCpuPercent": 33.59
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  },
+  {
+    "utc": "2026-11-27T11:23:55.050346+00:00",
+    "cpu": {
+      "utc": "2026-11-27T11:24:01.159505+00:00",
+      "twoSecondCpuPercent": [
+        6.84,
+        6.84,
+        12.99
+      ],
+      "meanCpuPercent": 8.89
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "772e98305c0efbe4fe107ca2c5245d7529c47559",
+    "testedTree": "0ac0120539e03a9a1ed2e1ab05ce7dbc63428095"
+  }
+]

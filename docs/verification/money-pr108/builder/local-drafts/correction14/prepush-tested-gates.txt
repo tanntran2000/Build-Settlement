@@ -1,0 +1,7 @@
+Current HEAD and tree:
+772e98305c0efbe4fe107ca2c5245d7529c47559
+0ac0120539e03a9a1ed2e1ab05ce7dbc63428095
+CI=1 python C:\Users\Admin\.t3\local-drafts\money-prM3\correction14\seal-evidence.py check gate-2 gate-2
+Start UTC 2026-11-27T12:58:19.495854+00:00
+Verified 772e98305c0efbe4fe107ca2c5245d7529c47559: gates 1?7, 3419 unit, 154 architecture, 430 smoke, 180730 gzip bytes.
+Exit 0 | end UTC 2026-11-27T12:58:20.290907+00:00

@@ -1,0 +1,238 @@
+[
+  {
+    "portsInUse": [],
+    "topProcesses": [
+      {
+        "Name": "WINWORD",
+        "CPUSeconds": 5.5
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 3.484
+      },
+      {
+        "Name": "powershell",
+        "CPUSeconds": 3.328
+      },
+      {
+        "Name": "node",
+        "CPUSeconds": 2.438
+      },
+      {
+        "Name": "claude",
+        "CPUSeconds": 1.141
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.938
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.922
+      },
+      {
+        "Name": "T3 Code (Nightly)",
+        "CPUSeconds": 0.406
+      },
+      {
+        "Name": "T3 Code (Nightly)",
+        "CPUSeconds": 0.391
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.203
+      }
+    ],
+    "cpu": {
+      "utc": "2026-11-27T07:40:49.794382+00:00",
+      "twoSecondCpuPercent": [
+        27.73,
+        18.51,
+        22.41
+      ],
+      "meanCpuPercent": 22.88
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+    "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+  },
+  {
+    "portsInUse": [],
+    "topProcesses": [
+      {
+        "Name": "powershell",
+        "CPUSeconds": 1.516
+      },
+      {
+        "Name": "WINWORD",
+        "CPUSeconds": 0.766
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.312
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.312
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.125
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.109
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.094
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.094
+      },
+      {
+        "Name": "claude",
+        "CPUSeconds": 0.031
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.016
+      }
+    ],
+    "cpu": {
+      "utc": "2026-11-27T07:41:05.177022+00:00",
+      "twoSecondCpuPercent": [
+        29.0,
+        51.86,
+        4.49
+      ],
+      "meanCpuPercent": 28.45
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+    "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+  },
+  {
+    "portsInUse": [],
+    "topProcesses": [
+      {
+        "Name": "powershell",
+        "CPUSeconds": 1.438
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.297
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.297
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.188
+      },
+      {
+        "Name": "claude",
+        "CPUSeconds": 0.125
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.062
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.062
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.062
+      },
+      {
+        "Name": "taskhostw",
+        "CPUSeconds": 0.031
+      },
+      {
+        "Name": "cloudflared",
+        "CPUSeconds": 0.031
+      }
+    ],
+    "cpu": {
+      "utc": "2026-11-27T07:41:20.416814+00:00",
+      "twoSecondCpuPercent": [
+        4.3,
+        4.38,
+        42.26
+      ],
+      "meanCpuPercent": 16.98
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+    "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+  },
+  {
+    "portsInUse": [],
+    "topProcesses": [
+      {
+        "Name": "powershell",
+        "CPUSeconds": 1.625
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.312
+      },
+      {
+        "Name": "browser",
+        "CPUSeconds": 0.281
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.078
+      },
+      {
+        "Name": "Zalo",
+        "CPUSeconds": 0.062
+      },
+      {
+        "Name": "Zalo",
+        "CPUSeconds": 0.062
+      },
+      {
+        "Name": "claude",
+        "CPUSeconds": 0.047
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.031
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.031
+      },
+      {
+        "Name": "codebase-memory-mcp",
+        "CPUSeconds": 0.031
+      }
+    ],
+    "cpu": {
+      "utc": "2026-11-27T07:41:35.878647+00:00",
+      "twoSecondCpuPercent": [
+        7.04,
+        4.1,
+        13.48
+      ],
+      "meanCpuPercent": 8.21
+    },
+    "logicalCpus": 8,
+    "systemRequired": true,
+    "node": "v24.19.0",
+    "testedHead": "57c0cbe7b2862bbc148a528444dcad64e58d35b9",
+    "testedTree": "38420881e654cc19299d07f2ee0d63becd116545"
+  }
+]
