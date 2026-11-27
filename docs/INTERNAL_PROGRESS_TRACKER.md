@@ -1,5 +1,30 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## Money M2 (Player Money purse, weekly levy, donations) — PR #107 G6 (2026-11-27 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** Money PR M2 of 3 is merged. Next in queue: M3 (home robbery), only when the owner starts it.
+
+- **Merge.** PR #107 (`Money M2: Player Money purse, weekly levy and donations`) was merged under G5 at 2026-11-27T03:51:54Z (GitHub account `tanntran2000`; the owner reported "Dot đã merge và xanh, bạn kiểm tra G6").
+  - Merge/main commit: `0b2b3a6088d003301d48b460202327fb53546ede` (parents `f1fac94`, `f97b5be`).
+  - Accepted head: `f97b5be31afbc3de02190a38c6c4075eb56d6194`. Base: `f1fac94` (Money M1 #106 merged).
+- **Trees.** The merge tree `75ec12d1a9c537f5e9788ac0ec52d3ff68db620c` is identical to the accepted head tree `75ec12d1a9c537f5e9788ac0ec52d3ff68db620c`. Claude checked this locally.
+- **Main CI.** Quality Gate run [45936615604](https://github.com/tanntran2000/Build-Settlement/actions/runs/45936615604), job 140301178644 (push, exact merge SHA), SUCCESS at 2026-11-27T04:13:47Z: 3,383 unit tests (151 files) and 422/422 Chromium smoke (20.0 min); the dependency audit reported 0 vulnerabilities.
+- **Pre-merge, at `f97b5be`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,383 unit), full smoke 422/422 with `CI=1` on the first run (2026-11-27T02:27Z–03:10Z).
+  - PR CI: quality-gate run 45932745215 SUCCESS (422 smoke, 15.8 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:d0ae99b3`: round 1 at `546c48b` FAIL (3 P1 loose matchers/freeze copy/placement Gold, 6 P2 incl. panel cost ignoring donations, 1 P3 `levyMoneyBps` 0 divisor) → correction 10; round 2 at `fa66b59` FAIL (1 P1 lost fractional Easy report check) → correction 11; round 3 at `f97b5be` PASS (0 findings).
+  - Builder (Sol 6.2 xhigh, `mcp:4cd8ccd3`): Step 0 HOLD → correction 8; retune HOLD → correction 9 (levy penalty 1.2 points per % above 2 %); calibration round 3 met 13/13 targets (Good Normal 10 % below Happiness 30 at W16; 5 % minimum 79; 15 Money at 5 % W12 Normal, W6 Easy).
+- **Evidence.** [`docs/verification/money-pr107/`](https://github.com/tanntran2000/Build-Settlement/tree/85f69cca261fc7ecb6ea1680812b417966c67954/docs/verification/money-pr107) on branch `docs/money-difficulty-design`, at `85f69cc`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Thiết kế Money"; "Duyệt thiết kế"; "Duyệt, giao M1"; "Start M2 Step 0";
+  - Plan corrections: 8 "Chỉ bù phạt levy (Recommended)", "Easy: 2 Money → 1 Gold (Recommended)", "Luôn hoàn vào Money (Recommended)", "Duyệt tất cả (Recommended)"; 9 "1,2 điểm mỗi % (Recommended)", "Happiness dưới 30 (Recommended)", "Duyệt 1 điểm/Gold, tối đa 2 (Recommended)", "Đúng khung thì commit (Recommended)"; 10 "Sửa cả 9 (Recommended)", "Sửa luôn trong M2 (Recommended)"; 11 "tiếp tục đi";
+  - Merge report: "Dot đã merge và xanh, bạn kiểm tra G6".
+- **Disclosed.**
+  - Astra failed twice before the PASS. Correction 11's "tiếp tục đi" came after Tân closed the dialog; it was taken as approval of the recommended test-only fix.
+  - Builder smoke at `f97b5be` first ran 421/422 (fulfillment case `character-life-navigation.spec.ts:225` at its existing 60 s timeout), full retry 422/422; Claude's run and both CI runs passed first time. No timeout changed.
+  - Bundle 178,080 B gzip and End Week timings carried from earlier heads under corrections 10–11 (later diffs touch only UI, the profile validator and tests).
+  - Open playtest risks: R-026, R-028 (fulfillment smoke case near its 60 s timeout), R-031. Smoke runs on Chromium only. Large files and the T3 settings backup stay local, listed by SHA-256 in the evidence.
+
 ## Money M1 (difficulty Normal/Easy, purse shape, Gold retune) — PR #106 G6 (2026-11-26 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** Money PR M1 of 3 is merged. Next in queue: M2 (purse, levy, donation, Money spending), only when the owner starts it.
