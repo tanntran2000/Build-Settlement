@@ -7,6 +7,8 @@ it('publishes every purse tuning key in the frozen whole-catalog view', () => {
   expect(Object.keys(PURSE_TRIAL)).toEqual([
     'marker', 'levyMaxPercent', 'levyFreePercent', 'levySatisfactionBpsPerPoint',
     'donateSatisfactionPerGoldMilli', 'donateSatisfactionCapPerWeek',
+    'robberySafeBaseMilli', 'robberySafePerSecurityMilli', 'robberyChanceBpsPerGold', 'robberyChanceCapBps',
+    'robberyRansomBps', 'robberyLossBps', 'robberyChaseSecurityMin', 'robberyChaseSuccessBpsPerSecurity',
   ]);
   expect(PURSE_TRIAL).toStrictEqual(tuning.PURSE_TRIAL);
   expect(Object.isFrozen(PURSE_TRIAL)).toBe(true);

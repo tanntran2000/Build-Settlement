@@ -155,15 +155,18 @@ export async function importLife(page: Page, session: CharacterLifeSessionState)
 }
 
 export async function exportLife(page: Page): Promise<CharacterLifeSessionState> {
-  expect(await page.getByTestId('life-end-week').getAttribute('aria-disabled')).toBe('false');
   await go(page, 'session');
+  const button = page.getByRole('button', { name: 'Export checkpoint', exact: true });
+  await expect(button).toBeEnabled();
   const pending = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();
+  await button.click();
   const download = await pending;
   expect(download.suggestedFilename()).toMatch(/^haven-world-life-week-\d+\.json$/);
   const state = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
   expect(isCharacterLifeSessionState(state)).toBe(true);
   expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
+  await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled',
+    state.city.society?.pendingCard || state.player.purse.robbery ? 'true' : 'false');
   return state;
 }
 
@@ -585,12 +588,31 @@ export async function expectReport(
     if (!levy || !donated || !balance) throw Error('Invalid purse report rows.');
     const credit = expected.purse.levyPaidMilli * (difficulty === 'easy' ? 2 : 1);
     expect(levy[1]).toBe(credit === 0 ? '0' : `+${u(credit)}`);
-    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after']);
+    const robbery = expected.purse.robbery;
+    await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after', ...(robbery ? ['Robbery'] : [])]);
     actual.purse = {
       levyPercent: Number(levy[2]), levyDueMilli: milli(levy[4]), levyPaidMilli: milli(levy[3]),
       donationsMilli: donated[1] ? milli(donated[1]) : 0,
       donationGoldMilli: donated[2] ? milli(donated[2]) : 0, moneyAfterMilli: milli(balance[1]),
     };
+    if (robbery) {
+      const atRisk = u(robbery.excessMilli) + ' Money at risk';
+      const labels = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' };
+      const row = purse.locator('dt:text-is("Robbery") + dd');
+      const loss = robbery.outcome === 'pending' ? '' : robbery.lossMilli ? '−' + u(robbery.lossMilli) : '0';
+      await expect(row).toHaveText(robbery.outcome === 'pending'
+        ? 'Awaiting answer · ' + atRisk : labels[robbery.outcome] + ' · ' + loss + ' Money · ' + atRisk);
+      const parsed = (await row.textContent())!.split(' · ');
+      const excessMilli = milli(parsed.at(-1)!.replace(' Money at risk', ''));
+      if (parsed[0] === 'Awaiting answer') actual.purse.robbery = { outcome: 'pending', excessMilli };
+      else {
+        const entry = Object.entries(labels).find(([, label]) => label === parsed[0]);
+        if (!entry) throw Error('Invalid Robbery report outcome.');
+        actual.purse.robbery = { outcome: entry[0] as keyof typeof labels, excessMilli,
+          lossMilli: milli(parsed[1].replace(/^−/, '').replace(' Money', '')) };
+      }
+      expect(actual.purse.robbery).toStrictEqual(robbery);
+    }
     const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;
     expect(levy[5] ? milli(levy[5]) : 0).toBe(shortfall);
   } else await expect(purse).toHaveCount(0);

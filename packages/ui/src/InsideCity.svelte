@@ -3,10 +3,10 @@
  import AcquisitionPanel from './AcquisitionPanel.svelte';
  import PotionPanel from './PotionPanel.svelte';
  import WorkshopPanel from './WorkshopPanel.svelte';
- import { TRIAL_BUILDINGS, isAcquisitionSource, societyStaff, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
+ import { TRIAL_BUILDINGS, isAcquisitionSource, societyStaff, type PlayerCharacter, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
  import { insideTiers, wallStatus, TOWN_PLOT_COUNT, buildingColour, effectLine, CLASS_LABELS } from './society-view.js';
  export let state:TileTrialState;
- export let purseMoneyMilli:number;
+ export let purse:PlayerCharacter['purse'];
  export let npcs:WorldNpc[]=[];
  export let selectedId:string;
  export let uiEpoch:number;
@@ -53,15 +53,15 @@
   {/each}</div></section>
  {/each}
  {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='town-market'&&state.tiles.find(t=>t.id===selectedId)?.building?.enabled}
-  <MarketPanel {state} {locked} {managementError} {oncommand} />
+  <MarketPanel {state} {purse} {locked} {managementError} {oncommand} />
  {/if}
- {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='smithy'}<WorkshopPanel {state} {npcs} {purseMoneyMilli} tileId={selectedId} {locked} {managementError} {oncommand} />{/if}
+ {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='smithy'}<WorkshopPanel {state} {npcs} {purse} tileId={selectedId} {locked} {managementError} {oncommand} />{/if}
  {#if source}
   {#key `${selectedId}:${uiEpoch}`}
    <AcquisitionPanel {state} {npcs} {source} tileId={selectedId} {locked} {managementError} {oncommand} />
   {/key}
  {/if}
- <PotionPanel {state} {npcs} {purseMoneyMilli} tileId={selectedId} {locked} {managementError} {oncommand} />
+ <PotionPanel {state} {npcs} {purse} tileId={selectedId} {locked} {managementError} {oncommand} />
 </section>
 <style>
  section{min-width:0;margin-bottom:16px}p{margin:8px 0}.plots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px;margin:12px 0}.plots button{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:12px;background:var(--bg-secondary)}.selected{outline:2px solid var(--accent-green)}.plots>*{min-width:0;overflow-wrap:anywhere}label{display:block;margin-top:12px}

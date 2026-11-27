@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url';
 import { writeFileSync } from 'node:fs';
 import type { CharacterLifeSessionState, DifficultyId, TileTrialReport } from '@haven/core';
 
-const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation } = await import('@haven/core');
+const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation, safeAmountMilli, homeRobberyChanceBps } = await import('@haven/core');
 const { executeCharacterLifeCommand, resolveWorkshopOperation, societyWorkforce } = await import('@haven/simulation');
 const styles = ['good', 'average', 'bad'] as const;
 const difficulties: DifficultyId[] = ['normal', 'easy'];
@@ -18,6 +18,8 @@ export interface CalibrationRow {
   planningNet: number; crisisCost: number; closeAfterAnswer: number; goods: number; sold: number;
   foodDemand: number; foodConsumed: number; happiness: number; netPer100: number | null; grossPer100: number | null;
   levyPercent: number; levyDueMilli: number; levyPaidMilli: number; levyMoneyMilli: number; moneyAfterMilli: number;
+  security: number; safeMoneyMilli: number; robberyExcessMilli: number; robberyChanceBps: number;
+  robberyHit: boolean; robberyLossMilli: number; moneyAfterAnswerMilli: number;
   crisisStage: string; tension: number; hungry: boolean;
   failure: string | null; fallen: boolean;
 }
@@ -109,6 +111,16 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
       act('CHOOSE_CARD_OPTION',{cardId:card.id,option});
     }
     const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';
+    const security = report.order!.after.security;
+    const safeMoneyMilli = safeAmountMilli(security, difficulty);
+    const robberyExcessMilli = Math.max(0, report.purse.moneyAfterMilli - safeMoneyMilli);
+    const robberyHit = report.purse.robbery?.outcome === 'pending';
+    let robberyLossMilli = 0;
+    if (robberyHit) {
+      act('NEXT_WEEK');
+      act('ANSWER_ROBBERY', { option: 'pay' });
+      robberyLossMilli = report.purse.moneyAfterMilli - state.player.purse.moneyMilli;
+    }
     rows.push({ seed,difficulty,style,week,residents,start,end,net,gross,tax,goodsRevenue,lawPay,wages,operations,
       farmBatch:report.farmBatchGoldMilli,scheduledUpkeepPaid:report.upkeepPaidMilli,scheduledUpkeepUnfunded:report.unpaidUpkeepMilli,
       homes,homeUpkeepUnfunded,lawCosts,training,securityTheft,crimeTheft,luxury,planningNet:start-prePlan,crisisCost:end-closeAfterAnswer,
@@ -117,10 +129,13 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
       grossPer100:residents?gross*100/residents:null,
       levyPercent, levyDueMilli: report.purse.levyDueMilli, levyPaidMilli: report.purse.levyPaidMilli,
       levyMoneyMilli: report.purse.moneyAfterMilli - opening.player.purse.moneyMilli,
-      moneyAfterMilli: report.purse.moneyAfterMilli, crisisStage: report.crisis?.stageAfter ?? 'unavailable',
+      moneyAfterMilli: report.purse.moneyAfterMilli, security, safeMoneyMilli, robberyExcessMilli,
+      robberyChanceBps: fallen ? 0 : homeRobberyChanceBps(robberyExcessMilli), robberyHit,
+      robberyLossMilli, moneyAfterAnswerMilli: state.player.purse.moneyMilli,
+      crisisStage: report.crisis?.stageAfter ?? 'unavailable',
       tension: report.crisis?.tensionAfter ?? society.tension, hungry: report.crisis?.hungry ?? false, failure,fallen });
     if (fallen || week === weeks) break;
-    act('NEXT_WEEK');
+    if (!robberyHit) act('NEXT_WEEK');
   }
   return rows;
 }
@@ -144,6 +159,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       firstAtOrBelowWarningHappiness:run.find(row=>row.happiness<=CRISIS_TRIAL.happinessBelow)?.week??null,
       firstBelowWarningHappiness:run.find(row=>row.happiness<CRISIS_TRIAL.happinessBelow)?.week??null,
       firstCrisis:run.find(row=>!['none','unavailable'].includes(row.crisisStage))?.week??null,
+      firstAboveSafe:run.find(row=>row.robberyExcessMilli>0)?.week??null,
+      robberies:run.filter(row=>row.robberyHit).length,
+      robberyLossMilli:run.reduce((sum,row)=>sum+row.robberyLossMilli,0),
       first15Money:run.find(row=>row.moneyAfterMilli>=15000)?.week??null,
       totalLevyPaidMilli:run.reduce((sum,row)=>sum+row.levyPaidMilli,0),
       totalLevyMoneyMilli:run.reduce((sum,row)=>sum+row.levyMoneyMilli,0),
@@ -152,5 +170,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       firstZero:run.find(row=>row.end===0)?.week??null,goods:run.reduce((sum,row)=>sum+row.goods,0),
       firstFailure:run.find(row=>row.failure)?.failure??null,fallen:run.some(row=>row.fallen)};
   }))));
-  writeFileSync(path,JSON.stringify({schemaVersion:2,levyColumns,rows,summary},null,2)+'\n','utf8');
+  writeFileSync(path,JSON.stringify({schemaVersion:3,levyColumns,rows,summary},null,2)+'\n','utf8');
 }

@@ -418,7 +418,7 @@ export interface TuningCatalog {
     DIFFICULTY_TRIAL: Readonly<{
         marker: "TRIAL";
         profiles: Readonly<Record<'normal' | 'easy', Readonly<{
-            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number;
+            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number; robberySafeBps: number;
         }>>>;
     }>;
     PURSE_TRIAL: Readonly<{
@@ -428,6 +428,14 @@ export interface TuningCatalog {
         levySatisfactionBpsPerPoint: number;
         donateSatisfactionPerGoldMilli: number;
         donateSatisfactionCapPerWeek: number;
+        robberySafeBaseMilli: number;
+        robberySafePerSecurityMilli: number;
+        robberyChanceBpsPerGold: number;
+        robberyChanceCapBps: number;
+        robberyRansomBps: number;
+        robberyLossBps: number;
+        robberyChaseSecurityMin: number;
+        robberyChaseSuccessBpsPerSecurity: number;
     }>;
     SOCIETY_TRIAL: SOCIETY_TRIALData;
     GOODS_STOCK_TRIAL: GOODS_STOCK_TRIALData;
@@ -585,12 +593,12 @@ const lawMessagesSchema = object({
 const normalDifficultyBps: Rule = (value, ref, field) => {
     if (value !== 10000) fail(ref, field, 'must be 10000');
 };
-const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps): Rule =>
-    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps });
+const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps, robberySafeBps: Rule = bps): Rule =>
+    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps, robberySafeBps });
 const tuningSchemas: Record<string, Rule> = {
     DIFFICULTY_TRIAL: object({
         marker: literal("TRIAL"),
-        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive) })
+        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive, integerInRange(1, 100000)) })
     }),
     PURSE_TRIAL: object({
         marker: literal("TRIAL"),
@@ -599,6 +607,14 @@ const tuningSchemas: Record<string, Rule> = {
         levySatisfactionBpsPerPoint: nonnegative,
         donateSatisfactionPerGoldMilli: probability,
         donateSatisfactionCapPerWeek: integerInRange(0, 100),
+        robberySafeBaseMilli: nonnegative,
+        robberySafePerSecurityMilli: nonnegative,
+        robberyChanceBpsPerGold: integerInRange(1, 10000),
+        robberyChanceCapBps: integerInRange(1, 10000),
+        robberyRansomBps: integerInRange(0, 10000),
+        robberyLossBps: integerInRange(1, 10000),
+        robberyChaseSecurityMin: integerInRange(0, 100),
+        robberyChaseSuccessBpsPerSecurity: integerInRange(1, 10000),
     }),
     "ORDER_TRIAL": object({
         "newGame": object({
@@ -877,6 +893,14 @@ export function validateTuning(json: unknown): TuningCatalog {
     for (const [id, rule] of Object.entries(tuningSchemas))
         rule(data[id], `tuning.json#${id}`, '');
     const tuning = data as unknown as TuningCatalog;
+    const purse = tuning.PURSE_TRIAL;
+    const maxSafeBps = Math.max(tuning.DIFFICULTY_TRIAL.profiles.normal.robberySafeBps,
+        tuning.DIFFICULTY_TRIAL.profiles.easy.robberySafeBps);
+    const safeAt100 = BigInt(purse.robberySafeBaseMilli) + 100n * BigInt(purse.robberySafePerSecurityMilli);
+    if (safeAt100 * BigInt(maxSafeBps) / 10000n > BigInt(Number.MAX_SAFE_INTEGER))
+        fail('tuning.json#PURSE_TRIAL', 'robberySafePerSecurityMilli', 'expected a safe integer amount at Security 100');
+    if (purse.robberyRansomBps >= purse.robberyLossBps)
+        fail('tuning.json#PURSE_TRIAL', 'robberyRansomBps', 'expected less than robberyLossBps');
     if (!Number.isSafeInteger(tuning.OUTSIDE_TRIAL.wallRing3StoneMilli * tuning.RING4_TRIAL.stoneFactor))
         fail('tuning.json#RING4_TRIAL', 'stoneFactor', 'expected a safe integer Stone cost');
     return tuning;

@@ -5,11 +5,11 @@ import { applyDifficulty, difficultyProfile } from '../difficulty.js';
 
 it('keeps each Normal multiplier at 10000 bps', () => {
   expect(difficultyProfile('normal')).toStrictEqual({
-    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000, levyMoneyBps: 10000,
+    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000, levyMoneyBps: 10000, robberySafeBps: 10000,
   });
 });
 
-it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps'] as const)(
+it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps', 'robberySafeBps'] as const)(
   'rejects non-identity Normal %s at its catalog path', field => {
     const data = structuredClone(tuningJson);
     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
@@ -39,6 +39,23 @@ it('refuses a zero Easy levy divisor at its catalog path', () => {
     message = error.message;
   }
   expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.easy.levyMoneyBps: expected integer > 0');
+});
+
+it('doubles the Easy safe amount', () => {
+  expect(difficultyProfile('easy').robberySafeBps).toBe(20000);
+});
+
+it.each([0, 100001, 1.5])('refuses Easy robberySafeBps %s at its catalog path', robberySafeBps => {
+  const data = structuredClone(tuningJson);
+  data.DIFFICULTY_TRIAL.profiles.easy.robberySafeBps = robberySafeBps;
+  let message: string | undefined;
+  try {
+    validateTuning(data);
+  } catch (error) {
+    if (!(error instanceof Error)) throw error;
+    message = error.message;
+  }
+  expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.easy.robberySafeBps: expected integer in [1, 100000]');
 });
 
 it('floors the scaled milli amount and keeps Normal exact', () => {

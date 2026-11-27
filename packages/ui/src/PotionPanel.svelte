@@ -1,9 +1,10 @@
 <script lang="ts">
- import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState, type WorldNpc } from '@haven/core';
+ import { canSpendMoney, ITEM_CATALOG, ITEM_TRIAL, type PlayerCharacter, type TileTrialState, type WorldNpc } from '@haven/core';
  import { potionShop } from './items-view.js';
+ import { heldMoneyNotice } from './purse-view.js';
  import { formatMilli } from './milli-format.js';
  import WorkshopPanel from './WorkshopPanel.svelte';
- export let purseMoneyMilli:number;
+ export let purse:PlayerCharacter['purse'];
  export let state:TileTrialState;
  export let npcs:WorldNpc[]=[];
  export let tileId:string;
@@ -11,6 +12,7 @@
  export let managementError:{action:string;message:string}|null;
  export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
  $: selling=potionShop(state,tileId);
+ $: holdNotice=heldMoneyNotice(purse);
  $: items=state.society!.items;
  $: building=state.tiles.find(t=>t.id===tileId)?.building;
  let active:'Buy'|'Brew'='Buy';
@@ -30,10 +32,12 @@
  </div>
  {#if active==='Buy'}<div role="tabpanel" id={`potion-panel-${tileId}-Buy`} aria-labelledby={`potion-${tileId}-Buy`}>
 {#if selling}<section aria-label="Potion shop" class="potion-panel"><h4>Potion shop</h4><p>{state.tiles.find(t=>t.id===tileId)!.building!.typeId==='hospital'?'The Hospital is staffed and supplied.':'The Drug Store sells without workers.'}</p>
- <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}<li><strong>{ITEM_CATALOG[`heal-potion-${tier}`].name}</strong><span>Restore {ITEM_TRIAL.potionHeal[key]} health · {formatMilli(ITEM_TRIAL.potionPricesMilli[key])} Money</span><button disabled={locked} onclick={()=>oncommand('BUY_POTION',{tileId,potion:tier})}>Buy {ITEM_CATALOG[`heal-potion-${tier}`].name}</button></li>{/each}</ul>
+ {#if holdNotice}<p id="potion-robbery-hold">{holdNotice}</p>{/if}
+ <ul>{#each [1,2,3] as tier}{@const key=String(tier) as '1'|'2'|'3'}{@const held=!!holdNotice&&!canSpendMoney(purse,ITEM_TRIAL.potionPricesMilli[key])}<li><strong>{ITEM_CATALOG[`heal-potion-${tier}`].name}</strong><span>Restore {ITEM_TRIAL.potionHeal[key]} health · {formatMilli(ITEM_TRIAL.potionPricesMilli[key])} Money</span><button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'potion-robbery-hold':undefined}
+   onclick={()=>{if(!held)oncommand('BUY_POTION',{tileId,potion:tier});}}>Buy {ITEM_CATALOG[`heal-potion-${tier}`].name}</button></li>{/each}</ul>
  {#if managementError?.action==='BUY_POTION'}<p role="alert">{managementError.message}</p>{/if}
 </section>{:else if state.tiles.find(t=>t.id===tileId)?.building?.typeId==='hospital'}<p>A Hospital sells potions when enabled, fully staffed, and supplied with Herbs and upkeep.</p>{/if}
- </div>{:else}<div role="tabpanel" id={`potion-panel-${tileId}-Brew`} aria-labelledby={`potion-${tileId}-Brew`}><WorkshopPanel {state} {npcs} {purseMoneyMilli} {tileId} {locked} {managementError} {oncommand} /></div>{/if}
+ </div>{:else}<div role="tabpanel" id={`potion-panel-${tileId}-Brew`} aria-labelledby={`potion-${tileId}-Brew`}><WorkshopPanel {state} {npcs} {purse} {tileId} {locked} {managementError} {oncommand} /></div>{/if}
 </section>
 {/if}
 {#if items.consumables.length}<section aria-label="Potion inventory" class="potion-panel"><h4>Potion inventory · {items.consumables.length} / {ITEM_TRIAL.consumableCap}</h4><p>Use while Planning to restore the Player's health, up to 100.</p><ul>{#each items.consumables as item (item.id)}<li><strong>{ITEM_CATALOG[item.defId].name}</strong><button disabled={locked} onclick={()=>oncommand('USE_CONSUMABLE',{itemId:item.id})}>Use {ITEM_CATALOG[item.defId].name}</button></li>{/each}</ul>{#if managementError?.action==='USE_CONSUMABLE'}<p role="alert">{managementError.message}</p>{/if}</section>{/if}

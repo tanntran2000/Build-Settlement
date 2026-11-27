@@ -180,8 +180,8 @@
   "DIFFICULTY_TRIAL": {
     "marker": "TRIAL",
     "profiles": {
-      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000, "levyMoneyBps": 10000 },
-      "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000 }
+      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000, "levyMoneyBps": 10000, "robberySafeBps": 10000 },
+      "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000, "robberySafeBps": 20000 }
     }
   },
   "PURSE_TRIAL": {
@@ -190,7 +190,15 @@
     "levyFreePercent": 2,
     "levySatisfactionBpsPerPoint": 12000,
     "donateSatisfactionPerGoldMilli": 0.001,
-    "donateSatisfactionCapPerWeek": 2
+    "donateSatisfactionCapPerWeek": 2,
+    "robberySafeBaseMilli": 15000,
+    "robberySafePerSecurityMilli": 250,
+    "robberyChanceBpsPerGold": 120,
+    "robberyChanceCapBps": 2500,
+    "robberyRansomBps": 2500,
+    "robberyLossBps": 6000,
+    "robberyChaseSecurityMin": 15,
+    "robberyChaseSuccessBpsPerSecurity": 250
   },
   "SOCIETY_TRIAL": {
     "rulesetId": "tile-society-14",

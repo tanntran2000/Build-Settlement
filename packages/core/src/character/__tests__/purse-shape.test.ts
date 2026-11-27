@@ -22,3 +22,12 @@ it.each([['moneyMilli', -1], ['levyPercent', 21], ['donatedThisWeekMilli', 1.5]]
     expect(isCharacterLifeSessionState(state)).toBe(false);
   },
 );
+
+it('accepts a fully backed robbery card and refuses one milli more than Money', () => {
+  const state = create();
+  state.player.purse.moneyMilli = 4000;
+  state.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
+  expect(isCharacterLifeSessionState(state)).toBe(true);
+  state.player.purse.robbery.excessMilli = 4001;
+  expect(isCharacterLifeSessionState(state)).toBe(false);
+});

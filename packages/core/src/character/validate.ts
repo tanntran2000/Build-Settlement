@@ -94,7 +94,8 @@ export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
     const robbery = purse.robbery;
     return robbery === null || (keysOf(robbery, ['id', 'week', 'excessMilli']) &&
       typeof robbery.id === 'string' && robbery.id !== '' && robbery.id.trim() === robbery.id &&
-      int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange));
+      int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange) &&
+      (robbery.excessMilli as number) <= (purse.moneyMilli as number));
   } catch { return false; }
 }
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
@@ -11,7 +11,7 @@
   import { formatMilli as units } from './milli-format.js';
 
   export let state: TileTrialState;
-  export let purseMoneyMilli: number;
+  export let purse: PlayerCharacter['purse'];
   export let npcs: WorldNpc[];
   export let selectedId: string;
   export let uiEpoch: number;
@@ -79,7 +79,7 @@
   }
 </script>
 
-  <InsideCity {state} {npcs} {purseMoneyMilli} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
+  <InsideCity {state} {npcs} {purse} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
   <LibraryPanel {state} {locked} {managementError} {oncommand} />
   <div class="layout">
     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />

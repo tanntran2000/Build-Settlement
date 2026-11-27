@@ -1,15 +1,18 @@
 <script lang="ts">
   import type { DifficultyId, PlayerCharacter } from '@haven/core';
   import { formatMilli } from './milli-format.js';
-  import { purseControls } from './purse-view.js';
+  import { heldMoneyNotice, purseControls, purseRisk } from './purse-view.js';
 
   export let purse: PlayerCharacter['purse'];
   export let locked: boolean;
+  export let security: number;
   export let difficulty: DifficultyId;
   export let oncommand: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
 
   let input = '';
   $: controls = purseControls(purse, input, locked, difficulty);
+  $: risk = purseRisk(purse.moneyMilli, security, difficulty, purse.robbery);
+  $: holdNotice = heldMoneyNotice(purse);
 
   function donate(event: SubmitEvent) {
     event.preventDefault();
@@ -36,7 +39,8 @@
     Happiness cost: {controls.happinessCost ? '−' : ''}{controls.happinessCost} a week{controls.donationOffset
       ? ` (levy −${controls.levyCost}, donation +${controls.donationOffset})` : ''}
   </p>
-  <p>Safe amount — · At risk —</p>
+  <p data-testid="purse-risk">Safe amount {formatMilli(risk.safeMilli)} Money · At risk {formatMilli(risk.atRiskMilli)} Money</p>
+  {#if holdNotice}<p data-testid="purse-held-money">{holdNotice}</p>{/if}
   <form onsubmit={donate}>
     <label for="purse-donate-amount">Donation amount in Money</label>
     <input id="purse-donate-amount" type="text" inputmode="numeric" bind:value={input}
