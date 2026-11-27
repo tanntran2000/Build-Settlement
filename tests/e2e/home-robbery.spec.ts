@@ -1,7 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 import { CRISIS_TRIAL, type CharacterLifeSessionState } from '@haven/core';
+import { serializeCharacterLifeSave } from '@haven/persistence';
 import { executeCharacterLifeCommand } from '@haven/simulation';
 import { expectReport, exportLife, go, importLife, keyActivate, makeLife, tabTo } from './character-life-navigation.helpers.ts';
+import { readStoredRecords, storedSaveText } from './storage.helpers.ts';
 
 function close(s: CharacterLifeSessionState) {
   const r = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedWeek: 1, expectedRevision: s.city.revision });
@@ -109,7 +111,7 @@ for (const [width, difficulty, excess, ransom, loss, rest] of [
     await go(page, 'city');
     await button(page, 'Select spec-1').click();
     const market = page.getByRole('group', { name: 'Weekly offers', exact: true }).getByRole('button', { name: 'Buy', exact: true });
-    expect(await market.count()).toBeGreaterThan(0);
+    await expect(market).toHaveCount(s.city.society!.items.market.length);
     for (const buy of await market.all()) {
       await expect(buy).toBeDisabled();
       await expect(buy).toHaveAccessibleDescription(notice);
@@ -131,6 +133,89 @@ for (const [width, difficulty, excess, ransom, loss, rest] of [
     expect(await exportLife(page)).toStrictEqual(before);
   });
 }
+
+test('rejects a robbery card one milli above Money and preserves the session and local checkpoint', async ({ page }) => {
+  const s = makeLife(40);
+  s.player.purse.moneyMilli = 4000;
+  await page.goto('/');
+  await importLife(page, s);
+  const before = await exportLife(page);
+  await button(page, 'Save locally').click();
+  const saved = serializeCharacterLifeSave(before);
+  if (!saved.success) throw Error(saved.error.message);
+  await expect.poll(() => storedSaveText(page)).toBe(saved.text);
+  const records = await readStoredRecords(page);
+  const rejected = JSON.parse(saved.text);
+  rejected.state.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4001 };
+  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({
+    name: 'unbacked-robbery.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(rejected)),
+  });
+  await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]'))
+    .toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+  expect(await exportLife(page)).toStrictEqual(before);
+  expect(await readStoredRecords(page)).toStrictEqual(records);
+  expect(await storedSaveText(page)).toBe(saved.text);
+});
+
+test('shows the exact card exposure and option losses after a permitted donation', async ({ page }) => {
+  const s = makeLife(40);
+  s.player.purse.moneyMilli = 50001;
+  s.player.purse.levyPercent = 5;
+  await page.goto('/');
+  await importLife(page, s);
+  await keyActivate(page, page.getByTestId('life-end-week'));
+  await expect(row(page)).toHaveText('Awaiting answer · 30.088 Money at risk');
+  await keyActivate(page, button(page, 'Plan next week'));
+  await page.locator('#life-nav-player').click();
+  await page.getByLabel('Donation amount in Money', { exact: true }).fill('21');
+  const donate = button(page, 'Donate');
+  await expect(donate).toBeEnabled();
+  await donate.click();
+  await expect(page.getByRole('region', { name: 'Purse', exact: true }).getByText('Money 30.338', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('purse-risk')).toHaveText('Safe amount 21.25 Money · At risk 30.088 Money');
+  await go(page, 'reports');
+  await expect(card(page).locator('#home-robbery-pay-amount')).toHaveText('Lose 7.522 Money.');
+  await expect(card(page).locator('#home-robbery-let-go-amount')).toHaveText('Lose 18.052 Money.');
+});
+
+test('blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold', async ({ page }) => {
+  const s = makeLife(40);
+  s.player.purse.moneyMilli = 8999;
+  s.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
+  const offers = s.city.society!.items.market;
+  const offerIndex = offers.findIndex(offer => offer.priceMilli === 5000);
+  expect(offers[offerIndex].priceMilli).toBe(5000);
+  const openMarket = async () => {
+    await go(page, 'city');
+    await button(page, 'Select spec-1').click();
+    const market = page.getByRole('group', { name: 'Weekly offers', exact: true });
+    const buys = market.getByRole('button', { name: 'Buy', exact: true });
+    await expect(buys).toHaveCount(offers.length);
+    await expect(market.getByRole('article').nth(offerIndex).getByText('5 Money', { exact: true })).toBeVisible();
+    return buys.nth(offerIndex);
+  };
+  await page.goto('/');
+  await importLife(page, s);
+  const before = await exportLife(page);
+  const blocked = await openMarket();
+  await expect(blocked).toBeDisabled();
+  await expect(blocked).toHaveAccessibleDescription('4 Money is held until the robbery is answered.');
+  await blocked.press('Enter');
+  expect(await exportLife(page)).toStrictEqual(before);
+
+  const cleared = structuredClone(s);
+  cleared.player.purse.robbery = null;
+  await importLife(page, cleared);
+  const ready = await exportLife(page);
+  expect(ready.player.purse).toStrictEqual({ ...before.player.purse, robbery: null });
+  expect(ready.city.society!.items).toStrictEqual(before.city.society!.items);
+  const enabled = await openMarket();
+  await expect(enabled).toBeEnabled();
+  await enabled.click();
+  const bought = await exportLife(page);
+  expect(bought.player.purse.moneyMilli).toBe(3999);
+  expect(bought.city.society!.items.market).toStrictEqual(offers.filter((_, i) => i !== offerIndex));
+});
 
 test('shows crisis first and resumes between the two answers from IndexedDB and JSON', async ({ page }) => {
   const s = makeLife(40);

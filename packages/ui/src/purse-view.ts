@@ -31,9 +31,10 @@ export function heldMoneyNotice(purse: PlayerCharacter['purse']): string {
   return held > 0 ? formatMilli(held) + ' Money is held until the robbery is answered.' : '';
 }
 
-export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId) {
+export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId,
+  robbery: PlayerCharacter['purse']['robbery'] = null) {
   const safeMilli = safeAmountMilli(security, difficulty);
-  return { safeMilli, atRiskMilli: Math.max(0, moneyMilli - safeMilli) };
+  return { safeMilli, atRiskMilli: robbery?.excessMilli ?? Math.max(0, moneyMilli - safeMilli) };
 }
 
 export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {

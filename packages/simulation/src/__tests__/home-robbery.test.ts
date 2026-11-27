@@ -141,6 +141,23 @@ it('checks Money after levy and donations and then resets the donation tally', (
   expect(stocks(result.next)).toStrictEqual(stocks(control.next));
 });
 
+it.each([
+  ['pay', 1000, 3000],
+  ['let-go', 2400, 1600],
+] as const)('answers %s after reloading a card backed by exactly its excess', (option, lossMilli, remainingMilli) => {
+  const s = make();
+  s.player.purse.moneyMilli = 4000;
+  s.player.purse.robbery = { id: 'home-robbery-w1', week: 1, excessMilli: 4000 };
+  const answer = act(reload(s), 'ANSWER_ROBBERY', { option });
+  const next = structuredClone(s);
+  next.city.revision++;
+  next.player.purse.moneyMilli = remainingMilli;
+  next.player.purse.robbery = null;
+  expect(answer).toStrictEqual({
+    success: true, next, robberyResolution: { week: 1, outcome: option, excessMilli: 4000, lossMilli },
+  });
+});
+
 it('opens both cards, preserves both across checkpoint reload, and resolves crisis first', () => {
   const s = make();
   const society = s.city.society!;

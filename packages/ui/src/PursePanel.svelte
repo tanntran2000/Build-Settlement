@@ -11,7 +11,7 @@
 
   let input = '';
   $: controls = purseControls(purse, input, locked, difficulty);
-  $: risk = purseRisk(purse.moneyMilli, security, difficulty);
+  $: risk = purseRisk(purse.moneyMilli, security, difficulty, purse.robbery);
   $: holdNotice = heldMoneyNotice(purse);
 
   function donate(event: SubmitEvent) {

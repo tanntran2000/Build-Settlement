@@ -165,6 +165,8 @@ export async function exportLife(page: Page): Promise<CharacterLifeSessionState>
   const state = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
   expect(isCharacterLifeSessionState(state)).toBe(true);
   expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
+  await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled',
+    state.city.society?.pendingCard || state.player.purse.robbery ? 'true' : 'false');
   return state;
 }
 

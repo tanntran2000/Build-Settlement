@@ -33,6 +33,12 @@ it('describes the held amount and keeps the same losses after a debit or credit'
     .toStrictEqual(homeRobberyOptions(held, 30, false));
 });
 
+it('shows the card excess as At risk after a donation changes Money minus safe', () => {
+  expect(purseRisk(30338, 25, 'normal')).toStrictEqual({ safeMilli: 21250, atRiskMilli: 9088 });
+  expect(purseRisk(30338, 25, 'normal', { id: 'home-robbery-w1', week: 1, excessMilli: 30088 }))
+    .toStrictEqual({ safeMilli: 21250, atRiskMilli: 30088 });
+});
+
 it.each(['normal', 'easy'] as const)('renders the %s Robbery row independently from the levy rate', difficulty => {
   const purse = { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0,
     donationGoldMilli: 0, moneyAfterMilli: 26501 };
