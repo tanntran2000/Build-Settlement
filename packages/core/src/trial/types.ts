@@ -40,7 +40,13 @@ export interface CrimeEventReport {
  event:null | {kind:'robbery'|'smear'|'raid'|'assassination';severity:'minor'|'serious'|'severe';target?:keyof OrderReport['theftMilli'];lossMilli?:number;soldiersKilled?:number;outcome?:'foiled'|'wounded'|'killed';standingLoss?:number;authorityLoss?:number};
  lordHealthLoss:number;
 }
+export type HomeRobberyReport =
+  | { outcome: 'pending'; excessMilli: number }
+  | { outcome: 'pay' | 'chase-success' | 'chase-failure' | 'let-go'; excessMilli: number; lossMilli: number };
+export type HomeRobberyResolution = Exclude<HomeRobberyReport, { outcome: 'pending' }> & { week: number };
+
 export interface PurseWeekReport {
+  robbery?: Readonly<HomeRobberyReport>;
   levyPercent: number;
   levyDueMilli: number;
   levyPaidMilli: number;

@@ -1,5 +1,5 @@
 import {
-  hasWeeklyKeys, isLiveCharacterLifeSessionState, isItemsState, isOpenItemSlot, isWearable,
+  canSpendMoney, hasWeeklyKeys, isLiveCharacterLifeSessionState, isItemsState, isOpenItemSlot, isWearable,
   ITEM_CATALOG, ITEM_TRIAL, CRAFT_TRIAL, RECIPES, buildingWorkerCap, trialBuilding, OUTSIDE_TRIAL,
   type CharacterLifeSessionState, type ItemInstance, type Slot,
 } from '@haven/core';
@@ -36,7 +36,7 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     list.push(item);list.sort((a,b)=>a.id-b.id);return true;
   };
   const purchase=(defId:string,price:number):CharacterLifeCommandResult|null=>{
-    if(purse.moneyMilli<price)return fail('NOT_ENOUGH_MONEY');
+    if(!canSpendMoney(purse,price))return fail('NOT_ENOUGH_MONEY');
     if(!receive({id:s.nextItemId,defId}))return fail('INVENTORY_FULL');
     s.nextItemId=safe(s.nextItemId+1);purse.moneyMilli-=price;return null;
   };
@@ -61,7 +61,7 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     }
     const workshop=s.workshops&&Object.hasOwn(s.workshops,tileId as string)?s.workshops[tileId as string]:{orders:[],ready:[]};
     if(workshop.orders.length>=CRAFT_TRIAL.queueCap)return fail('QUEUE_FULL');
-    if(purse.moneyMilli<recipe.feeMilli)return fail('NOT_ENOUGH_MONEY');
+    if(!canSpendMoney(purse,recipe.feeMilli))return fail('NOT_ENOUGH_MONEY');
     for(const item of heldItems){const found=locate(item.id)!;found.list.splice(found.index,1);}
     for(const [id,n] of Object.entries(materials)){s.materials[id]-=n;if(!s.materials[id])delete s.materials[id];}
     purse.moneyMilli-=recipe.feeMilli;

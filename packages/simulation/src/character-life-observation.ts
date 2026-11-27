@@ -101,15 +101,22 @@ export function observeCharacterLife(session: CharacterLifeSessionState, lastRep
   const held = new Set(session.npcs.map(n => n.postTileId));
   const freeManagerSlots = managerSlotTileIds(city).filter(id => !held.has(id)).map(tileId => ({ tileId, label: slotLabel(tileId) }));
   const disabledReasons: string[] = [];
+  const crisis = city.society?.pendingCard;
+  const robbery = session.player.purse.robbery;
+  if (crisis || robbery) disabledReasons.push(crisis ? 'Answer the crisis first.' : 'Answer the robbery first.');
   if (city.phase === 'report') disabledReasons.push('Choose Plan next week before saving, continuing, exporting or importing.');
   if (freeManagerSlots.length === 0 && session.npcs.some(n => n.postTileId === null)) {
     disabledReasons.push('No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.');
   }
   return {
     week: city.world.week, phase: city.phase, revision: city.revision,
-    actionTypes: city.phase === 'report' ? ['NEXT_WEEK']
-      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC',
-        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING', ...PURSE_COMMAND_TYPES] as const : []),
+    actionTypes: city.phase === 'report'
+      ? ['NEXT_WEEK', ...(crisis ? ['CHOOSE_CARD_OPTION'] as const : [])]
+      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED',
+        ...(crisis || robbery ? [] : ['END_WEEK'] as const), 'ASSIGN_NPC', 'UNASSIGN_NPC',
+        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING', ...PURSE_COMMAND_TYPES.filter(type =>
+          type !== 'ANSWER_ROBBERY' || (robbery && !crisis))] as const : []),
+        ...(crisis ? ['CHOOSE_CARD_OPTION'] as const : []),
         ...(acquisitionEnabled(city, 'guild') || acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BUY_NPC'] as const : []),
         ...(acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BID_NPC', 'WITHDRAW_BID'] as const : []),
         ...(acquisitionEnabled(city, 'slave-market') && session.npcs.length ? ['SELL_NPC'] as const : []),
