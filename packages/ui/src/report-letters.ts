@@ -252,6 +252,14 @@ export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food'
   ];
 }
 import { itemReportRows } from './items-view.js';
+import type { HomeRobberyReport } from '@haven/core';
+
+const robberyOutcomeText = { pay: 'Paid', 'chase-success': 'Chase succeeded', 'chase-failure': 'Chase failed', 'let-go': 'Let go' } as const;
+export function homeRobberyReportText(robbery: Readonly<HomeRobberyReport>): string {
+  if (robbery.outcome === 'pending') return 'Awaiting answer · ' + formatMilli(robbery.excessMilli) + ' Money at risk';
+  return robberyOutcomeText[robbery.outcome] + ' · ' + signedMilli(-robbery.lossMilli) + ' Money · ' +
+    formatMilli(robbery.excessMilli) + ' Money at risk';
+}
 
 export function purseReportRows(purse: Readonly<PurseWeekReport>, difficulty: DifficultyId) {
   const { levyPercent, levyDueMilli, levyPaidMilli, donationsMilli, donationGoldMilli, moneyAfterMilli } = purse;
@@ -263,5 +271,6 @@ export function purseReportRows(purse: Readonly<PurseWeekReport>, difficulty: Di
       (shortfall ? ' · ' + formatMilli(shortfall) + ' Gold shortfall' : '') },
     { label: 'Donation', value: `${signedMilli(-donationsMilli)} Money · ${signedMilli(donationGoldMilli)} Gold` },
     { label: 'Money after', value: formatMilli(moneyAfterMilli) + ' Money' },
+    ...(purse.robbery ? [{ label: 'Robbery', value: homeRobberyReportText(purse.robbery) }] : []),
   ];
 }

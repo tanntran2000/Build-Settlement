@@ -20,7 +20,7 @@ for (const width of [1280, 1600]) {
     await tabTo(page, player);
     await keyActivate(page, player);
     const purse = page.getByRole('region', { name: 'Purse', exact: true });
-    await expect(purse.getByText('Safe amount — · At risk —', { exact: true })).toBeVisible();
+    await expect(purse.getByTestId('purse-risk')).toHaveText(easy ? 'Safe amount 45 Money · At risk 0 Money' : 'Safe amount 22.5 Money · At risk 0 Money');
     const levy = purse.getByRole('group', { name: 'Weekly levy', exact: true });
     const percent = levy.locator('span');
     const decrease = levy.getByRole('button', { name: 'Decrease weekly levy', exact: true });

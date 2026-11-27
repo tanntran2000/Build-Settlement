@@ -119,7 +119,7 @@ test('C2 operating Hospital and worker-free Drug Store sell potions; inventory U
 });
 function crowdedReport(){
   let seed=1;while(seed<200&&(!drawItemRarity(ITEM_TRIAL.materialOddsBps,itemRandom(seed,1,'material'))||!drawItemRarity(ITEM_TRIAL.findOddsBps,itemRandom(seed,1,'find'))))seed++;
-  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.npcs[0].character.skills.management=40;s.npcs[0].character.skills.combat=30;s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
+  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.player.purse.moneyMilli=12000;s.npcs[0].character.skills.management=40;s.npcs[0].character.skills.combat=30;s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
   const i=s.city.society!.items;i.inventory=Array.from({length:50},(_,k)=>({id:k+1,defId:'common-ring'}));i.storage=Array.from({length:10},(_,k)=>({item:{id:k+51,defId:'rare-ring'},expiresWeek:k===0?1:99}));i.nextItemId=61;i.materials={iron:999,silver:999,gold:999,ruby:999};i.goals.rebellionSeen=true;i.goals.authorityStreak=3;s.city.society!.order.authority=100;return s;
 }
 test('C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards',async({page})=>{

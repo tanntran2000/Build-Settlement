@@ -1,9 +1,10 @@
 <script lang="ts">
   import './ledger-theme.css';
   import { tick, type Snippet } from 'svelte';
-  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport } from '@haven/core';
+  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport, type HomeRobberyOption } from '@haven/core';
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
+  import HomeRobberyCard from './HomeRobberyCard.svelte';
   import PursePanel from './PursePanel.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import OptionsDialog from './OptionsDialog.svelte';
@@ -21,6 +22,7 @@
   export let status: string;
   export let unapplied: { id: string; label: string; onopen: () => void }[];
   export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
+  export let onanswerrobbery: (option: HomeRobberyOption) => void;
   export let onendweek: (opener: HTMLButtonElement) => void;
   export let onmainmenu: () => void;
   export let onpurse: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
@@ -65,6 +67,16 @@
   }
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: locked = state.phase === 'report';
+  $: robbery = storageSession.player.purse.robbery;
+  $: endWeekReason = state.society?.pendingCard ? 'Answer the crisis first.' : robbery ? 'Answer the robbery first.' : '';
+
+  async function chooseCrisis(cardId: string, option: import('@haven/core').CardOption) {
+    onchoose(cardId, option);
+    if (robbery) {
+      await tick();
+      if (!state.society?.pendingCard) document.getElementById('home-robbery-title')?.focus();
+    }
+  }
   $: views = [
     { id: 'city' as const, label: 'City', content: city },
     { id: 'characters' as const, label: 'Characters', content: characters },
@@ -73,6 +85,13 @@
     { id: 'help' as const, label: 'Help', content: help },
   ];
 </script>
+
+{#snippet urgentLetter()}
+  <CrisisCard {state} onchoose={chooseCrisis} />
+  {#if !state.society?.pendingCard && robbery}
+    <HomeRobberyCard purse={storageSession.player.purse} security={state.society!.order.security} {locked} onanswer={onanswerrobbery} />
+  {/if}
+{/snippet}
 
 <main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision} onclickcapture={guardEndWeekRepeat} onmousedowncapture={guardEndWeekMouseDown}>
   <aside aria-label="Life status and navigation">
@@ -85,7 +104,7 @@
       <span class="balance-gold">Gold {formatMilli(settlement.inventory.gold)}</span>
       <span class="balance-money" data-testid="purse-money">Money {formatMilli(storageSession.player.purse.moneyMilli)}</span>
     </div>
-    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button class="ledger-wax" data-testid="life-end-week" disabled={!!endWeekReason} aria-disabled={locked || !!endWeekReason} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{endWeekReason || (locked ? 'Report open — Plan next week in Report' : 'End Week')}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
@@ -130,7 +149,7 @@
             {#if report.goods.demandMilli > report.goods.servedMilli}<p>Last week: Goods unmet {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}</p>{/if}
             {#if report.unpaidUpkeepMilli}<p>Last week: Unfunded upkeep {formatMilli(report.unpaidUpkeepMilli)}</p>{/if}
           {/if}
-          {#if destination === 'reports' && activeWindow !== 'information'}<CrisisCard {state} {onchoose} />{/if}
+          {#if destination === 'reports' && activeWindow !== 'information'}{@render urgentLetter()}{/if}
         {/if}
         {@render view.content()}
       </section>
@@ -157,11 +176,11 @@
       </div>
       </div>
     </section>
-    {#if activeWindow === 'information'}<CrisisCard {state} {onchoose} />{/if}
+    {#if activeWindow === 'information'}{@render urgentLetter()}{/if}
     <section hidden={activeWindow !== 'player'}>
       {@render playerInfo()}
       {#if activeWindow === 'player'}
-        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} {locked} oncommand={onpurse} />
+        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} security={state.society!.order.security} {locked} oncommand={onpurse} />
       {/if}
     </section>
     <section hidden={activeWindow !== 'population'}>

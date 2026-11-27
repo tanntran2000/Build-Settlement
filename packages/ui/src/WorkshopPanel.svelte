@@ -1,14 +1,15 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc } from '@haven/core';
+  import { canSpendMoney, CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc } from '@haven/core';
   import { craftingRecipes, workshopForecast } from './items-view.js';
+  import { heldMoneyNotice } from './purse-view.js';
   import { formatMilli } from './milli-format.js';
   import ItemCard from './ItemCard.svelte';
 
   export let state:TileTrialState;
   export let npcs:WorldNpc[]=[];
   export let tileId:string;
-  export let purseMoneyMilli:number;
+  export let purse:PlayerCharacter['purse'];
   export let locked:boolean;
   export let managementError:{action:string;message:string}|null;
   export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
@@ -19,7 +20,8 @@
   $: name=building?TRIAL_BUILDINGS[building.typeId].name:'';
   $: workshop=state.society!.items.workshops?.[tileId];
   $: orders=workshop?.orders??[];
-  $: recipes=craftingRecipes(state,tileId,purseMoneyMilli);
+  $: recipes=craftingRecipes(state,tileId,purse.moneyMilli);
+  $: holdNotice=heldMoneyNotice(purse);
   $: forecast=workshopForecast(state,npcs,tileId);
   $: capacity=forecast.capacity;
   $: failure=managementError&&['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(managementError.action)?managementError.message:'';
@@ -43,18 +45,21 @@
     <div>
       <button bind:this={recipeToggle} class="recipe-toggle" aria-expanded={expanded} aria-controls={`recipes-${tileId}`} onclick={()=>expanded=!expanded}>Available recipes</button>
       <div id={`recipes-${tileId}`} hidden={!expanded}>
+        {#if holdNotice}<p id="workshop-robbery-hold">{holdNotice}</p>{/if}
         {#if orders.length>=CRAFT_TRIAL.queueCap}<p>The workshop queue is full. Cancel an order to make room.</p>{/if}
         {#if !recipes.length}<p>No recipes can be placed now. Check owned inputs, Money and queue space.</p>{/if}
         {#each ['Refine','Upgrade','Brew'] as group}
           {#if recipes.some(recipe=>recipe.group===group)}<section class="recipe-group" aria-label={`${group} recipes`}><h5>{group}</h5>
             {#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}
+              {@const held=!!holdNotice&&!canSpendMoney(purse,recipe.feeMilli)}
               <div class="recipe" data-craft-recipe={recipe.recipeId}>
                 <h6>{ITEM_CATALOG[recipe.output].name}</h6>
                 <p>Inputs: {recipe.inputs.map(input=>`${input.count} ${ITEM_CATALOG[input.defId].name}`).join(' + ')}</p>
                 <p>Fee: {formatMilli(recipe.feeMilli)} Money</p>
                 {#if recipe.before}<p class="comparison">Before → After</p><div class="upgrade-cards"><ItemCard definition={ITEM_CATALOG[recipe.before]} /><ItemCard definition={ITEM_CATALOG[recipe.output]} /></div>
                 {:else}<ItemCard definition={ITEM_CATALOG[recipe.output]} />{/if}
-                <button disabled={locked} onclick={event=>run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget)}>Place {ITEM_CATALOG[recipe.output].name}</button>
+                <button disabled={locked} aria-disabled={held?true:undefined} aria-describedby={held?'workshop-robbery-hold':undefined}
+                  onclick={event=>{if(!held)void run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget);}}>Place {ITEM_CATALOG[recipe.output].name}</button>
               </div>
             {/each}
           </section>{/if}

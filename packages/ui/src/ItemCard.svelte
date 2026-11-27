@@ -9,6 +9,7 @@
   export let ondestroy:(()=>void)|undefined=undefined;
   export let onclaim:(()=>void)|undefined=undefined;
   export let onsell:(()=>void)|undefined=undefined;
+  export let buyReasonId:string|undefined=undefined;
   export let onbuy:(()=>void)|undefined=undefined;
   export let priceMilli:number|undefined=undefined;
   $: look=itemPresentation(definition);
@@ -28,7 +29,8 @@
   <div class="actions">
     {#if onequip}<button disabled={locked} onclick={onequip}>Equip</button>{/if}
     {#if onclaim}<button disabled={locked} onclick={onclaim}>Claim</button>{/if}
-    {#if onbuy}<button disabled={locked} onclick={onbuy}>Buy</button>{/if}
+    {#if onbuy}<button disabled={locked} aria-disabled={buyReasonId?true:undefined} aria-describedby={buyReasonId}
+      onclick={() => { if (!buyReasonId) onbuy?.(); }}>Buy</button>{/if}
     {#if onsell}<button disabled={locked} onclick={onsell}>Sell</button>{/if}
     {#if ondestroy}<button disabled={locked} onclick={ondestroy}>Destroy</button>{/if}
   </div>

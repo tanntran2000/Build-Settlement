@@ -8,6 +8,7 @@
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
   import SoloWeekReport from './SoloWeekReport.svelte';
+  import { homeRobberyReportText } from './report-letters.js';
   import type { LifeDestination, LifeWindow, PostDraftEntry } from './character-life-navigation.js';
   import { type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
@@ -78,7 +79,7 @@
       return false;
     }
     if (!result.success) {
-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE'];
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
       if (!known.includes(result.error.code)) {
         error = 'The action failed. Download the error log for review.';
         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
@@ -96,6 +97,13 @@
       report = result.report;
       reportNpcs = report.npcLife ? npcs ?? [] : [];
     }
+    if (result.robberyResolution) {
+      const { week, ...robbery } = result.robberyResolution;
+      if (report?.purse?.robbery?.outcome === 'pending' && report.week === week) {
+        report = Object.freeze({ ...report, purse: Object.freeze({ ...report.purse, robbery: Object.freeze(robbery) }) });
+      }
+      lifeStatus = 'Robbery · ' + homeRobberyReportText(robbery);
+    }
     ({ city: state, outside, npcs, player, profiles } = result.next);
     // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
     if (type === 'LOAD_TRIAL') report = null;
@@ -105,7 +113,7 @@
     return true;
   }
   async function endLifeWeek(opener: HTMLButtonElement): Promise<void> {
-    if (state.phase !== 'planning' || state.society?.pendingCard) return;
+    if (state.phase !== 'planning' || state.society?.pendingCard || player?.purse.robbery) return;
     if (command('END_WEEK', { expectedWeek: state.world.week })) {
       lifeStatus = '';
       const resolvedRevision = state.revision, resolvedReport = report;
@@ -145,6 +153,11 @@
     await tick();
     const post = document.getElementById(`npc-slot-${npcId}`) as HTMLSelectElement | null;
     (post && !post.disabled ? post : document.getElementById(`profile-${npcId}-tab-work`))?.focus();
+  }
+  async function focusLifeReport(): Promise<void> {
+    await tick();
+    const id = activeWindow === 'information' ? 'life-window-heading' : 'life-reports-heading';
+    document.getElementById(id)?.focus();
   }
   async function focusLifeCityNavigation(): Promise<void> {
     await tick();
@@ -230,7 +243,7 @@
 {#if state.society?.crisis.stage === 'fallen'}
   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
 {:else if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu} onpurse={command}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onanswerrobbery={option => { if (command('ANSWER_ROBBERY', { option })) void focusLifeReport(); }} onendweek={endLifeWeek} onmainmenu={mainMenu} onpurse={command}>
     {#snippet playerInfo()}
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
@@ -265,7 +278,7 @@
         </div>
       </section>
       {#if npcs && outside}
-      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purseMoneyMilli={player!.purse.moneyMilli} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
+      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purse={player!.purse} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
         onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} />
       {/if}
     {/snippet}

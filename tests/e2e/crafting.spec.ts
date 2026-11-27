@@ -11,7 +11,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string, 
 }
 function supplied(buildSmithy = true) {
   const s = makeLifeWithNpcs(42), stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
-  s.player.purse.moneyMilli = 1000000;
+  s.player.purse.moneyMilli = 12000;
   Object.assign(stock, { gold: 1000000, food: 1000000, wood: 1000000, iron: 1000000 });
   s.city.society!.classes.free = 37; s.city.society!.classes.makers.common = 30; s.city.society!.classes.luminaries.common = 20;
   s.city.society!.stocksMilli.herbs = 10000;
