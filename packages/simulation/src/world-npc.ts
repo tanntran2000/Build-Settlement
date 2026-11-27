@@ -46,7 +46,7 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
 }
 
 // City commands for an NPC session: a post whose tile was replaced or lost its slot is cleared in the same result.
-export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:ItemWeekContext): WorldNpcCityResult {
+export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:ItemWeekContext,levyPenalty=0): WorldNpcCityResult {
   const fail = (code: string, message: string): WorldNpcCityResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city) || !isWorldNpcList(session.npcs, session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
@@ -56,7 +56,7 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:I
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
     const occupiedHomes = new Set((session.npcs as NpcWorldSessionState["npcs"]).map(npc => npc.household.home));
-    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes);
+    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes,levyPenalty);
     if (!result.success) return fail(result.error.code, result.error.message);
     const city: TileTrialState = result.nextState, slots = managerSlotTileIds(city);
     const replaced = type === "REPLACE" ? Object.getOwnPropertyDescriptor(raw, "tileId")?.value : undefined;

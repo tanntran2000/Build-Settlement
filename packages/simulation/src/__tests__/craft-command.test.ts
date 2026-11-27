@@ -11,6 +11,7 @@ function life() {
   const made=createCharacterLifeSession(42,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});
   if(!made.success)throw Error(made.error.message);
   const s=made.value,stock=goldStock(s);
+  s.player.purse.moneyMilli=1_000_000;
   Object.assign(stock,{gold:1_000_000,wood:1_000_000,iron:1_000_000,food:1_000_000});
   for(const [tileId,typeId] of [['spec-2','smithy'],['service-1','hospital'],['slum-1','drug-store']] as const)
     s.city.tiles.find(t=>t.id===tileId)!.building={typeId,level:1,workers:0,enabled:true};
@@ -53,7 +54,7 @@ describe('place craft orders',()=>{
     const s=life(),itemId=stockRecipe(s,recipeId),before=structuredClone(s),next=act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId,...(itemId?{itemId}:{})});
     expect(items(next).workshops).toEqual({[tileId]:{orders:[{recipeId,items:defId?[{id:itemId,defId}]:[],materials,feeMilli}],ready:[]}});
     expect(items(next).inventory).toEqual([]);expect(items(next).consumables).toEqual([]);expect(items(next).materials).toEqual({});
-    expect(goldStock(next).gold).toBe(1_000_000-feeMilli);expect(next.city.revision).toBe(s.city.revision+1);expect(s).toEqual(before);
+    expect(next.player.purse.moneyMilli).toBe(1_000_000-feeMilli);expect(goldStock(next)).toEqual(goldStock(s));expect(next.city.revision).toBe(s.city.revision+1);expect(s).toEqual(before);
     expect(isLiveCharacterLifeSessionState(next)).toBe(true);
   });
   it.each(Object.keys(RECIPES))('places catalog recipe %s with all inputs held once',recipeId=>{
@@ -66,8 +67,11 @@ describe('place craft orders',()=>{
   });
   it.each(['smithy','hospital','drug-store'])('queues at enabled %s without requiring workers or current Herbs/upkeep',typeId=>{
     const s=life(),tileId=typeId==='smithy'?'spec-2':typeId==='hospital'?'service-1':'slum-1',recipeId=typeId==='smithy'?'refine-silver':'brew-heal-potion-1';
-    stockRecipe(s,recipeId);goldStock(s).gold=1000;
-    expect(items(act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId})).workshops![tileId].orders).toHaveLength(1);
+    stockRecipe(s,recipeId);s.player.purse.moneyMilli=1000;goldStock(s).gold=0;
+    const next=act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId});
+    expect(items(next).workshops![tileId].orders).toHaveLength(1);
+    expect(next.player.purse.moneyMilli).toBe(0);
+    expect(goldStock(next).gold).toBe(0);
   });
   it('RECIPE_UNKNOWN is atomic',()=>refuse(life(),{...place,recipeId:'unknown'},'RECIPE_UNKNOWN'));
   it.each(['wrong','unbuilt','disabled','unknown'])('NO_WORKSHOP for %s is atomic',kind=>{
@@ -91,7 +95,7 @@ describe('place craft orders',()=>{
     for(let i=0;i<6;i++)s=act(s,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'refine-silver'});
     expect(items(s).workshops!['spec-2'].orders).toHaveLength(6);refuse(s,place,'QUEUE_FULL');
   });
-  it('NOT_ENOUGH_GOLD is atomic',()=>{const s=life();stockRecipe(s,'refine-silver');goldStock(s).gold=999;refuse(s,place,'NOT_ENOUGH_GOLD');});
+  it('NOT_ENOUGH_MONEY is atomic',()=>{const s=life();stockRecipe(s,'refine-silver');s.player.purse.moneyMilli=999;refuse(s,place,'NOT_ENOUGH_MONEY');});
   it.each(['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'])('%s refuses Report and stale revision atomically',type=>{
     const s=life();stockRecipe(s,'refine-silver');const fields=type==='PLACE_CRAFT_ORDER'?place:{type,tileId:'spec-2',index:0};
     refuse(s,{...fields,expectedRevision:99},'STALE_COMMAND');s.city.phase='report';refuse(s,fields,'FORBIDDEN');
@@ -104,10 +108,10 @@ describe('place craft orders',()=>{
 });
 
 describe('cancel and held inputs',()=>{
-  it.each(['refine-silver','upgrade-rare-ring-player','upgrade-heal-potion-2','brew-heal-potion-1'])('cancel %s returns exact ids, stacks and Gold once',recipeId=>{
+  it.each(['refine-silver','upgrade-rare-ring-player','upgrade-heal-potion-2','brew-heal-potion-1'])('cancel %s returns exact ids, stacks and Money once',recipeId=>{
     const s=life(),itemId=stockRecipe(s,recipeId),before=structuredClone(s),tileId=RECIPES[recipeId].workshops[0]==='smithy'?'spec-2':'service-1';
     const placed=act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId,...(itemId?{itemId}:{})}),next=act(placed,'CANCEL_CRAFT_ORDER',{tileId,index:0});
-    expect(items(next)).toEqual(items(before));expect(goldStock(next)).toEqual(goldStock(before));
+    expect(items(next)).toEqual(items(before));expect(next.player.purse).toEqual(before.player.purse);expect(goldStock(next)).toEqual(goldStock(before));
     refuse(next,{type:'CANCEL_CRAFT_ORDER',tileId,index:0},'ORDER_UNKNOWN');
   });
   it.each(['inventory','consumables','materials'])('INVENTORY_FULL when returning %s is atomic',destination=>{
@@ -173,4 +177,13 @@ describe('canonical workshop state',()=>{
 
 it.each([['spec-2','smithy'],['service-1','hospital'],['slum-1','drug-store']])('ASSIGN_NPC accepts %s (%s)',(tileId)=>{
   const next=act(withNpcs(life(),NPC_TEST_KEYS.slice(0,1)),'ASSIGN_NPC',{npcId:'npc_w1_guild_0',tileId});expect(next.npcs[0].postTileId).toBe(tileId);
+});
+
+it('refunds a pending pre-M2 order in Money',()=>{
+  const s=queued();
+  const next=act(s,'CANCEL_CRAFT_ORDER',{tileId:'spec-2',index:0});
+  expect(goldStock(next)).toEqual(goldStock(s));
+  expect(next.player.purse).toEqual({...s.player.purse,moneyMilli:s.player.purse.moneyMilli+1000});
+  expect(items(next).materials.iron).toBe(2);
+  expect(items(next).workshops).toBeUndefined();
 });

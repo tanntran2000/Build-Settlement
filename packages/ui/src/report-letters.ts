@@ -1,3 +1,4 @@
+import { applyDifficulty, difficultyProfile, type DifficultyId, type PurseWeekReport } from '@haven/core';
 import type { CrisisStage, LawWeekReport, TileTrialReport } from '@haven/core';
 import { formatFulfillment, formatMilli } from './milli-format.js';
 import { CLASS_LABELS, crimeReportLine, crisisReportLines, garrisonReportLine, lawReportLines, orderReportLines, type ClassId } from './society-view.js';
@@ -251,3 +252,16 @@ export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food'
   ];
 }
 import { itemReportRows } from './items-view.js';
+
+export function purseReportRows(purse: Readonly<PurseWeekReport>, difficulty: DifficultyId) {
+  const { levyPercent, levyDueMilli, levyPaidMilli, donationsMilli, donationGoldMilli, moneyAfterMilli } = purse;
+  const credited = applyDifficulty(levyPaidMilli, difficultyProfile(difficulty).levyMoneyBps);
+  const shortfall = levyDueMilli - levyPaidMilli;
+  return [
+    { label: 'Levy', value: signedMilli(credited) + ' Money · ' + levyPercent + '% · ' +
+      formatMilli(levyPaidMilli) + ' of ' + formatMilli(levyDueMilli) + ' Gold paid' +
+      (shortfall ? ' · ' + formatMilli(shortfall) + ' Gold shortfall' : '') },
+    { label: 'Donation', value: `${signedMilli(-donationsMilli)} Money · ${signedMilli(donationGoldMilli)} Gold` },
+    { label: 'Money after', value: formatMilli(moneyAfterMilli) + ' Money' },
+  ];
+}

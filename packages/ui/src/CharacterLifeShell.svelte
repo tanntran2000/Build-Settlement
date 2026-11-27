@@ -4,6 +4,7 @@
   import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport } from '@haven/core';
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
+  import PursePanel from './PursePanel.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import OptionsDialog from './OptionsDialog.svelte';
   import { formatMilli } from './milli-format.js';
@@ -22,6 +23,7 @@
   export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
   export let onendweek: (opener: HTMLButtonElement) => void;
   export let onmainmenu: () => void;
+  export let onpurse: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
   export let playerInfo: Snippet;
   export let city: Snippet;
   export let characters: Snippet;
@@ -79,6 +81,10 @@
     <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
     <p>{recoveryLine}</p>
+    <div class="purse-balances">
+      <span class="balance-gold">Gold {formatMilli(settlement.inventory.gold)}</span>
+      <span class="balance-money" data-testid="purse-money">Money {formatMilli(storageSession.player.purse.moneyMilli)}</span>
+    </div>
     <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
@@ -152,7 +158,12 @@
       </div>
     </section>
     {#if activeWindow === 'information'}<CrisisCard {state} {onchoose} />{/if}
-    <section hidden={activeWindow !== 'player'}>{@render playerInfo()}</section>
+    <section hidden={activeWindow !== 'player'}>
+      {@render playerInfo()}
+      {#if activeWindow === 'player'}
+        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} {locked} oncommand={onpurse} />
+      {/if}
+    </section>
     <section hidden={activeWindow !== 'population'}>
       <SocietyPopulation {state} />
     </section>
@@ -173,6 +184,10 @@
     grid-template-columns: var(--life-sidebar-width) minmax(0, 1fr); gap: var(--life-gap);
     background: var(--bg-primary); color: var(--text-main); font-size: 16px; line-height: 1.4;
   }
+  .purse-balances { display: flex; flex-wrap: wrap; column-gap: 12px; font-variant-numeric: tabular-nums; }
+  .balance-gold::before, .balance-money::before { content: ''; display: inline-block; width: 0.65em; height: 0.65em; margin-inline-end: 0.35em; border: 1px solid currentColor; }
+  .balance-gold::before { border-radius: 50%; background: var(--accent-gold); }
+  .balance-money::before { background: var(--accent-green); }
   aside { position: sticky; top: 0; height: 100dvh; overflow-y: auto; align-self: start; padding: 18px 16px; background: #17242a; scroll-padding: 8px; }
   .content { max-height: 100dvh; overflow-y: auto; margin-inline: -8px; padding: 18px 8px; scroll-padding: 8px; }
   aside, .content, section { min-width: 0; overflow-wrap: anywhere; font-size: var(--life-body-size); }

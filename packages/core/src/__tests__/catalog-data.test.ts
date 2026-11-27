@@ -21,7 +21,14 @@ const cases = [
   { file: 'tuning.json', validator: 'validateTuning', view: () => ({
       ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE,
       IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,
-      DIFFICULTY_TRIAL, PURSE_TRIAL,
+      DIFFICULTY_TRIAL, PURSE_TRIAL: {
+        marker: PURSE_TRIAL.marker,
+        levyMaxPercent: PURSE_TRIAL.levyMaxPercent,
+        levyFreePercent: PURSE_TRIAL.levyFreePercent,
+        levySatisfactionBpsPerPoint: PURSE_TRIAL.levySatisfactionBpsPerPoint,
+        donateSatisfactionPerGoldMilli: PURSE_TRIAL.donateSatisfactionPerGoldMilli,
+        donateSatisfactionCapPerWeek: PURSE_TRIAL.donateSatisfactionCapPerWeek,
+      },
     }),
     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
   { file: 'npc-life.json', validator: 'validateNpcLife', view: () => ({ origins: NPC_ORIGINS, hobbies: NPC_HOBBIES, P7A_TRIAL }),
@@ -70,7 +77,9 @@ it.each(cases)('$file has recursively frozen typed views', entry => {
   // Wrapper objects belong to the test; the public constants themselves are frozen.
   const view = entry.view();
   if (Array.isArray(view)) frozen(view);
-  else Object.values(view).forEach(frozen);
+  else for (const [key, value] of Object.entries(view)) {
+    frozen(entry.file === 'tuning.json' && key === 'PURSE_TRIAL' ? PURSE_TRIAL : value);
+  }
 });
 
 it('validates the acquisition TRIAL data and pins malformed bands with a named error', async () => {

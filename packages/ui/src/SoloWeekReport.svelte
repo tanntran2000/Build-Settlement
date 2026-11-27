@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport, type WorldNpc } from '@haven/core';
+  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type DifficultyId, type TileTrialReport, type WorldNpc } from '@haven/core';
   import { ITEM_GOAL_LABELS, craftWork, craftDestination, WORKSHOP_IDLE_COPY } from './items-view.js';
   import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import ReportLetter from './ReportLetter.svelte';
-  import { householdReportRows, npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';
+  import { householdReportRows, npcLifeReportRows, purseReportRows, reportLetters, reportStamps } from './report-letters.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -11,6 +11,7 @@
   export let report: Readonly<TileTrialReport> | null;
   export let npcs: readonly WorldNpc[];
   export let planningWeek: number;
+  export let difficulty: DifficultyId;
   export let locked: boolean;
   export let onnextweek: () => void;
 
@@ -42,6 +43,13 @@
     </section>
     <section>
       <h3>Gold and upkeep</h3>
+      {#if report.purse}
+        <dl aria-label="Purse report" data-testid="purse-report">
+          {#each purseReportRows(report.purse, difficulty) as row}
+            <div><dt>{row.label}</dt><dd>{row.value}</dd></div>
+          {/each}
+        </dl>
+      {/if}
       <p>Tax: {formatMilli(report.taxMilli)} Gold. Upkeep covered: {formatMilli(report.upkeepPaidMilli)} Gold; unfunded: {formatMilli(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {formatMilli(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {formatMilli(report.farmExtraUpkeepMilli)} Gold.</p>
     </section>
     <details>

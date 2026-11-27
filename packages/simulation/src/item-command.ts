@@ -27,6 +27,7 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
   const optionalItem=type==='PLACE_CRAFT_ORDER'&&Object.hasOwn(raw,'itemId')?['itemId']:[];
   if(!hasWeeklyKeys(raw,['type','expectedRevision',...fields[type],...optionalItem]))return fail('FORBIDDEN');
   const next=structuredClone(session),s=next.city.society!.items;
+  const purse=next.player.purse;
   const stock=next.city.world.settlements[next.city.world.activeSettlementId!].inventory;
   const locate=(id:unknown)=>[s.inventory,s.consumables].map(list=>({list,index:list.findIndex(i=>i.id===id)})).find(p=>p.index>=0);
   const receive=(item:ItemInstance):boolean=>{
@@ -35,9 +36,9 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     list.push(item);list.sort((a,b)=>a.id-b.id);return true;
   };
   const purchase=(defId:string,price:number):CharacterLifeCommandResult|null=>{
-    if(stock.gold<price)return fail('NOT_ENOUGH_GOLD');
+    if(purse.moneyMilli<price)return fail('NOT_ENOUGH_MONEY');
     if(!receive({id:s.nextItemId,defId}))return fail('INVENTORY_FULL');
-    s.nextItemId=safe(s.nextItemId+1);stock.gold-=price;return null;
+    s.nextItemId=safe(s.nextItemId+1);purse.moneyMilli-=price;return null;
   };
   if(type==='BUY_ITEM'||type==='SELL_ITEM'||type==='SELL_MATERIAL'){
     if(!next.city.tiles.some(t=>t.building?.typeId==='town-market'&&t.building.enabled))return fail('NO_SHOP');
@@ -60,10 +61,10 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     }
     const workshop=s.workshops&&Object.hasOwn(s.workshops,tileId as string)?s.workshops[tileId as string]:{orders:[],ready:[]};
     if(workshop.orders.length>=CRAFT_TRIAL.queueCap)return fail('QUEUE_FULL');
-    if(stock.gold<recipe.feeMilli)return fail('NOT_ENOUGH_GOLD');
+    if(purse.moneyMilli<recipe.feeMilli)return fail('NOT_ENOUGH_MONEY');
     for(const item of heldItems){const found=locate(item.id)!;found.list.splice(found.index,1);}
     for(const [id,n] of Object.entries(materials)){s.materials[id]-=n;if(!s.materials[id])delete s.materials[id];}
-    stock.gold-=recipe.feeMilli;
+    purse.moneyMilli-=recipe.feeMilli;
     workshop.orders.push({recipeId:raw.recipeId,items:heldItems,materials:Object.fromEntries(Object.keys(ITEM_CATALOG).filter(id=>Object.hasOwn(materials,id)).map(id=>[id,materials[id]])),feeMilli:recipe.feeMilli});
     s.workshops=Object.fromEntries([...Object.entries(s.workshops??{}).filter(([id])=>id!==tileId),[tileId as string,workshop] as const].sort(([a],[b])=>a<b?-1:a>b?1:0));
   } else if(type==='CANCEL_CRAFT_ORDER'){
@@ -75,7 +76,8 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     for(const [id,n] of Object.entries(order.materials)){
       const total=safe((s.materials[id]??0)+n);if(total>ITEM_TRIAL.stackCap)return fail('INVENTORY_FULL');s.materials[id]=total;
     }
-    stock.gold=safe(stock.gold+order.feeMilli);workshop.orders.splice(raw.index,1);
+    purse.moneyMilli=safe(purse.moneyMilli+order.feeMilli);
+    workshop.orders.splice(raw.index,1);
     if(!workshop.orders.length&&!workshop.ready.length)delete s.workshops![tileId as string];
     if(!Object.keys(s.workshops!).length)delete s.workshops;
   } else if(type==='BUY_ITEM'){
@@ -91,7 +93,7 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     const id=raw.materialId;
     if(typeof id!=='string'||!Object.hasOwn(ITEM_CATALOG,id)||ITEM_CATALOG[id].category!=='material'||!count(raw.count)||raw.count<1||!s.materials[id]||s.materials[id]<raw.count)return fail('ITEM_UNKNOWN');
     const d=ITEM_CATALOG[id];if(d.rarity==='legendary')return fail('NOT_SELLABLE');
-    stock.gold=safe(stock.gold+safe(Math.floor(safe(d.basePriceMilli*ITEM_TRIAL.resaleBps)/10000)*raw.count));
+    purse.moneyMilli=safe(purse.moneyMilli+safe(Math.floor(safe(d.basePriceMilli*ITEM_TRIAL.resaleBps)/10000)*raw.count));
     s.materials[id]-=raw.count;if(s.materials[id]===0)delete s.materials[id];
   } else if(type==='CLAIM_STORED_ITEM'){
     const index=s.storage.findIndex(v=>v.item.id===raw.itemId);if(index<0)return fail('ITEM_UNKNOWN');
@@ -107,7 +109,7 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
     const item=found.list[found.index],d=ITEM_CATALOG[item.defId];
     if(type==='SELL_ITEM'){
       if(d.rarity==='legendary')return fail('NOT_SELLABLE');
-      stock.gold=safe(stock.gold+Math.floor(safe(d.basePriceMilli*ITEM_TRIAL.resaleBps)/10000));found.list.splice(found.index,1);
+      purse.moneyMilli=safe(purse.moneyMilli+Math.floor(safe(d.basePriceMilli*ITEM_TRIAL.resaleBps)/10000));found.list.splice(found.index,1);
     } else if(type==='DESTROY_ITEM')found.list.splice(found.index,1);
     else if(type==='USE_CONSUMABLE'){
       if(found.list!==s.consumables)return fail('SLOT_MISMATCH');

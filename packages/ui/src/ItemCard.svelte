@@ -24,7 +24,7 @@
   {#if hint}<p>{hint}</p>{/if}
   {#if definition.trait}<p>While worn: {({warden:`Watch House Security +${ITEM_TRIAL.effects.wardenSecurity}`,crown:`Authority +${ITEM_TRIAL.effects.crownAuthority}`,ironhide:`Wound damage −${ITEM_TRIAL.effects.ironhideWoundReduction}`,ledger:`Post output +${ITEM_TRIAL.effects.ledgerOutputPercent}%`} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
   {#if preview.length}<p>Before → After</p><dl>{#each preview as row}<div><dt>{itemTitle(row.skill)}</dt><dd>{row.before} → {row.after}</dd></div>{/each}</dl>{/if}
-  {#if priceMilli!==undefined}<p>{formatMilli(priceMilli)} Gold</p>{/if}
+  {#if priceMilli!==undefined}<p>{formatMilli(priceMilli)} Money</p>{/if}
   <div class="actions">
     {#if onequip}<button disabled={locked} onclick={onequip}>Equip</button>{/if}
     {#if onclaim}<button disabled={locked} onclick={onclaim}>Claim</button>{/if}

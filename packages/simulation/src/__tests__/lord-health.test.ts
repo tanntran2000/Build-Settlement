@@ -71,7 +71,7 @@ it('a wound leaving exactly one survives and then receives Hospital and gear reg
 it('CITY_FALLEN blocks every later city, NPC and item command without mutation', () => {
   const s = wound(); s.player.character.health = 20;
   const fallen = command(s,'END_WEEK',{expectedWeek:1}).next, before = structuredClone(fallen);
-  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {
+  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT','SET_LEVY','DONATE_MONEY',...ITEM_COMMAND_TYPES]) {
     expect(executeCharacterLifeCommand(fallen,{type,expectedRevision:fallen.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
   }
   expect(fallen).toEqual(before);
@@ -91,14 +91,15 @@ it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {
 it('builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions', () => {
   let s = life(); const stocks = () => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   stocks().gold = 100_000;
+  s.player.purse.moneyMilli = 100_000;
   const before = {...stocks()}; s = command(s,'BUILD',{tileId:'slum-1',typeId:'drug-store'}).next;
   expect(s.city.tiles.find(t=>t.id==='slum-1')!.building).toEqual({typeId:'drug-store',level:1,workers:0,enabled:true});
   expect(TRIAL_BUILDINGS['drug-store']).toMatchObject({terrain:['town'],maxLevel:1,maxWorkers:0,cost:TRIAL_BUILDINGS.hospital.cost,upkeepMilli:TRIAL_BUILDINGS.hospital.upkeepMilli});
   expect(SOCIETY_BUILDINGS['drug-store']).toMatchObject({tier:'slum',reserved:false,staff:null});
   expect(stocks()).toEqual({...before,gold:before.gold-8000,wood:before.wood-4000,iron:before.iron-2000});
   for (const [potion,price] of [[1,3000],[2,8000],[3,15000]]) {
-    const gold = stocks().gold; s = command(s,'BUY_POTION',{tileId:'slum-1',potion}).next;
-    expect(stocks().gold).toBe(gold-price); expect(s.city.society!.items.consumables.at(-1)!.defId).toBe(`heal-potion-${potion}`);
+    const gold = stocks().gold, money = s.player.purse.moneyMilli; s = command(s,'BUY_POTION',{tileId:'slum-1',potion}).next;
+    expect(stocks().gold).toBe(gold); expect(s.player.purse.moneyMilli).toBe(money-price); expect(s.city.society!.items.consumables.at(-1)!.defId).toBe(`heal-potion-${potion}`);
   }
   const r = command(s,'END_WEEK',{expectedWeek:1});
   expect(r.report!.upkeepPaidMilli).toBeGreaterThanOrEqual(1000); expect(r.report!.items.hospitalOperated).toBe(false);

@@ -40,7 +40,16 @@ export interface CrimeEventReport {
  event:null | {kind:'robbery'|'smear'|'raid'|'assassination';severity:'minor'|'serious'|'severe';target?:keyof OrderReport['theftMilli'];lossMilli?:number;soldiersKilled?:number;outcome?:'foiled'|'wounded'|'killed';standingLoss?:number;authorityLoss?:number};
  lordHealthLoss:number;
 }
+export interface PurseWeekReport {
+  levyPercent: number;
+  levyDueMilli: number;
+  levyPaidMilli: number;
+  donationsMilli: number;
+  donationGoldMilli: number;
+  moneyAfterMilli: number;
+}
 export interface TileTrialReport {
+  purse?: Readonly<PurseWeekReport>;
   items: ItemWeekReport;
   npcLife?: { exhausted: string[]; recovered: string[]; birthdays: string[] };
   laws?: LawWeekReport;

@@ -20,6 +20,7 @@ function life() {
   if (!made.success) throw Error(made.error.message);
   const s = withNpcs(made.value, [{ week: 1, source: 'guild', slot: 0 }]);
   stock(s).gold = 100000;
+  s.player.purse.moneyMilli = 100000;
   s.city.society!.stocksMilli.herbs = 10000;
   for (const [id, typeId, workers] of [['spec-2', 'smithy', 1], ['service-1', 'hospital', 2], ['slum-1', 'drug-store', 0]] as const) {
     s.city.tiles.find(t => t.id === id)!.building = { typeId, level: 1, workers, enabled: true };
@@ -105,48 +106,48 @@ describe('C1 crafting recipe projection', () => {
   it('lists only owned and affordable Smithy recipes, grouped Refine / Upgrade without mutation', () => {
     const s = life(); supply(s, 'refine-silver'); supply(s, 'upgrade-rare-ring-player');
     const before = JSON.stringify(s);
-    const rows = view.craftingRecipes(s.city, 'spec-2');
+    const rows = view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli);
     expect(rows.map(r => [r.recipeId, r.group])).toEqual([['refine-silver', 'Refine'], ['upgrade-rare-ring-player', 'Upgrade']]);
     expect(rows[1]).toMatchObject({ before: 'common-ring', output: 'rare-ring-player', feeMilli: 3000, inputs: RECIPES['upgrade-rare-ring-player'].inputs });
     expect(JSON.stringify(s)).toBe(before);
-    stock(s).gold = 999;
-    expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+    s.player.purse.moneyMilli = 999;
+    expect(view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli)).toEqual([]);
   });
   it.each(Object.keys(RECIPES))('offers catalog recipe %s only at its workshop, with exact single-order fields', recipeId => {
     const s = life(), recipe = RECIPES[recipeId]; supply(s, recipeId);
     const tileId = recipe.workshops[0] === 'smithy' ? 'spec-2' : 'service-1';
-    const row = view.craftingRecipes(s.city, tileId).find(r => r.recipeId === recipeId)!;
+    const row = view.craftingRecipes(s.city, tileId, s.player.purse.moneyMilli).find(r => r.recipeId === recipeId)!;
     expect(row).toBeDefined();
     const item = [...items(s).inventory, ...items(s).consumables][0];
     expect(row.fields).toEqual({ tileId, recipeId, ...(item ? { itemId: item.id } : {}) });
     expect(row.inputs).toEqual(recipe.inputs); expect(row.output).toBe(recipe.output); expect(row.feeMilli).toBe(recipe.feeMilli);
-    expect(view.craftingRecipes(s.city, tileId === 'spec-2' ? 'service-1' : 'spec-2').some(r => r.recipeId === recipeId)).toBe(false);
+    expect(view.craftingRecipes(s.city, tileId === 'spec-2' ? 'service-1' : 'spec-2', s.player.purse.moneyMilli).some(r => r.recipeId === recipeId)).toBe(false);
   });
   it('excludes equipped, stored and held items and chooses the lowest owned instance id', () => {
     const s = life(); items(s).materials.nitrate = 1;
     items(s).equipped.player = { ring: { id: 1, defId: 'common-ring' } };
     items(s).storage = [{ item: { id: 2, defId: 'common-ring' }, expiresWeek: 3 }];
     items(s).workshops = { 'spec-2': { orders: [{ recipeId: 'upgrade-rare-ring-player', items: [{ id: 3, defId: 'common-ring' }], materials: { nitrate: 1 }, feeMilli: 3000 }], ready: [] } };
-    expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+    expect(view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli)).toEqual([]);
     items(s).inventory = [{ id: 5, defId: 'common-ring' }, { id: 4, defId: 'common-ring' }];
-    expect(view.craftingRecipes(s.city, 'spec-2')[0].fields).toEqual({ tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 4 });
+    expect(view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli)[0].fields).toEqual({ tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 4 });
   });
   it('allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee', () => {
     const s = life(); supply(s, 'brew-heal-potion-1');
     s.city.tiles.find(t => t.id === 'service-1')!.building!.workers = 0;
-    s.city.society!.stocksMilli.herbs = 0; stock(s).gold = 1000;
+    s.city.society!.stocksMilli.herbs = 0; s.player.purse.moneyMilli = 1000; stock(s).gold = 0;
     expect(view.potionShop(s.city, 'service-1')).toBe(false);
-    for (const tileId of ['service-1', 'slum-1']) expect(view.craftingRecipes(s.city, tileId).map(r => r.recipeId)).toContain('brew-heal-potion-1');
-    stock(s).gold = 999; expect(view.craftingRecipes(s.city, 'service-1')).toEqual([]);
+    for (const tileId of ['service-1', 'slum-1']) expect(view.craftingRecipes(s.city, tileId, s.player.purse.moneyMilli).map(r => r.recipeId)).toContain('brew-heal-potion-1');
+    s.player.purse.moneyMilli = 999; expect(view.craftingRecipes(s.city, 'service-1', s.player.purse.moneyMilli)).toEqual([]);
   });
   it('hides placement recipes for absent/paused workshops and a full queue', () => {
     const s = life(); supply(s, 'refine-silver');
-    expect(view.craftingRecipes(s.city, 'missing')).toEqual([]);
+    expect(view.craftingRecipes(s.city, 'missing', s.player.purse.moneyMilli)).toEqual([]);
     s.city.tiles.find(t => t.id === 'spec-2')!.building!.enabled = false;
-    expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+    expect(view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli)).toEqual([]);
     s.city.tiles.find(t => t.id === 'spec-2')!.building!.enabled = true;
     items(s).workshops = { 'spec-2': { orders: Array.from({ length: 6 }, () => ({ recipeId: 'refine-silver', items: [], materials: { iron: 2 }, feeMilli: 1000 })), ready: [] } };
-    expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+    expect(view.craftingRecipes(s.city, 'spec-2', s.player.purse.moneyMilli)).toEqual([]);
   });
 });
 

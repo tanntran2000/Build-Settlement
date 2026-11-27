@@ -11,6 +11,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string, 
 }
 function supplied(buildSmithy = true) {
   const s = makeLifeWithNpcs(42), stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  s.player.purse.moneyMilli = 1000000;
   Object.assign(stock, { gold: 1000000, food: 1000000, wood: 1000000, iron: 1000000 });
   s.city.society!.classes.free = 37; s.city.society!.classes.makers.common = 30; s.city.society!.classes.luminaries.common = 20;
   s.city.society!.stocksMilli.herbs = 10000;
@@ -47,7 +48,7 @@ test('C1 1280 builds a Smithy, refines 2 Iron, upgrades a Player ring, cancels, 
   await expect(recipe(page, 'upgrade-rare-ring-player').getByRole('article')).toHaveCount(2);
   await expect(recipe(page, 'upgrade-rare-ring-player')).toContainText('Before → After');
   await expect(recipe(page, 'refine-silver')).toContainText('2 Iron');
-  await expect(recipe(page, 'refine-silver')).toContainText('Fee: 1 Gold');
+  await expect(recipe(page, 'refine-silver')).toContainText('Fee: 1 Money');
   await expect(smithy(page).locator('input')).toHaveCount(0);
   await place(page, 'refine-silver'); s = act(s, 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'refine-silver' });
   await place(page, 'upgrade-rare-ring-player'); s = act(s, 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1 });
@@ -103,7 +104,7 @@ test('C1 Hospital and Drug Store Brew tabs permit unstaffed orders and preserve 
   expect(await exportLife(page)).toEqual(s);
 });
 
-test('C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays atomic with a panel error', async ({ page }) => {
+test('C1 queue holds inputs/Money, shows ready outputs, and failed cancel stays atomic with a panel error', async ({ page }) => {
   let s = act(supplied(), 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1 });
   const items = s.city.society!.items;
   for (let i = 0; i < ITEM_TRIAL.inventoryCap; i++) items.inventory.push({ id: items.nextItemId++, defId: 'common-weapon' });
@@ -112,7 +113,7 @@ test('C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays a
   await expect(smithy(page)).toContainText('Ready outputs · Waiting for room');
   await expect(smithy(page).getByTestId('workshop-ready')).toContainText(ITEM_CATALOG['rare-ring-player'].name);
   await expect(smithy(page).getByTestId('workshop-ready')).toContainText('1 Silver');
-  await expect(smithy(page)).toContainText('Held fee: 3 Gold');
+  await expect(smithy(page)).toContainText('Held fee: 3 Money');
   await smithy(page).getByRole('button', { name: 'Cancel order 1', exact: true }).click();
   await expect(smithy(page).getByRole('alert')).toHaveText('There is no room in the inventory.');
   expect(await exportLife(page)).toEqual(s);

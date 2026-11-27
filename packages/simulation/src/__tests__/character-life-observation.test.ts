@@ -56,7 +56,8 @@ function characterContract(c: VisibleCharacter) {
 }
 
 function reportContract(r: VisibleReport) {
-  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : []), ...(r.household ? ['household'] : [])]);
+  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : []), ...(r.household ? ['household'] : []), ...(r.purse ? ['purse'] : [])]);
+  if (r.purse) keys(r.purse, ['levyPercent', 'levyDueMilli', 'levyPaidMilli', 'donationsMilli', 'donationGoldMilli', 'moneyAfterMilli']);
   if (r.household) keys(r.household, ['bought', 'sold', 'released', 'left', 'lotsToRivals', 'wagesPaidMilli', 'unpaid', 'notices']);
   keys(r.before, stockKeys); keys(r.after, stockKeys);
   keys(r.goods, ['demandMilli', 'servedMilli', 'fulfillmentBps', 'woodUsed', 'ironUsed', 'revenueMilli']);
@@ -110,7 +111,7 @@ function rendered(c: VisibleCharacter, view: CharacterView) {
 
 const noPost = 'No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.';
 const checkpointLock = 'Choose Plan next week before saving, continuing, exporting or importing.';
-const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING', 'RELEASE_NPC'];
+const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING', 'SET_LEVY', 'DONATE_MONEY', 'RELEASE_NPC'];
 
 describe('explicit nested allowlist and disclosure', () => {
   it('exports the projector and exposes only rendered character fields and exact nested keys', () => {
@@ -339,6 +340,7 @@ describe('detached complete visible report', () => {
     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.world.week, 'report', result.next.city.revision]);
     expect(o.actionTypes).toEqual(['NEXT_WEEK']); expect(o.disabledReasons).toEqual([checkpointLock]);
     expect(o.lastReport).toEqual({ week: r.week, before: r.before, after: r.after,
+      purse: { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 0 },
       taxMilli: r.taxMilli, farmBatchGoldMilli: r.farmBatchGoldMilli, farmExtraUpkeepMilli: r.farmExtraUpkeepMilli,
       upkeepPaidMilli: r.upkeepPaidMilli, unpaidUpkeepMilli: r.unpaidUpkeepMilli,
       foodDemandMilli: r.foodDemandMilli, foodConsumedMilli: r.foodConsumedMilli,

@@ -6,6 +6,7 @@ import {
   type TileTrialReport, type TileTrialState, type WeeklyStocks,
 } from '@haven/core';
 import type { CharacterLifeActionType } from './character-life-command.js';
+import { PURSE_COMMAND_TYPES } from './purse-command.js';
 
 export interface VisibleCharacter {
   id: string; name: string; shortDescription: string; longDescription: string;
@@ -20,6 +21,7 @@ export interface VisibleCharacter {
 export interface VisibleReport {
   goodsStock?: TileTrialReport['goodsStock'];
   household?: TileTrialReport['household'];
+  purse?: TileTrialReport['purse'];
   week: number; before: WeeklyStocks; after: WeeklyStocks;
   taxMilli: number; farmBatchGoldMilli: number; farmExtraUpkeepMilli: number;
   upkeepPaidMilli: number; unpaidUpkeepMilli: number;
@@ -83,6 +85,7 @@ function visibleReport(r: Readonly<TileTrialReport>): VisibleReport {
       woodUsed: r.goods.woodUsed, ironUsed: r.goods.ironUsed, revenueMilli: r.goods.revenueMilli },
     activities: [...r.activities],
   };
+  if (r.purse) report.purse = { ...r.purse };
   if (r.household) report.household = structuredClone(r.household);
   if (r.goodsStock) report.goodsStock = { ...r.goodsStock };
   if (r.immigration) report.immigration = { populationBefore: r.immigration.populationBefore,
@@ -106,7 +109,7 @@ export function observeCharacterLife(session: CharacterLifeSessionState, lastRep
     week: city.world.week, phase: city.phase, revision: city.revision,
     actionTypes: city.phase === 'report' ? ['NEXT_WEEK']
       : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC',
-        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING'] as const : []),
+        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING', ...PURSE_COMMAND_TYPES] as const : []),
         ...(acquisitionEnabled(city, 'guild') || acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BUY_NPC'] as const : []),
         ...(acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BID_NPC', 'WITHDRAW_BID'] as const : []),
         ...(acquisitionEnabled(city, 'slave-market') && session.npcs.length ? ['SELL_NPC'] as const : []),

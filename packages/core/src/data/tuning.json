@@ -184,7 +184,14 @@
       "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000 }
     }
   },
-  "PURSE_TRIAL": { "marker": "TRIAL", "levyMaxPercent": 20 },
+  "PURSE_TRIAL": {
+    "marker": "TRIAL",
+    "levyMaxPercent": 20,
+    "levyFreePercent": 2,
+    "levySatisfactionBpsPerPoint": 12000,
+    "donateSatisfactionPerGoldMilli": 0.001,
+    "donateSatisfactionCapPerWeek": 2
+  },
   "SOCIETY_TRIAL": {
     "rulesetId": "tile-society-14",
     "standing": 50,

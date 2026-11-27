@@ -421,7 +421,14 @@ export interface TuningCatalog {
             taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number;
         }>>>;
     }>;
-    PURSE_TRIAL: Readonly<{ marker: "TRIAL"; levyMaxPercent: 20 }>;
+    PURSE_TRIAL: Readonly<{
+        marker: "TRIAL";
+        levyMaxPercent: 20;
+        levyFreePercent: 2;
+        levySatisfactionBpsPerPoint: number;
+        donateSatisfactionPerGoldMilli: number;
+        donateSatisfactionCapPerWeek: number;
+    }>;
     SOCIETY_TRIAL: SOCIETY_TRIALData;
     GOODS_STOCK_TRIAL: GOODS_STOCK_TRIALData;
     TILE_TRIAL_BALANCE: TILE_TRIAL_BALANCEData;
@@ -460,6 +467,10 @@ const nonnegative: Rule = (value, ref, field) => {
 const positive: Rule = (value, ref, field) => {
     if (!Number.isSafeInteger(value) || (value as number) <= 0)
         fail(ref, field, 'expected integer > 0');
+};
+const integerInRange = (min: number, max: number): Rule => (value, ref, field) => {
+    if (!Number.isSafeInteger(value) || (value as number) < min || (value as number) > max)
+        fail(ref, field, 'expected integer in [' + min + ', ' + max + ']');
 };
 const probability: Rule = (value, ref, field) => {
     if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value > 1)
@@ -574,14 +585,21 @@ const lawMessagesSchema = object({
 const normalDifficultyBps: Rule = (value, ref, field) => {
     if (value !== 10000) fail(ref, field, 'must be 10000');
 };
-const difficultyProfileRule = (bps: Rule): Rule =>
-    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps: bps });
+const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps): Rule =>
+    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps });
 const tuningSchemas: Record<string, Rule> = {
     DIFFICULTY_TRIAL: object({
         marker: literal("TRIAL"),
-        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative) })
+        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive) })
     }),
-    PURSE_TRIAL: object({ marker: literal("TRIAL"), levyMaxPercent: literal(20) }),
+    PURSE_TRIAL: object({
+        marker: literal("TRIAL"),
+        levyMaxPercent: literal(20),
+        levyFreePercent: literal(2),
+        levySatisfactionBpsPerPoint: nonnegative,
+        donateSatisfactionPerGoldMilli: probability,
+        donateSatisfactionCapPerWeek: integerInRange(0, 100),
+    }),
     "ORDER_TRIAL": object({
         "newGame": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative

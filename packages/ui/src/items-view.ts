@@ -36,7 +36,7 @@ export function matchesItem(d:ItemDefinition,filter:string,slot:string):boolean 
 export function materialRows(items:ItemsState) {
   return Object.entries(items.materials).map(([id,count])=>({id,name:ITEM_CATALOG[id].name,rarity:itemTitle(ITEM_CATALOG[id].rarity),count})).sort((a,b)=>a.name.localeCompare(b.name));
 }
-export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_GOLD:'Not enough Gold.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.',RECIPE_UNKNOWN:'This recipe is no longer available.',NO_WORKSHOP:'Choose an enabled workshop for this recipe.',MISSING_INPUT:'The required inputs are no longer available.',QUEUE_FULL:'The workshop queue is full.',ORDER_UNKNOWN:'This order is no longer available.',WORKSHOP_BUSY:'Cancel orders and make room for ready outputs before replacing this workshop.'}[code]??'The item action could not be completed.');
+export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_MONEY:'Not enough Money.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.',RECIPE_UNKNOWN:'This recipe is no longer available.',NO_WORKSHOP:'Choose an enabled workshop for this recipe.',MISSING_INPUT:'The required inputs are no longer available.',QUEUE_FULL:'The workshop queue is full.',ORDER_UNKNOWN:'This order is no longer available.',WORKSHOP_BUSY:'Cancel orders and make room for ready outputs before replacing this workshop.'}[code]??'The item action could not be completed.');
 
 export function parseItemCount(text:string,available:number):number|null {
   if(!/^\d+$/.test(text))return null;const count=Number(text);
@@ -85,13 +85,12 @@ export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster
 }
 
 // Planning projection only: placement does not require workers, Herbs or upkeep.
-export function craftingRecipes(state:TileTrialState,tileId:string) {
+export function craftingRecipes(state:TileTrialState,tileId:string,moneyMilli:number) {
   const building=state.tiles.find(t=>t.id===tileId)?.building,items=state.society!.items;
   if(!building?.enabled||(items.workshops?.[tileId]?.orders.length??0)>=CRAFT_TRIAL.queueCap)return [];
-  const gold=state.world.settlements[state.world.activeSettlementId!].inventory.gold;
   const owned=[...items.inventory,...items.consumables].sort((a,b)=>a.id-b.id);
   return Object.entries(RECIPES).flatMap(([recipeId,recipe])=>{
-    if(!recipe.workshops.some(type=>type===building.typeId)||gold<recipe.feeMilli)return [];
+    if(!recipe.workshops.some(type=>type===building.typeId)||moneyMilli<recipe.feeMilli)return [];
     if(!recipe.inputs.every(input=>ITEM_CATALOG[input.defId].category==='material'?(items.materials[input.defId]??0)>=input.count:owned.some(item=>item.defId===input.defId)))return [];
     const itemInput=recipe.inputs.find(input=>ITEM_CATALOG[input.defId].category!=='material');
     const item=itemInput?owned.find(item=>item.defId===itemInput.defId):undefined;

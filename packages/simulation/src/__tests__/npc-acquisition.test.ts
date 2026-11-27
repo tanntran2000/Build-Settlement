@@ -106,12 +106,12 @@ describe('P7-B weekly acquisition', () => {
     expect(r.household!.bought).toStrictEqual([name]); expect(r.household!.released).toStrictEqual([name]);
   });
 
-  it('keeps an empty no-market report byte-identical to the city week', () => {
+  it('keeps an empty no-market report byte-identical to the city week plus purse', () => {
     const s = town(), raw = { type: 'END_WEEK', expectedRevision: s.city.revision, expectedWeek: 1 };
     const baseline = executeWorldNpcCityCommand({ city: s.city, outside: s.outside, npcs: s.npcs }, raw, buildItemWeekContext(s));
     expect(baseline.success).toBe(true); if (!baseline.success) throw Error(baseline.error.message);
     const result = succeeded(s, 'END_WEEK', { expectedWeek: 1 });
-    expect(JSON.stringify(result.report)).toBe(JSON.stringify(baseline.report));
+    expect(JSON.stringify(result.report)).toBe(JSON.stringify({ ...baseline.report, purse: { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 0 } }));
     expect(Object.hasOwn(result.report!, 'household')).toBe(false);
   });
 

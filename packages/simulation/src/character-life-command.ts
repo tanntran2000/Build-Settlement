@@ -1,14 +1,16 @@
-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
 import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';
 
+import { executePurseCommand, PURSE_COMMAND_TYPES, type PurseCommandType } from './purse-command.js';
+import { runLevyWeek } from './purse-week.js';
 import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment } from './household-week.js';
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType | PurseCommandType;
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
   | { success: false; error: { code: string; message: string } };
@@ -30,6 +32,10 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
     if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
     return executeItemCommand(session,raw);
   }
+  if (PURSE_COMMAND_TYPES.includes(type as PurseCommandType)) {
+    if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+    return executePurseCommand(session, type as PurseCommandType, raw);
+  }
   if (isAcquisitionCommand(type)) {
     if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
     return executeAcquisitionCommand(session, type, raw);
@@ -50,7 +56,10 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
     const world = { city: opening.city, outside: opening.outside, npcs: opening.npcs };
     const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'
       ? executeWorldNpcCommand(world, raw)
-      : type === 'END_WEEK' ? executeWorldNpcCityCommand(world, raw, buildItemWeekContext(opening)) : executeWorldNpcCityCommand(world, raw);
+      : type === 'END_WEEK' ? executeWorldNpcCityCommand(world, raw, buildItemWeekContext(opening),
+        levySatisfactionCost(opening.player.purse.levyPercent,
+          donationGoldMilli(opening.player.purse.donatedThisWeekMilli, opening.city.society!.difficulty)))
+      : executeWorldNpcCityCommand(world, raw);
     if (!result.success) return result;
 
     const next = { city: result.next.city, outside: result.next.outside, npcs: result.next.npcs,
@@ -99,6 +108,12 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
         Object.freeze(report.household!.bought); Object.freeze(report.household!.sold);
         Object.freeze(report.household!.released); Object.freeze(report.household!.lotsToRivals);
       } else if (market) report = Object.freeze({ ...report, household: market });
+      const purse = runLevyWeek(next, report.taxMilli + report.goods.revenueMilli + (report.laws?.incomeMilli ?? 0));
+      // M3 inserts the home robbery check here, before the weekly donation reset.
+      next.player.purse.donatedThisWeekMilli = 0;
+      const after = purse.levyPaidMilli > 0
+        ? Object.freeze({ ...report.after, gold: report.after.gold - purse.levyPaidMilli }) : report.after;
+      report = Object.freeze({ ...report, after, purse });
       next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);
     } else if (type === 'BUILD' || type === 'REPLACE' || type === 'SET_ENABLED') {
       const { week, worldMetadata: { worldSeed } } = next.city.world;

@@ -8,6 +8,7 @@
   export let state:TileTrialState;
   export let npcs:WorldNpc[]=[];
   export let tileId:string;
+  export let purseMoneyMilli:number;
   export let locked:boolean;
   export let managementError:{action:string;message:string}|null;
   export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
@@ -18,7 +19,7 @@
   $: name=building?TRIAL_BUILDINGS[building.typeId].name:'';
   $: workshop=state.society!.items.workshops?.[tileId];
   $: orders=workshop?.orders??[];
-  $: recipes=craftingRecipes(state,tileId);
+  $: recipes=craftingRecipes(state,tileId,purseMoneyMilli);
   $: forecast=workshopForecast(state,npcs,tileId);
   $: capacity=forecast.capacity;
   $: failure=managementError&&['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(managementError.action)?managementError.message:'';
@@ -43,14 +44,14 @@
       <button bind:this={recipeToggle} class="recipe-toggle" aria-expanded={expanded} aria-controls={`recipes-${tileId}`} onclick={()=>expanded=!expanded}>Available recipes</button>
       <div id={`recipes-${tileId}`} hidden={!expanded}>
         {#if orders.length>=CRAFT_TRIAL.queueCap}<p>The workshop queue is full. Cancel an order to make room.</p>{/if}
-        {#if !recipes.length}<p>No recipes can be placed now. Check owned inputs, Gold and queue space.</p>{/if}
+        {#if !recipes.length}<p>No recipes can be placed now. Check owned inputs, Money and queue space.</p>{/if}
         {#each ['Refine','Upgrade','Brew'] as group}
           {#if recipes.some(recipe=>recipe.group===group)}<section class="recipe-group" aria-label={`${group} recipes`}><h5>{group}</h5>
             {#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}
               <div class="recipe" data-craft-recipe={recipe.recipeId}>
                 <h6>{ITEM_CATALOG[recipe.output].name}</h6>
                 <p>Inputs: {recipe.inputs.map(input=>`${input.count} ${ITEM_CATALOG[input.defId].name}`).join(' + ')}</p>
-                <p>Fee: {formatMilli(recipe.feeMilli)} Gold</p>
+                <p>Fee: {formatMilli(recipe.feeMilli)} Money</p>
                 {#if recipe.before}<p class="comparison">Before → After</p><div class="upgrade-cards"><ItemCard definition={ITEM_CATALOG[recipe.before]} /><ItemCard definition={ITEM_CATALOG[recipe.output]} /></div>
                 {:else}<ItemCard definition={ITEM_CATALOG[recipe.output]} />{/if}
                 <button disabled={locked} onclick={event=>run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget)}>Place {ITEM_CATALOG[recipe.output].name}</button>
@@ -61,12 +62,12 @@
       </div>
     </div>
     <div class="queue"><h5>Order queue</h5>
-      <p>Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.</p>
+      <p>Orders complete in order at End Week. Cancel returns the exact inputs and the fee; make room in inventories and material stacks first.</p>
       {#if !orders.length}<p>No orders queued.</p>{/if}
       <ol>{#each orders as order,index}<li>
         <strong>{ITEM_CATALOG[RECIPES[order.recipeId].output].name}</strong>
         <p>Held inputs: {[...order.items.map(item=>`1 ${ITEM_CATALOG[item.defId].name}`),...Object.entries(order.materials).map(([id,count])=>`${count} ${ITEM_CATALOG[id].name}`)].join(' + ')}</p>
-        <p>Held fee: {formatMilli(order.feeMilli)} Gold</p>
+        <p>Held fee: {formatMilli(order.feeMilli)} Money</p>
         <button data-cancel-order aria-label={`Cancel order ${index+1}`} disabled={locked} onclick={event=>run('CANCEL_CRAFT_ORDER',{tileId,index},event.currentTarget)}>Cancel order {index+1}</button>
       </li>{/each}</ol>
       {#if workshop?.ready.length}<section data-testid="workshop-ready" class="ready"><h5>Ready outputs · Waiting for room</h5><p>Delivered at the next End Week with room. Ready outputs never expire.</p>
