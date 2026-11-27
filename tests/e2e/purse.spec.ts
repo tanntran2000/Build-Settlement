@@ -110,3 +110,37 @@ for (const width of [1280, 1600]) {
     expect(r.report.purse?.donationGoldMilli).toBe(easy ? 1000 : 2000);
   });
 }
+
+test('reports fractional Easy donation Gold after reloading a saved week', async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 900 });
+  const s = makeLife();
+  s.city.society = { ...s.city.society!, difficulty: 'easy' };
+  s.player.purse.moneyMilli = 1000;
+  s.player.purse.levyPercent = 5;
+  await page.goto('/');
+  await importLife(page, s);
+  await page.locator('#life-nav-player').click();
+  const purse = page.getByRole('region', { name: 'Purse', exact: true });
+  await purse.getByLabel('Donation amount in Money').fill('1');
+  await purse.getByRole('button', { name: 'Donate', exact: true }).click();
+  await expect(purse.getByText('Money 0', { exact: true })).toBeVisible();
+
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.getByText('Saved in this browser.', { exact: true })).toBeVisible();
+  await page.reload();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await expect(page.getByTestId('life-shell')).toBeVisible();
+  const planning = await exportLife(page);
+  expect(planning.player.purse).toStrictEqual({ moneyMilli: 0, levyPercent: 5, donatedThisWeekMilli: 1000, robbery: null });
+
+  const r = executeCharacterLifeCommand(planning, { type: 'END_WEEK', expectedWeek: 1, expectedRevision: planning.city.revision });
+  if (!r.success || !r.report) throw Error('Expected End Week report');
+  await go(page, 'city');
+  await page.getByTestId('life-end-week').click();
+  const donation = page.getByTestId('purse-report').locator('dt:text-is("Donation") + dd');
+  await expect(donation).toHaveText('−1 Money · +0.5 Gold');
+  const rendered = await expectReport(page, r.report, 'easy');
+  expect(rendered.purse?.donationsMilli).toBe(1000);
+  expect(rendered.purse?.donationGoldMilli).toBe(500);
+});
