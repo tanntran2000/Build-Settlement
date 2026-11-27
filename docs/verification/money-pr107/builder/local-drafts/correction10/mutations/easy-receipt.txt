@@ -1,0 +1,82 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/ui/src/report-letters.ts to render the Normal credit on Easy
+Original SHA-256 e3f92c79fa97d2f99b12f8610254f58d706dc9105ab643705263a7381975a714
+Variant SHA-256 7799e475fe7051e45fafab0ee1104f8383279515eb464cdb9bbc63c1d419a69f
+UTC start 2026-11-26T14:35:07.975772+00:00
+Command npm.cmd run test:smoke -- tests/e2e/purse.spec.ts --grep 1600
+
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+fatal: not a git repository (or any of the parent directories): .git
+vite v6.4.5 building for production...
+transforming...
+✓ 280 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bd6MtS16.css                   39.16 kB │ gzip:   7.89 kB
+dist/assets/index-NQcHdkuI.js                   535.16 kB │ gzip: 170.19 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.49s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/purse.spec.ts --grep 1600
+
+[WebServer] (node:13780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] (node:39640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 1 test using 1 worker
+
+(node:40492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1600 (9.5s)
+
+
+  1) [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1600 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "+2.854"
+    Received: "+1.427"
+
+       at character-life-navigation.helpers.ts:587
+
+      585 |     if (!levy || !donated || !balance) throw Error('Invalid purse report rows.');
+      586 |     const credit = expected.purse.levyPaidMilli * (difficulty === 'easy' ? 2 : 1);
+    > 587 |     expect(levy[1]).toBe(credit === 0 ? '0' : `+${u(credit)}`);
+          |                     ^
+      588 |     await expect(purse.locator('dt')).toHaveText(['Levy', 'Donation', 'Money after']);
+      589 |     actual.purse = {
+      590 |       levyPercent: Number(levy[2]), levyDueMilli: milli(levy[4]), levyPaidMilli: milli(levy[3]),
+        at expectReport (C:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\tests\e2e\character-life-navigation.helpers.ts:587:21)
+        at C:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\tests\e2e\purse.spec.ts:107:13
+
+    Error Context: test-results\purse-uses-the-Player-purs-975d5-ons-and-round-trips-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\purse-uses-the-Player-purs-975d5-ons-and-round-trips-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\purse-uses-the-Player-purs-975d5-ons-and-round-trips-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1600 
+
+Exit 1 in 31.096s

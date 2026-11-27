@@ -1,0 +1,15 @@
+HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Tree cfc1fc64a8bbb1df936ed495a8362fc2d15db18e
+origin/main f1fac9498f47fc7be8f6498ee3321800e14f2894
+UTC start 2026-11-26T13:26:56.833413+00:00
+CI unset
+VITEST_MAX_WORKERS 3
+Command npm.cmd run lint
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+Exit 0 in 9.508s
+UTC end 2026-11-26T13:27:06.341732+00:00

@@ -1,0 +1,53 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/simulation/src/purse-week.ts
+Original SHA-256 cbc23b1e27d72db7456e40c23400dc5cfdfca03c30c34e5f5f5a03fbd28279cb
+Variant SHA-256 3c853e3565d73be2d88f9f69e2204ecb2e3a1dd4d06d3ef8ad424c7f3df7e673
+UTC start 2026-11-26T14:33:35.051471+00:00
+Command npm.cmd test -- packages/simulation/src/__tests__/purse-week.test.ts -t "floors gross levy before scaling Money"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/purse-week.test.ts -t floors gross levy before scaling Money
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts (13 tests | 1 failed | 12 skipped) 37ms
+     × floors gross levy before scaling Money 35ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > floors gross levy before scaling Money
+AssertionError: expected { levyPercent: 5, …(5) } to strictly equal { levyPercent: 5, …(5) }
+
+- Expected
++ Received
+
+  {
+    "donationGoldMilli": 0,
+-   "donationsMilli": 0,
++   "donationsMilli": 1,
+    "levyDueMilli": 1200,
+    "levyPaidMilli": 1200,
+    "levyPercent": 5,
+    "moneyAfterMilli": 2400,
+  }
+
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:51:35
+     49|   it('floors gross levy before scaling Money', () => {
+     50|     const s = start('easy', 5);
+     51|     expect(runLevyWeek(s, 24019)).toStrictEqual({
+       |                                   ^
+     52|       levyPercent: 5, levyDueMilli: 1200, levyPaidMilli: 1200,
+     53|       donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 2400,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  21:33:36
+   Duration  1.54s (transform 912ms, setup 0ms, import 1.15s, tests 37ms, environment 0ms)
+
+
+Exit 1 in 2.948s

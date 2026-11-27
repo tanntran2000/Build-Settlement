@@ -1,0 +1,42 @@
+Base HEAD f1fac9498f47fc7be8f6498ee3321800e14f2894
+Base tree 7c8f6cb1b85a2193358bbab86d43f3c7d807cd50
+Branch feat/money-purse
+UTC start 2026-11-26T12:54:53.735820+00:00
+Command npm.cmd run lint
+SHA-256 of worktree inputs
+a996e470f7de7c628610aeba7ab3419f44150f17bb6661214d6a1e15fbcb6cbc  packages/core/src/__tests__/catalog-data.test.ts
+d4b8d88e7e589bee660aea4bd5f09769c110125a335a62265b31ddac58d993f7  packages/core/src/__tests__/purse-tuning.test.ts
+6c4b450e3e30144c7917519369f3f2ffd3c8c89b0eea11ecf5d5748153de78c8  packages/core/src/character/purse.ts
+9b0d8e1fa465d78c7fc426dbf83595bb42bd529441cb7d0362a9f1d9c990a0b5  packages/core/src/character/validate.ts
+e817650bf46154e9f9fcc6eee376dd90267fed30fa2b7c6d814989e3627ec972  packages/core/src/data/tuning.json
+288df0d952993f9d1814c368627cd2410b04ccb0d5bced87e6aad9d60b8d336e  packages/core/src/data/validate.ts
+be3aae530bba15f931c1423ebb7988f425a6801cb52a2b481300235a288dd3ec  packages/core/src/index.ts
+0048fd06bb892a94022ec8752dfcd7de3961d2eeea71257b010e10cd6f5126a1  packages/core/src/trial/types.ts
+3372b9a0e2a020e45a7595ad3de8540ba06005b3962ffe57a9f726d60badf63c  packages/persistence/src/__tests__/craft-records.test.ts
+87a03b28157ecc674705c04621f375043b5a4cec0915707785f2472da0fadbc5  packages/simulation/src/__tests__/character-life-command.test.ts
+8d6b6a1a6269bfcd0a2f99b1a38812682209ef720eaf128a5d06a87d1c18d740  packages/simulation/src/__tests__/character-life-observation.test.ts
+afc8e4b4429745e251e53403809faa862752642d2b180a9222fd98c464448128  packages/simulation/src/__tests__/craft-command.test.ts
+1a01eea12f82d80fae1b53c4e2b64bcaf3448da62ebccb98fab56c91ffe42918  packages/simulation/src/__tests__/item-command.test.ts
+b1f6bf8b21b56ccf8a556735554c661484c9d66683e6e406f76c646b52383fe7  packages/simulation/src/__tests__/lord-health.test.ts
+f3a676b223ad5e415f4c122218d3091f9a9821b6a4e1e80686906c829b0ac7b3  packages/simulation/src/__tests__/npc-acquisition.test.ts
+9b64df65c2d84cd57e8ec639a5c9e4b9bac739fa77002053aeb292324e525eaf  packages/simulation/src/__tests__/npc-life-week.test.ts
+779f469ece1de5deff18301024bc942d0cacc918bc8c0663da07448a0c56e6ca  packages/simulation/src/__tests__/purse-command.test.ts
+d911b0d8c4a6e5349f70729cd41cd4d60cf67bc67e895f2acfe3edf41b000da0  packages/simulation/src/__tests__/purse-week.test.ts
+306d16287ed36449b2f011f9f74969f0e0899e4dbabb56b10cf9c5cc6ba92778  packages/simulation/src/character-life-command.ts
+8d4237e0ab6b96361e7971e1874a41bc397fb127cfb612e0fd464fc25a835e65  packages/simulation/src/character-life-observation.ts
+e26a1ce09711484926c941db88ceb4897770ff59f9cc6f398fa4cebfab7f710c  packages/simulation/src/item-command.ts
+19f167164647816565da49c994721d415e19da5e67e917ab2b4b6083a2a5af0a  packages/simulation/src/purse-command.ts
+e998cebd48b62c5a84ed738cff8f64b84b460ff40d1485d6b49bed0632484ce7  packages/simulation/src/purse-week.ts
+50dd3ea6cf25acad01c489512c9eb24e2082336a74d0034a09e8bc9cede4af54  packages/simulation/src/society-week.ts
+540e5a4841d48a100039ad984a49f9eef0aaef1151bce3caec54468ceed3044a  packages/simulation/src/tile-trial-week.ts
+c8a9d659b60b49c2f7b4eefa0c7295d0afde0813aead3ff91243d2525eaee154  packages/simulation/src/tile-trial.ts
+b2055cbc707930fe8d8a1a07a2f2e860fe97b2cc2a4e46c2511e70e0a2785960  packages/simulation/src/world-npc.ts
+94785ca72e550fced779f08f1864fa2b0c020ef1684f05db955116f14555f185  scripts/money-calibration.ts
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+Exit 0 in 23.301s
+UTC end 2026-11-26T12:55:17.049074+00:00

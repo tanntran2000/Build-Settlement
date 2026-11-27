@@ -1,0 +1,10 @@
+UTC 2026-11-26T12:39:52.132980+00:00
+git rev-parse HEAD HEAD^{tree} origin/main
+f1fac9498f47fc7be8f6498ee3321800e14f2894
+7c8f6cb1b85a2193358bbab86d43f3c7d807cd50
+f1fac9498f47fc7be8f6498ee3321800e14f2894
+git status --porcelain=v1 --untracked-files=all
+0 output bytes
+git worktree list
+D:/NghienCuuTiemNang/Build-Settlement                           881402f [docs/p7-npc-design]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 f1fac94 (detached HEAD)

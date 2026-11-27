@@ -1,0 +1,55 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/ui/src/purse-view.ts
+Original SHA-256 6e92c11169262b2d43bc10481ee45f0e40b3fadb9e4c2edc06b4ea6da7fb358c
+Variant SHA-256 396ef0f5f4f32aa023eb0699e6a2af92dd571d909f380c688808a44d0b4ec2a0
+UTC start 2026-11-26T14:33:38.020662+00:00
+Command npm.cmd test -- packages/ui/src/__tests__/purse-view.test.ts -t "parses whole digits"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/purse-view.test.ts -t parses whole digits
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts (13 tests | 1 failed | 12 skipped) 14ms
+   × parses whole digits and explains all disabled purse actions 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/purse-view.test.ts > parses whole digits and explains all disabled purse actions
+AssertionError: expected { Object (amountMilli, extra, ...) } to strictly equal { amountMilli: 3000, …(7) }
+
+- Expected
++ Received
+
+  {
+    "amountMilli": 3000,
+    "decreaseReason": "Weekly levy is at its minimum.",
+    "donateReason": "",
+    "donationOffset": 0,
++   "extra": true,
+    "goldMilli": 3000,
+    "happinessCost": 0,
+    "increaseReason": "",
+    "levyCost": 0,
+  }
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts:13:54
+     11|   const purse = { levyPercent: 0, donatedThisWeekMilli: 0, moneyMilli:…
+     12|   expect(parseDonationMilli('03')).toBe(3000);
+     13|   expect(purseControls(purse, '3', false, 'normal')).toStrictEqual({
+       |                                                      ^
+     14|     amountMilli: 3000, goldMilli: 3000, happinessCost: 0, levyCost: 0,…
+     15|     decreaseReason: 'Weekly levy is at its minimum.', increaseReason: …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  21:33:39
+   Duration  1.66s (transform 1.01s, setup 0ms, import 1.28s, tests 14ms, environment 0ms)
+
+
+Exit 1 in 3.147s

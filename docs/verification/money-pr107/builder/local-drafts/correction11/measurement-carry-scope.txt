@@ -1,0 +1,8 @@
+Compared fa66b594391029ddb2cb43d98a90e9a8a4735446..f97b5be31afbc3de02190a38c6c4075eb56d6194
+Command git diff --stat fa66b594391029ddb2cb43d98a90e9a8a4735446..HEAD
+ tests/e2e/purse.spec.ts | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+The diff touches only tests/e2e/purse.spec.ts. Correction 11 permits carrying the bundle and End Week timings.
+Bundle from fa66b59, ../correction10/bundle.json and gzip/.
+End Week 0%/5% timings from 546c48b, ../round3-c9/measurement-1/measurement-summary.json and raw-timings.ndjson.

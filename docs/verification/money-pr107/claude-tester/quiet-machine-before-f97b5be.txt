@@ -1,0 +1,25 @@
+UTC: 2026-11-27T02:26:40Z
+HEAD: f97b5be31afbc3de02190a38c6c4075eb56d6194
+CPU avg %: 40
+Top CPU processes:
+
+Name                   Id        CPU
+----                   --        ---
+ChatGPT             17436 541.203125
+ChatGPT             34120   403.1875
+T3 Code (Nightly)   39352 364.390625
+codex               38804    277.125
+T3 Code (Nightly)   40416  232.15625
+codebase-memory-mcp 25372 214.734375
+explorer            39040 182.015625
+msedgewebview2       6580  178.09375
+
+
+
+Ports 4173/4174 listeners:
+0
+09:26:54 CPU % 13
+09:27:02 CPU % 15
+09:27:10 CPU % 8
+09:27:19 CPU % 6
+09:27:27 CPU % 8

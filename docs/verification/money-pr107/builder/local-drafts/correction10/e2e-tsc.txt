@@ -1,0 +1,22 @@
+HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Tree cfc1fc64a8bbb1df936ed495a8362fc2d15db18e
+UTC start 2026-11-26T14:33:30.520127+00:00
+Command node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --module esnext --moduleResolution bundler --target esnext --allowImportingTsExtensions --resolveJsonModule tests/e2e/purse.spec.ts
+Changed source SHA-256
+0787caa327bbbbb6cd5c06debed02787e8c208523b7efa1452facc90e840acec  packages/core/src/__tests__/catalog-data.test.ts
+a57c23fb0b20818f698ecb220f94200f35861e4dd6ffb6eea40e2cad6560aa59  packages/core/src/data/validate.ts
+0849097a068be38799c26bcae062600c560cf7118e3817984946d6d8894b619b  packages/core/src/trial/__tests__/difficulty.test.ts
+c585dc1eadc03c08191fcfc7ea6d15e04223e698098b092af3ce772855675161  packages/simulation/src/__tests__/craft-command.test.ts
+4dbdf986dc3d8267d6e626267ce17862dba41301ca27c9abf76c5a5744c71b14  packages/simulation/src/__tests__/purse-command.test.ts
+28d683488715ab32732f9e5439b648ee0c7deb7025b09346623730a73ef75342  packages/simulation/src/__tests__/purse-week.test.ts
+675ddbe99b651846b382d134019626ca0836f8b545ce7a8d91a370dd5f4265a8  packages/ui/src/PursePanel.svelte
+3d3dcaac638ecd47e870a7f9504d6f41553dfc3b9d83d7b7a2cceb5bc543fdd0  packages/ui/src/__tests__/crafting-view.test.ts
+43405a41468a2303072ff5a6d0ff723efa73c5b6ab93b3055617b7883b9cee83  packages/ui/src/__tests__/purse-view.test.ts
+6e92c11169262b2d43bc10481ee45f0e40b3fadb9e4c2edc06b4ea6da7fb358c  packages/ui/src/purse-view.ts
+77ee639e3baed581f479552a2ffca012bcc4dbbcf6bc093e037e6a19b487d9ff  tests/e2e/character-life-navigation.helpers.ts
+09186249bacef259029def80a69876bf487a514332b8f54aab00b48da7af815a  tests/e2e/purse.spec.ts
+
+tests/e2e/purse.spec.ts(11,21): error TS2540: Cannot assign to 'difficulty' because it is a read-only property.
+
+Exit 2 in 3.355s
+UTC end 2026-11-26T14:33:33.878213+00:00

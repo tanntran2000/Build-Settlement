@@ -1,0 +1,385 @@
+{
+  "head": "f97b5be31afbc3de02190a38c6c4075eb56d6194",
+  "tree": "75ec12d1a9c537f5e9788ac0ec52d3ff68db620c",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-27T00:48:38.258539+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        72.45,
+        39.24,
+        27.85
+      ],
+      "meanPercent": 46.51,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "claude",
+          "pid": 20232,
+          "cpuSecondsDelta": 1.594
+        },
+        {
+          "process": "powershell",
+          "pid": 35028,
+          "cpuSecondsDelta": 1.406
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 39352,
+          "cpuSecondsDelta": 1.125
+        },
+        {
+          "process": "codex-windows-sandbox-setup",
+          "pid": 11624,
+          "cpuSecondsDelta": 0.922
+        },
+        {
+          "process": "codex",
+          "pid": 38804,
+          "cpuSecondsDelta": 0.641
+        },
+        {
+          "process": "claude",
+          "pid": 30480,
+          "cpuSecondsDelta": 0.578
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 17436,
+          "cpuSecondsDelta": 0.484
+        },
+        {
+          "process": "SDXHelper",
+          "pid": 14656,
+          "cpuSecondsDelta": 0.484
+        },
+        {
+          "process": "SDXHelper",
+          "pid": 21236,
+          "cpuSecondsDelta": 0.422
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 40416,
+          "cpuSecondsDelta": 0.391
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.375
+        },
+        {
+          "process": "claude",
+          "pid": 27572,
+          "cpuSecondsDelta": 0.25
+        }
+      ],
+      "selected": false
+    },
+    {
+      "utc": "2026-11-27T00:48:50.758055+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        30.72,
+        4.88,
+        14.26
+      ],
+      "meanPercent": 16.62,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "codex",
+          "pid": 38804,
+          "cpuSecondsDelta": 1.047
+        },
+        {
+          "process": "powershell",
+          "pid": 40600,
+          "cpuSecondsDelta": 0.828
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 39352,
+          "cpuSecondsDelta": 0.266
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.25
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 30928,
+          "cpuSecondsDelta": 0.219
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 17436,
+          "cpuSecondsDelta": 0.203
+        },
+        {
+          "process": "claude",
+          "pid": 18060,
+          "cpuSecondsDelta": 0.141
+        },
+        {
+          "process": "browser",
+          "pid": 6136,
+          "cpuSecondsDelta": 0.094
+        },
+        {
+          "process": "browser",
+          "pid": 7392,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "browser",
+          "pid": 29040,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 39316,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "git",
+          "pid": 21564,
+          "cpuSecondsDelta": 0.062
+        }
+      ],
+      "selected": false
+    },
+    {
+      "utc": "2026-11-27T00:49:03.475967+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        43.85,
+        19.34,
+        11.33
+      ],
+      "meanPercent": 24.84,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "codex",
+          "pid": 38804,
+          "cpuSecondsDelta": 0.969
+        },
+        {
+          "process": "powershell",
+          "pid": 12284,
+          "cpuSecondsDelta": 0.734
+        },
+        {
+          "process": "node",
+          "pid": 34544,
+          "cpuSecondsDelta": 0.719
+        },
+        {
+          "process": "node",
+          "pid": 17632,
+          "cpuSecondsDelta": 0.562
+        },
+        {
+          "process": "codex-computer-use",
+          "pid": 16876,
+          "cpuSecondsDelta": 0.422
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 17436,
+          "cpuSecondsDelta": 0.391
+        },
+        {
+          "process": "codex",
+          "pid": 22908,
+          "cpuSecondsDelta": 0.359
+        },
+        {
+          "process": "codex",
+          "pid": 34648,
+          "cpuSecondsDelta": 0.359
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.328
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 30928,
+          "cpuSecondsDelta": 0.25
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 25372,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "codex-command-runner-0.171.0-alpha.13.2",
+          "pid": 19824,
+          "cpuSecondsDelta": 0.078
+        }
+      ],
+      "selected": false
+    },
+    {
+      "utc": "2026-11-27T00:49:14.957048+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        6.31,
+        14.62,
+        2.15
+      ],
+      "meanPercent": 7.69,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "ChatGPT",
+          "pid": 17436,
+          "cpuSecondsDelta": 1.531
+        },
+        {
+          "process": "powershell",
+          "pid": 26208,
+          "cpuSecondsDelta": 0.656
+        },
+        {
+          "process": "codex",
+          "pid": 38804,
+          "cpuSecondsDelta": 0.391
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 30928,
+          "cpuSecondsDelta": 0.281
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.141
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 39316,
+          "cpuSecondsDelta": 0.094
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 25372,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 40488,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "browser",
+          "pid": 39020,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 10280,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 34120,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "node_repl",
+          "pid": 39256,
+          "cpuSecondsDelta": 0.031
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

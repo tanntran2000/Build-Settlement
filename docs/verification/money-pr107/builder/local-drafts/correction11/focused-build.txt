@@ -1,0 +1,29 @@
+HEAD fa66b594391029ddb2cb43d98a90e9a8a4735446
+Tree 03ab402350d02f1bc89970b7f0ce9a4e27cc2e93
+UTC start 2026-11-27T00:41:46.852978+00:00
+Command npm.cmd run build --workspace=@haven/ui
+Changed source SHA-256
+f4c2f3be368dbbfbf3089b0e8637a2c4cd78acdaaf524327a7ec5e0f5e8f84e1  tests/e2e/purse.spec.ts
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 279 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bd6MtS16.css                   39.16 kB │ gzip:   7.89 kB
+dist/assets/index-BDhuyYJv.js                   535.15 kB │ gzip: 170.19 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.78s
+
+Exit 0 in 10.086s
+UTC end 2026-11-27T00:41:56.939322+00:00

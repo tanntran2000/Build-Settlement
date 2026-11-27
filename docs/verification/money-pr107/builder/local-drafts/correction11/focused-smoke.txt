@@ -1,0 +1,47 @@
+HEAD fa66b594391029ddb2cb43d98a90e9a8a4735446
+Tree 03ab402350d02f1bc89970b7f0ce9a4e27cc2e93
+UTC start 2026-11-27T00:41:57.297880+00:00
+Command npm.cmd run test:smoke -- tests/e2e/purse.spec.ts
+Changed source SHA-256
+f4c2f3be368dbbfbf3089b0e8637a2c4cd78acdaaf524327a7ec5e0f5e8f84e1  tests/e2e/purse.spec.ts
+
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 280 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bd6MtS16.css                   39.16 kB │ gzip:   7.89 kB
+dist/assets/index-BDhuyYJv.js                   535.15 kB │ gzip: 170.19 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.21s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/purse.spec.ts
+
+
+Running 3 tests using 1 worker
+
+(node:18972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1280 (10.4s)
+  ok 2 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1600 (8.8s)
+  ok 3 [chromium] › tests\e2e\purse.spec.ts:114:1 › reports fractional Easy donation Gold after reloading a saved week (5.3s)
+
+  3 passed (33.4s)
+
+Exit 0 in 43.649s
+UTC end 2026-11-27T00:42:40.946874+00:00

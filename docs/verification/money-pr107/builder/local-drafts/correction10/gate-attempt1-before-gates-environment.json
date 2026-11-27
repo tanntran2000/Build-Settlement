@@ -1,0 +1,103 @@
+{
+  "head": "fa66b594391029ddb2cb43d98a90e9a8a4735446",
+  "tree": "03ab402350d02f1bc89970b7f0ce9a4e27cc2e93",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-26T14:38:03.549656+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        2.54,
+        2.93,
+        2.54
+      ],
+      "meanPercent": 2.67,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 8908,
+          "cpuSecondsDelta": 0.656
+        },
+        {
+          "process": "cloudflared",
+          "pid": 24460,
+          "cpuSecondsDelta": 0.281
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 9956,
+          "cpuSecondsDelta": 0.094
+        },
+        {
+          "process": "codex",
+          "pid": 22948,
+          "cpuSecondsDelta": 0.094
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 21956,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 32212,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 41488,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "claude",
+          "pid": 21564,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "Zalo",
+          "pid": 24892,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "ZaloCall",
+          "pid": 30020,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 15920,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "claude",
+          "pid": 10176,
+          "cpuSecondsDelta": 0.016
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

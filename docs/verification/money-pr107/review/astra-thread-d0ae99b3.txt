@@ -1,0 +1,85 @@
+Money M2 Astra 6.2 high
+mcp:d0ae99b3-7d28-48a1-8275-407d3aebf866  completed  codex/gpt-6.2-astra
+
+[assistant]
+I reproduced the W16 Happiness crossing, the W12 Normal and W6 Easy Money milestones, and all 720 unchanged control records. The eight gate logs also match the claimed head and tree. The timing data support the narrower claim that paired median changes fell within the observed noise range. Several individual blocks exceeded it.
+
+[assistant]
+**VERDICT: FAIL** — 0 P0, 3 P1, 6 P2, 1 P3 at head `546c48b9`.
+
+All 47 changed files matched the approved byte reconstruction, and the calibration met its targets. The three P1 findings concern partial assertions in new tests, a freeze check that now inspects a test-created copy, and two placement tests that lost their low-Gold condition. The player-facing defect is that the Purse panel still shows a weekly Happiness cost of **−3** after a donation reduces the actual cost to **−1**.
+
+[Full review, per-file ledger, and reconstruction table](C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round1.md)
+
+[user]
+Money Astra 6.2: Money PR M2 review round 2. Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch feat/money-purse (pushed, no PR yet), head fa66b594391029ddb2cb43d98a90e9a8a4735446, tree 03ab402350d02f1bc89970b7f0ce9a4e27cc2e93. One new commit on your round 1 head 546c48b9f312144c494a48dd44fe41741c9c2470: fa66b59 `fix: purse cost preview, levy divisor and stricter purse tests` (12 files, +287/−89). Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first.
+
+Owner (Tân), verbatim dialog answers to your round 1: "Sửa cả 9 (Recommended)"; P3 — "Sửa luôn trong M2 (Recommended)".
+
+Binding documents
+- Plan with Correction 10: C:/Users/Admin/.t3/local-drafts/money-prM2/binding-plan-a5ef4bb.md (SHA-256 6579bbe220d290df9eb56bad641a5ca1fff5aa56e8267f946669dc3560341da5). Read Correction 10 in full; everything from your round 1 brief still applies.
+- Your round 1: C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round1.md (2679f41512fe7669d631b8dbe9f73fbd7070da74e5e1dcfe171713c9e62a3376).
+- Builder evidence: C:/Users/Admin/.t3/local-drafts/money-prM2/correction10/ — README.md (6d98607e5dad7d0676ee7bb0cfb36716f66dac96ab8d18f6249c9e841295d68d), SHA256SUMS.txt (7e4ba2befda00b26b3fb52799a6c4e3d8d2f68c7891ea1bf01c5283033984918, 58 entries), unit-test-bytes.json, implementation-bytes.json, mutations/ (broken-variant runs), red-product.txt, green-focus*.txt, browser-focus-2.txt, gate logs, bundle.json, timing-carry-scope.txt.
+
+Check, at minimum
+1. Each of your ten round 1 findings is closed as Correction 10 items 1–10 require. For each test-only fix, confirm the broken variant in mutations/ really fails for the reason claimed and that the final test checks what it says (exact equality, no partial matcher or panel-wide substring left in the new tests).
+2. Item 4: the panel's effective cost equals the End Week deduction on Normal and Easy (5 % after 2 Money donated: −1 Normal, −2 Easy), including after save/load; the text format and English copy.
+3. Item 10: `levyMoneyBps` > 0 with the field-specific message; Normal still must be 10000.
+4. The two disclosed fixture adjustments (Market disabled in the tax-only whole-levy fixture; typed copy for the selected difficulty in the browser fixture): are they test-only, do they keep the case's intent, and do they hide anything?
+5. No other product change, loosened or removed assertion, removed case, new timeout or skip in 546c48b..fa66b59; per-file ledger against Correction 10.
+6. Evidence: gates 1–7 exit 0 at fa66b59 (3,383 unit), CI=1 smoke 421/421, bundle 178,080 B; timings carried under Correction 10 item 11 only if `git diff --stat 546c48b..fa66b59` touches only packages/ui/, packages/core/src/data/validate.ts and tests. Logs name the head and tree they claim.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round2.md (UTF-8, no `?` in place of non-ASCII characters): head and tree checked, finding-by-finding closure table, new findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.
+
+[assistant]
+I’ll confirm the new head and tree first, then check each round 1 finding against Correction 10, the committed diff, and the recorded failures from the broken variants.
+
+[assistant]
+All 14 recorded broken variants failed at the intended checks. I also found a loss of browser coverage outside those ten fixes. The earlier Easy test closed a week after donating 1 Money and checked a 0.5 Gold receipt. The revised test makes a second donation before closing, so it only checks a whole-Gold receipt. I’m verifying whether another browser case still covers that fraction.
+
+[assistant]
+**VERDICT: FAIL** at `fa66b59` — **0 P0, 1 P1, 0 P2, 0 P3**.
+
+All ten round 1 findings are closed. The new P1 is a loss of browser coverage. The revised Easy test verifies the **0.5 Gold** donation preview, then makes a second donation before End Week. It therefore checks a **1 Gold** report receipt and drops the previous check that the rendered report preserves **0.5 Gold**. Correction 10 treats a removed case as a HOLD.
+
+The exact-head logs record all seven gates passing, including **3,383/3,383 unit tests**, followed by **421/421 smoke tests**. [Full round 2 review](C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round2.md)
+
+[user]
+Money Astra 6.2: Money PR M2 review round 3. Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch feat/money-purse (pushed, no PR yet), head f97b5be31afbc3de02190a38c6c4075eb56d6194, tree 75ec12d1a9c537f5e9788ac0ec52d3ff68db620c. One new commit on your round 2 head fa66b59: f97b5be `test(e2e): restore fractional Easy donation report check` (tests/e2e/purse.spec.ts only, +34/−0). Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first.
+
+Owner (Tân), verbatim, after your round 2 FAIL was reported: "tiếp tục đi".
+
+Binding documents
+- Plan with Correction 11: C:/Users/Admin/.t3/local-drafts/money-prM2/binding-plan-db8b946.md (SHA-256 b82d89dbeaf6875c93ea5bb9bb3ffa887040c3501b1a064e4bddeac21996b893). Read Correction 11 in full; everything from your round 1 and round 2 briefs still applies.
+- Your round 2: C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round2.md (1378ebcd77f1aecc6580c64e3756ad1ae8dfe0eecb678ee65c95514a21348bf7).
+- Builder evidence: C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/ — README.md (5f53c188b903295c36f92522809e6f4427e3f8a3cbddbeb72a778df795f50c7b), SHA256SUMS.txt (b6eac99ebfa6a166cb700a8a60001fac806ba4f1842f6c2a7e8cf049933b21cc), mutation-smoke.txt, gate-attempt1-*.txt, gate-attempt2-8-smoke.txt, playwright-attempt*-last-run.json, measurement-carry-scope.txt.
+
+Check, at minimum
+1. Your round 2 P1 is closed as Correction 11 item 1 requires: a saved 1-Money Easy donation, End Week, the rendered row pinned to exactly "−1 Money · +0.5 Gold", read through expectReport with 500 Gold milli; the broken renderer in mutation-smoke.txt really fails this case for the reason claimed.
+2. Every round 2 check in purse.spec.ts is kept (2-Money donation, effective cost, reload); no other file, product change, loosened assertion, removed case, new timeout or skip in fa66b59..f97b5be.
+3. Evidence: gates 1–7 exit 0 at f97b5be (3,383 unit). Smoke attempt 1 was 421 passed / 1 failed: `character-life-navigation.spec.ts:225 fulfillment states match strip and report` hit the existing 60 s timeout (it took 44.2 s at fa66b59). Full retry on the same commit: 422/422, that case 52.8 s. Judge whether this is load flake unrelated to the purse change (the case is outside purse.spec.ts and the diff is test-only), and whether the retry is disclosed honestly. Bundle and End Week timings carried under Correction 11 only if `git diff --stat fa66b59..f97b5be` touches only tests/e2e/. Logs name the head and tree they claim.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round3.md (UTF-8, no `?` in place of non-ASCII characters): head and tree checked, closure of the round 2 P1, new findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.
+
+[assistant]
+I’ll confirm the target head and tree first, then check the added browser case, the broken-renderer failure, and both smoke attempts against Correction 11.
+
+[assistant]
+The broken renderer fails on the exact Donation cell. The separate smoke timeout occurred before the purse cases ran. I’ll finish checking the evidence hashes and both recorded outcomes before writing the verdict.
+
+[assistant]
+**PASS** at `f97b5be`. The restored Easy donation test closes the round 2 P1. It verifies the exact rendered row `−1 Money · +0.5 Gold` after reload and fails when the renderer drops the half Gold. **Open findings: P0 0 · P1 0 · P2 0 · P3 0.**
+
+The first smoke run passed 421 of 422 cases. An existing fulfillment test timed out before the new purse case ran. The builder disclosed the failure, and the full retry passed **422/422** on the same tree. The evidence supports an unrelated timing flake.
+
+[Round 3 review report](C:/Users/Admin/.t3/local-drafts/money-prM2/astra-review/astra-round3.md)

@@ -1,0 +1,23 @@
+{
+  "gzipLevel": "zlib default",
+  "assets": [
+    {
+      "file": "assets/index-0s1_is5l.js",
+      "bytes": 534953,
+      "sha256": "960ba8d91906039f2635f850b3bcb3ba85cdac9129205d65785bead04bea6535",
+      "gzipBytes": 170121,
+      "gzipSha256": "e4904480a216986abc48abd04c74a700f5b97477a491e05f6bf571186600ca1d"
+    },
+    {
+      "file": "assets/index-Bd6MtS16.css",
+      "bytes": 39162,
+      "sha256": "b56927251e9ea449bdbc8884db1c5a72e8a34f73fd6468a8e5c417feefc765da",
+      "gzipBytes": 7893,
+      "gzipSha256": "2e11075dfe04d733539d4605f0f0082eb2a58e50f6b3edc8e2ad886af044d3c8"
+    }
+  ],
+  "indexSha256": "2389957033cf76df4755bac3573d98e3ad8fa57af7c5b46ebbb9223d74e8f79c",
+  "jsGzipBytes": 170121,
+  "cssGzipBytes": 7893,
+  "totalGzipBytes": 178014
+}

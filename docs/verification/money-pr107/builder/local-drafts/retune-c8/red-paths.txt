@@ -1,0 +1,12 @@
+packages/core/src/__tests__/catalog-data.test.ts
+packages/core/src/__tests__/purse-tuning.test.ts
+packages/persistence/src/__tests__/craft-records.test.ts
+packages/simulation/src/__tests__/character-life-command.test.ts
+packages/simulation/src/__tests__/character-life-observation.test.ts
+packages/simulation/src/__tests__/craft-command.test.ts
+packages/simulation/src/__tests__/item-command.test.ts
+packages/simulation/src/__tests__/lord-health.test.ts
+packages/simulation/src/__tests__/npc-acquisition.test.ts
+packages/simulation/src/__tests__/npc-life-week.test.ts
+packages/simulation/src/__tests__/purse-command.test.ts
+packages/simulation/src/__tests__/purse-week.test.ts

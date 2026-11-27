@@ -1,0 +1,37 @@
+UTC 2026-11-26T13:01:01.675242+00:00
+Base HEAD f1fac9498f47fc7be8f6498ee3321800e14f2894
+Base tree 7c8f6cb1b85a2193358bbab86d43f3c7d807cd50
+## feat/money-purse
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/types.ts
+ M packages/persistence/src/__tests__/craft-records.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/craft-command.test.ts
+ M packages/simulation/src/__tests__/item-command.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/npc-life-week.test.ts
+ M packages/simulation/src/character-life-command.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/item-command.ts
+ M packages/simulation/src/society-week.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/tile-trial.ts
+ M packages/simulation/src/world-npc.ts
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M scripts/money-calibration.ts
+?? packages/core/src/__tests__/purse-tuning.test.ts
+?? packages/core/src/character/purse.ts
+?? packages/simulation/src/__tests__/purse-command.test.ts
+?? packages/simulation/src/__tests__/purse-week.test.ts
+?? packages/simulation/src/purse-command.ts
+?? packages/simulation/src/purse-week.ts
+
+Git worktrees
+D:/NghienCuuTiemNang/Build-Settlement                           881402f [docs/p7-npc-design]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 f1fac94 [feat/money-purse]

@@ -1,0 +1,39 @@
+HEAD d0e04f7a7da2f10b3d1a721c12f85f693fa6e189
+Tree cad46a507ce838b7bae58e2bc970be6ba043a8ae
+UTC start 2026-11-26T13:24:33.530123+00:00
+Command npm.cmd test -- packages/ui/src/__tests__/purse-view.test.ts
+Changed source SHA-256
+7d70889e97fc0877423e5fe687c4754042168e54b8b2615d6a83e685288fdf21  packages/ui/src/__tests__/purse-view.test.ts
+837775b35b479003363beae241b442af6f1fbba8620e2b09a0a7b3ad34611f65  tests/e2e/purse.spec.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/purse-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/purse-view.test.ts [ packages/ui/src/__tests__/purse-view.test.ts ]
+Error: Cannot find module '../purse-view.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/purse-view.test.ts
+ ❯ packages/ui/src/__tests__/purse-view.test.ts:2:1
+      1| import { expect, it } from 'vitest';
+      2| import { parseDonationMilli, purseControls } from '../purse-view.js';
+       | ^
+      3| import { purseReportRows } from '../report-letters.js';
+      4| import { itemError } from '../items-view.js';
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  20:24:34
+   Duration  351ms (transform 32ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+
+Exit 1 in 1.534s
+UTC end 2026-11-26T13:24:35.086416+00:00

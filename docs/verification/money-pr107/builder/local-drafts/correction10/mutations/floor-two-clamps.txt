@@ -1,0 +1,46 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/simulation/src/society-week.ts
+Original SHA-256 50dd3ea6cf25acad01c489512c9eb24e2082336a74d0034a09e8bc9cede4af54
+Variant SHA-256 de8301b045a0eb019bc1f4f1dbda8d2398dce8aff8d916ae2c90b939bdece477
+UTC start 2026-11-26T14:34:36.545866+00:00
+Command npm.cmd test -- packages/simulation/src/__tests__/purse-command.test.ts -t "keeps a funded citizen class at zero"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/purse-command.test.ts -t keeps a funded citizen class at zero
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (30 tests | 1 failed | 29 skipped) 120ms
+   × keeps a funded citizen class at zero through the combined adjustment and compares the aggregate 119ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > keeps a funded citizen class at zero through the combined adjustment and compares the aggregate
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:154:65
+    152|   expect(baseFree.satisfactionAfter).toBe(0);
+    153|   expect(baseline.report.order!.satisfactionLost).toBe(0);
+    154|   expect(result.report.society!.classes.free.satisfactionAfter).toBe(0…
+       |                                                                 ^
+    155|   const scores = baseline.next.city.society!.satisfaction;
+    156|   const expected = { ...scores, free: 0, makers: scores.makers - 1, lu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 29 skipped (30)
+   Start at  21:34:37
+   Duration  1.49s (transform 844ms, setup 0ms, import 1.06s, tests 120ms, environment 0ms)
+
+
+Exit 1 in 2.692s

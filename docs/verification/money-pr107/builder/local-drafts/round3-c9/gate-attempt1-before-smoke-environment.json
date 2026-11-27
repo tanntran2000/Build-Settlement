@@ -1,0 +1,103 @@
+{
+  "head": "546c48b9f312144c494a48dd44fe41741c9c2470",
+  "tree": "cfc1fc64a8bbb1df936ed495a8362fc2d15db18e",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-26T13:30:30.276168+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        3.6,
+        2.95,
+        2.83
+      ],
+      "meanPercent": 3.13,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 41528,
+          "cpuSecondsDelta": 0.719
+        },
+        {
+          "process": "cloudflared",
+          "pid": 24460,
+          "cpuSecondsDelta": 0.297
+        },
+        {
+          "process": "codex",
+          "pid": 22948,
+          "cpuSecondsDelta": 0.156
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 9956,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 15920,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "claude",
+          "pid": 21564,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 20324,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "claude",
+          "pid": 23660,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 21956,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 22788,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 41488,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "explorer",
+          "pid": 37988,
+          "cpuSecondsDelta": 0.016
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

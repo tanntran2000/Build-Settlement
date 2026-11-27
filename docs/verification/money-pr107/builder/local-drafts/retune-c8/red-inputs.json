@@ -1,0 +1,14 @@
+{
+  "packages/core/src/__tests__/catalog-data.test.ts": "a996e470f7de7c628610aeba7ab3419f44150f17bb6661214d6a1e15fbcb6cbc",
+  "packages/core/src/__tests__/purse-tuning.test.ts": "d4b8d88e7e589bee660aea4bd5f09769c110125a335a62265b31ddac58d993f7",
+  "packages/persistence/src/__tests__/craft-records.test.ts": "3372b9a0e2a020e45a7595ad3de8540ba06005b3962ffe57a9f726d60badf63c",
+  "packages/simulation/src/__tests__/character-life-command.test.ts": "87a03b28157ecc674705c04621f375043b5a4cec0915707785f2472da0fadbc5",
+  "packages/simulation/src/__tests__/character-life-observation.test.ts": "8d6b6a1a6269bfcd0a2f99b1a38812682209ef720eaf128a5d06a87d1c18d740",
+  "packages/simulation/src/__tests__/craft-command.test.ts": "afc8e4b4429745e251e53403809faa862752642d2b180a9222fd98c464448128",
+  "packages/simulation/src/__tests__/item-command.test.ts": "1a01eea12f82d80fae1b53c4e2b64bcaf3448da62ebccb98fab56c91ffe42918",
+  "packages/simulation/src/__tests__/lord-health.test.ts": "b1f6bf8b21b56ccf8a556735554c661484c9d66683e6e406f76c646b52383fe7",
+  "packages/simulation/src/__tests__/npc-acquisition.test.ts": "f3a676b223ad5e415f4c122218d3091f9a9821b6a4e1e80686906c829b0ac7b3",
+  "packages/simulation/src/__tests__/npc-life-week.test.ts": "9b64df65c2d84cd57e8ec639a5c9e4b9bac739fa77002053aeb292324e525eaf",
+  "packages/simulation/src/__tests__/purse-command.test.ts": "779f469ece1de5deff18301024bc942d0cacc918bc8c0663da07448a0c56e6ca",
+  "packages/simulation/src/__tests__/purse-week.test.ts": "6f1d91f1d919ade4eb9ccfdbbf93f08085985848e4892cb82cbf07d934183308"
+}

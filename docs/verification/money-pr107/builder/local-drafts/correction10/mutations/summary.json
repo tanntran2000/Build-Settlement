@@ -1,0 +1,100 @@
+[
+  {
+    "label": "refusal-message",
+    "path": "packages/simulation/src/purse-command.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "refuses levy 21",
+    "exit": 1
+  },
+  {
+    "label": "whole-levy-receipt",
+    "path": "packages/simulation/src/purse-week.ts",
+    "test": "packages/simulation/src/__tests__/purse-week.test.ts",
+    "query": "floors gross levy before scaling Money",
+    "exit": 1
+  },
+  {
+    "label": "control-object-shape",
+    "path": "packages/ui/src/purse-view.ts",
+    "test": "packages/ui/src/__tests__/purse-view.test.ts",
+    "query": "parses whole digits",
+    "exit": 1
+  },
+  {
+    "label": "public-freeze",
+    "path": "packages/core/src/character/purse.ts",
+    "test": "packages/core/src/__tests__/catalog-data.test.ts",
+    "query": "tuning.json.*has recursively frozen typed views",
+    "exit": 1
+  },
+  {
+    "label": "craft-gold-gate",
+    "path": "packages/simulation/src/item-command.ts",
+    "test": "packages/simulation/src/__tests__/craft-command.test.ts",
+    "query": "queues at enabled",
+    "exit": 1
+  },
+  {
+    "label": "craft-preview-gold-gate",
+    "path": "packages/ui/src/items-view.ts",
+    "test": "packages/ui/src/__tests__/crafting-view.test.ts",
+    "query": "allows Brew placement without staffing",
+    "exit": 1
+  },
+  {
+    "label": "floor-two-clamps",
+    "path": "packages/simulation/src/society-week.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "keeps a funded citizen class at zero",
+    "exit": 1
+  },
+  {
+    "label": "free-levy-gain",
+    "path": "packages/core/src/character/purse.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "a positive .* donation leaves Happiness",
+    "exit": 1
+  },
+  {
+    "label": "shipped-rate-zero",
+    "path": "packages/core/src/data/tuning.json",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "uses shipped",
+    "exit": 1
+  },
+  {
+    "label": "shipped-cap-zero",
+    "path": "packages/core/src/data/tuning.json",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "uses shipped",
+    "exit": 1
+  },
+  {
+    "label": "report-guard",
+    "path": "packages/simulation/src/purse-command.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "in Report or with an invalid command envelope",
+    "exit": 1
+  },
+  {
+    "label": "revision-guard",
+    "path": "packages/simulation/src/purse-command.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "in Report or with an invalid command envelope",
+    "exit": 1
+  },
+  {
+    "label": "envelope-guard",
+    "path": "packages/simulation/src/purse-command.ts",
+    "test": "packages/simulation/src/__tests__/purse-command.test.ts",
+    "query": "in Report or with an invalid command envelope",
+    "exit": 1
+  },
+  {
+    "label": "easy-receipt",
+    "path": "packages/ui/src/report-letters.ts",
+    "test": "tests/e2e/purse.spec.ts",
+    "query": "1600",
+    "exit": 1
+  }
+]

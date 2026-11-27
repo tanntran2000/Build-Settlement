@@ -1,0 +1,66 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/core/src/data/tuning.json
+Original SHA-256 e9e4d543c8182d505c9c4340b5c5c8eee88eb0a0bbcc6ee9d9c56c391ac55662
+Variant SHA-256 d45495b712acb0e1eeb9efb8976468928d9e68129477cfe9925e108a51ee7852
+UTC start 2026-11-26T14:34:45.304118+00:00
+Command npm.cmd test -- packages/simulation/src/__tests__/purse-command.test.ts -t "uses shipped"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/purse-command.test.ts -t uses shipped
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (30 tests | 2 failed | 28 skipped) 207ms
+   × uses shipped normal Gold conversion and the capped offset including after save and reload 127ms
+   × uses shipped easy Gold conversion and the capped offset including after save and reload 78ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > uses shipped normal Gold conversion and the capped offset including after save and reload
+AssertionError: expected 79 to be 81 // Object.is equality
+
+- Expected
++ Received
+
+- 81
++ 79
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:190:63
+    188|     expect(offsetWeek.report.purse!.donationGoldMilli).toBe(gold);
+    189|     for (const key of ['free', 'makers', 'luminaries', 'merchants'] as…
+    190|       expect(offsetWeek.next.city.society!.satisfaction[key]).toBe(reg…
+       |                                                               ^
+    191|       expect(offsetWeek.next.city.society!.satisfaction[key]).toBe(unl…
+    192|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > uses shipped easy Gold conversion and the capped offset including after save and reload
+AssertionError: expected 79 to be 80 // Object.is equality
+
+- Expected
++ Received
+
+- 80
++ 79
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:190:63
+    188|     expect(offsetWeek.report.purse!.donationGoldMilli).toBe(gold);
+    189|     for (const key of ['free', 'makers', 'luminaries', 'merchants'] as…
+    190|       expect(offsetWeek.next.city.society!.satisfaction[key]).toBe(reg…
+       |                                                               ^
+    191|       expect(offsetWeek.next.city.society!.satisfaction[key]).toBe(unl…
+    192|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 28 skipped (30)
+   Start at  21:34:46
+   Duration  1.81s (transform 1.00s, setup 0ms, import 1.26s, tests 207ms, environment 0ms)
+
+
+Exit 1 in 3.069s

@@ -1,0 +1,43 @@
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Tree cfc1fc64a8bbb1df936ed495a8362fc2d15db18e
+origin/main f1fac9498f47fc7be8f6498ee3321800e14f2894
+UTC start 2026-11-26T13:27:06.580835+00:00
+CI unset
+VITEST_MAX_WORKERS 3
+Command npm.cmd run typecheck
+
+
+Exit 0 in 31.773s
+UTC end 2026-11-26T13:27:38.353542+00:00

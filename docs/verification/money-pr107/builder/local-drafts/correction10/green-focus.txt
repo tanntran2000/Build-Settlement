@@ -1,0 +1,198 @@
+HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Tree cfc1fc64a8bbb1df936ed495a8362fc2d15db18e
+UTC start 2026-11-26T14:31:35.007056+00:00
+Command npm.cmd test -- packages/core/src/trial/__tests__/difficulty.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/simulation/src/__tests__/purse-command.test.ts packages/simulation/src/__tests__/purse-week.test.ts packages/simulation/src/__tests__/craft-command.test.ts packages/ui/src/__tests__/purse-view.test.ts packages/ui/src/__tests__/crafting-view.test.ts
+Changed source SHA-256
+0787caa327bbbbb6cd5c06debed02787e8c208523b7efa1452facc90e840acec  packages/core/src/__tests__/catalog-data.test.ts
+a57c23fb0b20818f698ecb220f94200f35861e4dd6ffb6eea40e2cad6560aa59  packages/core/src/data/validate.ts
+0849097a068be38799c26bcae062600c560cf7118e3817984946d6d8894b619b  packages/core/src/trial/__tests__/difficulty.test.ts
+c585dc1eadc03c08191fcfc7ea6d15e04223e698098b092af3ce772855675161  packages/simulation/src/__tests__/craft-command.test.ts
+a377850fa3564b0772fd0db38a1d7eead30c43b5d95d9de4fb0136aedcb632a5  packages/simulation/src/__tests__/purse-command.test.ts
+28d683488715ab32732f9e5439b648ee0c7deb7025b09346623730a73ef75342  packages/simulation/src/__tests__/purse-week.test.ts
+675ddbe99b651846b382d134019626ca0836f8b545ce7a8d91a370dd5f4265a8  packages/ui/src/PursePanel.svelte
+3d3dcaac638ecd47e870a7f9504d6f41553dfc3b9d83d7b7a2cceb5bc543fdd0  packages/ui/src/__tests__/crafting-view.test.ts
+43405a41468a2303072ff5a6d0ff723efa73c5b6ab93b3055617b7883b9cee83  packages/ui/src/__tests__/purse-view.test.ts
+6e92c11169262b2d43bc10481ee45f0e40b3fadb9e4c2edc06b4ea6da7fb358c  packages/ui/src/purse-view.ts
+77ee639e3baed581f479552a2ffca012bcc4dbbcf6bc093e037e6a19b487d9ff  tests/e2e/character-life-navigation.helpers.ts
+09186249bacef259029def80a69876bf487a514332b8f54aab00b48da7af815a  tests/e2e/purse.spec.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/trial/__tests__/difficulty.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/simulation/src/__tests__/purse-command.test.ts packages/simulation/src/__tests__/purse-week.test.ts packages/simulation/src/__tests__/craft-command.test.ts packages/ui/src/__tests__/purse-view.test.ts packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (30 tests | 8 failed) 983ms
+   × returning the whole levy at percent 2 in 'normal' creates no Gold or Happiness 33ms
+   × returning the whole levy at percent 2 in 'easy' creates no Gold or Happiness 21ms
+   × returning the whole levy at percent 5 in 'normal' creates no Gold or Happiness 25ms
+   × returning the whole levy at percent 5 in 'easy' creates no Gold or Happiness 31ms
+   × returning the whole levy at percent 10 in 'normal' creates no Gold or Happiness 24ms
+   × returning the whole levy at percent 10 in 'easy' creates no Gold or Happiness 18ms
+   × returning the whole levy at percent 20 in 'normal' creates no Gold or Happiness 23ms
+   × returning the whole levy at percent 20 in 'easy' creates no Gold or Happiness 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 2 in 'normal' creates no Gold or Happiness
+AssertionError: expected 6076 to be 6000 // Object.is equality
+
+- Expected
++ Received
+
+- 6000
++ 6076
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 2 in 'easy' creates no Gold or Happiness
+AssertionError: expected 6125 to be 6000 // Object.is equality
+
+- Expected
++ Received
+
+- 6000
++ 6125
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 5 in 'normal' creates no Gold or Happiness
+AssertionError: expected 15190 to be 15000 // Object.is equality
+
+- Expected
++ Received
+
+- 15000
++ 15190
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 5 in 'easy' creates no Gold or Happiness
+AssertionError: expected 15313 to be 15000 // Object.is equality
+
+- Expected
++ Received
+
+- 15000
++ 15313
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 10 in 'normal' creates no Gold or Happiness
+AssertionError: expected 30380 to be 30000 // Object.is equality
+
+- Expected
++ Received
+
+- 30000
++ 30380
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 10 in 'easy' creates no Gold or Happiness
+AssertionError: expected 30627 to be 30000 // Object.is equality
+
+- Expected
++ Received
+
+- 30000
++ 30627
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 20 in 'normal' creates no Gold or Happiness
+AssertionError: expected 60760 to be 60000 // Object.is equality
+
+- Expected
++ Received
+
+- 60000
++ 60760
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole levy at percent 20 in 'easy' creates no Gold or Happiness
+AssertionError: expected 61254 to be 60000 // Object.is equality
+
+- Expected
++ Received
+
+- 60000
++ 61254
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:102:48
+    100|     const receipt = paid * (difficulty === 'easy' ? 2 : 1);
+    101|     expect(closed.report.taxMilli).toBe(300000);
+    102|     expect(closed.report.purse!.levyPaidMilli).toBe(paid);
+       |                                                ^
+    103|     expect(closed.next.player.purse.moneyMilli).toBe(receipt);
+    104|     const planning = act(closed.next, 'NEXT_WEEK').next;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  8 failed | 387 passed (395)
+   Start at  21:31:36
+   Duration  2.77s (transform 3.61s, setup 0ms, import 5.90s, tests 4.04s, environment 1ms)
+
+
+Exit 1 in 4.039s
+UTC end 2026-11-26T14:31:39.124753+00:00

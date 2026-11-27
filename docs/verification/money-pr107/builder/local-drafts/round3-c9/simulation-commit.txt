@@ -1,0 +1,13 @@
+[feat/money-purse d0e04f7] feat(simulation): player money, weekly levy and donations
+ 29 files changed, 470 insertions(+), 65 deletions(-)
+ create mode 100644 packages/core/src/__tests__/purse-tuning.test.ts
+ create mode 100644 packages/core/src/character/purse.ts
+ create mode 100644 packages/simulation/src/__tests__/purse-command.test.ts
+ create mode 100644 packages/simulation/src/__tests__/purse-week.test.ts
+ create mode 100644 packages/simulation/src/purse-command.ts
+ create mode 100644 packages/simulation/src/purse-week.ts
+
+UTC 2026-11-26T13:24:32.294352+00:00
+HEAD d0e04f7a7da2f10b3d1a721c12f85f693fa6e189
+Tree cad46a507ce838b7bae58e2bc970be6ba043a8ae
+Exit 0

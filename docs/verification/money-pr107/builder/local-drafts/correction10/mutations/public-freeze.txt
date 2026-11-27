@@ -1,0 +1,47 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/core/src/character/purse.ts
+Original SHA-256 5ed1ae605c3d6bbd7bbc2c0569711ac250bfbd0181ab7369227fa2a43d71525d
+Variant SHA-256 09d3f141f334f885384afdf8f0a88d4cfa7ce846368b9772fe263c1dbf0baf40
+UTC start 2026-11-26T14:33:41.196649+00:00
+Command npm.cmd test -- packages/core/src/__tests__/catalog-data.test.ts -t "tuning.json.*has recursively frozen typed views"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/__tests__/catalog-data.test.ts -t tuning.json.*has recursively frozen typed views
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (52 tests | 1 failed | 51 skipped) 15ms
+   × 'tuning.json' has recursively frozen typed views 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' has recursively frozen typed views
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ frozen packages/core/src/__tests__/catalog-data.test.ts:73:38
+     71|   function frozen(value: unknown) {
+     72|     if (value && typeof value === 'object') {
+     73|       expect(Object.isFrozen(value)).toBe(true);
+       |                                      ^
+     74|       Object.values(value).forEach(frozen);
+     75|     }
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:81:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 51 skipped (52)
+   Start at  21:33:42
+   Duration  1.19s (transform 642ms, setup 0ms, import 829ms, tests 15ms, environment 0ms)
+
+
+Exit 1 in 2.535s

@@ -1,0 +1,38 @@
+Money M2 Builder 6.2 xhigh
+mcp:4cd8ccd3-956a-46a7-859c-206a0a0373bf  completed  codex/gpt-6.2-sol
+
+[assistant]
+The broken renderer displayed `−1 Money · 0 Gold`. The restored test caught it, and both original desktop cases still passed. All three passed with the shipped renderer, so I’ll commit the test and run the full gates.
+
+[assistant]
+Gates 1–7 passed at `f97b5be`, including 3,383 unit tests. The full 422-case smoke run is underway with `CI=1`. CPU averaged 7.7% before it started, and both smoke ports were free.
+
+[assistant]
+The first 20 smoke cases passed, including both desktop accessibility baselines. The tested commit is still local while the suite runs.
+
+[assistant]
+The smoke run hit the existing 60-second limit in the fulfillment report case, which passed in 44.2 seconds at `fa66b59`. I’ll keep the test and its limit intact, retain this run’s log, and retry the full suite once on the same commit after checking the machine.
+
+[assistant]
+All three Purse cases passed in the full run, including the restored fractional receipt. The fulfillment timeout is still the only failure recorded. I’ll let this run finish so the log captures all 422 outcomes before the retry.
+
+[assistant]
+The first smoke run finished with 421 passes and the one fulfillment timeout. The full retry is running on the same commit. CPU averaged 2.5% at startup, and both ports were free.
+
+[assistant]
+The fulfillment case passed on retry in 52.8 seconds under its existing 60-second limit. The retry is at 44 of 422 with zero failures.
+
+[assistant]
+All three Purse cases passed again on the full retry. The restored case verified the exact `−1 Money · +0.5 Gold` row and read back 500 Gold milli through `expectReport`.
+
+[assistant]
+The full retry passed all 422 cases. I’ll seal both smoke logs and the carry-forward evidence, then push and verify the remote commit.
+
+[assistant]
+Pushed Correction 11 to `feat/money-purse` and verified the remote at `f97b5be31afbc3de02190a38c6c4075eb56d6194`.
+
+The restored Easy browser case donates 1 Money, saves and reloads, then ends the week. It checks the exact rendered row `−1 Money · +0.5 Gold` and reads back 500 Gold milli through `expectReport`. A scratch renderer that dropped fractional Gold failed this check while both original desktop cases passed. [Test case](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/purse.spec.ts:114) · [Mutation log](C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/mutation-smoke.txt)
+
+Gates 1–7 exited 0, including **3,383 unit tests**. The first full smoke run hit the existing 60-second limit in the fulfillment report case. The full `CI=1` retry passed **422 of 422** on the same commit under the existing limits. [First smoke run](C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/gate-attempt1-8-smoke.txt) · [Successful retry](C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/gate-attempt2-8-smoke.txt)
+
+The only changed file is `tests/e2e/purse.spec.ts`, so I carried forward the **178,080 gzip-byte** bundle measurement and the paired End Week timings under Correction 11. [Evidence README](C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/README.md) · [SHA-256 manifest](C:/Users/Admin/.t3/local-drafts/money-prM2/correction11/SHA256SUMS.txt)

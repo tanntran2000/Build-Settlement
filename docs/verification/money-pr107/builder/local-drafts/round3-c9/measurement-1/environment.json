@@ -1,0 +1,76 @@
+{
+  "idleSamples": [
+    {
+      "utc": "2026-11-26T14:06:55.596538+00:00",
+      "twoSecondCpuPercent": [
+        2.33,
+        1.86,
+        2.92
+      ],
+      "meanCpuPercent": 2.37
+    }
+  ],
+  "topTotalCpuProcesses": [
+    {
+      "ProcessName": "T3 Code (Nightly)",
+      "Id": 5872,
+      "CPU": 1228.59375
+    },
+    {
+      "ProcessName": "codebase-memory-mcp",
+      "Id": 9956,
+      "CPU": 915.078125
+    },
+    {
+      "ProcessName": "msedgewebview2",
+      "Id": 10720,
+      "CPU": 745.84375
+    },
+    {
+      "ProcessName": "cloudflared",
+      "Id": 24460,
+      "CPU": 716.25
+    },
+    {
+      "ProcessName": "ChatGPT",
+      "Id": 15920,
+      "CPU": 664.734375
+    },
+    {
+      "ProcessName": "claude",
+      "Id": 21564,
+      "CPU": 663.28125
+    },
+    {
+      "ProcessName": "T3 Code (Nightly)",
+      "Id": 27188,
+      "CPU": 509.390625
+    },
+    {
+      "ProcessName": "claude",
+      "Id": 23660,
+      "CPU": 464.875
+    },
+    {
+      "ProcessName": "claude",
+      "Id": 3504,
+      "CPU": 403.640625
+    },
+    {
+      "ProcessName": "claude",
+      "Id": 10176,
+      "CPU": 374.875
+    },
+    {
+      "ProcessName": "explorer",
+      "Id": 37988,
+      "CPU": 338.21875
+    },
+    {
+      "ProcessName": "Zalo",
+      "Id": 24892,
+      "CPU": 191.09375
+    }
+  ],
+  "keepAwakePriorState": "0x80000000"
+}

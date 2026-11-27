@@ -1,0 +1,103 @@
+{
+  "head": "f97b5be31afbc3de02190a38c6c4075eb56d6194",
+  "tree": "75ec12d1a9c537f5e9788ac0ec52d3ff68db620c",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-27T01:39:16.957081+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        2.84,
+        2.24,
+        2.36
+      ],
+      "meanPercent": 2.48,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 32460,
+          "cpuSecondsDelta": 0.672
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 25372,
+          "cpuSecondsDelta": 0.188
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 6864,
+          "cpuSecondsDelta": 0.141
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 39316,
+          "cpuSecondsDelta": 0.141
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 40488,
+          "cpuSecondsDelta": 0.141
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 39352,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "codex",
+          "pid": 34040,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 40416,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 35872,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "msedgewebview2",
+          "pid": 32324,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "POWERPNT",
+          "pid": 28832,
+          "cpuSecondsDelta": 0.031
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

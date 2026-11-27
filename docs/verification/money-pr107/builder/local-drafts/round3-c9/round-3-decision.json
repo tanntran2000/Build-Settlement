@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "checks": {
+    "unchangedM1ZeroPercentRows": true,
+    "2026 normal 5% 15 Money pace": true,
+    "2026 normal 5% Happiness >=30 and no Warning": true,
+    "2026 normal 10% first below 30 W12-W18": true,
+    "2026 easy 5% 15 Money pace": true,
+    "2027 normal 5% 15 Money pace": true,
+    "2027 normal 5% Happiness >=30 and no Warning": true,
+    "2027 normal 10% first below 30 W12-W18": true,
+    "2027 easy 5% 15 Money pace": true,
+    "2028 normal 5% 15 Money pace": true,
+    "2028 normal 5% Happiness >=30 and no Warning": true,
+    "2028 normal 10% first below 30 W12-W18": true,
+    "2028 easy 5% 15 Money pace": true
+  }
+}

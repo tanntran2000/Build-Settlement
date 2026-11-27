@@ -1,0 +1,47 @@
+HEAD d0e04f7a7da2f10b3d1a721c12f85f693fa6e189
+Tree cad46a507ce838b7bae58e2bc970be6ba043a8ae
+UTC start 2026-11-26T13:25:49.251424+00:00
+Command npm.cmd run build --workspace=@haven/ui
+Changed source SHA-256
+66e4364db85352281a3aff0d8b60036faf558bb7280b184c0b85c2b876451f2e  packages/ui/src/CharacterLifeCity.svelte
+bb011a11b10d3b80a4a80dda819daa5542325fa736f7defa7467052b0d5b890e  packages/ui/src/CharacterLifeShell.svelte
+ac80141a27a41174769ddad7b02b32bb4e285d21078854b5ed297c72aad7faf9  packages/ui/src/InsideCity.svelte
+e71fb6d7d1f0b24817b91fd0fc37b92422d8556618c9042bb2ff7d7da33fea8b  packages/ui/src/ItemCard.svelte
+c36a3690b81a5fda8064ce1eb5935241e7637958bde3af8ad72751aa2305b256  packages/ui/src/MarketPanel.svelte
+6ae7fc20e8918e1ea8cb770b9915b40335474e7ae1cc067a0b083a98f8c03466  packages/ui/src/PotionPanel.svelte
+4bc473849b9908c228d342f438605c869daa152f684bfa2210c0140a6fd59a96  packages/ui/src/PursePanel.svelte
+bac529ab978e900f640167448f024b87005a2f9799c819537bb0004fbc4a11c7  packages/ui/src/SoloWeekReport.svelte
+316a3f89f1262483adc840ba56d8df20f910ec654e75b0d4e15d6ab09de3be2b  packages/ui/src/TileManagement.svelte
+a705d65a1a9cea73ef633cb3e516cacf9513f1147c910d0c9907ab2117ef37a9  packages/ui/src/WorkshopPanel.svelte
+338d0ea762d7108564971feeb30ed3f289c4f732bbbf139dd3fe6f2d8eeef5a6  packages/ui/src/__tests__/crafting-view.test.ts
+7d70889e97fc0877423e5fe687c4754042168e54b8b2615d6a83e685288fdf21  packages/ui/src/__tests__/purse-view.test.ts
+79c5221e6d6e652e90613ec3f11733faa52d121278c101a094af95dd65dd3a32  packages/ui/src/items-view.ts
+7687d80f155c086268c4207922cefbfb3cc8c48b7dafd84e80bac0c3ce0e6e2a  packages/ui/src/purse-view.ts
+e3f92c79fa97d2f99b12f8610254f58d706dc9105ab643705263a7381975a714  packages/ui/src/report-letters.ts
+826fdc4c1b64a77492959277b1d0c7dc7cc76f1fcbf238f990da1870eb04c906  tests/e2e/character-life-navigation.helpers.ts
+a01c0351263c5a55d0f7159a251c81b34fb708284469273b6f4d3f043cd41204  tests/e2e/crafting.spec.ts
+2460e5ce9dfe6f5f7d160381845ffe4f8b663d7ebbba7a58a9649834cc3a47ed  tests/e2e/items.spec.ts
+837775b35b479003363beae241b442af6f1fbba8620e2b09a0a7b3ad34611f65  tests/e2e/purse.spec.ts
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 279 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bd6MtS16.css                   39.16 kB │ gzip:   7.89 kB
+dist/assets/index-DDz6H9wX.js                   534.95 kB │ gzip: 170.12 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.54s
+
+Exit 0 in 6.118s
+UTC end 2026-11-26T13:25:55.373780+00:00

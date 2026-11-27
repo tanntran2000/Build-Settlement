@@ -1,0 +1,20 @@
+Compared 546c48b9f312144c494a48dd44fe41741c9c2470..fa66b594391029ddb2cb43d98a90e9a8a4735446
+Command git diff --stat 546c48b9f312144c494a48dd44fe41741c9c2470..HEAD
+ packages/core/src/__tests__/catalog-data.test.ts   |   8 +-
+ packages/core/src/data/validate.ts                 |   6 +-
+ .../core/src/trial/__tests__/difficulty.test.ts    |  13 ++
+ .../simulation/src/__tests__/craft-command.test.ts |   7 +-
+ .../simulation/src/__tests__/purse-command.test.ts | 209 +++++++++++++++------
+ .../simulation/src/__tests__/purse-week.test.ts    |   5 +-
+ packages/ui/src/PursePanel.svelte                  |   5 +-
+ packages/ui/src/__tests__/crafting-view.test.ts    |   2 +-
+ packages/ui/src/__tests__/purse-view.test.ts       |  32 +++-
+ packages/ui/src/purse-view.ts                      |   7 +-
+ tests/e2e/character-life-navigation.helpers.ts     |   8 +-
+ tests/e2e/purse.spec.ts                            |  74 ++++++--
+ 12 files changed, 287 insertions(+), 89 deletions(-)
+
+The diff is limited to packages/ui/, packages/core/src/data/validate.ts and tests.
+Simulation source and shipped tuning are unchanged. The divisor rule checks inputs when the profile is loaded.
+Correction 10 permits carrying the 0%/5% End Week timing evidence from the reviewed head.
+Source ../round3-c9/measurement-1/measurement-summary.json and raw-timings.ndjson.

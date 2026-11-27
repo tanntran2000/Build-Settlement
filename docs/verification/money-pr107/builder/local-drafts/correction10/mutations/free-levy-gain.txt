@@ -1,0 +1,65 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/core/src/character/purse.ts
+Original SHA-256 5ed1ae605c3d6bbd7bbc2c0569711ac250bfbd0181ab7369227fa2a43d71525d
+Variant SHA-256 92fbb5d6b9e6a61c1744161736281230d4a84f9d690e18a3eeeb4cb35f2ceef0
+UTC start 2026-11-26T14:34:39.253320+00:00
+Command npm.cmd test -- packages/simulation/src/__tests__/purse-command.test.ts -t "a positive .* donation leaves Happiness"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/purse-command.test.ts -t a positive .* donation leaves Happiness
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (30 tests | 6 failed | 24 skipped) 274ms
+   × at +0 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control 87ms
+   × at +0 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control 41ms
+   × at 1 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control 37ms
+   × at 1 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control 35ms
+   × at 2 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control 35ms
+   × at 2 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control 37ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at +0 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at +0 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at 1 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at 1 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at 2 percent, a positive 'normal' donation leaves Happiness and class scores at the zero-levy control
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > at 2 percent, a positive 'easy' donation leaves Happiness and class scores at the zero-levy control
+AssertionError: expected { free: 84, makers: 84, …(3) } to strictly equal { free: 82, makers: 82, …(3) }
+
+- Expected
++ Received
+
+  {
+    "bound": 80,
+-   "free": 82,
+-   "luminaries": 82,
+-   "makers": 82,
+-   "merchants": 82,
++   "free": 84,
++   "luminaries": 84,
++   "makers": 84,
++   "merchants": 84,
+  }
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:131:59
+    129|     expect(afterDonation.report.purse!.donationGoldMilli).toBe(gold);
+    130|     expect(baseline.report.purse!.donationsMilli).toBe(0);
+    131|     expect(afterDonation.next.city.society!.satisfaction).toStrictEqua…
+       |                                                           ^
+    132|     expect(afterDonation.next.city.happiness).toBe(baseline.next.city.…
+    133|     expect(afterDonation.report.happinessAfter).toBe(baseline.report.h…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 24 skipped (30)
+   Start at  21:34:40
+   Duration  1.70s (transform 861ms, setup 0ms, import 1.09s, tests 274ms, environment 0ms)
+
+
+Exit 1 in 3.240s

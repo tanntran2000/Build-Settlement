@@ -1,0 +1,39 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/ui/src/items-view.ts
+Original SHA-256 79c5221e6d6e652e90613ec3f11733faa52d121278c101a094af95dd65dd3a32
+Variant SHA-256 1c921001f639929b8a25a879a6e722e4a4886f649fa4f96c19207349ce0a3f33
+UTC start 2026-11-26T14:34:33.829748+00:00
+Command npm.cmd test -- packages/ui/src/__tests__/crafting-view.test.ts -t "allows Brew placement without staffing"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts -t allows Brew placement without staffing
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (167 tests | 1 failed | 166 skipped) 26ms
+     × allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee 24ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee
+AssertionError: expected [] to include 'brew-heal-potion-1'
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:140:144
+    138|     s.city.society!.stocksMilli.herbs = 0; s.player.purse.moneyMilli =…
+    139|     expect(view.potionShop(s.city, 'service-1')).toBe(false);
+    140|     for (const tileId of ['service-1', 'slum-1']) expect(view.crafting…
+       |                                                                                                                                                ^
+    141|     s.player.purse.moneyMilli = 999; expect(view.craftingRecipes(s.cit…
+    142|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 166 skipped (167)
+   Start at  21:34:34
+   Duration  1.47s (transform 900ms, setup 0ms, import 1.13s, tests 26ms, environment 0ms)
+
+
+Exit 1 in 2.688s

@@ -1,0 +1,637 @@
+Base HEAD f1fac9498f47fc7be8f6498ee3321800e14f2894
+Base tree 7c8f6cb1b85a2193358bbab86d43f3c7d807cd50
+
+UTC 2026-11-26T12:30:29.983096+00:00
+Command: npm.cmd run typecheck
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Error while loading config at  c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Loading svelte-check in workspace: c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui
+Getting Svelte diagnostics...
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterCreation.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import {
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\ErrorLog.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { errorLog } from './error-log.js';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\OptionsDialog.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\TitleScreen.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount, tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CityFallen.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import './ledger-theme.css';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CrisisCard.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { crisisOptions, societyPopulation, CRISIS_TRIAL, type TileTrialState, type CardOption } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\PursePanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { PlayerCharacter } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\SocietyPopulation.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { societyPopulation, type TileTrialState, type SocietyGroupKey } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterLifeShell.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import './ledger-theme.css';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\OutsideCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import {TRIAL_BUILDINGS,type TileTrialState,type WorldNpc} from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CouncilPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { LAW_IDS, LAW_CATALOG, previewLawVote, lawVoteWeights, type LawId, type LobbyOption, type SocietyClassKey, type TileTrialState } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\LibraryPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import {OUTSIDE_TRIAL,RESEARCH_TOPICS,type TileTrialState,type ResearchTopic} from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\ItemCard.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { ITEM_TRIAL, type ItemDefinition } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\MarketPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\AcquisitionPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\WorkshopPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\PotionPanel.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { ITEM_CATALOG, ITEM_TRIAL, type TileTrialState, type WorldNpc } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\InsideCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import MarketPanel from './MarketPanel.svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\HouseholdNotice.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterLifeCity.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\EquipmentView.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import { tick } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\NpcSheet.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { WorldNpc } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterProfile.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterLifeCharacters.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import EquipmentView from './EquipmentView.svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\ReportLetter.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import type { Snippet } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\SocietyReport.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+ import type { TileTrialReport } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\SoloWeekReport.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type DifficultyId, type TileTrialReport, type WorldNpc } from '@haven/core';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\TileManagement.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import CityFallen from './CityFallen.svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\CharacterLifeApp.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\DataInspector.svelte:1:1
+Error: Error in svelte.config.js
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sveltejs/vite-plugin-svelte' imported from c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\svelte.config.js (svelte)
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\main.ts:1:23
+Error: Cannot find type definition file for 'vite/client'. 
+/// <reference types="vite/client" />
+import './app.css';
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\main.ts:7:35
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+
+const inspectorMode = import.meta.env.DEV && new URLSearchParams(window.location.search).get('mode') === 'data-inspector';
+let app;
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\main.ts:10:19
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+if (inspectorMode) {
+  if (import.meta.env.DEV) {
+    const { default: DataInspector } = await import('./DataInspector.svelte');
+
+c:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui\src\__tests__\npc-sheet-view.test.ts:5:29
+Error: Property 'glob' does not exist on type 'ImportMeta'. 
+
+const modules = import.meta.glob<typeof import('../npc-sheet-view.js')>('../npc-sheet-view.ts', { eager: true });
+
+====================================
+svelte-check found 34 errors and 0 warnings in 32 files
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path C:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui
+npm error workspace @haven/ui@0.1.0
+npm error location C:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c svelte-check --tsconfig ./tsconfig.json
+
+Exit 1 in 28.124s
+
+UTC 2026-11-26T12:30:58.112871+00:00
+Command: npm.cmd run lint
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+Exit 0 in 17.702s
+
+UTC 2026-11-26T12:31:15.814754+00:00
+Command: npm.cmd test
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts (43 tests | 1 failed) 3037ms
+     × keeps every no-NPC result byte-identical to the old delegated path 92ms
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts (35 tests | 2 failed) 11052ms
+   × full-session parity through two week cycles 1104ms
+     × accepts null-prototype command data with identical complete results 322ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (52 tests | 1 failed) 263ms
+   × 'tuning.json' has recursively frozen typed views 36ms
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts (9 tests | 1 failed) 4202ms
+     × keeps an empty no-market report byte-identical to the city week 105ms
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts (10 tests | 10 failed) 78ms
+     × credits normal Money on a 24 Gold gross week and charges 1.2 Gold 26ms
+     × credits easy Money on a 24 Gold gross week and charges 1.2 Gold 6ms
+     × caps the Gold charge at 0.4 in normal and reports a 0.8 shortfall 5ms
+     × caps the Gold charge at 0.4 in easy and reports a 0.8 shortfall 5ms
+     × floors gross levy before scaling Money 9ms
+     × applies the 0% undefined levy penalty to citizens before the Happiness report 5ms
+     × applies the 1% undefined levy penalty to citizens before the Happiness report 4ms
+     × applies the 2% undefined levy penalty to citizens before the Happiness report 4ms
+     × applies the 3% undefined levy penalty to citizens before the Happiness report 4ms
+     × keeps the purse with the Player when the active pointer moves to a new city 5ms
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (14 tests | 14 failed) 91ms
+   × refuses levy 21 without mutation 24ms
+   × refuses levy 2.5 without mutation 6ms
+   × refuses levy -1 without mutation 4ms
+   × refuses levy 5 without mutation 5ms
+   × refuses levy Infinity without mutation 5ms
+   × refuses donation 0 without mutation 7ms
+   × refuses donation 1500 without mutation 4ms
+   × refuses donation 3000 without mutation 4ms
+   × donates 3 Gold at 1:1 with the capped satisfaction increment and reports before resetting 4ms
+   × returning the whole 2% undefined levy in Money gives no direct Happiness gain 5ms
+   × returning the whole 5% undefined levy in Money gives no direct Happiness gain 4ms
+   × returning the whole 10% undefined levy in Money gives no direct Happiness gain 7ms
+   × returning the whole 20% undefined levy in Money gives no direct Happiness gain 4ms
+   × keeps NPC acquisition on Gold even when the Player has Money 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 29 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' has recursively frozen typed views
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ frozen packages/core/src/__tests__/catalog-data.test.ts:73:38
+     71|   function frozen(value: unknown) {
+     72|     if (value && typeof value === 'object') {
+     73|       expect(Object.isFrozen(value)).toBe(true);
+       |                                      ^
+     74|       Object.values(value).forEach(frozen);
+     75|     }
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:80:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > full-session parity through two week cycles
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -2320,10 +2320,17 @@
+          "herbs": 0,
+          "stone": 0,
+          "wool": 0,
+        },
+      },
++     "purse": {
++       "donationsMilli": 0,
++       "levyDueMilli": 0,
++       "levyPaidMilli": 0,
++       "levyPercent": 0,
++       "moneyAfterMilli": 0,
++     },
+      "society": {
+        "classes": {
+          "bound": {
+            "arrivals": 0,
+            "debtAfter": null,
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:119:15
+    117|       ...(action.type === 'END_WEEK' ? { expectedWeek: s.city.world.we…
+    118|     const expected = success(legacy(old, raw)), r = success(executeCha…
+    119|     expect(r).toEqual(expected);
+       |               ^
+    120|     expect(Object.keys(r.next).sort()).toEqual(['city', 'npcs', 'outsi…
+    121|     expect(r.next.city.revision).toBe(s.city.revision + 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > own data and prototype taxonomy precedes session and revision > accepts null-prototype command data with identical complete results
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -2292,10 +2292,17 @@
+          "herbs": 0,
+          "stone": 0,
+          "wool": 0,
+        },
+      },
++     "purse": {
++       "donationsMilli": 0,
++       "levyDueMilli": 0,
++       "levyPaidMilli": 0,
++       "levyPercent": 0,
++       "moneyAfterMilli": 0,
++     },
+      "society": {
+        "classes": {
+          "bound": {
+            "arrivals": 0,
+            "debtAfter": null,
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:280:21
+    278|       const expected = legacy(s, raw), plain = executeCharacterLifeCom…
+    279|       const nullRaw = Object.assign(Object.create(null), raw), rawBefo…
+    280|       expect(plain).toEqual(expected);
+       |                     ^
+    281|       expect(executeCharacterLifeCommand(s, nullRaw)).toEqual(expected…
+    282|       expect(Object.getOwnPropertyDescriptors(nullRaw)).toEqual(rawBef…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-acquisition.test.ts > P7-B weekly acquisition > keeps an empty no-market report byte-identical to the city week
+AssertionError: expected '{"items":{"materials":[],"found":null…' to be '{"items":{"materials":[],"found":null…' // Object.is equality
+
+Expected: "{"items":{"materials":[],"found":null,"expired":[],"legendary":null,"hospitalOperated":false,"regen":1},"laws":{"inForce":[],"costs":[],"unfunded":[],"incomeMilli":0,"promise":null},"crimeEvent":{"standingBefore":50,"standingAfter":50,"chancePercent":7,"event":null,"lordHealthLoss":0},"crisis":{"stageBefore":"none","stageAfter":"none","hungry":false,"hungerStreak":0,"calmStreak":1,"weeksInStage":1,"promise":null,"cardOpened":null,"lastChoice":null,"tensionBefore":0,"tensionAfter":0},"order":{"before":{"security":30,"crime":10,"authority":50},"taxModifierBps":0,"taxDeltaMilli":0,"arrivalsBudgetBefore":0,"arrivalsBudgetAfter":0,"soldiers":0,"garrisonSecurity":0,"targets":{"security":10,"crime":0,"authority":40},"after":{"security":25,"crime":5,"authority":47},"theftMilli":{},"tensionAdded":0,"satisfactionLost":0},"outside":{"producedMilli":{"wood":0,"iron":0,"stone":0,"wool":0,"herbs":0,"cloth":0},"stocksBefore":{"stone":0,"wool":0,"cloth":0,"herbs":0},"stocksAfter":{"stone":0,"wool":0,"cloth":0,"herbs":0},"hospitalsIdle":[],"cleared":[],"researchCompleted":[],"exhausted":[],"spoiledMilli":{}},"week":1,"before":{"gold":1000000,"wheat":0,"food":40000,"wood":8000,"iron":4000},"after":{"gold":1020755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"taxMilli":24000,"farmBatchGoldMilli":2000,"farmExtraUpkeepMilli":0,"upkeepPaidMilli":2000,"unpaidUpkeepMilli":0,"foodDemandMilli":4000,"foodConsumedMilli":4000,"happinessBefore":80,"happinessAfter":82,"goods":{"demandMilli":1450,"servedMilli":1450,"fulfillmentBps":10000,"woodUsed":0,"ironUsed":0,"revenueMilli":2755},"goodsStock":{"openingMilli":30000,"producedMilli":0,"distributedMilli":1450,"closingMilli":28550,"demandMilli":1450,"unmetMilli":0,"capacityMilli":2000,"limitedBy":"none"},"society":{"classes":{"free":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":12,"notes":["unemployed"]},"makers":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":0,"notes":[]},"luminaries":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"merchants":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"bound":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":80,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":null,"debtAfter":null,"notes":[]}},"eliteArrived":null,"desperationBefore":0,"desperationAfter":0,"tensionBefore":0,"tensionAfter":0,"corruptionAfter":48},"luxuryImportedMilli":0,"trainingGoldMilli":0,"activities":["field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.","plain-1: Food Processor 2 batches."],"immigration":{"populationBefore":100,"arrivals":0,"populationAfter":100,"target":90,"usefulWorkerSlots":10,"renewableFoodMilli":4000,"reason":"no-capacity"},"householdUpkeep":{"paidMilli":3000,"unpaidMilli":0}}"
+Received: "{"items":{"materials":[],"found":null,"expired":[],"legendary":null,"hospitalOperated":false,"regen":1},"laws":{"inForce":[],"costs":[],"unfunded":[],"incomeMilli":0,"promise":null},"crimeEvent":{"standingBefore":50,"standingAfter":50,"chancePercent":7,"event":null,"lordHealthLoss":0},"crisis":{"stageBefore":"none","stageAfter":"none","hungry":false,"hungerStreak":0,"calmStreak":1,"weeksInStage":1,"promise":null,"cardOpened":null,"lastChoice":null,"tensionBefore":0,"tensionAfter":0},"order":{"before":{"security":30,"crime":10,"authority":50},"taxModifierBps":0,"taxDeltaMilli":0,"arrivalsBudgetBefore":0,"arrivalsBudgetAfter":0,"soldiers":0,"garrisonSecurity":0,"targets":{"security":10,"crime":0,"authority":40},"after":{"security":25,"crime":5,"authority":47},"theftMilli":{},"tensionAdded":0,"satisfactionLost":0},"outside":{"producedMilli":{"wood":0,"iron":0,"stone":0,"wool":0,"herbs":0,"cloth":0},"stocksBefore":{"stone":0,"wool":0,"cloth":0,"herbs":0},"stocksAfter":{"stone":0,"wool":0,"cloth":0,"herbs":0},"hospitalsIdle":[],"cleared":[],"researchCompleted":[],"exhausted":[],"spoiledMilli":{}},"week":1,"before":{"gold":1000000,"wheat":0,"food":40000,"wood":8000,"iron":4000},"after":{"gold":1020755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"taxMilli":24000,"farmBatchGoldMilli":2000,"farmExtraUpkeepMilli":0,"upkeepPaidMilli":2000,"unpaidUpkeepMilli":0,"foodDemandMilli":4000,"foodConsumedMilli":4000,"happinessBefore":80,"happinessAfter":82,"goods":{"demandMilli":1450,"servedMilli":1450,"fulfillmentBps":10000,"woodUsed":0,"ironUsed":0,"revenueMilli":2755},"goodsStock":{"openingMilli":30000,"producedMilli":0,"distributedMilli":1450,"closingMilli":28550,"demandMilli":1450,"unmetMilli":0,"capacityMilli":2000,"limitedBy":"none"},"society":{"classes":{"free":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":12,"notes":["unemployed"]},"makers":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":0,"notes":[]},"luminaries":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"merchants":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"bound":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":80,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":null,"debtAfter":null,"notes":[]}},"eliteArrived":null,"desperationBefore":0,"desperationAfter":0,"tensionBefore":0,"tensionAfter":0,"corruptionAfter":48},"luxuryImportedMilli":0,"trainingGoldMilli":0,"activities":["field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.","plain-1: Food Processor 2 batches."],"immigration":{"populationBefore":100,"arrivals":0,"populationAfter":100,"target":90,"usefulWorkerSlots":10,"renewableFoodMilli":4000,"reason":"no-capacity"},"householdUpkeep":{"paidMilli":3000,"unpaidMilli":0},"purse":{"levyPercent":0,"levyDueMilli":0,"levyPaidMilli":0,"donationsMilli":0,"moneyAfterMilli":0}}"
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts:114:43
+    112|     expect(baseline.success).toBe(true); if (!baseline.success) throw …
+    113|     const result = succeeded(s, 'END_WEEK', { expectedWeek: 1 });
+    114|     expect(JSON.stringify(result.report)).toBe(JSON.stringify(baseline…
+       |                                           ^
+    115|     expect(Object.hasOwn(result.report!, 'household')).toBe(false);
+    116|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > keeps every no-NPC result byte-identical to the old delegated path
+AssertionError: expected '{"success":true,"next":{"city":{"worl…' to be '{"success":true,"next":{"city":{"worl…' // Object.is equality
+
+- Expected
++ Received
+
+- {"success":true,"next":{"city":{"world":{"week":2,"worldMetadata":{"worldSeed":42,"gameVersion":"0.1.0"},"activeSettlementId":"settlement_haven_01","settlements":{"settlement_haven_01":{"id":"settlement_haven_01","name":"Haven","status":"active","foodProcessorOperational":true,"inventory":{"gold":140755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"cohorts":[{"id":"weekly_middle","occupation":"worker","socialClass":"common","legalStatus":"citizen","count":100,"averageHealth":80,"morale":80,"productivity":80,"resentment":0,"loyalty":80,"livingStandard":"decent"}]}}},"revision":1,"phase":"report","tiles":[{"id":"field-1","terrain":"fertile","building":{"typeId":"farm","level":1,"workers":2,"enabled":true}},{"id":"plain-1","terrain":"plain","building":{"typeId":"processor","level":1,"workers":2,"enabled":true}},{"id":"forest-1","terrain":"forest","building":null},{"id":"ore-1","terrain":"ore","building":null},{"id":"plain-2","terrain":"plain","building":null},{"id":"plain-3","terrain":"plain","building":null},{"id":"forest-2","terrain":"forest","building":null},{"id":"ore-2","terrain":"ore","building":null},{"id":"field-2","terrain":"fertile","building":null},{"id":"plain-4","terrain":"plain","building":null},{"id":"field-3","terrain":"fertile","building":null},{"id":"field-4","terrain":"fertile","building":null},{"id":"pasture-1","terrain":"pasture","building":null},{"id":"pasture-2","terrain":"pasture","building":null},{"id":"meadow-1","terrain":"meadow","building":null},{"id":"meadow-2","terrain":"meadow","building":null},{"id":"forest-3","terrain":"forest","building":null},{"id":"rock-1","terrain":"rock","building":null},{"id":"rock-2","terrain":"rock","building":null},{"id":"plain-5","terrain":"plain","building":null},{"id":"field-5","terrain":"fertile","building":null},{"id":"pasture-3","terrain":"pasture","building":null},{"id":"meadow-3","terrain":"meadow","building":null},{"id":"forest-4","terrain":"forest","building":null},{"id":"forest-5","terrain":"forest","building":null},{"id":"ore-3","terrain":"ore","building":null},{"id":"ore-4","terrain":"ore","building":null},{"id":"rock-3","terrain":"rock","building":null},{"id":"plain-6","terrain":"plain","building":null},{"id":"plain-7","terrain":"plain","building":null},{"id":"house-1","terrain":"town","building":{"typeId":"common-housing","level":3,"workers":0,"enabled":true}},{"id":"house-2","terrain":"town","building":{"typeId":"makers-rowhouses","level":2,"workers":0,"enabled":true}},{"id":"house-3","terrain":"town","building":{"typeId":"scholars-quarters","level":2,"workers":0,"enabled":true}},{"id":"house-4","terrain":"town","building":{"typeId":"merchant-townhouses","level":1,"workers":0,"enabled":true}},{"id":"house-5","terrain":"town","building":null},{"id":"house-6","terrain":"town","building":null},{"id":"house-7","terrain":"town","building":null},{"id":"house-8","terrain":"town","building":null},{"id":"house-9","terrain":"town","building":null},{"id":"house-10","terrain":"town","building":null},{"id":"house-11","terrain":"town","building":null},{"id":"service-1","terrain":"town","building":null},{"id":"service-2","terrain":"town","building":null},{"id":"service-3","terrain":"town","building":null},{"id":"service-4","terrain":"town","building":null},{"id":"service-5","terrain":"town","building":null},{"id":"service-6","terrain":"town","building":null},{"id":"spec-1","terrain":"town","building":{"typeId":"town-market","level":1,"workers":0,"enabled":true}},{"id":"spec-2","terrain":"town","building":null},{"id":"spec-3","terrain":"town","building":null},{"id":"spec-4","terrain":"town","building":null},{"id":"spec-5","terrain":"town","building":null},{"id":"spec-6","terrain":"town","building":null},{"id":"spec-7","terrain":"town","building":null},{"id":"spec-8","terrain":"town","building":null},{"id":"spec-9","terrain":"town","building":null},{"id":"spec-10","terrain":"town","building":null},{"id":"slum-1","terrain":"town","building":null},{"id":"slum-2","terrain":"town","building":null},{"id":"slum-3","terrain":"town","building":null},{"id":"slum-4","terrain":"town","building":null},{"id":"slum-5","terrain":"town","building":null},{"id":"slum-6","terrain":"town","building":null},{"id":"house-12","terrain":"town","building":null},{"id":"house-13","terrain":"town","building":null},{"id":"house-14","terrain":"town","building":null},{"id":"service-7","terrain":"town","building":null},{"id":"service-8","terrain":"town","building":null},{"id":"spec-11","terrain":"town","building":null},{"id":"spec-12","terrain":"town","building":null},{"id":"slum-7","terrain":"town","building":null},{"id":"slum-8","terrain":"town","building":null},{"id":"slum-9","terrain":"town","building":null},{"id":"estate-1","terrain":"town","building":{"typeId":"mansion","level":1,"workers":0,"enabled":true}},{"id":"estate-2","terrain":"town","building":{"typeId":"retainers-hall","level":1,"workers":0,"enabled":true}}],"happiness":82,"goodsStock":{"rulesetId":"tile-population-goods-01","amountMilli":28550},"society":{"rulesetId":"tile-society-14","standing":50,"laws":{"active":[],"votedWeek":null,"repealedUntil":{},"promise":null},"order":{"security":25,"crime":5,"authority":47},"crisis":{"fallCause":null,"stage":"none","weeksInStage":1,"hungerStreak":0,"calmStreak":1,"promise":null,"lastChoice":null},"pendingCard":null,"stocksMilli":{"stone":0,"wool":0,"cloth":0,"herbs":0},"outside":{"field-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"plain-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-3":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"field-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-4":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"rock-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"rock-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"plain-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"forest-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"ore-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"rock-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"plain-6":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-7":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false}},"research":{"topic":null,"progressMilli":{"deep-mining":0,"watch-patrols":0,"barracks-drill":0},"paid":[],"completed":[]},"classes":{"free":55,"makers":{"common":20,"elite":0},"luminaries":{"common":12,"elite":0},"merchants":{"common":13,"elite":0},"bound":{"free":0,"makers":0,"luminaries":0,"merchants":0}},"satisfaction":{"free":82,"makers":82,"luminaries":82,"merchants":82,"bound":80},"desperation":0,"tension":0,"debtPressure":{"free":12,"makers":0,"luminaries":20,"merchants":20},"corruption":48,"luxuryStockMilli":0,"training":{"target":null,"progressMilli":0},"wallRing":1,"items":{"nextItemId":1,"inventory":[],"consumables":[],"materials":{},"storage":[],"equipped":{},"market":[{"defId":"common-bottom-npc","priceMilli":5000},{"defId":"common-bottom","priceMilli":5000},{"defId":"common-bottom","priceMilli":5000},{"defId":"common-set-npc","priceMilli":5000},{"defId":"rare-weapon-player","priceMilli":15000},{"defId":"rare-earrings-player","priceMilli":15000},{"defId":"epic-ring-player","priceMilli":40000},{"defId":"epic-shoes-npc","priceMilli":40000}],"goals":{"calm":false,"authority":false,"week52":false,"research":false,"rebellionSeen":false,"authorityStreak":0}},"acquisition":{"week":0,"stock":[],"lots":[],"departures":[]},"difficulty":"normal"}},"outside":{"scenarioId":"outside-trial-01","generator":"outside-gen-01","seed":42,"actors":["player","ai-1","ai-2"],"tiles":[{"id":"o01","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o02","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o03","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o04","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o05","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o06","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o07","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o08","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o09","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o10","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o11","owner":null,"knownBy":[],"feature":null},{"id":"o12","owner":null,"knownBy":[],"feature":null},{"id":"o13","owner":null,"knownBy":[],"feature":null},{"id":"o14","owner":null,"knownBy":[],"feature":null},{"id":"o15","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o16","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o17","owner":null,"knownBy":[],"feature":null},{"id":"o18","owner":null,"knownBy":[],"feature":null},{"id":"o19","owner":null,"knownBy":[],"feature":null},{"id":"o20","owner":null,"knownBy":[],"feature":null},{"id":"o21","owner":null,"knownBy":[],"feature":null},{"id":"o22","owner":null,"knownBy":[],"feature":null},{"id":"o23","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"iron"}},{"id":"o24","owner":null,"knownBy":[],"feature":null},{"id":"o25","owner":null,"knownBy":[],"feature":null},{"id":"o26","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o27","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o28","owner":null,"knownBy":[],"feature":null},{"id":"o29","owner":null,"knownBy":[],"feature":null},{"id":"o30","owner":null,"knownBy":[],"feature":null},{"id":"o31","owner":null,"knownBy":[],"feature":null},{"id":"o32","owner":null,"knownBy":[],"feature":null},{"id":"o33","owner":null,"knownBy":[],"feature":null},{"id":"o34","owner":null,"knownBy":[],"feature":null},{"id":"o35","owner":null,"knownBy":[],"feature":null},{"id":"o36","owner":null,"knownBy":[],"feature":null},{"id":"o37","owner":null,"knownBy":[],"feature":null},{"id":"o38","owner":null,"knownBy":[],"feature":null},{"id":"o39","owner":null,"knownBy":[],"feature":null},{"id":"o40","owner":null,"knownBy":[],"feature":null},{"id":"o41","owner":null,"knownBy":[],"feature":null},{"id":"o42","owner":null,"knownBy":[],"feature":null},{"id":"o43","owner":null,"knownBy":[],"feature":null},{"id":"o44","owner":null,"knownBy":[],"feature":null},{"id":"o45","owner":null,"knownBy":[],"feature":null},{"id":"o46","owner":null,"knownBy":[],"feature":null},{"id":"o47","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o48","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o49","owner":null,"knownBy":[],"feature":null},{"id":"o50","owner":null,"knownBy":[],"feature":null},{"id":"o51","owner":null,"knownBy":[],"feature":null},{"id":"o52","owner":null,"knownBy":[],"feature":null},{"id":"o53","owner":null,"knownBy":[],"feature":null},{"id":"o54","owner":null,"knownBy":[],"feature":null},{"id":"o55","owner":null,"knownBy":[],"feature":null},{"id":"o56","owner":null,"knownBy":[],"feature":null},{"id":"o57","owner":null,"knownBy":[],"feature":null},{"id":"o58","owner":null,"knownBy":[],"feature":null},{"id":"o59","owner":null,"knownBy":[],"feature":null},{"id":"o60","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o61","owner":null,"knownBy":[],"feature":null},{"id":"o62","owner":null,"knownBy":[],"feature":null},{"id":"o63","owner":null,"knownBy":[],"feature":null},{"id":"o64","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o65","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o66","owner":null,"knownBy":[],"feature":null},{"id":"o67","owner":null,"knownBy":[],"feature":null},{"id":"o68","owner":null,"knownBy":[],"feature":null},{"id":"o69","owner":null,"knownBy":[],"feature":null},{"id":"o70","owner":null,"knownBy":[],"feature":null},{"id":"o71","owner":null,"knownBy":[],"feature":null},{"id":"o72","owner":null,"knownBy":[],"feature":null},{"id":"o73","owner":null,"knownBy":[],"feature":null},{"id":"o74","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o75","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o76","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o77","owner":null,"knownBy":[],"feature":null},{"id":"o78","owner":null,"knownBy":[],"feature":null},{"id":"o79","owner":null,"knownBy":[],"feature":null},{"id":"o80","owner":null,"knownBy":[],"feature":null},{"id":"o81","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o82","owner":null,"knownBy":[],"feature":null},{"id":"o83","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o84","owner":null,"knownBy":[],"feature":null},{"id":"o85","owner":null,"knownBy":[],"feature":null},{"id":"o86","owner":null,"knownBy":[],"feature":null},{"id":"o87","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wheat"}},{"id":"o88","owner":null,"knownBy":[],"feature":null},{"id":"o89","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wheat"}},{"id":"o90","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}}]},"npcs":[],"player":{"character":{"id":"player","name":"Synthetic Keeper","gender":"other","age":25,"occupation":"worker","socialClass":"common","legalStatus":"citizen","needs":{"safety":70,"nutrition":80,"autonomy":60,"recognition":50,"intimacy":40,"purpose":50},"emotions":{"joy":50,"fear":10,"anger":0,"sadness":10,"shame":0,"jealousy":0,"hope":70,"stress":20},"relationshipToPlayer":{"trust":30,"affection":20,"attraction":10,"respect":30,"fear":10,"resentment":0,"dependency":20,"familiarity":10},"memories":[],"skills":{"management":30,"technical":30,"medical":20,"combat":20,"negotiation":30},"health":100},"profile":{"id":"player","identity":{"birthName":null,"label":null,"pronouns":"they","birthplaceId":"kestrel_ford","origin":{"regionId":"northreach","upbringing":"frontier"},"currentLocationId":"haven","biography":null},"traits":{"attractiveness":50,"learningAptitude":50,"warmth":50},"appearance":{"presentation":"androgynous","skinTone":"olive","eyeColor":"brown","hair":{"color":"dark_brown","length":"short","texture":"straight","style":"loose"},"face":{"shape":"oval","features":[]},"build":"average","heightCm":170,"weightKg":68,"outfit":"role_default"}},"purse":{"moneyMilli":0,"levyPercent":0,"donatedThisWeekMilli":0,"robbery":null}},"profiles":[]},"report":{"items":{"materials":[],"found":null,"expired":[],"legendary":null,"hospitalOperated":false,"regen":1},"laws":{"inForce":[],"costs":[],"unfunded":[],"incomeMilli":0,"promise":null},"crimeEvent":{"standingBefore":50,"standingAfter":50,"chancePercent":7,"event":null,"lordHealthLoss":0},"crisis":{"stageBefore":"none","stageAfter":"none","hungry":false,"hungerStreak":0,"calmStreak":1,"weeksInStage":1,"promise":null,"cardOpened":null,"lastChoice":null,"tensionBefore":0,"tensionAfter":0},"order":{"before":{"security":30,"crime":10,"authority":50},"taxModifierBps":0,"taxDeltaMilli":0,"arrivalsBudgetBefore":0,"arrivalsBudgetAfter":0,"soldiers":0,"garrisonSecurity":0,"targets":{"security":10,"crime":0,"authority":40},"after":{"security":25,"crime":5,"authority":47},"theftMilli":{},"tensionAdded":0,"satisfactionLost":0},"outside":{"producedMilli":{"wood":0,"iron":0,"stone":0,"wool":0,"herbs":0,"cloth":0},"stocksBefore":{"stone":0,"wool":0,"cloth":0,"herbs":0},"stocksAfter":{"stone":0,"wool":0,"cloth":0,"herbs":0},"hospitalsIdle":[],"cleared":[],"researchCompleted":[],"exhausted":[],"spoiledMilli":{}},"week":1,"before":{"gold":120000,"wheat":0,"food":40000,"wood":8000,"iron":4000},"after":{"gold":140755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"taxMilli":24000,"farmBatchGoldMilli":2000,"farmExtraUpkeepMilli":0,"upkeepPaidMilli":2000,"unpaidUpkeepMilli":0,"foodDemandMilli":4000,"foodConsumedMilli":4000,"happinessBefore":80,"happinessAfter":82,"goods":{"demandMilli":1450,"servedMilli":1450,"fulfillmentBps":10000,"woodUsed":0,"ironUsed":0,"revenueMilli":2755},"goodsStock":{"openingMilli":30000,"producedMilli":0,"distributedMilli":1450,"closingMilli":28550,"demandMilli":1450,"unmetMilli":0,"capacityMilli":2000,"limitedBy":"none"},"society":{"classes":{"free":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":12,"notes":["unemployed"]},"makers":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":0,"notes":[]},"luminaries":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"merchants":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"bound":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":80,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":null,"debtAfter":null,"notes":[]}},"eliteArrived":null,"desperationBefore":0,"desperationAfter":0,"tensionBefore":0,"tensionAfter":0,"corruptionAfter":48},"luxuryImportedMilli":0,"trainingGoldMilli":0,"activities":["field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.","plain-1: Food Processor 2 batches."],"immigration":{"populationBefore":100,"arrivals":0,"populationAfter":100,"target":90,"usefulWorkerSlots":10,"renewableFoodMilli":4000,"reason":"no-capacity"},"householdUpkeep":{"paidMilli":3000,"unpaidMilli":0}}}
++ {"success":true,"next":{"city":{"world":{"week":2,"worldMetadata":{"worldSeed":42,"gameVersion":"0.1.0"},"activeSettlementId":"settlement_haven_01","settlements":{"settlement_haven_01":{"id":"settlement_haven_01","name":"Haven","status":"active","foodProcessorOperational":true,"inventory":{"gold":140755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"cohorts":[{"id":"weekly_middle","occupation":"worker","socialClass":"common","legalStatus":"citizen","count":100,"averageHealth":80,"morale":80,"productivity":80,"resentment":0,"loyalty":80,"livingStandard":"decent"}]}}},"revision":1,"phase":"report","tiles":[{"id":"field-1","terrain":"fertile","building":{"typeId":"farm","level":1,"workers":2,"enabled":true}},{"id":"plain-1","terrain":"plain","building":{"typeId":"processor","level":1,"workers":2,"enabled":true}},{"id":"forest-1","terrain":"forest","building":null},{"id":"ore-1","terrain":"ore","building":null},{"id":"plain-2","terrain":"plain","building":null},{"id":"plain-3","terrain":"plain","building":null},{"id":"forest-2","terrain":"forest","building":null},{"id":"ore-2","terrain":"ore","building":null},{"id":"field-2","terrain":"fertile","building":null},{"id":"plain-4","terrain":"plain","building":null},{"id":"field-3","terrain":"fertile","building":null},{"id":"field-4","terrain":"fertile","building":null},{"id":"pasture-1","terrain":"pasture","building":null},{"id":"pasture-2","terrain":"pasture","building":null},{"id":"meadow-1","terrain":"meadow","building":null},{"id":"meadow-2","terrain":"meadow","building":null},{"id":"forest-3","terrain":"forest","building":null},{"id":"rock-1","terrain":"rock","building":null},{"id":"rock-2","terrain":"rock","building":null},{"id":"plain-5","terrain":"plain","building":null},{"id":"field-5","terrain":"fertile","building":null},{"id":"pasture-3","terrain":"pasture","building":null},{"id":"meadow-3","terrain":"meadow","building":null},{"id":"forest-4","terrain":"forest","building":null},{"id":"forest-5","terrain":"forest","building":null},{"id":"ore-3","terrain":"ore","building":null},{"id":"ore-4","terrain":"ore","building":null},{"id":"rock-3","terrain":"rock","building":null},{"id":"plain-6","terrain":"plain","building":null},{"id":"plain-7","terrain":"plain","building":null},{"id":"house-1","terrain":"town","building":{"typeId":"common-housing","level":3,"workers":0,"enabled":true}},{"id":"house-2","terrain":"town","building":{"typeId":"makers-rowhouses","level":2,"workers":0,"enabled":true}},{"id":"house-3","terrain":"town","building":{"typeId":"scholars-quarters","level":2,"workers":0,"enabled":true}},{"id":"house-4","terrain":"town","building":{"typeId":"merchant-townhouses","level":1,"workers":0,"enabled":true}},{"id":"house-5","terrain":"town","building":null},{"id":"house-6","terrain":"town","building":null},{"id":"house-7","terrain":"town","building":null},{"id":"house-8","terrain":"town","building":null},{"id":"house-9","terrain":"town","building":null},{"id":"house-10","terrain":"town","building":null},{"id":"house-11","terrain":"town","building":null},{"id":"service-1","terrain":"town","building":null},{"id":"service-2","terrain":"town","building":null},{"id":"service-3","terrain":"town","building":null},{"id":"service-4","terrain":"town","building":null},{"id":"service-5","terrain":"town","building":null},{"id":"service-6","terrain":"town","building":null},{"id":"spec-1","terrain":"town","building":{"typeId":"town-market","level":1,"workers":0,"enabled":true}},{"id":"spec-2","terrain":"town","building":null},{"id":"spec-3","terrain":"town","building":null},{"id":"spec-4","terrain":"town","building":null},{"id":"spec-5","terrain":"town","building":null},{"id":"spec-6","terrain":"town","building":null},{"id":"spec-7","terrain":"town","building":null},{"id":"spec-8","terrain":"town","building":null},{"id":"spec-9","terrain":"town","building":null},{"id":"spec-10","terrain":"town","building":null},{"id":"slum-1","terrain":"town","building":null},{"id":"slum-2","terrain":"town","building":null},{"id":"slum-3","terrain":"town","building":null},{"id":"slum-4","terrain":"town","building":null},{"id":"slum-5","terrain":"town","building":null},{"id":"slum-6","terrain":"town","building":null},{"id":"house-12","terrain":"town","building":null},{"id":"house-13","terrain":"town","building":null},{"id":"house-14","terrain":"town","building":null},{"id":"service-7","terrain":"town","building":null},{"id":"service-8","terrain":"town","building":null},{"id":"spec-11","terrain":"town","building":null},{"id":"spec-12","terrain":"town","building":null},{"id":"slum-7","terrain":"town","building":null},{"id":"slum-8","terrain":"town","building":null},{"id":"slum-9","terrain":"town","building":null},{"id":"estate-1","terrain":"town","building":{"typeId":"mansion","level":1,"workers":0,"enabled":true}},{"id":"estate-2","terrain":"town","building":{"typeId":"retainers-hall","level":1,"workers":0,"enabled":true}}],"happiness":82,"goodsStock":{"rulesetId":"tile-population-goods-01","amountMilli":28550},"society":{"rulesetId":"tile-society-14","standing":50,"laws":{"active":[],"votedWeek":null,"repealedUntil":{},"promise":null},"order":{"security":25,"crime":5,"authority":47},"crisis":{"fallCause":null,"stage":"none","weeksInStage":1,"hungerStreak":0,"calmStreak":1,"promise":null,"lastChoice":null},"pendingCard":null,"stocksMilli":{"stone":0,"wool":0,"cloth":0,"herbs":0},"outside":{"field-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-1":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"plain-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-3":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"field-2":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-4":{"wild":false,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"rock-1":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"rock-2":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"plain-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"field-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"pasture-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"meadow-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"forest-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"forest-5":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":60000,"capMilli":60000,"deepShaft":false},"ore-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"ore-4":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":80000,"capMilli":80000,"deepShaft":false},"rock-3":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":100000,"capMilli":100000,"deepShaft":false},"plain-6":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false},"plain-7":{"wild":true,"clearMilli":0,"clearWorkers":0,"clearPaid":false,"depositMilli":null,"capMilli":null,"deepShaft":false}},"research":{"topic":null,"progressMilli":{"deep-mining":0,"watch-patrols":0,"barracks-drill":0},"paid":[],"completed":[]},"classes":{"free":55,"makers":{"common":20,"elite":0},"luminaries":{"common":12,"elite":0},"merchants":{"common":13,"elite":0},"bound":{"free":0,"makers":0,"luminaries":0,"merchants":0}},"satisfaction":{"free":82,"makers":82,"luminaries":82,"merchants":82,"bound":80},"desperation":0,"tension":0,"debtPressure":{"free":12,"makers":0,"luminaries":20,"merchants":20},"corruption":48,"luxuryStockMilli":0,"training":{"target":null,"progressMilli":0},"wallRing":1,"items":{"nextItemId":1,"inventory":[],"consumables":[],"materials":{},"storage":[],"equipped":{},"market":[{"defId":"common-bottom-npc","priceMilli":5000},{"defId":"common-bottom","priceMilli":5000},{"defId":"common-bottom","priceMilli":5000},{"defId":"common-set-npc","priceMilli":5000},{"defId":"rare-weapon-player","priceMilli":15000},{"defId":"rare-earrings-player","priceMilli":15000},{"defId":"epic-ring-player","priceMilli":40000},{"defId":"epic-shoes-npc","priceMilli":40000}],"goals":{"calm":false,"authority":false,"week52":false,"research":false,"rebellionSeen":false,"authorityStreak":0}},"acquisition":{"week":0,"stock":[],"lots":[],"departures":[]},"difficulty":"normal"}},"outside":{"scenarioId":"outside-trial-01","generator":"outside-gen-01","seed":42,"actors":["player","ai-1","ai-2"],"tiles":[{"id":"o01","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o02","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o03","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o04","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o05","owner":"ai-1","knownBy":["ai-1"],"feature":null},{"id":"o06","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o07","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o08","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o09","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o10","owner":"ai-2","knownBy":["ai-2"],"feature":null},{"id":"o11","owner":null,"knownBy":[],"feature":null},{"id":"o12","owner":null,"knownBy":[],"feature":null},{"id":"o13","owner":null,"knownBy":[],"feature":null},{"id":"o14","owner":null,"knownBy":[],"feature":null},{"id":"o15","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o16","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o17","owner":null,"knownBy":[],"feature":null},{"id":"o18","owner":null,"knownBy":[],"feature":null},{"id":"o19","owner":null,"knownBy":[],"feature":null},{"id":"o20","owner":null,"knownBy":[],"feature":null},{"id":"o21","owner":null,"knownBy":[],"feature":null},{"id":"o22","owner":null,"knownBy":[],"feature":null},{"id":"o23","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"iron"}},{"id":"o24","owner":null,"knownBy":[],"feature":null},{"id":"o25","owner":null,"knownBy":[],"feature":null},{"id":"o26","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o27","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o28","owner":null,"knownBy":[],"feature":null},{"id":"o29","owner":null,"knownBy":[],"feature":null},{"id":"o30","owner":null,"knownBy":[],"feature":null},{"id":"o31","owner":null,"knownBy":[],"feature":null},{"id":"o32","owner":null,"knownBy":[],"feature":null},{"id":"o33","owner":null,"knownBy":[],"feature":null},{"id":"o34","owner":null,"knownBy":[],"feature":null},{"id":"o35","owner":null,"knownBy":[],"feature":null},{"id":"o36","owner":null,"knownBy":[],"feature":null},{"id":"o37","owner":null,"knownBy":[],"feature":null},{"id":"o38","owner":null,"knownBy":[],"feature":null},{"id":"o39","owner":null,"knownBy":[],"feature":null},{"id":"o40","owner":null,"knownBy":[],"feature":null},{"id":"o41","owner":null,"knownBy":[],"feature":null},{"id":"o42","owner":null,"knownBy":[],"feature":null},{"id":"o43","owner":null,"knownBy":[],"feature":null},{"id":"o44","owner":null,"knownBy":[],"feature":null},{"id":"o45","owner":null,"knownBy":[],"feature":null},{"id":"o46","owner":null,"knownBy":[],"feature":null},{"id":"o47","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o48","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o49","owner":null,"knownBy":[],"feature":null},{"id":"o50","owner":null,"knownBy":[],"feature":null},{"id":"o51","owner":null,"knownBy":[],"feature":null},{"id":"o52","owner":null,"knownBy":[],"feature":null},{"id":"o53","owner":null,"knownBy":[],"feature":null},{"id":"o54","owner":null,"knownBy":[],"feature":null},{"id":"o55","owner":null,"knownBy":[],"feature":null},{"id":"o56","owner":null,"knownBy":[],"feature":null},{"id":"o57","owner":null,"knownBy":[],"feature":null},{"id":"o58","owner":null,"knownBy":[],"feature":null},{"id":"o59","owner":null,"knownBy":[],"feature":null},{"id":"o60","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o61","owner":null,"knownBy":[],"feature":null},{"id":"o62","owner":null,"knownBy":[],"feature":null},{"id":"o63","owner":null,"knownBy":[],"feature":null},{"id":"o64","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o65","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o66","owner":null,"knownBy":[],"feature":null},{"id":"o67","owner":null,"knownBy":[],"feature":null},{"id":"o68","owner":null,"knownBy":[],"feature":null},{"id":"o69","owner":null,"knownBy":[],"feature":null},{"id":"o70","owner":null,"knownBy":[],"feature":null},{"id":"o71","owner":null,"knownBy":[],"feature":null},{"id":"o72","owner":null,"knownBy":[],"feature":null},{"id":"o73","owner":null,"knownBy":[],"feature":null},{"id":"o74","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o75","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o76","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o77","owner":null,"knownBy":[],"feature":null},{"id":"o78","owner":null,"knownBy":[],"feature":null},{"id":"o79","owner":null,"knownBy":[],"feature":null},{"id":"o80","owner":null,"knownBy":[],"feature":null},{"id":"o81","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wood"}},{"id":"o82","owner":null,"knownBy":[],"feature":null},{"id":"o83","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}},{"id":"o84","owner":null,"knownBy":[],"feature":null},{"id":"o85","owner":null,"knownBy":[],"feature":null},{"id":"o86","owner":null,"knownBy":[],"feature":null},{"id":"o87","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wheat"}},{"id":"o88","owner":null,"knownBy":[],"feature":null},{"id":"o89","owner":null,"knownBy":[],"feature":{"kind":"deposit","resource":"wheat"}},{"id":"o90","owner":null,"knownBy":[],"feature":{"kind":"loot","claimedBy":null}}]},"npcs":[],"player":{"character":{"id":"player","name":"Synthetic Keeper","gender":"other","age":25,"occupation":"worker","socialClass":"common","legalStatus":"citizen","needs":{"safety":70,"nutrition":80,"autonomy":60,"recognition":50,"intimacy":40,"purpose":50},"emotions":{"joy":50,"fear":10,"anger":0,"sadness":10,"shame":0,"jealousy":0,"hope":70,"stress":20},"relationshipToPlayer":{"trust":30,"affection":20,"attraction":10,"respect":30,"fear":10,"resentment":0,"dependency":20,"familiarity":10},"memories":[],"skills":{"management":30,"technical":30,"medical":20,"combat":20,"negotiation":30},"health":100},"profile":{"id":"player","identity":{"birthName":null,"label":null,"pronouns":"they","birthplaceId":"kestrel_ford","origin":{"regionId":"northreach","upbringing":"frontier"},"currentLocationId":"haven","biography":null},"traits":{"attractiveness":50,"learningAptitude":50,"warmth":50},"appearance":{"presentation":"androgynous","skinTone":"olive","eyeColor":"brown","hair":{"color":"dark_brown","length":"short","texture":"straight","style":"loose"},"face":{"shape":"oval","features":[]},"build":"average","heightCm":170,"weightKg":68,"outfit":"role_default"}},"purse":{"moneyMilli":0,"levyPercent":0,"donatedThisWeekMilli":0,"robbery":null}},"profiles":[]},"report":{"items":{"materials":[],"found":null,"expired":[],"legendary":null,"hospitalOperated":false,"regen":1},"laws":{"inForce":[],"costs":[],"unfunded":[],"incomeMilli":0,"promise":null},"crimeEvent":{"standingBefore":50,"standingAfter":50,"chancePercent":7,"event":null,"lordHealthLoss":0},"crisis":{"stageBefore":"none","stageAfter":"none","hungry":false,"hungerStreak":0,"calmStreak":1,"weeksInStage":1,"promise":null,"cardOpened":null,"lastChoice":null,"tensionBefore":0,"tensionAfter":0},"order":{"before":{"security":30,"crime":10,"authority":50},"taxModifierBps":0,"taxDeltaMilli":0,"arrivalsBudgetBefore":0,"arrivalsBudgetAfter":0,"soldiers":0,"garrisonSecurity":0,"targets":{"security":10,"crime":0,"authority":40},"after":{"security":25,"crime":5,"authority":47},"theftMilli":{},"tensionAdded":0,"satisfactionLost":0},"outside":{"producedMilli":{"wood":0,"iron":0,"stone":0,"wool":0,"herbs":0,"cloth":0},"stocksBefore":{"stone":0,"wool":0,"cloth":0,"herbs":0},"stocksAfter":{"stone":0,"wool":0,"cloth":0,"herbs":0},"hospitalsIdle":[],"cleared":[],"researchCompleted":[],"exhausted":[],"spoiledMilli":{}},"week":1,"before":{"gold":120000,"wheat":0,"food":40000,"wood":8000,"iron":4000},"after":{"gold":140755,"wheat":0,"food":40000,"wood":8000,"iron":4000},"taxMilli":24000,"farmBatchGoldMilli":2000,"farmExtraUpkeepMilli":0,"upkeepPaidMilli":2000,"unpaidUpkeepMilli":0,"foodDemandMilli":4000,"foodConsumedMilli":4000,"happinessBefore":80,"happinessAfter":82,"goods":{"demandMilli":1450,"servedMilli":1450,"fulfillmentBps":10000,"woodUsed":0,"ironUsed":0,"revenueMilli":2755},"goodsStock":{"openingMilli":30000,"producedMilli":0,"distributedMilli":1450,"closingMilli":28550,"demandMilli":1450,"unmetMilli":0,"capacityMilli":2000,"limitedBy":"none"},"society":{"classes":{"free":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":12,"notes":["unemployed"]},"makers":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":0,"notes":[]},"luminaries":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"merchants":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":82,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":0,"debtAfter":20,"notes":["unemployed"]},"bound":{"foodBps":10000,"goodsBps":10000,"luxuryBps":null,"satisfactionBefore":80,"satisfactionAfter":80,"arrivals":0,"trained":0,"enslaved":0,"debtBefore":null,"debtAfter":null,"notes":[]}},"eliteArrived":null,"desperationBefore":0,"desperationAfter":0,"tensionBefore":0,"tensionAfter":0,"corruptionAfter":48},"luxuryImportedMilli":0,"trainingGoldMilli":0,"activities":["field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.","plain-1: Food Processor 2 batches."],"immigration":{"populationBefore":100,"arrivals":0,"populationAfter":100,"target":90,"usefulWorkerSlots":10,"renewableFoodMilli":4000,"reason":"no-capacity"},"householdUpkeep":{"paidMilli":3000,"unpaidMilli":0},"purse":{"levyPercent":0,"levyDueMilli":0,"levyPaidMilli":0,"donationsMilli":0,"moneyAfterMilli":0}}}
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:228:36
+    226|     const expected = { ...old, next: { ...old.next, player: structured…
+    227|     const actual = executeCharacterLifeCommand(s, raw);
+    228|     expect(JSON.stringify(actual)).toBe(JSON.stringify(expected)); exp…
+       |                                    ^
+    229|   });
+    230|   it('history overflow preserves the complete original command input',…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses levy 21 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses levy 2.5 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses levy -1 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses levy 5 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses levy Infinity without mutation
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-command.test.ts:10:25
+      8| function make() {
+      9|   const r = createCharacterLifeSession(2026, structuredClone(DEFAULT_P…
+     10|   if (!r.success) throw Error(r.error.message);
+       |                         ^
+     11|   return r.value;
+     12| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:24:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses donation 0 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses donation 1500 without mutation
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses donation 3000 without mutation
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-command.test.ts:10:25
+      8| function make() {
+      9|   const r = createCharacterLifeSession(2026, structuredClone(DEFAULT_P…
+     10|   if (!r.success) throw Error(r.error.message);
+       |                         ^
+     11|   return r.value;
+     12| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:31:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > donates 3 Gold at 1:1 with the capped satisfaction increment and reports before resetting
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-command.test.ts:10:25
+      8| function make() {
+      9|   const r = createCharacterLifeSession(2026, structuredClone(DEFAULT_P…
+     10|   if (!r.success) throw Error(r.error.message);
+       |                         ^
+     11|   return r.value;
+     12| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:38:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole 2% undefined levy in Money gives no direct Happiness gain
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole 5% undefined levy in Money gives no direct Happiness gain
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole 10% undefined levy in Money gives no direct Happiness gain
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > returning the whole 20% undefined levy in Money gives no direct Happiness gain
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-command.test.ts:10:25
+      8| function make() {
+      9|   const r = createCharacterLifeSession(2026, structuredClone(DEFAULT_P…
+     10|   if (!r.success) throw Error(r.error.message);
+       |                         ^
+     11|   return r.value;
+     12| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:52:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > keeps NPC acquisition on Gold even when the Player has Money
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-command.test.ts:10:25
+      8| function make() {
+      9|   const r = createCharacterLifeSession(2026, structuredClone(DEFAULT_P…
+     10|   if (!r.success) throw Error(r.error.message);
+       |                         ^
+     11|   return r.value;
+     12| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:65:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > credits normal Money on a 24 Gold gross week and charges 1.2 Gold
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > credits easy Money on a 24 Gold gross week and charges 1.2 Gold
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-week.test.ts:10:30
+      8| function make(difficulty: DifficultyId = 'normal') {
+      9|   const result = createCharacterLifeSession(2026, structuredClone(DEFA…
+     10|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     11|   return result.value;
+     12| }
+ ❯ start packages/simulation/src/__tests__/purse-week.test.ts:14:13
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:29:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > caps the Gold charge at 0.4 in normal and reports a 0.8 shortfall
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > caps the Gold charge at 0.4 in easy and reports a 0.8 shortfall
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-week.test.ts:10:30
+      8| function make(difficulty: DifficultyId = 'normal') {
+      9|   const result = createCharacterLifeSession(2026, structuredClone(DEFA…
+     10|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     11|   return result.value;
+     12| }
+ ❯ start packages/simulation/src/__tests__/purse-week.test.ts:14:13
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:40:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > floors gross levy before scaling Money
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-week.test.ts:10:30
+      8| function make(difficulty: DifficultyId = 'normal') {
+      9|   const result = createCharacterLifeSession(2026, structuredClone(DEFA…
+     10|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     11|   return result.value;
+     12| }
+ ❯ start packages/simulation/src/__tests__/purse-week.test.ts:14:13
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:50:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > applies the 0% undefined levy penalty to citizens before the Happiness report
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > applies the 1% undefined levy penalty to citizens before the Happiness report
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > applies the 2% undefined levy penalty to citizens before the Happiness report
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > applies the 3% undefined levy penalty to citizens before the Happiness report
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-week.test.ts:10:30
+      8| function make(difficulty: DifficultyId = 'normal') {
+      9|   const result = createCharacterLifeSession(2026, structuredClone(DEFA…
+     10|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     11|   return result.value;
+     12| }
+ ❯ start packages/simulation/src/__tests__/purse-week.test.ts:14:13
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:55:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/29]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-week.test.ts > weekly levy > keeps the purse with the Player when the active pointer moves to a new city
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ make packages/simulation/src/__tests__/purse-week.test.ts:10:30
+      8| function make(difficulty: DifficultyId = 'normal') {
+      9|   const result = createCharacterLifeSession(2026, structuredClone(DEFA…
+     10|   if (!result.success) throw Error(result.error.message);
+       |                              ^
+     11|   return result.value;
+     12| }
+ ❯ start packages/simulation/src/__tests__/purse-week.test.ts:14:13
+ ❯ packages/simulation/src/__tests__/purse-week.test.ts:70:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/29]⎯
+
+
+ Test Files  6 failed | 145 passed (151)
+      Tests  29 failed | 3332 passed (3361)
+   Start at  19:31:17
+   Duration  82.48s (transform 17.22s, setup 0ms, import 80.47s, tests 243.59s, environment 84ms)
+
+
+Exit 1 in 84.791s
+
+UTC 2026-11-26T12:32:40.605407+00:00
+Command: node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --module esnext --moduleResolution bundler --target esnext --allowImportingTsExtensions --resolveJsonModule scripts/money-calibration.ts tests/e2e/purse.spec.ts tests/e2e/items.spec.ts tests/e2e/crafting.spec.ts
+
+Exit 0 in 3.934s

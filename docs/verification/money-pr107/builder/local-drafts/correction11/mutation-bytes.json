@@ -1,0 +1,10 @@
+{
+  "path": "packages/ui/src/report-letters.ts",
+  "before": "signedMilli(donationGoldMilli)",
+  "after": "signedMilli(Math.floor(donationGoldMilli / 1000) * 1000)",
+  "beforeSha256": "552025ff3469f87a1522bf77893db5f33914c9d5dbcc4c8bea0cde84874f93e2",
+  "afterSha256": "91d1d789e0fa31560de14e81000549ab22f1063bdc4f2d6f974385227cd0c1ad",
+  "specSha256": "f4c2f3be368dbbfbf3089b0e8637a2c4cd78acdaaf524327a7ec5e0f5e8f84e1",
+  "baseHead": "fa66b594391029ddb2cb43d98a90e9a8a4735446",
+  "baseTree": "03ab402350d02f1bc89970b7f0ce9a4e27cc2e93"
+}

@@ -1,0 +1,291 @@
+{
+  "head": "f97b5be31afbc3de02190a38c6c4075eb56d6194",
+  "tree": "75ec12d1a9c537f5e9788ac0ec52d3ff68db620c",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-27T00:43:00.798396+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        12.04,
+        26.9,
+        4.91
+      ],
+      "meanPercent": 14.62,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 39352,
+          "cpuSecondsDelta": 0.938
+        },
+        {
+          "process": "powershell",
+          "pid": 10512,
+          "cpuSecondsDelta": 0.656
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.312
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 40416,
+          "cpuSecondsDelta": 0.281
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 4540,
+          "cpuSecondsDelta": 0.219
+        },
+        {
+          "process": "claude",
+          "pid": 30480,
+          "cpuSecondsDelta": 0.203
+        },
+        {
+          "process": "codex",
+          "pid": 34040,
+          "cpuSecondsDelta": 0.094
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 25372,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "claude",
+          "pid": 18060,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "claude",
+          "pid": 18208,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "claude",
+          "pid": 20232,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "claude",
+          "pid": 27572,
+          "cpuSecondsDelta": 0.016
+        }
+      ],
+      "selected": false
+    },
+    {
+      "utc": "2026-11-27T00:43:11.596464+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        2.94,
+        9.82,
+        29.1
+      ],
+      "meanPercent": 13.95,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 30908,
+          "cpuSecondsDelta": 0.703
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 40416,
+          "cpuSecondsDelta": 0.219
+        },
+        {
+          "process": "claude",
+          "pid": 30480,
+          "cpuSecondsDelta": 0.203
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.188
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 4540,
+          "cpuSecondsDelta": 0.188
+        },
+        {
+          "process": "claude",
+          "pid": 27572,
+          "cpuSecondsDelta": 0.172
+        },
+        {
+          "process": "claude",
+          "pid": 20232,
+          "cpuSecondsDelta": 0.125
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 39352,
+          "cpuSecondsDelta": 0.125
+        },
+        {
+          "process": "codex",
+          "pid": 34040,
+          "cpuSecondsDelta": 0.109
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 25372,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "taskhostw",
+          "pid": 30540,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "ChatGPT",
+          "pid": 10280,
+          "cpuSecondsDelta": 0.016
+        }
+      ],
+      "selected": false
+    },
+    {
+      "utc": "2026-11-27T00:43:22.505173+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        3.0,
+        3.71,
+        1.95
+      ],
+      "meanPercent": 2.89,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 19608,
+          "cpuSecondsDelta": 0.703
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 4540,
+          "cpuSecondsDelta": 0.438
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 40416,
+          "cpuSecondsDelta": 0.391
+        },
+        {
+          "process": "cloudflared",
+          "pid": 38288,
+          "cpuSecondsDelta": 0.25
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 28984,
+          "cpuSecondsDelta": 0.219
+        },
+        {
+          "process": "msedgewebview2",
+          "pid": 6580,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "msedgewebview2",
+          "pid": 32324,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 30024,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 39316,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "codex",
+          "pid": 34040,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "javaw",
+          "pid": 37704,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "msedgewebview2",
+          "pid": 28320,
+          "cpuSecondsDelta": 0.016
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

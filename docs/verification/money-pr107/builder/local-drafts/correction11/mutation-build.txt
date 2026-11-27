@@ -1,0 +1,31 @@
+HEAD fa66b594391029ddb2cb43d98a90e9a8a4735446
+Tree 03ab402350d02f1bc89970b7f0ce9a4e27cc2e93
+UTC start 2026-11-27T00:40:38.522126+00:00
+Working directory C:\Users\Admin\.t3\local-drafts\money-prM2-scratch-f1fac94\packet
+CI 1
+Command npm.cmd run build --workspace=@haven/ui
+Mutation {"path": "packages/ui/src/report-letters.ts", "before": "signedMilli(donationGoldMilli)", "after": "signedMilli(Math.floor(donationGoldMilli / 1000) * 1000)", "beforeSha256": "552025ff3469f87a1522bf77893db5f33914c9d5dbcc4c8bea0cde84874f93e2", "afterSha256": "91d1d789e0fa31560de14e81000549ab22f1063bdc4f2d6f974385227cd0c1ad", "specSha256": "f4c2f3be368dbbfbf3089b0e8637a2c4cd78acdaaf524327a7ec5e0f5e8f84e1", "baseHead": "fa66b594391029ddb2cb43d98a90e9a8a4735446", "baseTree": "03ab402350d02f1bc89970b7f0ce9a4e27cc2e93"}
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+fatal: not a git repository (or any of the parent directories): .git
+vite v6.4.5 building for production...
+transforming...
+✓ 279 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bd6MtS16.css                   39.16 kB │ gzip:   7.89 kB
+dist/assets/index-DmZr7E-W.js                   535.17 kB │ gzip: 170.20 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.23s
+
+Exit 0 in 13.072s
+UTC end 2026-11-27T00:40:51.595422+00:00

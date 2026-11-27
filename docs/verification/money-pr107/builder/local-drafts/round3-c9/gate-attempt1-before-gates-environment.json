@@ -1,0 +1,103 @@
+{
+  "head": "546c48b9f312144c494a48dd44fe41741c9c2470",
+  "tree": "cfc1fc64a8bbb1df936ed495a8362fc2d15db18e",
+  "baseRef": "f1fac9498f47fc7be8f6498ee3321800e14f2894",
+  "awakeApiFlags": "ES_CONTINUOUS|ES_SYSTEM_REQUIRED",
+  "awakePriorState": "0x80000000",
+  "measurements": [
+    {
+      "utc": "2026-11-26T13:26:56.453864+00:00",
+      "cpuPercentTwoSecondIntervals": [
+        0.88,
+        1.28,
+        3.59
+      ],
+      "meanPercent": 1.92,
+      "ports": [
+        {
+          "ip": "127.0.0.1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "127.0.0.1",
+          "port": 4174,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4173,
+          "open": false
+        },
+        {
+          "ip": "::1",
+          "port": 4174,
+          "open": false
+        }
+      ],
+      "topCpuProcesses": [
+        {
+          "process": "powershell",
+          "pid": 41824,
+          "cpuSecondsDelta": 0.797
+        },
+        {
+          "process": "cloudflared",
+          "pid": 24460,
+          "cpuSecondsDelta": 0.156
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 21956,
+          "cpuSecondsDelta": 0.078
+        },
+        {
+          "process": "codebase-memory-mcp",
+          "pid": 41488,
+          "cpuSecondsDelta": 0.062
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 28832,
+          "cpuSecondsDelta": 0.047
+        },
+        {
+          "process": "claude",
+          "pid": 10176,
+          "cpuSecondsDelta": 0.031
+        },
+        {
+          "process": "codex",
+          "pid": 22948,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 5872,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "T3 Code (Nightly)",
+          "pid": 27188,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "Zalo",
+          "pid": 11776,
+          "cpuSecondsDelta": 0.016
+        },
+        {
+          "process": "ApplicationFrameHost",
+          "pid": 18644,
+          "cpuSecondsDelta": 0.0
+        },
+        {
+          "process": "bash",
+          "pid": 9340,
+          "cpuSecondsDelta": 0.0
+        }
+      ],
+      "selected": true
+    }
+  ]
+}

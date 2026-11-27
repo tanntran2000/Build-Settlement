@@ -1,0 +1,10 @@
+HEAD fa66b594391029ddb2cb43d98a90e9a8a4735446
+Tree 03ab402350d02f1bc89970b7f0ce9a4e27cc2e93
+UTC start 2026-11-27T00:41:12.422540+00:00
+Command node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --module esnext --moduleResolution bundler --target esnext --allowImportingTsExtensions --resolveJsonModule tests/e2e/purse.spec.ts
+Changed source SHA-256
+f4c2f3be368dbbfbf3089b0e8637a2c4cd78acdaaf524327a7ec5e0f5e8f84e1  tests/e2e/purse.spec.ts
+
+
+Exit 0 in 5.332s
+UTC end 2026-11-27T00:41:17.755042+00:00

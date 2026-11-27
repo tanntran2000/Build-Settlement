@@ -1,0 +1,51 @@
+[
+  {
+    "log": "gate-attempt1-2-lint.txt",
+    "originalSha256": "225dd5351838717b4e2f70be076570ff79c1fb3bca21d8d818011d293852d336",
+    "normalizedSha256": "61bd386bad6ab7aff911cae33da5eee50d9c1efe5291b7acefa5cbdf2809e46e",
+    "headerOffset": 60,
+    "headerLength": 244
+  },
+  {
+    "log": "gate-attempt1-3-typecheck.txt",
+    "originalSha256": "3443b8e5e1a70d6a767b247e5201fe7292c58fc86bb8f30bb7f4f7763111ff50",
+    "normalizedSha256": "87f4351b83dabfcf5600b8e11cf8baea74c2c57776f8f1048d6040a35e0004cd",
+    "headerOffset": 895,
+    "headerLength": 249
+  },
+  {
+    "log": "gate-attempt1-4-architecture.txt",
+    "originalSha256": "82e38e8439656533668c7113a990b1a3b7aac20993bed37d69ace51c805520c0",
+    "normalizedSha256": "b4f65618b4d572dd4296cc9be71b236e4b930ddb44b432ca2efa87ab667f8f6d",
+    "headerOffset": 23633,
+    "headerLength": 258
+  },
+  {
+    "log": "gate-attempt1-5-architecture-tests.txt",
+    "originalSha256": "2dbc5e7449093ec7a86433aba13a31663484575c75b5da59307071d44053646d",
+    "normalizedSha256": "06118939a96a375ed88e0643920a1a4831254ff3d97157df371dddacf7f44a0c",
+    "headerOffset": 12876,
+    "headerLength": 257
+  },
+  {
+    "log": "gate-attempt1-6-unit.txt",
+    "originalSha256": "f9a92ba5aa51c564afb3cd1330d1c734a35ec50c4ba93a2eabc8fce95fad9755",
+    "normalizedSha256": "119fb12eacb72d171b24289cce2031aa5a2bdc1a235beb8d6e4c574f5be50afe",
+    "headerOffset": 308,
+    "headerLength": 240
+  },
+  {
+    "log": "gate-attempt1-7-build.txt",
+    "originalSha256": "16bec72ea00524141792b1d760ba0cc1a3614c72638f98ae58adb6341a2846bd",
+    "normalizedSha256": "194b9e3969ffcbbcf1b6ad2e486c17ff7bd512106a5747ba4c17683b8e9b526b",
+    "headerOffset": 1042,
+    "headerLength": 245
+  },
+  {
+    "log": "gate-attempt1-8-smoke.txt",
+    "originalSha256": "45199ae4b5286ac19c687bf6de437441fcb1d3f270000060e01829a2f285608b",
+    "normalizedSha256": "3aac45bc07d3435564c25a8f5557538728dc575eb4105e659bf779d9e8777e51",
+    "headerOffset": 61010,
+    "headerLength": 246
+  }
+]

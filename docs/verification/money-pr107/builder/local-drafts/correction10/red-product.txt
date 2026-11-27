@@ -1,0 +1,122 @@
+HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Tree cfc1fc64a8bbb1df936ed495a8362fc2d15db18e
+UTC start 2026-11-26T14:30:31.257012+00:00
+Command npm.cmd test -- packages/ui/src/__tests__/purse-view.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+Changed source SHA-256
+0787caa327bbbbb6cd5c06debed02787e8c208523b7efa1452facc90e840acec  packages/core/src/__tests__/catalog-data.test.ts
+0849097a068be38799c26bcae062600c560cf7118e3817984946d6d8894b619b  packages/core/src/trial/__tests__/difficulty.test.ts
+c585dc1eadc03c08191fcfc7ea6d15e04223e698098b092af3ce772855675161  packages/simulation/src/__tests__/craft-command.test.ts
+a377850fa3564b0772fd0db38a1d7eead30c43b5d95d9de4fb0136aedcb632a5  packages/simulation/src/__tests__/purse-command.test.ts
+28d683488715ab32732f9e5439b648ee0c7deb7025b09346623730a73ef75342  packages/simulation/src/__tests__/purse-week.test.ts
+3d3dcaac638ecd47e870a7f9504d6f41553dfc3b9d83d7b7a2cceb5bc543fdd0  packages/ui/src/__tests__/crafting-view.test.ts
+43405a41468a2303072ff5a6d0ff723efa73c5b6ab93b3055617b7883b9cee83  packages/ui/src/__tests__/purse-view.test.ts
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/purse-view.test.ts packages/core/src/trial/__tests__/difficulty.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts (9 tests | 1 failed) 16ms
+   × refuses a zero Easy levy divisor at its catalog path 6ms
+ ❯ packages/ui/src/__tests__/purse-view.test.ts (13 tests | 3 failed) 17ms
+   × parses whole digits and explains all disabled purse actions 10ms
+   × previews the effective normal Happiness cost from saved donations 1ms
+   × previews the effective easy Happiness cost from saved donations 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/purse-view.test.ts > parses whole digits and explains all disabled purse actions
+AssertionError: expected { amountMilli: 3000, …(5) } to strictly equal { amountMilli: 3000, …(7) }
+
+- Expected
++ Received
+
+  {
+    "amountMilli": 3000,
+    "decreaseReason": "Weekly levy is at its minimum.",
+    "donateReason": "",
+-   "donationOffset": 0,
+    "goldMilli": 3000,
+    "happinessCost": 0,
+    "increaseReason": "",
+-   "levyCost": 0,
+  }
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts:13:54
+     11|   const purse = { levyPercent: 0, donatedThisWeekMilli: 0, moneyMilli:…
+     12|   expect(parseDonationMilli('03')).toBe(3000);
+     13|   expect(purseControls(purse, '3', false, 'normal')).toStrictEqual({
+       |                                                      ^
+     14|     amountMilli: 3000, goldMilli: 3000, happinessCost: 0, levyCost: 0,…
+     15|     decreaseReason: 'Weekly levy is at its minimum.', increaseReason: …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/ui/src/__tests__/purse-view.test.ts > previews the effective normal Happiness cost from saved donations
+AssertionError: expected 3 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 3
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts:35:36
+     33|     const purse = { levyPercent: 5, donatedThisWeekMilli: 2000, moneyM…
+     34|     const controls = purseControls(purse, '', false, difficulty);
+     35|     expect(controls.happinessCost).toBe(cost);
+       |                                    ^
+     36|     expect(controls).toStrictEqual({
+     37|       amountMilli: null, goldMilli: null, happinessCost: cost, levyCos…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/ui/src/__tests__/purse-view.test.ts > previews the effective easy Happiness cost from saved donations
+AssertionError: expected 3 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 3
+
+ ❯ packages/ui/src/__tests__/purse-view.test.ts:35:36
+     33|     const purse = { levyPercent: 5, donatedThisWeekMilli: 2000, moneyM…
+     34|     const controls = purseControls(purse, '', false, difficulty);
+     35|     expect(controls.happinessCost).toBe(cost);
+       |                                    ^
+     36|     expect(controls).toStrictEqual({
+     37|       amountMilli: null, goldMilli: null, happinessCost: cost, levyCos…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/core/src/trial/__tests__/difficulty.test.ts > refuses a zero Easy levy divisor at its catalog path
+AssertionError: expected undefined to be 'tuning.json#DIFFICULTY_TRIAL.profiles…' // Object.is equality
+
+- Expected:
+"tuning.json#DIFFICULTY_TRIAL.profiles.easy.levyMoneyBps: expected integer > 0"
+
++ Received:
+undefined
+
+ ❯ packages/core/src/trial/__tests__/difficulty.test.ts:41:19
+     39|     message = error.message;
+     40|   }
+     41|   expect(message).toBe('tuning.json#DIFFICULTY_TRIAL.profiles.easy.lev…
+       |                   ^
+     42| });
+     43|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 18 passed (22)
+   Start at  21:30:32
+   Duration  1.31s (transform 909ms, setup 0ms, import 1.19s, tests 32ms, environment 0ms)
+
+
+Exit 1 in 2.856s
+UTC end 2026-11-26T14:30:34.205103+00:00

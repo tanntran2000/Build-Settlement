@@ -1,0 +1,106 @@
+{
+  "base-normal-empty": {
+    "variant": "empty",
+    "difficulty": "normal",
+    "bytes": 17525,
+    "sha256": "41ca7bbb86324f22029f09d418af927995c71c227e2289d1dbed1678a179657a",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "base-normal-populated": {
+    "variant": "populated",
+    "difficulty": "normal",
+    "bytes": 17531,
+    "sha256": "892d72830ee944ad2e5c3e5abfe0f2cf7a73e1785abe242c0fcc65fa9278963d",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "head-normal-empty": {
+    "variant": "empty",
+    "difficulty": "normal",
+    "bytes": 17525,
+    "sha256": "41ca7bbb86324f22029f09d418af927995c71c227e2289d1dbed1678a179657a",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "head-normal-populated": {
+    "variant": "populated",
+    "difficulty": "normal",
+    "bytes": 17531,
+    "sha256": "892d72830ee944ad2e5c3e5abfe0f2cf7a73e1785abe242c0fcc65fa9278963d",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "base-easy-empty": {
+    "variant": "empty",
+    "difficulty": "easy",
+    "bytes": 17523,
+    "sha256": "af522bd6936f68f14c59e6b2b2c988a57c4fb203c8f578af20bb65ae400f1f21",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "base-easy-populated": {
+    "variant": "populated",
+    "difficulty": "easy",
+    "bytes": 17529,
+    "sha256": "758614f9c03575845e00dc59a073ec7366617969d035c6dd7c027a3a91e8ec2d",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "head-easy-empty": {
+    "variant": "empty",
+    "difficulty": "easy",
+    "bytes": 17523,
+    "sha256": "af522bd6936f68f14c59e6b2b2c988a57c4fb203c8f578af20bb65ae400f1f21",
+    "purse": {
+      "moneyMilli": 0,
+      "levyPercent": 0,
+      "donatedThisWeekMilli": 0,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  },
+  "head-easy-populated": {
+    "variant": "populated",
+    "difficulty": "easy",
+    "bytes": 17529,
+    "sha256": "758614f9c03575845e00dc59a073ec7366617969d035c6dd7c027a3a91e8ec2d",
+    "purse": {
+      "moneyMilli": 1201,
+      "levyPercent": 5,
+      "donatedThisWeekMilli": 1000,
+      "robbery": null
+    },
+    "ruleset": "tile-society-14"
+  }
+}

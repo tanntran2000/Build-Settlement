@@ -1,0 +1,82 @@
+Base HEAD 546c48b9f312144c494a48dd44fe41741c9c2470
+Mutated packages/simulation/src/purse-command.ts
+Original SHA-256 051547ab7753c8e93b344272c982e1945cafc79bde797f0a92cc26ee595e43be
+Variant SHA-256 d8a1842fb37d08c0ea60667e9b7a4d5ee584637b7afa3cbbb7917e9f34ea2b19
+UTC start 2026-11-26T14:34:54.637282+00:00
+Command npm.cmd test -- packages/simulation/src/__tests__/purse-command.test.ts -t "in Report or with an invalid command envelope"
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/purse-command.test.ts -t in Report or with an invalid command envelope
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/money-prM2-scratch-f1fac94/packet
+
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts (30 tests | 2 failed | 28 skipped) 420ms
+   × refuses SET_LEVY in Report or with an invalid command envelope 285ms
+   × refuses DONATE_MONEY in Report or with an invalid command envelope 127ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses SET_LEVY in Report or with an invalid command envelope
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_COMMAND",
+-     "message": "Command must contain plain data fields.",
++     "code": "INVALID_AMOUNT",
++     "message": "Enter a whole levy percent from 0 to 20.",
+    },
+    "success": false,
+  }
+
+ ❯ refused packages/simulation/src/__tests__/purse-command.test.ts:31:51
+     29| function refused(s: CharacterLifeSessionState, command: object, code: …
+     30|   const before = structuredClone(s);
+     31|   expect(executeCharacterLifeCommand(s, command)).toStrictEqual({ succ…
+       |                                                   ^
+     32|   expect(s).toStrictEqual(before);
+     33| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:65:6
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/purse-command.test.ts > refuses DONATE_MONEY in Report or with an invalid command envelope
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_COMMAND",
+-     "message": "Command must contain plain data fields.",
++     "code": "INVALID_AMOUNT",
++     "message": "Enter a positive whole amount.",
+    },
+    "success": false,
+  }
+
+ ❯ refused packages/simulation/src/__tests__/purse-command.test.ts:31:51
+     29| function refused(s: CharacterLifeSessionState, command: object, code: …
+     30|   const before = structuredClone(s);
+     31|   expect(executeCharacterLifeCommand(s, command)).toStrictEqual({ succ…
+       |                                                   ^
+     32|   expect(s).toStrictEqual(before);
+     33| }
+ ❯ packages/simulation/src/__tests__/purse-command.test.ts:65:6
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 28 skipped (30)
+   Start at  21:34:55
+   Duration  2.49s (transform 1.27s, setup 0ms, import 1.66s, tests 420ms, environment 0ms)
+
+
+Exit 1 in 3.955s
