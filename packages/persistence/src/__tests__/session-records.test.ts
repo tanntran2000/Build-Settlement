@@ -2,7 +2,7 @@
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { expect, it } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
-import { serializeCharacterLifeSave } from '../character-life-save.js';
+import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
 import { sessionToRecords, recordsToSession, StoreRecordError } from '../session-records.js';
 const root = new URL('./fixtures/', import.meta.url);
 for (const version of readdirSync(root)) {
@@ -13,6 +13,16 @@ for (const version of readdirSync(root)) {
       const decoded = recordsToSession(sessionToRecords('main', s));
       const after = serializeCharacterLifeSave(decoded);
       if (version === 'society-v14') {
+        const upgraded = deserializeCharacterLifeSave(readFileSync(new URL(version + '/' + file, root), 'utf8'));
+        expect(before.success).toBe(false);
+        expect(upgraded.success).toBe(true);
+        if (!upgraded.success) throw Error(upgraded.error.message);
+        expect(decoded).toStrictEqual(upgraded.state);
+        expect(after).toEqual(serializeCharacterLifeSave(upgraded.state));
+        expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main', decoded)))).toEqual(after);
+        return;
+      }
+      if (version === 'society-v15') {
         expect(before.success).toBe(true); expect(after.success).toBe(true);
         if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
         expect(after.text).toBe(before.text);
@@ -32,7 +42,7 @@ it('rebuilds detached v11 item rows for refusal while preserving every stored ro
   state.city.society.items.nextItemId = 2;
   state.city.society.items.equipped[npcId] = { necklace: { id: 1, defId: 'rare-necklace' } };
   const staged = structuredClone(state);
-  staged.city.society.rulesetId = 'tile-society-14';
+  staged.city.society.rulesetId = 'tile-society-15';
   const rows = sessionToRecords('main', staged);
   const meta = rows.find(row => row.table === 'meta')!.value as { rulesetId: string };
   const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string } };
@@ -57,17 +67,21 @@ it('rebuilds v12 detached rows with household NPCs and refuses the checkpoint wi
   current.city.society!.items.equipped[npcId] = { necklace: { id: 1, defId: 'rare-necklace' } };
   const rows = sessionToRecords('main', current);
   const meta = rows.find(row => row.table === 'meta')!.value as { rulesetId: string };
-  const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string; acquisition?: unknown; difficulty?: unknown } };
+  const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string; acquisition?: unknown; difficulty?: unknown; mansion?: unknown } };
   meta.rulesetId = 'tile-society-12';
   city.society.rulesetId = 'tile-society-12';
   delete city.society.acquisition;
   delete city.society.difficulty;
-  const playerRow = rows.find(row => row.table === 'characters' && row.id === 'player')!.value as { player: { purse?: unknown } };
-  const { purse, ...historicalPlayer } = playerRow.player;
+  delete city.society.mansion;
+  const playerRow = rows.find(row => row.table === 'characters' && row.id === 'player')!.value as { player: { purse?: unknown; needs?: unknown } };
+  const { purse, needs, ...historicalPlayer } = playerRow.player;
   playerRow.player = historicalPlayer;
+  const historicalNpcs = current.npcs.map(({ household: { room, role, training, ...household }, ...npc }) => ({ ...npc, household }));
+  const npcRows = rows.filter(row => row.table === 'characters' && row.id !== 'player');
+  npcRows.forEach((row, index) => { (row.value as { npc: unknown }).npc = historicalNpcs[index]; });
   const before = structuredClone(rows);
   const decoded = recordsToSession(rows);
-  expect(decoded.npcs).toStrictEqual(current.npcs);
+  expect(decoded.npcs).toStrictEqual(historicalNpcs);
   expect(decoded.city.society!.items.equipped).toStrictEqual(current.city.society!.items.equipped);
   expect(Object.hasOwn(decoded.city.society!, 'acquisition')).toBe(false);
   expect(serializeCharacterLifeSave(decoded)).toStrictEqual({

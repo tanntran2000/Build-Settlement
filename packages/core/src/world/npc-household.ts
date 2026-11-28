@@ -1,4 +1,6 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { isMansionRole, isSkillKey } from '../mansion/catalog.js';
+import type { MansionRole, SkillKey } from '../mansion/types.js';
 import { npcBeds } from '../trial/catalog.js';
 import type { TileTrialState } from '../trial/types.js';
 import { NPC_GENERATOR_CATALOG, P7B_TRIAL, type AcquisitionSource } from './npc-generator.js';
@@ -15,6 +17,9 @@ export interface NpcHousehold {
   lifelongAskWeek: number | null;
   source: AcquisitionSource;
   boughtWeek: number;
+  room: string | null;
+  role: MansionRole | null;
+  training: SkillKey | null;
 }
 
 const keys = ['home', 'status', 'obedience', 'contract', 'will', 'notice', 'lifelongAskWeek', 'source', 'boughtWeek'];
@@ -25,9 +30,22 @@ const stat = (value: unknown): value is number => count(value) && value >= statM
 const axis = (value: unknown, ids: readonly string[]) => hasWeeklyKeys(value, ['id', 'strength']) &&
   typeof value.id === 'string' && ids.includes(value.id) && stat(value.strength);
 
+type HistoricalHousehold = Omit<NpcHousehold, 'room' | 'role' | 'training'>;
+
+export function isHistoricalNpcHousehold(raw: unknown): raw is HistoricalHousehold {
+  return validHousehold(raw, true);
+}
+
 export function isNpcHousehold(raw: unknown): raw is NpcHousehold {
+  return validHousehold(raw, false);
+}
+
+function validHousehold(raw: unknown, historical: boolean): boolean {
   try {
-    if (!hasWeeklyKeys(raw, keys) || typeof raw.home !== 'string' || !raw.home || raw.home !== raw.home.trim() ||
+    if (!hasWeeklyKeys(raw, historical ? keys : [...keys, 'room', 'role', 'training'])) return false;
+    if (!historical && (!(raw.room === null || typeof raw.room === 'string') || !(raw.role === null || isMansionRole(raw.role)) ||
+        !(raw.training === null || isSkillKey(raw.training)))) return false;
+    if (typeof raw.home !== 'string' || !raw.home || raw.home !== raw.home.trim() ||
         !stat(raw.obedience) || !positive(raw.boughtWeek) || !hasWeeklyKeys(raw.will, ['preference', 'flaw']) ||
         !axis(raw.will.preference, NPC_GENERATOR_CATALOG.preferences) || !axis(raw.will.flaw, NPC_GENERATOR_CATALOG.flaws)) return false;
     if (raw.source !== 'guild' && raw.source !== 'auction-house' && raw.source !== 'slave-market') return false;

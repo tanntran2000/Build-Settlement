@@ -1,11 +1,12 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { isMansionState } from '../mansion/invariants.js';
 import type { NamedCharacter } from '../domain/character.js';
 import { REQUIRED_EMOTIONS,REQUIRED_NEEDS,REQUIRED_RELATIONSHIP,REQUIRED_SKILLS } from '../domain/gamestate.js';
 import type { TileTrialState } from '../trial/types.js';
 import { readDenseArray } from './arrays.js';
 import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from './npc-content.js';
 import { isNpcLife, npcAge, type NpcLife } from './npc-life.js';
-import { homeBeds, isNpcHousehold, type NpcHousehold } from './npc-household.js';
+import { homeBeds, isHistoricalNpcHousehold, isNpcHousehold, type NpcHousehold } from './npc-household.js';
 import { P7B_TRIAL } from './npc-generator.js';
 import { CHARACTER_LIMITS } from '../character/catalog.js';
 import { createWorldSession,isWorldSessionState } from './session.js';
@@ -47,14 +48,25 @@ export function isNamedCharacterRecord(c: unknown): c is NamedCharacter {
 
 // Validates untrusted data; `city` must already be a valid tile state.
 export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is WorldNpc[] {
+  return validNpcList(raw, city, false);
+}
+
+export function isHistoricalHouseholdNpcList(raw: unknown, city: TileTrialState): boolean {
+  return validNpcList(raw, city, true);
+}
+
+function validNpcList(raw: unknown, city: TileTrialState, historical: boolean): boolean {
   try {
     const list = readDenseArray(raw);
     if (!list || list.length > P7B_TRIAL.npcCap) return false;
     const slots = managerSlotTileIds(city), traitIds = WORLD_TRAITS.map(t => t.id), ids = new Set<string>(), posts = new Set<string>();
     const names = new Set<string>(), residents = new Map<string, number>();
     for (const npc of list) {
-      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;
-      const c = npc.character, traits = readDenseArray(npc.traits), household = npc.household;
+      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life)) return false;
+      const household = npc.household;
+      const validateHousehold = historical ? isHistoricalNpcHousehold : isNpcHousehold;
+      if (!validateHousehold(household)) return false;
+      const c = npc.character, traits = readDenseArray(npc.traits);
       if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < CHARACTER_LIMITS.ageMin ||
           npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || !Number.isInteger(c.relationshipToPlayer.affection) ||
           ids.has(c.id) || names.has(c.name)) return false;
@@ -68,7 +80,7 @@ export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is World
       if (post !== null && (household.home === 'estate-1' || typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
       ids.add(c.id); names.add(c.name); if (post !== null) posts.add(post);
     }
-    return true;
+    return historical || isMansionState(city.society?.mansion, city, list as WorldNpc[]);
   } catch { return false; }
 }
 

@@ -25,7 +25,7 @@ it('refuses v13 JSON and detached store rows without rewriting either', () => {
   const fixture = new URL('./fixtures/society-v13/life-new-game.json', import.meta.url);
   const bytes = readFileSync(fixture, 'utf8'), historical = JSON.parse(bytes).state;
   const staged = structuredClone(historical);
-  staged.city.society.rulesetId = 'tile-society-14';
+  staged.city.society.rulesetId = 'tile-society-15';
   const rows = sessionToRecords('main', staged);
   for (const row of rows) {
     if (row.table === 'meta') (row.value as { rulesetId: string }).rulesetId = 'tile-society-13';

@@ -46,6 +46,7 @@ describe('P7-B weekly acquisition', () => {
     stock(s).gold = npcValueMilli(npc, 'guild', false);
     const next = succeeded(s, 'BUY_NPC', guild).next;
     npc.household.home = 'estate-1';
+    npc.household.room = 'room-3';
     expect([stock(next).gold, next.city.revision, state(next).stock[0].status]).toStrictEqual([0, s.city.revision + 1, 'bought']);
     expect(next.npcs).toStrictEqual([npc]); expect(next.profiles).toStrictEqual([profile]);
     refuse(next, 'BUY_NPC', guild, 'OFFER_GONE');

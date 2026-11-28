@@ -1,4 +1,5 @@
 import { PURSE_TRIAL } from './purse.js';
+import { isPlayerNeeds } from '../mansion/invariants.js';
 export { PURSE_TRIAL } from './purse.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import type { NamedCharacter } from '../domain/character.js';
@@ -78,16 +79,20 @@ function hasPlayerIdentity(raw: Record<string, unknown>): boolean {
 }
 
 // Used by the storage reader only to validate records before old-ruleset refusal.
-export function isHistoricalPlayerCharacter(raw: unknown): boolean {
+export function isHistoricalPlayerCharacter(raw: unknown, withPurse = false): boolean {
   try {
-    return keysOf(raw, ['character', 'profile']) && hasPlayerIdentity(raw);
+    return keysOf(raw, withPurse ? ['character', 'profile', 'purse'] : ['character', 'profile']) &&
+      hasPlayerIdentity(raw) && (!withPurse || hasValidPurse(raw.purse));
   } catch { return false; }
 }
 
 export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
   try {
-    if (!keysOf(raw, ['character', 'profile', 'purse']) || !hasPlayerIdentity(raw)) return false;
-    const purse = raw.purse;
+    return keysOf(raw, ['character', 'profile', 'purse', 'needs']) && hasPlayerIdentity(raw) && isPlayerNeeds(raw.needs) && hasValidPurse(raw.purse);
+  } catch { return false; }
+}
+
+function hasValidPurse(purse: unknown): boolean {
     if (!keysOf(purse, ['moneyMilli', 'levyPercent', 'donatedThisWeekMilli', 'robbery']) ||
         !int(purse.moneyMilli, balanceRange) || !int(purse.levyPercent, [0, levyMaxPercent]) ||
         !int(purse.donatedThisWeekMilli, balanceRange)) return false;
@@ -96,7 +101,6 @@ export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
       typeof robbery.id === 'string' && robbery.id !== '' && robbery.id.trim() === robbery.id &&
       int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange) &&
       (robbery.excessMilli as number) <= (purse.moneyMilli as number));
-  } catch { return false; }
 }
 
 export function isCharacterLifeSessionState(raw: unknown): raw is CharacterLifeSessionState {

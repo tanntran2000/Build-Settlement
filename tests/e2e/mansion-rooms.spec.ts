@@ -1,0 +1,388 @@
+import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { expect, test, type Page } from '@playwright/test';
+import { exportLife, go, importLife, keyActivate, keyPost, makeLife, makeLifeWithNpcs } from './character-life-navigation.helpers.ts';
+import { readStoredRecords, storeMarks, storedSaveText, watchMigrationActivity, writeRecords } from './storage.helpers.ts';
+
+import { GAME_DB, sessionToRecords, type GameStore } from '../../packages/persistence/src/index.ts';
+import { executeCharacterLifeCommand } from '../../packages/simulation/src/index.ts';
+
+const fixtures = new URL('../../packages/persistence/src/__tests__/fixtures/', import.meta.url);
+const file = (path: string) => readFile(new URL(path, fixtures));
+const oldMessage = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+const legacyKey = 'haven.character-life-session-society.checkpoint.v1';
+const sessionOnly = 'Saved for this session only. Use Export checkpoint to keep your progress.';
+const damagedMessage = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
+const upload = (page: Page, buffer: Buffer) => page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'mansion.json', mimeType: 'application/json', buffer });
+
+async function selectHome(page: Page, id: string) {
+  await keyActivate(page, page.getByTestId('trial-tile-' + id));
+}
+
+for (const width of [1280, 1600]) {
+  test('builds and upgrades rooms and moves residents by keyboard at ' + width, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    const state = makeLifeWithNpcs(42), { id, name } = state.npcs[0].character;
+    await page.goto('/');
+    await importLife(page, state);
+    await go(page, 'city');
+    await selectHome(page, 'estate-1');
+    const rooms = page.getByRole('region', { name: 'Mansion rooms' });
+    await expect(rooms.getByRole('heading', { name: 'Master Suite · Level 1' })).toBeVisible();
+    await expect(rooms.getByRole('heading', { name: 'Throne Room · Level 1' })).toBeVisible();
+    const types = rooms.getByLabel('Build room type'), build = rooms.getByRole('button', { name: 'Build room', exact: true });
+    await keyPost(page, types, 'guard-quarters');
+    await expect(build).toBeDisabled();
+    await expect(build).toHaveAccessibleDescription('Needs Mansion level 2');
+    await keyPost(page, types, 'maids-quarters');
+    await keyActivate(page, build);
+    await keyPost(page, types, 'bedroom');
+    await keyActivate(page, build);
+    const bedrooms = rooms.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Bedrooms · Level 1', exact: true }) });
+    await expect(bedrooms.getByText('2 Gold · 0.5 Wood · 0.2 Iron')).toBeVisible();
+    await keyActivate(page, bedrooms.getByRole('button', { name: 'Upgrade Bedrooms' }));
+    await expect(rooms.getByRole('heading', { name: 'Bedrooms · Level 2' })).toBeVisible();
+    await selectHome(page, 'estate-2');
+    const home = page.getByRole('region', { name: 'Home residents' });
+    const resident = home.getByRole('listitem').filter({ hasText: name });
+    const move = resident.getByRole('button', { name: 'Move', exact: true });
+    await keyPost(page, resident.getByLabel('Destination for ' + name), 'estate-1');
+    await expect(move).toHaveAccessibleDescription('Choose a Mansion room.');
+    await keyPost(page, resident.getByLabel('Room for ' + name), 'room-3');
+    await keyActivate(page, move);
+    await selectHome(page, 'estate-1');
+    await expect(rooms.getByText('Beds used: 1 / 10', { exact: true })).toBeVisible();
+    await keyPost(page, rooms.getByLabel('Move to room for ' + name), 'room-4');
+    await keyActivate(page, rooms.getByRole('button', { name: 'Move ' + name + ' to room', exact: true }));
+    await expect(rooms.getByText('Beds used: 1 / 1', { exact: true })).toBeVisible();
+    expect((await exportLife(page)).npcs.find(npc => npc.character.id === id)?.household.room).toBe('room-4');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  });
+}
+
+test('imports a real v14 file at the title and opens the existing Report from the Throne Room', async ({ page }) => {
+  await page.goto('/');
+  await upload(page, await file('society-v14/life-demand-card.json'));
+  await expect(page.getByTestId('life-shell')).toBeVisible();
+  await go(page, 'city');
+  await selectHome(page, 'estate-1');
+  const rooms = page.getByRole('region', { name: 'Mansion rooms' });
+  await expect(rooms.getByRole('heading', { name: 'Master Suite · Level 1' })).toBeVisible();
+  await keyActivate(page, rooms.getByRole('button', { name: 'Open Report' }));
+  await expect(page.locator('#life-nav-report')).toHaveAttribute('aria-current', 'page');
+  await expect(page.locator('#life-reports-heading')).toBeFocused();
+  expect((await exportLife(page)).city.society?.rulesetId).toBe('tile-society-15');
+});
+
+test('keeps both checkpoint copies when a v14 upgrade fails or a v15 file is damaged', async ({ page }) => {
+  const earlier = JSON.parse((await file('society-v14/life-new-game.json')).toString('utf8'));
+  earlier.state.player.purse.moneyMilli = -1;
+  const current = JSON.parse((await file('society-v15/life-new-game.json')).toString('utf8'));
+  current.state.player.needs.lust = 101;
+  const invalid = [[earlier, oldMessage], [current, damagedMessage]] as const;
+  await page.goto('/');
+  for (const [bad, message] of invalid) {
+    await upload(page, Buffer.from(JSON.stringify(bad)));
+    await expect(page.getByRole('alert')).toHaveText(message);
+  }
+  await importLife(page, makeLife(40));
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved in this browser.');
+  const oldRows = await readStoredRecords(page), oldText = await storedSaveText(page), before = await exportLife(page);
+  for (const [bad, message] of invalid) {
+    await go(page, 'session');
+    await upload(page, Buffer.from(JSON.stringify(bad)));
+    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText(message);
+    expect(await readStoredRecords(page)).toEqual(oldRows);
+    expect(await storedSaveText(page)).toBe(oldText);
+    expect(await exportLife(page)).toEqual(before);
+  }
+});
+
+test('warns when continuing v14 without IndexedDB and reports volatile saves as session-only', async ({ page }) => {
+  const text = (await file('society-v14/life-new-game.json')).toString('utf8');
+  const key = 'haven.character-life-session-society.checkpoint.v1';
+  await page.addInitScript(({ text, key }) => {
+    localStorage.setItem(key, text);
+    indexedDB.open = () => { throw Error('storage blocked'); };
+  }, { text, key });
+  await page.goto('/');
+  await expect.soft(page.getByRole('alert')).toHaveText('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved for this session only. Use Export checkpoint to keep your progress.');
+  expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(text);
+});
+
+test('continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker', async ({ page }) => {
+  const initial = makeLifeWithNpcs(42);
+  initial.player.purse.moneyMilli = 1_000_000;
+  Object.assign(initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory, { gold: 1_000_000, wood: 1_000_000, iron: 1_000_000 });
+  initial.city.tiles.find(tile => tile.id === 'spec-2')!.building = { typeId: 'smithy', level: 1, workers: 0, enabled: true };
+  const items = initial.city.society!.items;
+  Object.assign(items, { nextItemId: 2, inventory: [{ id: 1, defId: 'common-ring' }], materials: { iron: 4, nitrate: 1 } });
+  const order = executeCharacterLifeCommand(initial, { type: 'PLACE_CRAFT_ORDER', tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1, expectedRevision: initial.city.revision });
+  if (!order.success) throw Error(order.error.message);
+  const state = order.next, workshop = state.city.society!.items.workshops!['spec-2'];
+  workshop.ready = [{ material: 'silver', count: 1 }, { item: { id: 2, defId: 'rare-top' } }];
+  state.city.society!.items.nextItemId = 3;
+  const savedNpc = state.npcs[0];
+  state.city.society!.mansion.rooms.push({ id: 'room-3', typeId: 'maids-quarters', level: 1, furniture: [] });
+  state.city.society!.mansion.nextRoomSeq = 4;
+  Object.assign(savedNpc.household, { home: 'estate-1', room: 'room-3' });
+
+  // Project the current detached rows to the archived v14 writer layout.
+  const rows = sessionToRecords('main', state);
+  for (const row of rows) {
+    if (row.table === 'meta') Object.assign(row.value as object, { rulesetId: 'tile-society-14' });
+    if (row.table === 'city') {
+      const society = (row.value as typeof state.city).society! as unknown as Record<string, unknown>;
+      society.rulesetId = 'tile-society-14';
+      delete society.mansion;
+    }
+    if (row.table === 'characters') {
+      const value = row.value as { kind: 'player'; player: Record<string, unknown> } | { kind: 'npc'; npc: { household: Record<string, unknown> } };
+      if (value.kind === 'player') delete value.player.needs;
+      else {
+        const { household } = value.npc;
+        delete household.room;
+        delete household.role;
+        delete household.training;
+      }
+    }
+  }
+  expect(rows.filter(row => row.table === 'items').map(row => row.value)).toEqual([
+    { defId: 'common-ring', place: 'order:spec-2:0' },
+    { defId: 'rare-top', place: 'ready:spec-2:1' },
+  ]);
+  rows.push({ table: 'system', slotId: '_', id: 'migration:legacy-local-checkpoint', schemaVersion: 1, value: true });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+  await writeRecords(page, rows);
+  const before = await readStoredRecords(page);
+  await page.reload();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  expect(await readStoredRecords(page)).toEqual(before);
+  const loaded = await exportLife(page);
+  expect(loaded.city.society?.rulesetId).toBe('tile-society-15');
+  expect(loaded.player.needs.graceEndsWeek).toBe(state.city.world.week + 8);
+  expect(loaded.npcs).toEqual(state.npcs);
+  expect(loaded.city.society?.items.workshops?.['spec-2']).toEqual(workshop);
+  expect((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+  expect(await readStoredRecords(page)).toEqual(before);
+});
+
+test('successfully imports a v14 checkpoint in game without writing the local slot', async ({ page }) => {
+  const old = await file('society-v14/life-demand-card.json');
+  const saved = JSON.parse(old.toString('utf8')).state;
+  await page.goto('/');
+  await importLife(page, makeLife(40));
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved in this browser.');
+  const before = await readStoredRecords(page), activity = await watchMigrationActivity(page);
+  await upload(page, old);
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
+  const loaded = await exportLife(page);
+  expect(loaded.outside.seed).toBe(saved.outside.seed);
+  expect(loaded.city.world.week).toBe(saved.city.world.week);
+  expect(loaded.city.society?.rulesetId).toBe('tile-society-15');
+  expect(loaded.player.needs.graceEndsWeek).toBe(saved.city.world.week + 8);
+  expect(await activity()).toEqual({ readwrite: 0, writes: [] });
+  expect(await readStoredRecords(page)).toEqual(before);
+});
+
+for (const legacy of ['empty', 'v13', 'v15'] as const) {
+  test(`R2-01 preserves the v14 slot without metadata when legacy is ${legacy}`, async ({ page }) => {
+    const old = JSON.parse((await file('society-v14/life-new-game.json')).toString('utf8'));
+    const orphaned = sessionToRecords('main', old.state).filter(row => row.table !== 'meta');
+    const backup = legacy === 'empty' ? null : (await file(`society-${legacy}/life-new-game.json`)).toString('utf8');
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'HAVEN', exact: true })).toBeVisible();
+    await writeRecords(page, orphaned);
+    await page.evaluate(({ db, key, backup }) => new Promise<void>((resolve, reject) => {
+      if (backup !== null) localStorage.setItem(key, backup);
+      const request = indexedDB.open(db.name, db.version);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const connection = request.result;
+        const tx = connection.transaction('system', 'readwrite');
+        tx.objectStore('system').delete(['_', 'migration:legacy-local-checkpoint']);
+        tx.oncomplete = () => { connection.close(); resolve(); };
+        tx.onabort = () => { connection.close(); reject(tx.error); };
+      };
+    }), { db: GAME_DB, key: legacyKey, backup });
+    const before = await readStoredRecords(page);
+    expect(before.filter(row => row.table === 'meta' || row.table === 'system')).toEqual([]);
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'HAVEN', exact: true })).toBeVisible();
+    const after = await readStoredRecords(page);
+    const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+    expect.soft(city.society.rulesetId).toBe('tile-society-14');
+    expect.soft(after.some(row => row.table === 'system')).toBe(false);
+    expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+    expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+    expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+    await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+  });
+}
+
+test('R2-02 keeps Export available before leaving a volatile game and warns on Quit', async ({ page }) => {
+  const text = (await file('society-v14/life-new-game.json')).toString('utf8');
+  await page.addInitScript(({ text, key }) => {
+    localStorage.setItem(key, text);
+    indexedDB.open = () => { throw Error('storage blocked'); };
+  }, { text, key: legacyKey });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await go(page, 'city');
+  await page.getByTestId('trial-tile-estate-1').click();
+  await page.getByRole('region', { name: 'Mansion rooms' }).getByRole('button', { name: 'Build room', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Bedrooms · Level 1', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Main menu', exact: true }).click();
+  const prompt = page.getByRole('dialog', { name: 'Session-only checkpoint' });
+  const title = page.getByRole('heading', { name: 'HAVEN', exact: true });
+  await expect(prompt.or(title)).toBeVisible();
+  const prompted = await prompt.isVisible();
+  expect.soft(prompted).toBe(true);
+  if (prompted) {
+    await expect(prompt.getByText(sessionOnly, { exact: true })).toBeVisible();
+    await expect(prompt.getByRole('button', { name: 'Export checkpoint', exact: true })).toBeEnabled();
+    await prompt.getByRole('button', { name: 'Return to title', exact: true }).click();
+  }
+  await expect(title).toBeVisible();
+  await page.getByRole('button', { name: 'Quit', exact: true }).click();
+  await expect.soft(page.getByText('You can close this tab now.', { exact: true })).toHaveCount(0);
+  await expect(page.getByText(sessionOnly, { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Back to title', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByRole('button', { name: 'Main menu', exact: true }).click();
+  await expect(prompt).toBeVisible();
+  const download = page.waitForEvent('download');
+  await prompt.getByRole('button', { name: 'Export checkpoint', exact: true }).click();
+  const exported = JSON.parse(await readFile((await (await download).path())!, 'utf8'));
+  expect(exported.state.city.society.mansion.rooms[2]).toEqual({
+    id: 'room-3', typeId: 'bedroom', level: 1, furniture: [],
+  });
+  expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(text);
+});
+
+// Bundle the production store and loader for an isolated page with real browser storage.
+const uiRequire = createRequire(new URL('../../packages/ui/package.json', import.meta.url));
+let adapterProbe: Promise<string> | undefined;
+function checkpointAdapterProbe() {
+  return adapterProbe ??= (async () => {
+    const { build } = createRequire(uiRequire.resolve('vite'))('esbuild');
+    const bundle = await build({
+      stdin: {
+        contents: [
+          "export { createIndexedDbGameStore } from './packages/ui/src/indexeddb-store.ts';",
+          "export { readLocalCharacterLife } from './packages/ui/src/character-life-session.ts';",
+        ].join('\n'),
+        resolveDir: process.cwd(),
+        loader: 'ts',
+      },
+      bundle: true,
+      format: 'iife',
+      globalName: 'checkpointProbe',
+      write: false,
+    });
+    return bundle.outputFiles[0].text;
+  })();
+}
+
+interface CheckpointProbeWindow extends Window {
+  checkpointProbe: {
+    createIndexedDbGameStore: () => GameStore;
+    readLocalCharacterLife: typeof import('../../packages/ui/src/character-life-session.ts').readLocalCharacterLife;
+  };
+  finishCheckpointPreliminaryRead?: () => void;
+  checkpointProbeResult?: Promise<Awaited<ReturnType<CheckpointProbeWindow['checkpointProbe']['readLocalCharacterLife']>>>;
+}
+
+for (const incoming of ['intact v14', 'v14 missing city', 'v15 missing city'] as const) {
+  test(`R3-01 preserves ${incoming} inserted between IndexedDB reads`, async ({ page }) => {
+    const version = incoming === 'v15 missing city' ? 'v15' : 'v14';
+    const envelope = JSON.parse((await file(`society-${version}/life-new-game.json`)).toString('utf8'));
+    const backup = (await file('society-v15/life-new-game.json')).toString('utf8');
+    const rows = sessionToRecords('main', envelope.state).filter(row => incoming === 'intact v14' || row.table !== 'city');
+
+    await page.route('**/checkpoint-adapter-probe', route => route.fulfill({
+      contentType: 'text/html',
+      body: '<!doctype html><title>Checkpoint adapter probe</title>',
+    }));
+    await page.goto('/checkpoint-adapter-probe');
+    await page.addScriptTag({ content: await checkpointAdapterProbe() });
+    await page.evaluate(({ key, backup }) => {
+      const probe = window as CheckpointProbeWindow;
+      const { createIndexedDbGameStore, readLocalCharacterLife } = probe.checkpointProbe;
+      const store = createIndexedDbGameStore();
+      localStorage.setItem(key, backup);
+      probe.checkpointProbeResult = readLocalCharacterLife({
+        legacy: localStorage,
+        store: { ...store, async read(slot: string) {
+          const preliminary = await store.read(slot);
+          if (preliminary !== null) throw Error('The preliminary read must see an empty slot.');
+          await new Promise<void>(resolve => { probe.finishCheckpointPreliminaryRead = resolve; });
+          return preliminary;
+        } },
+      });
+    }, { key: legacyKey, backup });
+    await page.waitForFunction(() => typeof (window as CheckpointProbeWindow).finishCheckpointPreliminaryRead === 'function');
+    expect(await readStoredRecords(page)).toEqual([]);
+    await writeRecords(page, rows);
+    const before = await readStoredRecords(page);
+    const activity = await watchMigrationActivity(page);
+
+    const result = await page.evaluate(() => {
+      const probe = window as CheckpointProbeWindow;
+      probe.finishCheckpointPreliminaryRead!();
+      return probe.checkpointProbeResult!;
+    });
+
+    if (incoming === 'intact v14') {
+      expect(result.success ? result.state.city.society?.rulesetId : null).toBe('tile-society-15');
+    } else {
+      expect(result).toEqual({
+        success: false,
+        message: incoming === 'v14 missing city'
+          ? 'Local checkpoint not loaded; it was left unchanged. ' + oldMessage
+          : damagedMessage,
+      });
+    }
+    expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    expect.soft(await readStoredRecords(page)).toEqual(before);
+    expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+  });
+}
+
+test('R3-02 shows a damaged current slot as damaged on the title', async ({ page }) => {
+  const rows = sessionToRecords('main', makeLife()).filter(row => row.table !== 'city');
+  await page.goto('/');
+  await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
+  await writeRecords(page, rows);
+  await page.evaluate(db => new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open(db.name, db.version);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const connection = request.result;
+      const tx = connection.transaction('system', 'readwrite');
+      tx.objectStore('system').delete(['_', 'migration:legacy-local-checkpoint']);
+      tx.oncomplete = () => { connection.close(); resolve(); };
+      tx.onabort = () => { connection.close(); reject(tx.error); };
+    };
+  }), GAME_DB);
+  const before = await readStoredRecords(page);
+  expect(before.some(row => row.table === 'meta')).toBe(true);
+  expect(before.filter(row => row.table === 'city' || row.table === 'system')).toEqual([]);
+
+  await page.reload();
+
+  await expect(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+  await expect(page.getByRole('alert')).toHaveText(damagedMessage);
+  expect(await readStoredRecords(page)).toEqual(before);
+  await expect(page.getByText('No local checkpoint', { exact: true })).toHaveCount(0);
+});

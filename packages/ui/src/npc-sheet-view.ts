@@ -68,7 +68,7 @@ export function buildNpcSheetView({ character, life, household }: WorldNpc) {
   return {
     household: {
       status: { slave: 'Slave', servant: 'Servant', lifelong: 'Lifelong' }[household.status],
-      home: TRIAL_BUILDINGS[homeType].name + ' (' + household.home + ')',
+      home: TRIAL_BUILDINGS[homeType].name + ' (' + household.home + ')' + (household.room ? ' · ' + household.room : ''),
       contract: household.contract && { weeksLeft: household.contract.weeksLeft, wageMilli: household.contract.wageMilli },
       obedience: household.obedience, quadrant,
       preference: will(household.will.preference), flaw: will(household.will.flaw),

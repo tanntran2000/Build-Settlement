@@ -1,9 +1,10 @@
 ﻿import { SOCIETY_RULESET, type CharacterLifeSessionState, isCharacterLifeSessionState } from '@haven/core';
-import { captureSaveData, deserializeCharacterLifeSave, serializeCharacterLifeSave, createMemoryGameStore, sessionToRecords, recordsToSession, type GameStore, type StoredRecord } from '@haven/persistence';
+import { captureSaveData, deserializeCharacterLifeSave, serializeCharacterLifeSave, createMemoryGameStore, sessionToRecords, recordsToSession, savedCityRuleset, savedSessionWeek, upgradeV14Session, V14_RULESET, type GameStore, type StoredRecord } from '@haven/persistence';
 import { createIndexedDbGameStore } from './indexeddb-store.js';
 import { prepareNpcWorldSessionLoad } from './world-npc-session.js';
 export const CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY = 'haven.character-life-session-society.checkpoint.v1';
 export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+export const SESSION_ONLY_CHECKPOINT_MESSAGE = 'Saved for this session only. Use Export checkpoint to keep your progress.';
 export const DAMAGED_CHECKPOINT_MESSAGE = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
 export function isPlayableCheckpoint(state: CharacterLifeSessionState): boolean { return state.city.society?.rulesetId === SOCIETY_RULESET; }
 type Failure = { success: false; message: string };
@@ -15,6 +16,7 @@ const MARKER = 'migration:legacy-local-checkpoint';
 export interface CheckpointDeps { store: GameStore; legacy: Pick<Storage,'getItem' | 'removeItem'> | null }
 let defaults: CheckpointDeps | undefined;
 const warnings = new WeakSet<CheckpointDeps>();
+const volatileStores = new WeakSet<CheckpointDeps>();
 let checkpointQueue: Promise<void> = Promise.resolve();
 function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
   const pending = checkpointQueue.then(operation);
@@ -23,7 +25,11 @@ function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
 }
 export function createCheckpointDeps(factory: () => GameStore, legacy: CheckpointDeps['legacy']): CheckpointDeps {
   try { return { store: factory(),legacy }; }
-  catch { const deps = { store: createMemoryGameStore(),legacy }; warnings.add(deps); return deps; }
+  catch { const deps = { store: createMemoryGameStore(),legacy }; markVolatile(deps); return deps; }
+}
+function markVolatile(deps: CheckpointDeps): void {
+  volatileStores.add(deps);
+  warnings.add(deps);
 }
 function defaultDeps(): CheckpointDeps {
   if (defaults) return defaults;
@@ -36,7 +42,8 @@ function defaultDeps(): CheckpointDeps {
 }
 export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded: unknown, expectedRevision: number): { success: true; next: CharacterLifeSessionState } | Failure {
   try {
-    const captured = captureSaveData(loaded);
+    const snapshot = captureSaveData(loaded);
+    const captured = savedCityRuleset(snapshot) === V14_RULESET ? upgradeV14Session(snapshot, savedSessionWeek(snapshot)) : snapshot;
     if (!isCharacterLifeSessionState(captured)) return fail('Checkpoint must contain a valid complete Character Life session in Planning.');
     const base = prepareNpcWorldSessionLoad(live, { city: captured.city,outside: captured.outside,npcs: captured.npcs },expectedRevision);
     if (!base.success) return base;
@@ -44,48 +51,74 @@ export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded
     return isCharacterLifeSessionState(next) ? { success: true,next } : fail('Checkpoint player or profiles do not match its characters.');
   } catch { return fail('Could not prepare the Character Life checkpoint. Your game was preserved.'); }
 }
-export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean } | Failure> {
+export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean; volatile?: true } | Failure> {
   // Capture the invocation's state before waiting behind earlier storage work.
   const result = serializeCharacterLifeSave(session);
   return enqueueCheckpoint(async () => {
   if (!result.success) return fail(result.error.message);
   const d = deps ?? defaultDeps();
-  try { const replaced = (await d.store.read('main')) !== null; await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state)); return { success: true,replaced }; }
+  try {
+    const replaced = (await d.store.read('main')) !== null;
+    await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state));
+    return volatileStores.has(d) ? { success: true,replaced,volatile: true } : { success: true,replaced };
+  }
   catch { return fail(BLOCKED); }
   });
 }
-export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState } | Failure> {
+function identifiesV14(rows: StoredRecord[]): boolean {
+  return rows.some(({ value }) => {
+    if (!value || typeof value !== 'object') return false;
+    return Object.getOwnPropertyDescriptor(value, 'rulesetId')?.value === V14_RULESET ||
+      savedCityRuleset({ city: value }) === V14_RULESET;
+  });
+}
+
+function readStoredCheckpoint(rows: StoredRecord[]): { success: true; state: CharacterLifeSessionState } | Failure {
+  try {
+    const state = recordsToSession(rows);
+    if (!isPlayableCheckpoint(state)) return fail(OLD);
+    if (isCharacterLifeSessionState(state)) return { success: true, state };
+  } catch { /* Classify the failure from the surviving version fields. */ }
+  return fail(identifiesV14(rows) ? OLD : DAMAGED_CHECKPOINT_MESSAGE);
+}
+
+export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState; warning?: string } | Failure> {
   return enqueueCheckpoint(async () => {
   const d = deps ?? defaultDeps();
   try {
     let marker: StoredRecord | null;
     try { marker = await d.store.getSystem(MARKER); }
-    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); warnings.add(d); marker = null; }
-    let records = await d.store.read('main');
-    let invalid = false;
-    if (!marker) {
+    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); markVolatile(d); marker = null; }
+    const records = await d.store.read('main');
+    let loaded = records ? readStoredCheckpoint(records) : fail(NONE);
+    if (!marker && (!records || (loaded.success && !identifiesV14(records)))) {
       let candidate: StoredRecord[] | null = null;
+      let invalid = false;
       // A save made while migration was blocked is newer than the legacy backup.
       if (!records) {
         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
-      if (text !== null) {
-        const loaded = deserializeCharacterLifeSave(text);
-        if (loaded.success) candidate = sessionToRecords('main',loaded.state);
-        else {
+        if (text !== null) {
+          let raw;
+          try { raw = JSON.parse(text); } catch { /* The legacy reader handles invalid JSON. */ }
+          const loaded = deserializeCharacterLifeSave(text);
+          if (raw?.cityRulesetId === V14_RULESET || savedCityRuleset(raw?.state) === V14_RULESET) {
+            if (!loaded.success) return fail(OLD);
+            return warnings.delete(d) ? { ...loaded, warning: BLOCKED } : loaded;
+          }
+          if (loaded.success) candidate = sessionToRecords('main',loaded.state);
           // Preserve valid old-ruleset data without making it playable or rewriting its ruleset.
-          try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) candidate = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
+          else if (raw?.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 &&
+              raw.cityRulesetId !== SOCIETY_RULESET && savedCityRuleset(raw.state) === raw.cityRulesetId && raw.state?.city?.society) {
+            try { candidate = sessionToRecords('main',raw.state); } catch { invalid = true; }
+          } else invalid = true;
         }
       }
-      }
-      records = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
+      // Recheck within the transaction. A different tab may have filled the slot since the read.
+      const migrated = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
+      loaded = migrated ? readStoredCheckpoint(migrated) : fail(invalid ? OLD : NONE);
     }
-    if (warnings.has(d)) { warnings.delete(d); return fail(BLOCKED); }
-    if (invalid && records === null) return fail(OLD);
-    if (!records) return fail(NONE);
-    let state: CharacterLifeSessionState;
-    try { state = recordsToSession(records); } catch { return fail(OLD); }
-    return isPlayableCheckpoint(state) && isCharacterLifeSessionState(state) ? { success: true,state } : fail(OLD);
+    return warnings.delete(d) ? fail(BLOCKED) : loaded;
   } catch { return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'); }
   });
 }

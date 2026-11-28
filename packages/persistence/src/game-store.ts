@@ -3,12 +3,18 @@ export type TableName = typeof GAME_DB.stores[number];
 export interface StoredRecord { slotId: string; id: string; table: TableName; schemaVersion: 1; value: unknown }
 export interface WriteStats { put: number; deleted: number; unchanged: number }
 export interface GameStore {
+  // Return every surviving row so callers can distinguish damaged slots from empty ones.
   read(slotId: string): Promise<StoredRecord[] | null>;
   replaceSlot(slotId: string, next: StoredRecord[], extra?: StoredRecord[]): Promise<WriteStats>;
+  // Migrate only when both the destination slot and its migration marker are absent.
   migrateSlot(slotId: string, candidate: StoredRecord[] | null, marker: StoredRecord): Promise<StoredRecord[] | null>;
   clear(slotId: string): Promise<void>;
   getSystem(id: string): Promise<StoredRecord | null>;
 }
+export function canMigrateSlot(current: readonly StoredRecord[], markerExists: boolean): boolean {
+  return current.length === 0 && !markerExists;
+}
+
 export function diffRecords(current: StoredRecord[], next: StoredRecord[]): { put: StoredRecord[]; remove: Array<[TableName,string]>; unchanged: number } {
   const key = (r: StoredRecord) => JSON.stringify([r.table,r.id]);
   const old = new Map(current.map(r => [key(r),r]));

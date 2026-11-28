@@ -1,5 +1,6 @@
 import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, type CharacterLifeSessionState, type HomeRobberyResolution, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
+import { executeMansionCommand, MANSION_COMMAND_TYPES, type MansionCommandType } from './mansion-command.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
 import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';
@@ -10,7 +11,7 @@ import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment }
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType | PurseCommandType;
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType | PurseCommandType | MansionCommandType;
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport>; robberyResolution?: Readonly<HomeRobberyResolution> }
   | { success: false; error: { code: string; message: string } };
@@ -35,6 +36,10 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   if (PURSE_COMMAND_TYPES.includes(type as PurseCommandType)) {
     if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
     return executePurseCommand(session, type as PurseCommandType, raw);
+  }
+  if (MANSION_COMMAND_TYPES.includes(type as MansionCommandType)) {
+    if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+    return executeMansionCommand(session, type as MansionCommandType, raw);
   }
   if (isAcquisitionCommand(type)) {
     if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');

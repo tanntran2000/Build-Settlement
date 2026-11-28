@@ -1,3 +1,4 @@
+import type { PlayerNeeds } from '../mansion/types.js';
 import type { NamedCharacter } from '../domain/character.js';
 import type { NpcWorldSessionState } from '../world/npc.js';
 
@@ -28,5 +29,5 @@ export interface PlayerPurse {
   donatedThisWeekMilli: number;
   robbery: HomeRobberyCard | null;
 }
-export interface PlayerCharacter { character: NamedCharacter; profile: CharacterProfile; purse: PlayerPurse }
+export interface PlayerCharacter { character: NamedCharacter; profile: CharacterProfile; purse: PlayerPurse; needs: PlayerNeeds }
 export interface CharacterLifeSessionState extends NpcWorldSessionState { player: PlayerCharacter; profiles: CharacterProfile[] }

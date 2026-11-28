@@ -6,6 +6,7 @@ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../../
 import { populate, town } from '../../packages/simulation/src/__tests__/acquisition-fixture.ts';
 import { readStoredRecords, storedSaveText } from './storage.helpers.ts';
 import { expectReport, exportLife, go, importLife, keyActivate, makeLife, selectArea, selectPerson, tabTo } from './character-life-navigation.helpers.ts';
+import { seedFixtureMansionBeds } from '../../packages/core/src/__tests__/helpers/npcs.ts';
 
 function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown>) {
   const result = executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
@@ -14,6 +15,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string, 
 }
 function stocked() {
   let s = makeLife(42);
+  seedFixtureMansionBeds(s.city);
   for (const [tileId, typeId] of [['service-1', 'guild'], ['spec-2', 'auction-house'], ['slum-1', 'slave-market']]) {
     s = act(s, 'BUILD', { tileId, typeId }).next;
   }

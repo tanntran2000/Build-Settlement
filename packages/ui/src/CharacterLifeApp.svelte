@@ -5,13 +5,14 @@
   import CharacterCreation from './CharacterCreation.svelte';
   import TitleScreen from './TitleScreen.svelte';
   import TileManagement from './TileManagement.svelte';
-  import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   let screen: 'start' | 'create' = 'start';
   let session: CharacterLifeSessionState | null = null;
   let cachedCheckpoint: CharacterLifeSessionState | null = null;
-  let checkpoint: 'playable' | 'none' | 'old' = 'none';
+  let checkpoint: 'playable' | 'none' | 'old' | 'damaged' = 'none';
   let checkpointReady = false;
+  let volatileCheckpoint = false;
   let error = '';
   // Any later choice invalidates a file read still pending.
   let importRead = 0;
@@ -22,6 +23,9 @@
     const result = await readLocalCharacterLife();
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
+      if (result.warning) error = result.warning;
+    } else if (!result.success && result.message === DAMAGED_CHECKPOINT_MESSAGE) {
+      checkpoint = 'damaged';
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
     if (!result.success && result.message.startsWith('Could not')) error = result.message;
     checkpointReady = true;
@@ -50,20 +54,21 @@
       const text = await file.text();
       if (ticket !== importRead || session) return;
       const result = deserializeCharacterLifeSave(text);
-      if (result.success && isPlayableCheckpoint(result.state)) session = result.state; else error = OLD_CHECKPOINT_MESSAGE;
+      if (result.success && isPlayableCheckpoint(result.state)) session = result.state;
+      else error = result.success || result.error.code === 'INCOMPATIBLE_SAVE' ? OLD_CHECKPOINT_MESSAGE : DAMAGED_CHECKPOINT_MESSAGE;
     } catch { if (ticket === importRead) error = 'Could not read the checkpoint file.'; }
   }
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} onexit={() => { importRead++; session = null; screen = 'start'; error = ''; readSlot(); }} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} onexit={volatile => { importRead++; volatileCheckpoint = volatile; session = null; screen = 'start'; error = ''; readSlot(); }} />
 {:else if screen === 'create'}
   <main lang="en">
     <header class="card"><h1>Character Life</h1></header>
     <CharacterCreation oncreate={create} oncancel={() => { screen = 'start'; }} />
   </main>
 {:else if checkpointReady}
-  <TitleScreen {checkpoint} {error} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
+  <TitleScreen {checkpoint} {error} {volatileCheckpoint} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
 {:else}
   <main class="ledger-shell storage-loading" lang="en" aria-busy="true"></main>
 {/if}

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
   import OptionsDialog from './OptionsDialog.svelte';
-  import { OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { DAMAGED_CHECKPOINT_MESSAGE, OLD_CHECKPOINT_MESSAGE, SESSION_ONLY_CHECKPOINT_MESSAGE } from './character-life-session.js';
   import { platform, setQuitHandler } from './platform.js';
   import { APP_VERSION, RELEASE_STAGE, versionLabel } from './version.js';
-  export let checkpoint: 'playable' | 'none' | 'old';
+  export let checkpoint: 'playable' | 'none' | 'old' | 'damaged';
   export let error: string;
+  export let volatileCheckpoint: boolean;
   export let oncontinue: () => void;
   export let onnewgame: () => void;
   export let onquit: () => void;
@@ -31,19 +32,19 @@
 <svelte:window onresize={resize} onkeydown={keyboard} />
 <main class="ledger-shell title-screen" lang="en">
   {#if quit}
-    <section class="ledger-parchment"><p>You can close this tab now.</p><button onclick={() => { quit = false; void focusMenu(); }}>Back to title</button></section>
+    <section class="ledger-parchment"><p>{volatileCheckpoint ? SESSION_ONLY_CHECKPOINT_MESSAGE : 'You can close this tab now.'}</p><button onclick={() => { quit = false; void focusMenu(); }}>Back to title</button></section>
   {:else}
     {#if art}<img src="./title-art.webp" alt="" decoding="async" style:width={`${960 * scale}px`} style:height={`${540 * scale}px`} onerror={() => art = false}>{/if}
     <div class="title-content"><h1>HAVEN</h1><p>Sovereign Frontier</p>
       <section aria-label="Start" class="ledger-board" bind:this={menu}>
         <button class="ledger-plaque" tabindex={active === 0 ? 0 : -1} onfocus={() => active = 0} disabled={checkpoint !== 'playable'} onclick={oncontinue}>Continue</button>
-        {#if checkpoint !== 'playable'}<p>{checkpoint === 'old' ? OLD_CHECKPOINT_MESSAGE : 'No local checkpoint'}</p>{/if}
+        {#if checkpoint === 'old'}<p>{OLD_CHECKPOINT_MESSAGE}</p>{:else if checkpoint === 'none'}<p>No local checkpoint</p>{/if}
         <button class="ledger-plaque" tabindex={active === 1 ? 0 : -1} onfocus={() => active = 1} onclick={onnewgame}>New Game</button>
         <button class="ledger-plaque" tabindex={active === 2 ? 0 : -1} onfocus={() => active = 2} onclick={() => input.click()}>Load checkpoint</button>
         <button class="ledger-plaque" tabindex={active === 3 ? 0 : -1} onfocus={() => active = 3} onclick={() => open = true}>Options</button>
         <button class="ledger-plaque" tabindex={active === 4 ? 0 : -1} onfocus={() => active = 4} onclick={() => { onquit(); platform.quit(); }}>Quit</button>
         <input hidden bind:this={input} id="life-save-file" aria-label="Import checkpoint" type="file" accept=".json,application/json" onchange={() => { const file = input.files?.[0]; input.value = ''; if (file) onload(file); }}>
-        {#if error}<p role="alert">{error}</p>{/if}
+        {#if error || checkpoint === 'damaged'}<p role="alert">{error || DAMAGED_CHECKPOINT_MESSAGE}</p>{/if}
       </section>
     </div>
     <p class="version">{versionLabel(APP_VERSION, RELEASE_STAGE)}</p>

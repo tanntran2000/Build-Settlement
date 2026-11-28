@@ -18,6 +18,26 @@ export const NPC_TEST_KEYS = [
   { week: 1, source: 'guild', slot: 2 },
 ] as const satisfies readonly NpcTestKey[];
 
+export function seedFixtureMansionBeds(city: NpcWorldSessionState['city'], residents = 1): string[] {
+  const mansion = city.society!.mansion;
+  const level = city.tiles.find(row => row.id === 'estate-1')!.building!.level;
+  const rooms = mansion.rooms.filter(room => room.typeId === 'master-suite' || room.typeId === 'throne-room');
+  mansion.rooms = rooms;
+  mansion.nextRoomSeq = 3;
+  const residences: string[] = [];
+  const append = (typeId: 'maids-quarters' | 'guard-quarters' | 'bedroom', beds: number) => {
+    const seq = mansion.nextRoomSeq++;
+    const id = 'room-' + seq;
+    const furniture = typeId === 'bedroom' ? Array<string>(beds - 1).fill('single-bed') : [];
+    rooms.push({ id, typeId, level: 1, furniture });
+    for (let bed = 0; bed < beds; bed++) residences.push(id);
+  };
+  append('maids-quarters', 10);
+  if (residents >= 20 && level >= 2) append('guard-quarters', 10);
+  while (residences.length < residents) append('bedroom', Math.min(3, residents - residences.length));
+  return residences;
+}
+
 export function withNpcs(session: CharacterLifeSessionState, keys: readonly NpcTestKey[]): CharacterLifeSessionState;
 export function withNpcs(session: NpcWorldSessionState, keys: readonly NpcTestKey[]): NpcWorldSessionState;
 export function withNpcs(

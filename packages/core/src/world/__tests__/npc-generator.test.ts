@@ -21,10 +21,10 @@ function generator() {
 }
 
 const samplePins = [
-  [0, 1, 'guild', 0, 'npc_w1_guild_0', 'Adrel Brassmark', 40, 'workshop_district', 8000, '5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f'],
-  [42, 3, 'auction-house', 2, 'npc_w3_auction-house_2', 'Neraya Dustlark', 19, 'caravan', 15000, 'db94789a78e6ca07288524a07ac42ca6d67eca53dbaf3ed027d7c22f00931e5a'],
-  [2026, 4, 'slave-market', 'lot', 'npc_w4_slave-market_lot', 'Halla Ironbrook', 32, 'frontier', 63000, '1e25d57b31365e1d20678bdc20483efb7ed74cc6c60e8e93d0513b8215ebd63b'],
-  [2026, 1, 'auction-house', 'lot', 'npc_w1_auction-house_lot', 'Orielle Seawick', 29, 'port_town', 60000, 'b0cca7a583a112c302575a4dc686de04976151f8a8db3bf2bf09eed7a0a8eeed'],
+  [0, 1, 'guild', 0, 'npc_w1_guild_0', 'Adrel Brassmark', 40, 'workshop_district', 8000, '62ef6ef9bdffe9bb28e7b6b3b127837eac0fb1e1e641f9451f72e5749592bd19'],
+  [42, 3, 'auction-house', 2, 'npc_w3_auction-house_2', 'Neraya Dustlark', 19, 'caravan', 15000, '7def8e1daa7a494016aefaa7ebbda1a8678407290b68cde3de727ae61c306bd9'],
+  [2026, 4, 'slave-market', 'lot', 'npc_w4_slave-market_lot', 'Halla Ironbrook', 32, 'frontier', 63000, '4a2b44b7d0f7030ff41789452254b09afe7ee618d493c0ec62130f6eb2b4f5bf'],
+  [2026, 1, 'auction-house', 'lot', 'npc_w1_auction-house_lot', 'Orielle Seawick', 29, 'port_town', 60000, '636e1d72e36626fe8052f33f45ff3e99209c4640431b4dd69b1f0c94852f1184'],
 ] as const;
 
 const sourceBands = [

@@ -8,6 +8,7 @@ import { ESTATE_BUILDINGS,SOCIETY_BUILDINGS,societyPlot,societyStaff,type StaffC
 import { createSocietyState,isSocietyState,societyPopulation } from './society.js';
 import type { TileTrialState } from "./types.js";
 import { isAcquisitionReplay } from './acquisition-replay.js';
+import { isMansionState } from '../mansion/invariants.js';
 
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 export function isTileTrialState(raw: unknown): raw is TileTrialState {
@@ -68,6 +69,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       workers += b.workers; if (!Number.isSafeInteger(workers)) return false;
     }
     if (s.society) {
+      if (!isMansionState(s.society.mansion, s, [])) return false;
       const c = s.society.classes;
       const bound = Object.values(c.bound).reduce((a,b)=>a+b,0);
       return assigned.basic <= Math.floor(c.free/10)+Math.floor(bound/10) && (['makers','luminaries','merchants'] as const).every(k=>assigned[k]<=Math.floor(c[k].common/10));

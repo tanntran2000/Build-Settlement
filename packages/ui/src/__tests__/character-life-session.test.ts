@@ -3,15 +3,15 @@ import { createMemoryGameStore,recordsToSession,sessionToRecords,GAME_DB,type Ga
 import { readFileSync } from 'node:fs';
 import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { afterEach,beforeEach,expect,it,vi } from 'vitest';
-import { createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
+import { DAMAGED_CHECKPOINT_MESSAGE,createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
 const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
 const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
 
-it('loads live and pinned v14 cities into a detached complete Life session without conversion or grants', () => {
+it('loads live and pinned v15 cities into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();
-  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v14/life-new-game.json','utf8'));
+  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v15/life-new-game.json','utf8'));
   if(!decoded.success)throw Error(decoded.error.message);
   const fresh={success:true,value:decoded.state};
   fresh.value.city.goodsStock!.amountMilli = 321;
@@ -193,7 +193,7 @@ it('old ruleset legacy migrates and retains refusal message', async () => { cons
 it('save and read are identical and replaced changes from false to true', async () => { const d = deps(); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: true }); });
 it('failed write returns existing message and preserves records', async () => { const opts = { failWrites: false },d = deps(null,opts); await saveLocalCharacterLife(a2Session(),d); const prior = await d.store.read('main'); opts.failWrites = true; expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: false,message: BLOCKED }); expect(await d.store.read('main')).toEqual(prior); });
 it('fallen clear keeps marker and cannot resurrect legacy', async () => { const d = deps(a2Text()); await readLocalCharacterLife(d); expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({ success: true }); expect(await d.store.read('main')).toBeNull(); expect(d.legacy.removeItem).toHaveBeenCalledWith(KEY); expect(await d.store.getSystem(MARKER)).not.toBeNull(); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: NONE }); expect(d.legacy.getItem).toHaveBeenCalledTimes(1); });
-it('factory failure falls back to memory with a one-time warning', async () => { const checkpointDeps = createCheckpointDeps(() => { throw Error('blocked'); },deps().legacy); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: BLOCKED }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: NONE }); expect(await saveLocalCharacterLife(a2Session(),checkpointDeps)).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: true,state: a2Session() }); });
+it('factory failure falls back to memory with a one-time warning', async () => { const checkpointDeps = createCheckpointDeps(() => { throw Error('blocked'); },deps().legacy); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: BLOCKED }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: NONE }); expect(await saveLocalCharacterLife(a2Session(),checkpointDeps)).toEqual({ success: true,replaced: false,volatile: true }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: true,state: a2Session() }); });
 
 // Raw-observable GameStore double: verifies service clears the entire slot; A3 checks real IndexedDB tables.
 function inspectableDeps() {
@@ -238,9 +238,9 @@ it('three consecutive started saved and fallen games never accumulate records',a
  }expect(totals).toEqual([1,1,1]);
 });
 
-it('corrupt stored city is refused with the existing message and exact records preserved',async()=>{
+it('corrupt stored city is refused as damaged and exact records are preserved',async()=>{
  const d=deps();const rows=sessionToRecords('main',a2Session());rows.find(r=>r.table==='city')!.value='{';await d.store.replaceSlot('main',rows,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);const before=await d.store.read('main');
- expect(await readLocalCharacterLife(d)).toEqual({success:false,message:OLD});expect(await d.store.read('main')).toEqual(before);
+ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:DAMAGED_CHECKPOINT_MESSAGE});expect(await d.store.read('main')).toEqual(before);
 });
 
 function deferred() {
@@ -309,10 +309,10 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
  const migrate=vi.fn(d.store.migrateSlot?.bind(d.store));Object.assign(d.store,{migrateSlot:migrate});dataWrites.reset();
  blocked=availability==='still blocked';
  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
- expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+ expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toBeNull();
  expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
  expect(await migrate.mock.results[0].value).toEqual(before);
- expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:1});expect(replace).not.toHaveBeenCalled();
+ expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:0});expect(replace).not.toHaveBeenCalled();
  expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);
 });
 
@@ -340,7 +340,7 @@ it.each(['existing B','empty','invalid legacy','other migration'] as const)('fix
   const preliminary=await base.read(slot);if(!interleaved){interleaved=true;await base.replaceSlot('main',cRows,kind==='other migration'?[otherMarker]:[]);}return preliminary;
  })};
  expect(await readLocalCharacterLife({store:wrapped,legacy})).toEqual({success:true,state:c});
- expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+ expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:null);
  expect(wrapped.replaceSlot).not.toHaveBeenCalled();expect(legacy.getItem).toHaveBeenCalledTimes(kind==='existing B'?0:1);expect(legacy.removeItem).not.toHaveBeenCalled();
  expect(legacy.getItem.getMockImplementation()!()).toBe(kind==='invalid legacy'?'{':encoded.text);
 });

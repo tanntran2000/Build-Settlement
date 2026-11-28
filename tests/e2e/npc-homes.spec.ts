@@ -1,11 +1,12 @@
 import { expect, test, type Locator } from '@playwright/test';
-import { withNpcs } from '../../packages/core/src/__tests__/helpers/npcs.ts';
+import { seedFixtureMansionBeds, withNpcs } from '../../packages/core/src/__tests__/helpers/npcs.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { BROWSER_NPC_KEYS, characterWindow, exportLife, go, importLife, keyActivate, keyPost, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 for (const width of [1280, 1600]) test(`homes show capacity and a keyboard Move clears the city post at ${width}px`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 });
   const initial = withNpcs(makeLife(), [BROWSER_NPC_KEYS[0]]);
+  seedFixtureMansionBeds(initial.city);
   const { id, name } = initial.npcs[0].character;
   const assigned = executeCharacterLifeCommand(initial, { type: 'ASSIGN_NPC', npcId: id, tileId: 'field-1', expectedRevision: initial.city.revision });
   if (!assigned.success) throw Error(assigned.error.message);
@@ -30,12 +31,13 @@ for (const width of [1280, 1600]) test(`homes show capacity and a keyboard Move 
   await expect(move).toHaveAccessibleDescription('Choose a destination home.');
   await expect(destination.locator('option')).toHaveText(['Choose a destination home', 'Mansion (estate-1)']);
   await keyPost(page, destination, 'estate-1');
+  await keyPost(page, home.getByLabel('Room for '+name, { exact: true }), 'room-3');
   await keyActivate(page, move);
   await expect(manage.getByRole('heading').first()).toBeFocused();
   await count('Beds used: 0 / 25');
   await count('No residents.');
 
-  const expected = executeCharacterLifeCommand(assigned.next, { type: 'MOVE_NPC_HOME', npcId: id, homeTileId: 'estate-1', expectedRevision: assigned.next.city.revision });
+  const expected = executeCharacterLifeCommand(assigned.next, { type: 'MOVE_NPC_HOME', npcId: id, homeTileId: 'estate-1', roomId: 'room-3', expectedRevision: assigned.next.city.revision });
   if (!expected.success) throw Error(expected.error.message);
   const moved = await exportLife(page);
   expect(moved).toStrictEqual(expected.next);

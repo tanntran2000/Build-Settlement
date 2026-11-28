@@ -1,12 +1,14 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { applyDifficulty, difficultyProfile, buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, mansionRecruitment, MANSION_TILE_ID, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type PlayerCharacter, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
   import LibraryPanel from './LibraryPanel.svelte';
   import InsideCity from './InsideCity.svelte';
   import HouseholdNotice from './HouseholdNotice.svelte';
+  import MansionPanel from './MansionPanel.svelte';
+  import { mansionRoomChoices } from './mansion-view.js';
   import { buildOptions } from './society-view.js';
   import { formatMilli as units } from './milli-format.js';
 
@@ -24,15 +26,18 @@
   export let onworkersinput: () => void;
   export let onworkersinvalid: () => void = () => {};
   export let oncommand: (type: string, fields?: Record<string, unknown>) => boolean;
+  export let onopenreports: () => void;
   $: upkeepBps = difficultyProfile(state.society!.difficulty).upkeepBps;
   let managementHeading: HTMLHeadingElement | undefined;
   let moveDrafts: Record<string, string> = {};
+  let roomDrafts: Record<string, string> = {};
   let moveContext = '';
   $: {
     const context = `${selectedId}:${uiEpoch}`;
     if (context !== moveContext) {
       moveContext = context;
       moveDrafts = {};
+      roomDrafts = {};
     }
   }
   $: selected = state.tiles.find(tile => tile.id === selectedId)!;
@@ -45,7 +50,7 @@
     .map(tile => ({
       id: tile.id,
       label: `${TRIAL_BUILDINGS[tile.building!.typeId].name} (${tile.id})`,
-      free: homeResidents(npcs, tile.id) < homeBeds(state, tile.id),
+      free: tile.id === MANSION_TILE_ID ? mansionRecruitment(state, npcs).free > 0 : homeResidents(npcs, tile.id) < homeBeds(state, tile.id),
     }));
   $: hasDestination = destinations.some(destination => destination.free);
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
@@ -64,11 +69,17 @@
     const acquisitionHeading = fromTile ? document.getElementById(`acquisition-panel-${selectedId}`) : null;
     (acquisitionHeading ?? managementHeading)?.focus();
   }
-  async function moveResident(npcId: string, homeTileId: string): Promise<void> {
-    if (!oncommand('MOVE_NPC_HOME', { npcId, homeTileId })) return;
+  function pickHome(npcId: string, destination: string): void {
+    moveDrafts = { ...moveDrafts, [npcId]: destination };
+    roomDrafts = { ...roomDrafts, [npcId]: '' };
+  }
+  async function moveResident(npcId: string, homeTileId: string, roomId: string): Promise<void> {
+    const fields = homeTileId === MANSION_TILE_ID ? { npcId, homeTileId, roomId } : { npcId, homeTileId };
+    if (!oncommand('MOVE_NPC_HOME', fields)) return;
     const nextDrafts = { ...moveDrafts };
     delete nextDrafts[npcId];
     moveDrafts = nextDrafts;
+    roomDrafts = { ...roomDrafts, [npcId]: '' };
     await tick();
     focusManage();
   }
@@ -99,10 +110,13 @@
                 {#each residents as resident (resident.character.id)}
                   {@const id = resident.character.id}
                   {@const destination = moveDrafts[id] ?? ''}
+                  {@const roomId = roomDrafts[id] ?? ''}
+                  {@const rooms = destination === MANSION_TILE_ID ? mansionRoomChoices(state, npcs, resident).filter(option => !option.reason) : []}
                   {@const reason = locked ? 'Plan next week to move residents.'
                     : !hasDestination ? 'No other home has a free bed.'
                     : !destination ? 'Choose a destination home.'
                     : !destinations.some(option => option.id === destination && option.free) ? 'That home has no free bed.'
+                    : destination === MANSION_TILE_ID && !rooms.some(room => room.id === roomId) ? 'Choose a Mansion room.'
                     : ''}
                   <li>
                     <strong>{resident.character.name}</strong>
@@ -114,15 +128,24 @@
                     <label for={`npc-home-destination-${id}`}>Destination for {resident.character.name}</label>
                     <select id={`npc-home-destination-${id}`} value={destination} disabled={locked || !hasDestination}
                       aria-describedby={reason ? `npc-home-reason-${id}` : undefined}
-                      onchange={event => { moveDrafts = { ...moveDrafts, [id]: event.currentTarget.value }; }}>
+                      onchange={event => pickHome(id, event.currentTarget.value)}>
                       <option value="" disabled>Choose a destination home</option>
                       {#each destinations as option (option.id)}
                         <option value={option.id} disabled={!option.free}>{option.label}{option.free ? '' : ' — No free bed'}</option>
                       {/each}
                     </select>
+                    {#if destination === MANSION_TILE_ID}
+                      <label for={'npc-home-room-' + id}>Room for {resident.character.name}</label>
+                      <select id={'npc-home-room-' + id} value={roomId} disabled={locked || !rooms.length}
+                        aria-describedby={reason ? 'npc-home-reason-' + id : undefined}
+                        onchange={event => { roomDrafts = { ...roomDrafts, [id]: event.currentTarget.value }; }}>
+                        <option value="">Choose a Mansion room</option>
+                        {#each rooms as room (room.id)}<option value={room.id}>{room.label}</option>{/each}
+                      </select>
+                    {/if}
                     {#if reason}<p id={`npc-home-reason-${id}`}>{reason}</p>{/if}
                     <button disabled={!!reason} aria-describedby={reason ? `npc-home-reason-${id}` : undefined}
-                      onclick={() => void moveResident(id, destination)}>Move</button>
+                      onclick={() => void moveResident(id, destination, roomId)}>Move</button>
                   </li>
                 {/each}
               </ul>
@@ -131,6 +154,9 @@
               <p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>
             {/if}
           </section>
+          {#if selectedId === MANSION_TILE_ID}
+            {#key uiEpoch}<MansionPanel city={state} {npcs} {locked} {managementError} {oncommand} {onopenreports} />{/key}
+          {/if}
         {:else}
         <p>Upkeep: {units(applyDifficulty(definition.upkeepMilli * selected.building.level, upkeepBps))} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
         {/if}

@@ -1,5 +1,6 @@
 import { hasWeeklyKeys,isWorldSessionState,outsideProvenance,SOCIETY_RULESET,type WorldSessionState } from '@haven/core';
 import { TILE_SAVE_MAX_BYTES } from './tile-trial-save.js';
+import { upgradeV14WorldSession, V14_RULESET } from './upgrade-v14.js';
 
 export const WORLD_SESSION_SAVE_FORMAT = 'haven.world-session.save';
 export type WorldSaveFailure = { success: false; error: { code: 'INVALID_SAVE' | 'INCOMPATIBLE_SAVE' | 'INVALID_SAVE_STATE' | 'SAVE_TOO_LARGE' | 'SAVE_FAILED'; message: string } };
@@ -59,17 +60,20 @@ export function deserializeWorldSessionSave(text: unknown): { success: true; sta
     if (typeof text !== 'string') return fail('INVALID_SAVE', 'Choose a world session checkpoint JSON file.');
     if (tooLarge(text)) return fail('SAVE_TOO_LARGE', 'Checkpoint exceeds the 1 MiB limit.');
     const value: unknown = JSON.parse(text);
-    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state']) || value.format !== WORLD_SESSION_SAVE_FORMAT || value.schemaVersion !== 1 || value.cityRulesetId !== SOCIETY_RULESET) {
+    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state']) || value.format !== WORLD_SESSION_SAVE_FORMAT || value.schemaVersion !== 1 || (value.cityRulesetId !== SOCIETY_RULESET && value.cityRulesetId !== V14_RULESET)) {
       return fail('INCOMPATIBLE_SAVE', 'Unsupported world checkpoint format, version or city ruleset. No migration was performed.');
     }
     const state = value.state;
+    if (value.cityRulesetId === V14_RULESET) {
+      const upgraded = upgradeV14WorldSession(state);
+      return upgraded ? { success: true, state: upgraded } : fail('INCOMPATIBLE_SAVE', 'Unsupported city economy.');
+    }
     const city = state && typeof state === 'object' ? Object.getOwnPropertyDescriptor(state, 'city')?.value : undefined;
     if (city && typeof city === 'object' && (!Object.hasOwn(city, 'society') || Object.getOwnPropertyDescriptor(city, 'society')?.value?.rulesetId !== SOCIETY_RULESET)) return fail('INCOMPATIBLE_SAVE', 'Unsupported city economy.');
     const provenance = state && typeof state === 'object' ? outsideProvenance(Object.getOwnPropertyDescriptor(state, 'outside')?.value) : 'malformed';
     if (provenance === 'malformed') return fail('INVALID_SAVE_STATE', 'Checkpoint has malformed outside world provenance.');
     if (provenance === 'unsupported') return fail('INCOMPATIBLE_SAVE', 'Unsupported outside world generator or scenario. No migration was performed.');
     if (!isWorldSessionState(state)) return fail('INVALID_SAVE_STATE', 'Checkpoint must contain a valid complete world session in Planning.');
-    if (value.cityRulesetId !== SOCIETY_RULESET) return fail('INCOMPATIBLE_SAVE', 'Checkpoint ruleset does not match its city.');
     return { success: true, state };
   } catch { return fail('INVALID_SAVE', 'Could not read a valid checkpoint JSON. Your game was preserved.'); }
 }

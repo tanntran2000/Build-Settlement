@@ -128,6 +128,7 @@ export function generateNpc(seed: number, week: number, source: AcquisitionSourc
   character.relationshipToPlayer.affection = affection;
   const household: NpcHousehold = {
     home: 'estate-2', status: row.status, obedience, contract, will: { preference, flaw }, notice: null, lifelongAskWeek: null, source, boughtWeek: week,
+    room: null, role: null, training: null,
   };
   const profile: CharacterProfile = {
     id,

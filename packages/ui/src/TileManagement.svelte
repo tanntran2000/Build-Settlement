@@ -16,10 +16,10 @@
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
-  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE, SESSION_ONLY_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
-  export let onexit:()=>void;
+  export let onexit:(volatile: boolean)=>void;
   export let lifeMode = true;
   export let initialLife: CharacterLifeSessionState;
   let state = initialLife.city;
@@ -38,6 +38,8 @@
   let uiEpoch = 0;
   let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
+  let leaveDialog: HTMLDialogElement;
+  let leavePromptOpen = false;
   let importRead = 0;
   let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -79,7 +81,7 @@
       return false;
     }
     if (!result.success) {
-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'ROOM_LOCKED', 'ROOM_LIMIT', 'ROOM_MAX_LEVEL', 'ROOM_FULL', 'MANSION_FULL', 'SUITE_ROLE_ONLY', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
       if (!known.includes(result.error.code)) {
         error = 'The action failed. Download the error log for review.';
         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
@@ -88,7 +90,7 @@
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
       else if (['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','BUY_POTION','USE_CONSUMABLE','CLAIM_STORED_ITEM','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(type)) managementError = {action:type,message:itemError(result.error.code)};
-      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUILD_ROOM', 'UPGRADE_ROOM', 'MOVE_TO_ROOM', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
@@ -138,7 +140,10 @@
     await tick();
     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
-      if (!result.success && state.revision === savedRevision && state.world.week === savedWeek) lifeStatus = 'Autosave failed. Your last save is kept.';
+      if (state.revision === savedRevision && state.world.week === savedWeek) {
+        if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+        else if (result.volatile) lifeStatus = 'Autosaved for this session only. Use Export checkpoint to keep your progress.';
+      }
     }
   }
   async function openLifeCity(fromTile = false): Promise<void> {
@@ -225,14 +230,20 @@
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
+    error = ''; saveNotice = result.volatile ? SESSION_ONLY_CHECKPOINT_MESSAGE
+      : result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   async function continueLocally() {
     const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await readLocalCharacterLife();
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
-    if (!result.success) { checkpointError(result.message); return; }
-    loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
+    if (!result.success) {
+      checkpointError(result.message === DAMAGED_CHECKPOINT_MESSAGE
+        ? 'Local checkpoint not loaded; it was left unchanged. ' + result.message
+        : result.message);
+      return;
+    }
+    if (loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true) && result.warning) error = result.warning;
   }
   async function mainMenu() {
     if (checkpointLocked) return;
@@ -240,7 +251,15 @@
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    onexit();
+    if (result.volatile) {
+      importRead++;
+      error = ''; saveNotice = '';
+      leavePromptOpen = true;
+      await tick();
+      leaveDialog.showModal();
+      return;
+    }
+    onexit(false);
   }
 </script>
 
@@ -283,7 +302,7 @@
       </section>
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purse={player!.purse} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
-        onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} />
+        onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} onopenreports={() => { destination = 'reports'; activeWindow = null; void focusLifeReport(); }} />
       {/if}
     {/snippet}
     {#snippet characters()}
@@ -303,7 +322,7 @@
     <p>Difficulty: {state.society?.difficulty === 'easy' ? 'Easy' : 'Normal'}</p>
     <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
     <details><summary>About checkpoints</summary>
-    <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Checkpoints from older versions of Haven cannot be played.</p>
+    <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Version 14 checkpoints upgrade when loaded.</p>
 </details>
     {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
     <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
@@ -321,8 +340,22 @@
 <details class="card"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>
     {/snippet}
   </CharacterLifeShell>
+  <dialog bind:this={leaveDialog} aria-labelledby="session-only-checkpoint-title" onclose={() => { leavePromptOpen = false; }}>
+    {#if leavePromptOpen}
+      <h2 id="session-only-checkpoint-title">Session-only checkpoint</h2>
+      <p>{SESSION_ONLY_CHECKPOINT_MESSAGE}</p>
+      <button onclick={exportCheckpoint}>Export checkpoint</button>
+      <button onclick={() => { leaveDialog.close(); onexit(true); }}>Return to title</button>
+      <button onclick={() => leaveDialog.close()}>Stay in game</button>
+      {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
+      {#if error}<p role="alert">{error}</p>{/if}
+    {/if}
+  </dialog>
 {/if}
 
 <style>
+  dialog { max-width: min(420px, calc(100vw - 32px)); }
+  dialog button { margin: 4px; }
+  dialog::backdrop { background: rgb(0 0 0 / 65%); }
 p{margin:8px 0;line-height:1.5}.card{margin-bottom:16px}.requirements-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.requirements-strip>div{min-width:0;overflow-wrap:anywhere}.life-requirements{background:var(--bg-tertiary);padding:20px;margin-bottom:22px}.life-requirements header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.requirement-heading{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.fulfillment-track{height:8px;background:var(--bg-primary);border-radius:4px;overflow:hidden}.fulfillment-track span{display:block;height:100%;background:var(--accent-green)}label{display:block;margin:12px 0}input{max-width:100%}@media(max-width:500px){.requirements-strip{grid-template-columns:minmax(0,1fr)}}
 </style>

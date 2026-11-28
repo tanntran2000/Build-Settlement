@@ -1,4 +1,4 @@
-﻿import { GAME_DB, diffRecords, type GameStore, type StoredRecord, type WriteStats } from '@haven/persistence';
+﻿import { GAME_DB, canMigrateSlot, diffRecords, type GameStore, type StoredRecord, type WriteStats } from '@haven/persistence';
 export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameStore {
   const opening = new Promise<IDBDatabase>((resolve,reject) => {
     const request = factory.open(GAME_DB.name,GAME_DB.version);
@@ -21,7 +21,7 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
   }
   const slotRows = async (tx: IDBTransaction, slotId: string) => (await Promise.all(GAME_DB.stores.filter(t => t !== 'system').map(t => request(tx.objectStore(t).index('bySlot').getAll(slotId)) as Promise<StoredRecord[]>))).flat();
   return {
-    async read(slotId) { performance.mark('haven.store.read'); return transaction('readonly',async tx => { const rows = await slotRows(tx,slotId); return rows.some(r => r.table === 'meta') ? rows : null; }); },
+    async read(slotId) { performance.mark('haven.store.read'); return transaction('readonly',async tx => { const rows = await slotRows(tx,slotId); return rows.length ? rows : null; }); },
     async replaceSlot(slotId,next,extra = []): Promise<WriteStats> {
       performance.mark('haven.store.write');
       if (next.some(r => r.slotId !== slotId || r.table === 'system') || extra.some(r => r.table !== 'system')) throw Error('Invalid slot records');
@@ -37,12 +37,11 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
       if ((candidate !== null && candidate.some(r => r.slotId !== slotId || r.table === 'system')) || marker.table !== 'system') throw Error('Invalid slot records');
       return transaction('readwrite',async tx => {
         const [existingMarker,current] = await Promise.all([request(tx.objectStore('system').get([marker.slotId,marker.id])),slotRows(tx,slotId)]);
-        if (!existingMarker) {
-          if (!current.some(r => r.table === 'meta') && candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
-          tx.objectStore('system').put(marker);
-        }
+        if (!canMigrateSlot(current, Boolean(existingMarker))) return current.length ? current : null;
+        if (candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
+        tx.objectStore('system').put(marker);
         const result = await slotRows(tx,slotId);
-        return result.some(r => r.table === 'meta') ? result : null;
+        return result.length ? result : null;
       });
     },
     async clear(slotId) { performance.mark('haven.store.clear'); return transaction('readwrite',async tx => { for (const r of await slotRows(tx,slotId)) tx.objectStore(r.table).delete([slotId,r.id]); }); },

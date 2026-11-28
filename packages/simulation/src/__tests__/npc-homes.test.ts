@@ -8,6 +8,7 @@ import {
 } from '@haven/core';
 import { deserializeCharacterLifeSave, recordsToSession, serializeCharacterLifeSave, sessionToRecords } from '@haven/persistence';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
+import { seedFixtureMansionBeds } from '@haven/core/testing/npcs';
 
 type Resident = WorldNpc & { household: NpcHousehold };
 type Populated = Omit<CharacterLifeSessionState, 'npcs'> & { npcs: Resident[] };
@@ -49,6 +50,7 @@ function populate(homes: readonly string[], maxBeds = false): Populated {
   ] as const) session.city.tiles.find(tile => tile.id === id)!.building = contents;
   const keys = [1, 2, 3, 4, 5, 6, 7, 8].flatMap(weekKeys);
   const names = new Set<string>();
+  const roomIds = seedFixtureMansionBeds(session.city, homes.filter(home => home === 'estate-1').length);
   for (const [index, home] of homes.entries()) {
     const key = keys[index];
     let salt = 0;
@@ -59,6 +61,7 @@ function populate(homes: readonly string[], maxBeds = false): Populated {
     }
     names.add(draw.npc.character.name);
     draw.npc.household.home = home;
+    if (home === 'estate-1') draw.npc.household.room = roomIds.shift()!;
     session.npcs.push(draw.npc);
     session.profiles.push(draw.profile);
   }
@@ -99,7 +102,7 @@ function roundTrip(session: CharacterLifeSessionState) {
   return { state: loaded.state, text: saved.text };
 }
 
-describe('NPC homes and v14 saves', () => {
+describe('NPC homes and v15 saves', () => {
   it('starts New Game with no NPCs or profiles, 120 Gold, and both fixed L1 homes', () => {
     const session = newGame();
     const world = createNpcWorldSession(2026);
@@ -112,7 +115,7 @@ describe('NPC homes and v14 saves', () => {
     }
     expect([homeBeds(session.city, 'estate-1'), homeBeds(session.city, 'estate-2')]).toStrictEqual([10, 25]);
     const loaded = roundTrip(session);
-    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-14', 'tile-society-14']);
+    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-15', 'tile-society-15']);
   });
 
   it('rejects 45000 in generator data once the live tuning is 120000', () => {
@@ -146,7 +149,7 @@ describe('NPC homes and v14 saves', () => {
       (session: Populated) => { session.npcs[1].character.name = session.npcs[0].character.name; },
       (session: Populated) => { session.npcs[0].character.legalStatus = 'citizen'; },
       (session: Populated) => { session.npcs[0].household.obedience = -1; },
-      (session: Populated) => { session.npcs[0].household.home = 'estate-1'; session.npcs[0].postTileId = 'field-1'; },
+      (session: Populated) => { session.npcs[0].household.home = 'estate-1'; session.npcs[0].household.room = 'room-3'; session.npcs[0].postTileId = 'field-1'; },
     ]) {
       const session = structuredClone(valid);
       mutate(session);
@@ -154,7 +157,7 @@ describe('NPC homes and v14 saves', () => {
     }
   });
 
-  it('rejects a v14 checkpoint with fractional NPC affection', () => {
+  it('rejects a v15 checkpoint with fractional NPC affection', () => {
     const { text } = roundTrip(populate(['estate-2']));
     const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };
     checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;
@@ -174,7 +177,7 @@ describe('NPC homes and v14 saves', () => {
     expect([view(hall).household.home, view(hall).postTileId]).toStrictEqual(['house-5', 'field-1']);
     expect([view(posted).household.home, view(posted).postTileId]).toStrictEqual(['estate-2', 'field-1']);
     expect(roundTrip(hall).state.npcs[0].postTileId).toBe('field-1');
-    const mansion = success(hall, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1' });
+    const mansion = success(hall, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1', roomId: 'room-3' });
     expect([view(mansion).household.home, view(mansion).postTileId]).toStrictEqual(['estate-1', null]);
     expect(mansion.profiles).toStrictEqual(hall.profiles);
     expect(mansion.city.society!.items).toStrictEqual(hall.city.society!.items);
@@ -184,8 +187,9 @@ describe('NPC homes and v14 saves', () => {
 
   it('refuses full or wrong homes, stale revisions and moves in Report', () => {
     const session = populate(['estate-2', ...Array<string>(10).fill('estate-1')]);
+    seedFixtureMansionBeds(session.city, 11);
     expect(isCharacterLifeSessionState(session)).toBe(true);
-    failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1' }, 'NO_BED', 'That home has no free bed.');
+    failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1', roomId: 'room-4' }, 'MANSION_FULL', 'The Mansion has no free bed.');
     failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'field-1' }, 'NOT_A_HOME', "Select the Mansion or a Retainers' Hall.");
     failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'house-5', expectedRevision: session.city.revision + 1 }, 'STALE_COMMAND');
     const reported = success(session, 'END_WEEK', { expectedWeek: session.city.world.week });

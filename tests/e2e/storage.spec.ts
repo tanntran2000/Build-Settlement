@@ -11,7 +11,7 @@ const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true})
 function bytes(session=makeLife()){const r=serializeCharacterLifeSave(session);if(!r.success)throw Error(r.error.message);return r.text;}
 async function save(page:Page){await go(page,'session');await button(page,'Save locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');}
 async function start(page:Page){await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await importLife(page,makeLife());}
-async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v14/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v15/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function expectCleared(page:Page){
  await expect.poll(()=>readStoredRecords(page)).toEqual([marker]);
  const rows=await readStoredRecords(page);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(rows.filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);
@@ -40,7 +40,7 @@ test('two tabs saving A B A leave exactly the last A session',async({page,contex
  await start(page);await save(page);const second=await context.newPage();try{await second.goto('/');await importLife(second,makeLife(22));await save(second);const a=await exportLife(page);await save(page);expect(await storedSaveText(second)).toBe(bytes(a));expect(await exportLife(second)).toEqual(makeLife(22));}finally{await second.close();}
 });
 test('blocked IndexedDB stays playable warns once and exports',async({page})=>{
- await page.addInitScript(()=>{indexedDB.open=()=>{throw Error('blocked');};});await page.goto('/');await expect(page.getByRole('alert')).toHaveText(BLOCKED);await importLife(page,makeLife());expect(await exportLife(page)).toEqual(makeLife());await button(page,'Main menu').click();await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await expect(page.getByRole('alert')).toHaveCount(0);await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());
+ await page.addInitScript(()=>{indexedDB.open=()=>{throw Error('blocked');};});await page.goto('/');await expect(page.getByRole('alert')).toHaveText(BLOCKED);await importLife(page,makeLife());expect(await exportLife(page)).toEqual(makeLife());await button(page,'Main menu').click();const prompt=page.getByRole('dialog',{name:'Session-only checkpoint',exact:true});await expect(prompt.getByText('Saved for this session only. Use Export checkpoint to keep your progress.',{exact:true})).toBeVisible();await prompt.getByRole('button',{name:'Return to title',exact:true}).click();await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await expect(page.getByRole('alert')).toHaveCount(0);await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());
 });
 test('title menu waits for the initial async storage read',async({page})=>{
  await page.addInitScript(()=>{const open=IDBFactory.prototype.open;IDBFactory.prototype.open=function(...args:Parameters<typeof open>){const r=open.apply(this,args);if(args[0]==='haven'){Object.defineProperty(r,'onsuccess',{set(handler){r.addEventListener('success',event=>{Object.assign(window,{releaseStoreRead:()=>handler.call(r,event)});});}});}return r;};});
@@ -115,7 +115,7 @@ test('fix2 F1: recovered legacy A cannot replace B saved while migration was blo
  await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
  expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
  expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
- expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
 });
 
 for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outcome+' Save feedback cannot replace a rejected Import',async({page})=>{
@@ -173,19 +173,27 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
   await importLife(page,makeLife(44));await go(page,'session');await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
   const liveRevision=(await exportLife(page)).city.revision;
   await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
-  await importLife(writer,c);const savedC=await exportLife(writer);await save(writer);
-  const before=await readStoredRecords(writer);expect(before.filter(r=>r.table==='system')).toEqual([]);expect(await storedSaveText(writer)).toBe(bytes(savedC));
+  await importLife(writer,c);const savedC=await exportLife(writer);
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([]);
   if(scenario==='marker winner'){
-   await writer.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());await button(writer,'Continue locally').click();
+   await writer.evaluate(({key,text})=>{
+    (window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage();
+    const get = Storage.prototype.getItem;
+    Storage.prototype.getItem = function(k) { return k === key ? text : get.call(this,k); };
+   },{key:KEY,text:bytes(savedC)});
+   await button(writer,'Continue locally').click();
    await expect(writer.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
-   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);
-  }
+  } else await save(writer);
+  const before=await readStoredRecords(writer);
+  const expectedMarkers=scenario==='marker winner'?[marker]:[];
+  expect(before.filter(r=>r.table==='system')).toEqual(expectedMarkers);
+  expect(await storedSaveText(writer)).toBe(bytes(savedC));
   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:Math.max(liveRevision,savedC.city.revision)+1}});
   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
-  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
-  expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual(expectedMarkers);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+  expect(await activity()).toEqual({readwrite:1,writes:[]});
   expect((await storeMarks(page)).filter(name=>name==='haven.store.write')).toEqual(['haven.store.write']);
  }finally{await writer.close();}
 });
