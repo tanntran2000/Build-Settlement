@@ -1,6 +1,14 @@
 import { expect, test } from '@playwright/test';
 import { exportLife, go, importLife, makeLifeWithNpcs, reportRegion, selectPerson } from './character-life-navigation.helpers.ts';
 
+async function tabToRole(page: import('@playwright/test').Page, profile: import('@playwright/test').Locator) {
+  const description = profile.getByRole('tab', { name: 'Description', exact: true });
+  await description.click();
+  await expect(description).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(profile.getByRole('combobox', { name: 'Role', exact: true })).toBeFocused();
+}
+
 for (const width of [1280, 1600]) {
   test('assigns and clears a role with a visible fit room, cap and weekly breakdown at ' + width, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -20,13 +28,12 @@ for (const width of [1280, 1600]) {
     const captain = role.locator('option[value="captain"]');
     await expect(captain).toBeDisabled();
     await expect(captain).toHaveText('Captain · Guard Quarters · That Mansion role is full.');
-    await role.focus();
-    await expect(role).toBeFocused();
-    await role.selectOption('maid');
+    await tabToRole(page, profile);
+    await page.keyboard.press('ArrowDown');
     await expect(role).toHaveValue('maid');
     expect((await exportLife(page)).npcs.find(npc => npc.character.id === id)?.household.role).toBe('maid');
-    await selectPerson(page, id);
-    await role.selectOption('');
+    await tabToRole(page, await selectPerson(page, id));
+    await page.keyboard.press('Home');
     await expect(role).toHaveValue('');
     expect((await exportLife(page)).npcs.find(npc => npc.character.id === id)?.household.role).toBeNull();
 
