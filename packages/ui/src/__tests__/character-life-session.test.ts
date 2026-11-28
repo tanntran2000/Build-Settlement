@@ -309,10 +309,10 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
  const migrate=vi.fn(d.store.migrateSlot?.bind(d.store));Object.assign(d.store,{migrateSlot:migrate});dataWrites.reset();
  blocked=availability==='still blocked';
  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
- expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+ expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toBeNull();
  expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
  expect(await migrate.mock.results[0].value).toEqual(before);
- expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:1});expect(replace).not.toHaveBeenCalled();
+ expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:0});expect(replace).not.toHaveBeenCalled();
  expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);
 });
 
@@ -340,7 +340,7 @@ it.each(['existing B','empty','invalid legacy','other migration'] as const)('fix
   const preliminary=await base.read(slot);if(!interleaved){interleaved=true;await base.replaceSlot('main',cRows,kind==='other migration'?[otherMarker]:[]);}return preliminary;
  })};
  expect(await readLocalCharacterLife({store:wrapped,legacy})).toEqual({success:true,state:c});
- expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+ expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:null);
  expect(wrapped.replaceSlot).not.toHaveBeenCalled();expect(legacy.getItem).toHaveBeenCalledTimes(kind==='existing B'?0:1);expect(legacy.removeItem).not.toHaveBeenCalled();
  expect(legacy.getItem.getMockImplementation()!()).toBe(kind==='invalid legacy'?'{':encoded.text);
 });

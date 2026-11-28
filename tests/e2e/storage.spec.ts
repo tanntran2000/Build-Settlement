@@ -115,7 +115,7 @@ test('fix2 F1: recovered legacy A cannot replace B saved while migration was blo
  await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
  expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
  expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
- expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
 });
 
 for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outcome+' Save feedback cannot replace a rejected Import',async({page})=>{
@@ -173,19 +173,27 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
   await importLife(page,makeLife(44));await go(page,'session');await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
   const liveRevision=(await exportLife(page)).city.revision;
   await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
-  await importLife(writer,c);const savedC=await exportLife(writer);await save(writer);
-  const before=await readStoredRecords(writer);expect(before.filter(r=>r.table==='system')).toEqual([]);expect(await storedSaveText(writer)).toBe(bytes(savedC));
+  await importLife(writer,c);const savedC=await exportLife(writer);
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([]);
   if(scenario==='marker winner'){
-   await writer.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());await button(writer,'Continue locally').click();
+   await writer.evaluate(({key,text})=>{
+    (window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage();
+    const get = Storage.prototype.getItem;
+    Storage.prototype.getItem = function(k) { return k === key ? text : get.call(this,k); };
+   },{key:KEY,text:bytes(savedC)});
+   await button(writer,'Continue locally').click();
    await expect(writer.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
-   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);
-  }
+  } else await save(writer);
+  const before=await readStoredRecords(writer);
+  const expectedMarkers=scenario==='marker winner'?[marker]:[];
+  expect(before.filter(r=>r.table==='system')).toEqual(expectedMarkers);
+  expect(await storedSaveText(writer)).toBe(bytes(savedC));
   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:Math.max(liveRevision,savedC.city.revision)+1}});
   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
-  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
-  expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual(expectedMarkers);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+  expect(await activity()).toEqual({readwrite:1,writes:[]});
   expect((await storeMarks(page)).filter(name=>name==='haven.store.write')).toEqual(['haven.store.write']);
  }finally{await writer.close();}
 });

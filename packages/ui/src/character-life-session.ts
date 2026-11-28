@@ -25,7 +25,7 @@ function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
 }
 export function createCheckpointDeps(factory: () => GameStore, legacy: CheckpointDeps['legacy']): CheckpointDeps {
   try { return { store: factory(),legacy }; }
-  catch { const deps = { store: createMemoryGameStore({ allowExistingOnMigration }),legacy }; markVolatile(deps); return deps; }
+  catch { const deps = { store: createMemoryGameStore(),legacy }; markVolatile(deps); return deps; }
 }
 function markVolatile(deps: CheckpointDeps): void {
   volatileStores.add(deps);
@@ -38,7 +38,7 @@ function defaultDeps(): CheckpointDeps {
     getItem(key) { return window.localStorage.getItem(key); },
     removeItem(key) { window.localStorage.removeItem(key); }
   };
-  defaults = createCheckpointDeps(() => createIndexedDbGameStore(undefined, allowExistingOnMigration),legacy); return defaults;
+  defaults = createCheckpointDeps(() => createIndexedDbGameStore(),legacy); return defaults;
 }
 export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded: unknown, expectedRevision: number): { success: true; next: CharacterLifeSessionState } | Failure {
   try {
@@ -82,17 +82,13 @@ function readStoredCheckpoint(rows: StoredRecord[]): { success: true; state: Cha
   return fail(identifiesV14(rows) ? OLD : DAMAGED_CHECKPOINT_MESSAGE);
 }
 
-function allowExistingOnMigration(rows: StoredRecord[]): boolean {
-  return !identifiesV14(rows) && readStoredCheckpoint(rows).success;
-}
-
 export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState; warning?: string } | Failure> {
   return enqueueCheckpoint(async () => {
   const d = deps ?? defaultDeps();
   try {
     let marker: StoredRecord | null;
     try { marker = await d.store.getSystem(MARKER); }
-    catch (error) { if (deps) throw error; d.store = createMemoryGameStore({ allowExistingOnMigration }); markVolatile(d); marker = null; }
+    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); markVolatile(d); marker = null; }
     const records = await d.store.read('main');
     let loaded = records ? readStoredCheckpoint(records) : fail(NONE);
     if (!marker && (!records || (loaded.success && !identifiesV14(records)))) {

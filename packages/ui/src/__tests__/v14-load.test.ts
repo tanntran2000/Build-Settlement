@@ -120,3 +120,32 @@ it('preserves a damaged v14 slot installed after the preliminary read', async ()
   expect(legacy.removeItem).not.toHaveBeenCalled();
   expect(result).toEqual({ success: false, message: oldLocalMessage });
 });
+
+it.each(['intact v14', 'v14 missing city', 'v15 missing city'] as const)(
+  'R3-01 preserves %s with metadata inserted after the preliminary read in memory',
+  async incoming => {
+    const backup = readFileSync(new URL('society-v15/life-new-game.json', fixtures), 'utf8');
+    const state = incoming === 'v15 missing city' ? JSON.parse(backup).state : parsed().state;
+    const rows = persistence.sessionToRecords('main', state).filter(row => incoming === 'intact v14' || row.table !== 'city');
+    const store = persistence.createMemoryGameStore();
+    const wrapped = { ...store, async read(slot: string) {
+      const preliminary = await store.read(slot);
+      expect(preliminary).toBeNull();
+      await store.replaceSlot(slot, rows);
+      return preliminary;
+    } };
+    const legacy = { getItem: vi.fn(() => backup), removeItem: vi.fn() };
+
+    const result = await readLocalCharacterLife({ store: wrapped, legacy });
+
+    expect(await store.read('main')).toEqual(rows);
+    expect(legacy.getItem).toHaveBeenCalledExactlyOnceWith('haven.character-life-session-society.checkpoint.v1');
+    expect(legacy.removeItem).not.toHaveBeenCalled();
+    if (incoming === 'intact v14') {
+      expect(result).toEqual({ success: true, state: persistence.upgradeV14Session(state, state.city.world.week) });
+    } else {
+      expect(result).toEqual({ success: false, message: incoming === 'v14 missing city' ? oldLocalMessage : DAMAGED_CHECKPOINT_MESSAGE });
+    }
+    expect(await store.getSystem(marker)).toBeNull();
+  },
+);

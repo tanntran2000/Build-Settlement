@@ -11,9 +11,9 @@ it.each([true,false])('fix3 memory: existing marker writes nothing with meta=%s'
  expect(typeof s.migrateSlot).toBe('function');expect(await s.migrateSlot('main',records('A'),marker)).toEqual(hasMeta?b:null);
  expect(await s.read('main')).toEqual(hasMeta?b:null);expect(await s.getSystem(marker.id)).toEqual(marker);
 });
-it('fix3 memory: existing slot wins and only receives the marker',async()=>{
+it('fix3 memory: existing slot wins without receiving a marker',async()=>{
  const s=createMemoryGameStore(),b=records('B');await s.replaceSlot('main',b);expect(typeof s.migrateSlot).toBe('function');
- expect(await s.migrateSlot('main',records('A'),marker)).toEqual(b);expect(await s.read('main')).toEqual(b);expect(await s.getSystem(marker.id)).toEqual(marker);
+ expect(await s.migrateSlot('main',records('A'),marker)).toEqual(b);expect(await s.read('main')).toEqual(b);expect(await s.getSystem(marker.id)).toBeNull();
 });
 it('fix3 memory: empty slot stores candidate and marker with detached return',async()=>{
  const s=createMemoryGameStore(),a=records('A');expect(typeof s.migrateSlot).toBe('function');const result=await s.migrateSlot('main',a,marker);
@@ -34,8 +34,11 @@ it.each(['candidate slot','candidate system','marker table'] as const)('fix3 mem
  expect(typeof s.migrateSlot).toBe('function');await expect(s.migrateSlot('main',candidate,badMarker)).rejects.toThrow('Invalid slot records');
  expect(await s.read('main')).toEqual(b);expect(await s.getSystem(marker.id)).toBeNull();
 });
-it.each([true,false])('fix3 memory: failed migration preserves records with meta=%s',async hasMeta=>{
+it.each([true,false])('fix3 memory: preserves records when writes fail with meta=%s',async hasMeta=>{
  const opts={failWrites:false},s=createMemoryGameStore(opts),b=records('B');if(hasMeta)await s.replaceSlot('main',b);opts.failWrites=true;
- expect(typeof s.migrateSlot).toBe('function');await expect(s.migrateSlot('main',records('A'),marker)).rejects.toThrow('Write aborted');
+ expect(typeof s.migrateSlot).toBe('function');
+ const result=s.migrateSlot('main',records('A'),marker);
+ if(hasMeta)await expect(result).resolves.toEqual(b);
+ else await expect(result).rejects.toThrow('Write aborted');
  expect(await s.read('main')).toEqual(hasMeta?b:null);expect(await s.getSystem(marker.id)).toBeNull();
 });

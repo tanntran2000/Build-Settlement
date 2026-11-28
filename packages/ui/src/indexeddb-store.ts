@@ -1,5 +1,5 @@
-﻿import { GAME_DB, diffRecords, type GameStore, type StoredRecord, type WriteStats } from '@haven/persistence';
-export function createIndexedDbGameStore(factory: IDBFactory = indexedDB, allowExistingOnMigration?: (rows: StoredRecord[]) => boolean): GameStore {
+﻿import { GAME_DB, canMigrateSlot, diffRecords, type GameStore, type StoredRecord, type WriteStats } from '@haven/persistence';
+export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameStore {
   const opening = new Promise<IDBDatabase>((resolve,reject) => {
     const request = factory.open(GAME_DB.name,GAME_DB.version);
     request.onupgradeneeded = () => { const db = request.result; for (const name of GAME_DB.stores) { const store = db.createObjectStore(name,{ keyPath: ['slotId','id'] }); store.createIndex('bySlot','slotId'); } };
@@ -37,11 +37,9 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB, allowE
       if ((candidate !== null && candidate.some(r => r.slotId !== slotId || r.table === 'system')) || marker.table !== 'system') throw Error('Invalid slot records');
       return transaction('readwrite',async tx => {
         const [existingMarker,current] = await Promise.all([request(tx.objectStore('system').get([marker.slotId,marker.id])),slotRows(tx,slotId)]);
-        const canMark = !current.length || (current.some(row => row.table === 'meta' && row.id === 'session') && allowExistingOnMigration?.(current) !== false);
-        if (!existingMarker && canMark) {
-          if (!current.length && candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
-          tx.objectStore('system').put(marker);
-        }
+        if (!canMigrateSlot(current, Boolean(existingMarker))) return current.length ? current : null;
+        if (candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
+        tx.objectStore('system').put(marker);
         const result = await slotRows(tx,slotId);
         return result.length ? result : null;
       });
