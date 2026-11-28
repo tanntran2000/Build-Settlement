@@ -16,10 +16,10 @@
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
-  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE, SESSION_ONLY_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
-  export let onexit:()=>void;
+  export let onexit:(volatile: boolean)=>void;
   export let lifeMode = true;
   export let initialLife: CharacterLifeSessionState;
   let state = initialLife.city;
@@ -38,6 +38,7 @@
   let uiEpoch = 0;
   let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
+  let leaveDialog: HTMLDialogElement;
   let importRead = 0;
   let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -228,7 +229,7 @@
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    error = ''; saveNotice = result.volatile ? 'Saved for this session only. Use Export checkpoint to keep your progress.'
+    error = ''; saveNotice = result.volatile ? SESSION_ONLY_CHECKPOINT_MESSAGE
       : result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   async function continueLocally() {
@@ -244,7 +245,13 @@
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    onexit();
+    if (result.volatile) {
+      importRead++;
+      error = ''; saveNotice = '';
+      leaveDialog.showModal();
+      return;
+    }
+    onexit(false);
   }
 </script>
 
@@ -325,8 +332,20 @@
 <details class="card"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>
     {/snippet}
   </CharacterLifeShell>
+  <dialog bind:this={leaveDialog} aria-labelledby="session-only-checkpoint-title">
+    <h2 id="session-only-checkpoint-title">Session-only checkpoint</h2>
+    <p>{SESSION_ONLY_CHECKPOINT_MESSAGE}</p>
+    <button onclick={exportCheckpoint}>Export checkpoint</button>
+    <button onclick={() => { leaveDialog.close(); onexit(true); }}>Return to title</button>
+    <button onclick={() => leaveDialog.close()}>Stay in game</button>
+    {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
+    {#if error}<p role="alert">{error}</p>{/if}
+  </dialog>
 {/if}
 
 <style>
+  dialog { max-width: min(420px, calc(100vw - 32px)); }
+  dialog button { margin: 4px; }
+  dialog::backdrop { background: rgb(0 0 0 / 65%); }
 p{margin:8px 0;line-height:1.5}.card{margin-bottom:16px}.requirements-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.requirements-strip>div{min-width:0;overflow-wrap:anywhere}.life-requirements{background:var(--bg-tertiary);padding:20px;margin-bottom:22px}.life-requirements header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.requirement-heading{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.fulfillment-track{height:8px;background:var(--bg-primary);border-radius:4px;overflow:hidden}.fulfillment-track span{display:block;height:100%;background:var(--accent-green)}label{display:block;margin:12px 0}input{max-width:100%}@media(max-width:500px){.requirements-strip{grid-template-columns:minmax(0,1fr)}}
 </style>

@@ -12,6 +12,7 @@
   let cachedCheckpoint: CharacterLifeSessionState | null = null;
   let checkpoint: 'playable' | 'none' | 'old' = 'none';
   let checkpointReady = false;
+  let volatileCheckpoint = false;
   let error = '';
   // Any later choice invalidates a file read still pending.
   let importRead = 0;
@@ -58,14 +59,14 @@
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} onexit={() => { importRead++; session = null; screen = 'start'; error = ''; readSlot(); }} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} onexit={volatile => { importRead++; volatileCheckpoint = volatile; session = null; screen = 'start'; error = ''; readSlot(); }} />
 {:else if screen === 'create'}
   <main lang="en">
     <header class="card"><h1>Character Life</h1></header>
     <CharacterCreation oncreate={create} oncancel={() => { screen = 'start'; }} />
   </main>
 {:else if checkpointReady}
-  <TitleScreen {checkpoint} {error} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
+  <TitleScreen {checkpoint} {error} {volatileCheckpoint} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
 {:else}
   <main class="ledger-shell storage-loading" lang="en" aria-busy="true"></main>
 {/if}

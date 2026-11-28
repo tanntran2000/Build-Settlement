@@ -4,6 +4,7 @@ import { createIndexedDbGameStore } from './indexeddb-store.js';
 import { prepareNpcWorldSessionLoad } from './world-npc-session.js';
 export const CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY = 'haven.character-life-session-society.checkpoint.v1';
 export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+export const SESSION_ONLY_CHECKPOINT_MESSAGE = 'Saved for this session only. Use Export checkpoint to keep your progress.';
 export const DAMAGED_CHECKPOINT_MESSAGE = 'This checkpoint file is damaged or was changed and cannot be loaded. Your game was preserved.';
 export function isPlayableCheckpoint(state: CharacterLifeSessionState): boolean { return state.city.society?.rulesetId === SOCIETY_RULESET; }
 type Failure = { success: false; message: string };
@@ -59,9 +60,7 @@ export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps):
   try {
     const replaced = (await d.store.read('main')) !== null;
     await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state));
-    // An injected store's save confirms that store accepted the snapshot.
-    // Browser callers also need to know whether their default store persists.
-    return !deps && volatileStores.has(d) ? { success: true,replaced,volatile: true } : { success: true,replaced };
+    return volatileStores.has(d) ? { success: true,replaced,volatile: true } : { success: true,replaced };
   }
   catch { return fail(BLOCKED); }
   });

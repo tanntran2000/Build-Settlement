@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
   import OptionsDialog from './OptionsDialog.svelte';
-  import { OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { OLD_CHECKPOINT_MESSAGE, SESSION_ONLY_CHECKPOINT_MESSAGE } from './character-life-session.js';
   import { platform, setQuitHandler } from './platform.js';
   import { APP_VERSION, RELEASE_STAGE, versionLabel } from './version.js';
   export let checkpoint: 'playable' | 'none' | 'old';
   export let error: string;
+  export let volatileCheckpoint: boolean;
   export let oncontinue: () => void;
   export let onnewgame: () => void;
   export let onquit: () => void;
@@ -31,7 +32,7 @@
 <svelte:window onresize={resize} onkeydown={keyboard} />
 <main class="ledger-shell title-screen" lang="en">
   {#if quit}
-    <section class="ledger-parchment"><p>You can close this tab now.</p><button onclick={() => { quit = false; void focusMenu(); }}>Back to title</button></section>
+    <section class="ledger-parchment"><p>{volatileCheckpoint ? SESSION_ONLY_CHECKPOINT_MESSAGE : 'You can close this tab now.'}</p><button onclick={() => { quit = false; void focusMenu(); }}>Back to title</button></section>
   {:else}
     {#if art}<img src="./title-art.webp" alt="" decoding="async" style:width={`${960 * scale}px`} style:height={`${540 * scale}px`} onerror={() => art = false}>{/if}
     <div class="title-content"><h1>HAVEN</h1><p>Sovereign Frontier</p>
