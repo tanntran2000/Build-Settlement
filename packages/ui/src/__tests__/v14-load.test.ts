@@ -7,6 +7,7 @@ import { prepareWorldSessionLoad } from '../world-session.js';
 
 const fixtures = new URL('../../../persistence/src/__tests__/fixtures/', import.meta.url);
 const marker = 'migration:legacy-local-checkpoint';
+const oldLocalMessage = `Local checkpoint not loaded; it was left unchanged. ${OLD_CHECKPOINT_MESSAGE}`;
 const parsed = () => JSON.parse(readFileSync(new URL('society-v14/life-new-game.json', fixtures), 'utf8'));
 const encode = (state: unknown) => JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-14', state });
 
@@ -17,7 +18,7 @@ it('prepares decoded World and NPC World v14 states with their own shapes', () =
   if (!live) throw Error('World fixture refused.');
   const before = JSON.stringify(world);
   const prepared = prepareWorldSessionLoad(live, world, live.city.revision);
-  expect(prepared).toMatchObject({ success: true, next: { city: { society: { rulesetId: 'tile-society-15' } } } });
+  expect(prepared.success ? prepared.next.city.society?.rulesetId : null).toBe('tile-society-15');
   const preparedNpc = prepareNpcWorldSessionLoad({ ...live, npcs: [] }, { ...world, npcs: [] }, live.city.revision);
   expect(preparedNpc.success).toBe(true);
   if (!preparedNpc.success) throw Error(preparedNpc.message);
@@ -59,8 +60,9 @@ it.each(['legacy', 'rows', 'detached rows'] as const)('loads v14 %s without writ
   expect(await store.getSystem(marker)).toBeNull();
   expect(JSON.stringify(await store.read('main'))).toBe(before);
   expect(removals).toBe(0);
-  expect(await saveLocalCharacterLife(loaded.state, deps)).toMatchObject({ success: true });
-  expect((await store.read('main'))?.find(row => row.table === 'meta')?.value).toMatchObject({ rulesetId: 'tile-society-15' });
+  expect(await saveLocalCharacterLife(loaded.state, deps)).toEqual({ success: true, replaced: medium !== 'legacy' });
+  const meta = (await store.read('main'))?.find(row => row.table === 'meta')?.value as { rulesetId?: unknown } | undefined;
+  expect(meta?.rulesetId).toBe('tile-society-15');
 });
 
 it.each(['legacy', 'rows'] as const)('rejects damaged v14 %s without adding a migration marker', async medium => {
@@ -69,7 +71,20 @@ it.each(['legacy', 'rows'] as const)('rejects damaged v14 %s without adding a mi
   if (medium === 'rows') await store.replaceSlot('main', persistence.sessionToRecords('main', state));
   const before = JSON.stringify(await store.read('main'));
   const result = await readLocalCharacterLife({store, legacy: { getItem: () => medium === 'legacy' ? encode(state) : null, removeItem: () => { throw Error('Unexpected write'); } }});
-  expect(result).toMatchObject({ success: false, message: expect.stringContaining(OLD_CHECKPOINT_MESSAGE) });
+  expect(result).toEqual({ success: false, message: oldLocalMessage });
   expect(await store.getSystem(marker)).toBeNull();
   expect(JSON.stringify(await store.read('main'))).toBe(before);
+});
+
+it.each(['missing', 'current'] as const)('does not mark a damaged nested v14 checkpoint with a %s outer version', async version => {
+  const envelope = parsed(), store = persistence.createMemoryGameStore();
+  envelope.state.player.purse.moneyMilli = -1;
+  if (version === 'missing') delete envelope.cityRulesetId;
+  else envelope.cityRulesetId = 'tile-society-15';
+  const originalText = JSON.stringify(envelope);
+  const deps = { store, legacy: { getItem: () => originalText, removeItem: () => { throw Error('Unexpected localStorage write'); } } };
+  const result = await readLocalCharacterLife(deps);
+  expect(result).toEqual({ success: false, message: oldLocalMessage });
+  expect(await store.getSystem(marker)).toBeNull();
+  expect(await store.read('main')).toBeNull();
 });

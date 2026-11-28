@@ -138,7 +138,10 @@
     await tick();
     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
-      if (!result.success && state.revision === savedRevision && state.world.week === savedWeek) lifeStatus = 'Autosave failed. Your last save is kept.';
+      if (state.revision === savedRevision && state.world.week === savedWeek) {
+        if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+        else if (result.volatile) lifeStatus = 'Autosaved for this session only. Use Export checkpoint to keep your progress.';
+      }
     }
   }
   async function openLifeCity(fromTile = false): Promise<void> {
@@ -225,14 +228,15 @@
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
+    error = ''; saveNotice = result.volatile ? 'Saved for this session only. Use Export checkpoint to keep your progress.'
+      : result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   async function continueLocally() {
     const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await readLocalCharacterLife();
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
+    if (loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true) && result.warning) error = result.warning;
   }
   async function mainMenu() {
     if (checkpointLocked) return;

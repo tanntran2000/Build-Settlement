@@ -15,6 +15,7 @@ const MARKER = 'migration:legacy-local-checkpoint';
 export interface CheckpointDeps { store: GameStore; legacy: Pick<Storage,'getItem' | 'removeItem'> | null }
 let defaults: CheckpointDeps | undefined;
 const warnings = new WeakSet<CheckpointDeps>();
+const volatileStores = new WeakSet<CheckpointDeps>();
 let checkpointQueue: Promise<void> = Promise.resolve();
 function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
   const pending = checkpointQueue.then(operation);
@@ -23,7 +24,11 @@ function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
 }
 export function createCheckpointDeps(factory: () => GameStore, legacy: CheckpointDeps['legacy']): CheckpointDeps {
   try { return { store: factory(),legacy }; }
-  catch { const deps = { store: createMemoryGameStore(),legacy }; warnings.add(deps); return deps; }
+  catch { const deps = { store: createMemoryGameStore(),legacy }; markVolatile(deps); return deps; }
+}
+function markVolatile(deps: CheckpointDeps): void {
+  volatileStores.add(deps);
+  warnings.add(deps);
 }
 function defaultDeps(): CheckpointDeps {
   if (defaults) return defaults;
@@ -45,23 +50,29 @@ export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded
     return isCharacterLifeSessionState(next) ? { success: true,next } : fail('Checkpoint player or profiles do not match its characters.');
   } catch { return fail('Could not prepare the Character Life checkpoint. Your game was preserved.'); }
 }
-export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean } | Failure> {
+export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean; volatile?: true } | Failure> {
   // Capture the invocation's state before waiting behind earlier storage work.
   const result = serializeCharacterLifeSave(session);
   return enqueueCheckpoint(async () => {
   if (!result.success) return fail(result.error.message);
   const d = deps ?? defaultDeps();
-  try { const replaced = (await d.store.read('main')) !== null; await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state)); return { success: true,replaced }; }
+  try {
+    const replaced = (await d.store.read('main')) !== null;
+    await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state));
+    // An injected store's save confirms that store accepted the snapshot.
+    // Browser callers also need to know whether their default store persists.
+    return !deps && volatileStores.has(d) ? { success: true,replaced,volatile: true } : { success: true,replaced };
+  }
   catch { return fail(BLOCKED); }
   });
 }
-export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState } | Failure> {
+export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState; warning?: string } | Failure> {
   return enqueueCheckpoint(async () => {
   const d = deps ?? defaultDeps();
   try {
     let marker: StoredRecord | null;
     try { marker = await d.store.getSystem(MARKER); }
-    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); warnings.add(d); marker = null; }
+    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); markVolatile(d); marker = null; }
     let records = await d.store.read('main');
     let invalid = false;
     // v14 rows are upgraded in memory by recordsToSession, with or without a prior marker.
@@ -74,21 +85,25 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
       if (!records) {
         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
-      if (text !== null) {
-        const loaded = deserializeCharacterLifeSave(text);
-        let legacyVersion: unknown;
-        try { legacyVersion = JSON.parse(text)?.cityRulesetId; } catch { /* The legacy reader handles invalid JSON. */ }
-        if (legacyVersion === V14_RULESET) return loaded.success ? loaded : fail(OLD);
-        if (loaded.success) candidate = sessionToRecords('main',loaded.state);
-        else {
+        if (text !== null) {
+          let raw;
+          try { raw = JSON.parse(text); } catch { /* The legacy reader handles invalid JSON. */ }
+          const loaded = deserializeCharacterLifeSave(text);
+          if (raw?.cityRulesetId === V14_RULESET || savedCityRuleset(raw?.state) === V14_RULESET) {
+            if (!loaded.success) return fail(OLD);
+            return warnings.delete(d) ? { ...loaded, warning: BLOCKED } : loaded;
+          }
+          if (loaded.success) candidate = sessionToRecords('main',loaded.state);
           // Preserve valid old-ruleset data without making it playable or rewriting its ruleset.
-          try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) candidate = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
+          else if (raw?.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 &&
+              raw.cityRulesetId !== SOCIETY_RULESET && savedCityRuleset(raw.state) === raw.cityRulesetId && raw.state?.city?.society) {
+            try { candidate = sessionToRecords('main',raw.state); } catch { invalid = true; }
+          } else invalid = true;
         }
-      }
       }
       records = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
     }
-    if (warnings.has(d)) { warnings.delete(d); return fail(BLOCKED); }
+    if (warnings.delete(d)) return fail(BLOCKED);
     if (invalid && records === null) return fail(OLD);
     if (!records) return fail(NONE);
     let state: CharacterLifeSessionState;

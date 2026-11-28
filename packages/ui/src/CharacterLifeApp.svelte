@@ -22,6 +22,7 @@
     const result = await readLocalCharacterLife();
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
+      if (result.warning) error = result.warning;
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
     if (!result.success && result.message.startsWith('Could not')) error = result.message;
     checkpointReady = true;
