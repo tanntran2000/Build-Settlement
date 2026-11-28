@@ -543,3 +543,10 @@ Owner (Tân), verbatim: "Duyệt 1A 2A 4B 5A". Accepted by the Orchestrator with
 2. **2A — title-screen alerts.** The title-screen import uses the same mapping as the in-game import: `INCOMPATIBLE_SAVE` (including a v14 that fails the upgrade) shows `OLD_CHECKPOINT_MESSAGE`; every other decoder failure shows `DAMAGED_CHECKPOINT_MESSAGE`. `OLD_CHECKPOINT_MESSAGE` keeps its current text exactly (spec §9's "Your game was preserved." is not added to it). A v14 load writes no localStorage, IndexedDB row or migration marker; the first successful save writes v15.
 3. **4B — Single Beds.** `single-bed` does not use a furniture slot. Every Bedroom, at any level, takes up to 3 `single-bed` pieces (4 beds) in addition to its furniture slots 2 / 3 / 4. The v14 upgrade fills Bedrooms up to 4 each.
 4. **5A — buying into the Mansion.** `BUY_NPC` / `BID_NPC` keep their payloads. A recruit whose home is the Mansion goes to the first room, in room order, that is not the Master Suite and has a free bed. With none, the existing `NO_BED` result applies. The acquisition picker shows Mansion free beds as the lesser of room beds free and building beds free.
+
+### Correction 2 (R1.1 HOLD, 2026-11-28)
+
+Owner (Tân), verbatim: "Duyệt A".
+
+1. The four sample pins at `packages/core/src/world/__tests__/npc-generator.test.ts:24–27` change only their SHA-256 literal, to the v15 digests in `delivery/R1.1-HOLD-byte-inventory.json` (`62ef6ef9…`, `7def8e1d…`, `4a2b44b7…`, `636e1d72…`). The full generator-output hash assertion stays. The change is proven by `projection-proof.cjs`: removing only `room`, `role` and `training` reproduces the v14 digests.
+2. Disclosed: the two approved `withNpcs` additions that read the optional Character Life state are not applied (core typecheck rejected them); the shared room-seeding helper stays. No assertion is loosened.
