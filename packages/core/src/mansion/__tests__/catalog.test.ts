@@ -20,27 +20,27 @@ it('rejects an unknown effect with a catalog path', () => {
   expect(core.validateMansionCatalog).toBeTypeOf('function');
   const raw = structuredClone(core.MANSION_CATALOG);
   Object.assign(raw.roomTypes['master-suite'].effects[0], { kind: 'unknown' });
-  expect(() => core.validateMansionCatalog(raw)).toThrow('mansion.json#roomTypes.master-suite.effects[0].kind: unknown effect kind');
+  expect(() => core.validateMansionCatalog(raw)).toThrow(new Error('mansion.json#roomTypes.master-suite.effects[0].kind: unknown effect kind'));
 });
 
 it('rejects a negative resource cost with a catalog path', () => {
   expect(core.validateMansionCatalog).toBeTypeOf('function');
   const raw = structuredClone(core.MANSION_CATALOG);
   Object.assign(raw.roomTypes.bedroom.cost[0], { gold: -1 });
-  expect(() => core.validateMansionCatalog(raw)).toThrow('mansion.json#roomTypes.bedroom.cost[0].gold: must be ≥ 0');
+  expect(() => core.validateMansionCatalog(raw)).toThrow(new Error('mansion.json#roomTypes.bedroom.cost[0].gold: must be ≥ 0'));
 });
 
 it.each([
-  ['needsGraceWeeks', (raw: Record<string, unknown>) => { raw.needsGraceWeeks = '8'; }],
-  ['calibration.lightRoleStressRelief', (raw: Record<string, unknown>) => { delete (raw.calibration as Record<string, unknown>).lightRoleStressRelief; }],
-  ['arousalPerWeek', (raw: Record<string, unknown>) => { delete raw.arousalPerWeek; }],
-] as const)('checks the imported JSON independently at %s', async (path, change) => {
+  ['needsGraceWeeks', 'must be a safe integer', (raw: Record<string, unknown>) => { raw.needsGraceWeeks = '8'; }],
+  ['calibration.lightRoleStressRelief', 'missing field', (raw: Record<string, unknown>) => { delete (raw.calibration as Record<string, unknown>).lightRoleStressRelief; }],
+  ['arousalPerWeek', 'missing field', (raw: Record<string, unknown>) => { delete raw.arousalPerWeek; }],
+] as const)('checks the imported JSON independently at %s', async (path, message, change) => {
   const raw = structuredClone(core.MANSION_CATALOG);
   change(raw);
   vi.resetModules();
   vi.doMock('../../data/mansion.json', () => ({ default: raw }));
   try {
-    await expect(import('../catalog.js')).rejects.toThrow('mansion.json#' + path + ':');
+    await expect(import('../catalog.js')).rejects.toHaveProperty('message', 'mansion.json#' + path + ': ' + message);
   } finally {
     vi.doUnmock('../../data/mansion.json');
     vi.resetModules();
