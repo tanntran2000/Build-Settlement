@@ -1,6 +1,6 @@
 import {
   ACQUISITION_SOURCES, acquisitionEnabled, acquisitionNpc, auctionOpeningMilli, auctionRivals, emptyAcquisition,
-  emptyHouseholdReport, generateNpc, hasWeeklyKeys, homeBeds, homeResidents, isAcquisitionSource, isAuctionSource,
+  emptyHouseholdReport, generateNpc, hasWeeklyKeys, homeBeds, homeResidents, mansionRecruitment, MANSION_TILE_ID, isAcquisitionSource, isAuctionSource,
   isLiveCharacterLifeSessionState, marketNpcName, npcSellMilli, npcValueMilli, P7B_TRIAL, playerRaise, returnEquippedToStorage,
   type AcquisitionSource, type AcquisitionState, type AuctionLot, type CharacterLifeSessionState, type HouseholdReport,
   type TileTrialState, type WorldNpc,
@@ -91,14 +91,17 @@ type AcquisitionRefusal = keyof typeof ACQUISITION_MESSAGES;
 const fail = (code: string, message: string): CharacterLifeCommandResult => ({ success: false, error: { code, message } });
 const refusal = (code: AcquisitionRefusal): CharacterLifeCommandResult => fail(code, ACQUISITION_MESSAGES[code]);
 
-function recruitCheck(session: CharacterLifeSessionState, home: string, price: number): AcquisitionRefusal | undefined {
-  const { city } = session;
-  if (city.world.settlements[city.world.activeSettlementId!].inventory.gold < price) return 'NOT_ENOUGH_GOLD';
-  if (homeBeds(city, home) <= homeResidents(session.npcs, home)) return 'NO_BED';
-  if (session.npcs.length >= P7B_TRIAL.npcCap) return 'NPC_CAP';
+function recruitCheck(session: CharacterLifeSessionState, home: string, price: number): { error: AcquisitionRefusal } | { roomId: string | null } {
+  const { city, npcs } = session;
+  if (city.world.settlements[city.world.activeSettlementId!].inventory.gold < price) return { error: 'NOT_ENOUGH_GOLD' };
+  const space = home === MANSION_TILE_ID ? mansionRecruitment(city, npcs) : { free: homeBeds(city, home) - homeResidents(npcs, home), roomId: null };
+  if (space.free <= 0) return { error: 'NO_BED' };
+  if (npcs.length >= P7B_TRIAL.npcCap) return { error: 'NPC_CAP' };
+  return { roomId: space.roomId };
 }
-function admit(next: CharacterLifeSessionState, generated: ReturnType<typeof acquisitionNpc>, home: string): void {
+function admit(next: CharacterLifeSessionState, generated: ReturnType<typeof acquisitionNpc>, home: string, roomId: string | null): void {
   generated.npc.household.home = home;
+  generated.npc.household.room = roomId;
   next.npcs.push(generated.npc);
   next.profiles.push(generated.profile);
 }
@@ -139,10 +142,10 @@ export function executeAcquisitionCommand(session: CharacterLifeSessionState, ty
         if (!offer) return refusal('OFFER_GONE');
         const generated = acquisitionNpc(seed, week, source, offer.slot, offer.nameSalt);
         const price = npcValueMilli(generated.npc, source, false);
-        const blocked = recruitCheck(next, raw.homeTileId, price);
-        if (blocked) return refusal(blocked);
+        const admission = recruitCheck(next, raw.homeTileId, price);
+        if ('error' in admission) return refusal(admission.error);
         gold.gold -= price;
-        admit(next, generated, raw.homeTileId);
+        admit(next, generated, raw.homeTileId, admission.roomId);
         offer.status = 'bought';
       } else {
         if (!isAuctionSource(source)) return fail('INVALID_COMMAND', 'This building has no auction.');
@@ -153,15 +156,15 @@ export function executeAcquisitionCommand(session: CharacterLifeSessionState, ty
         else {
           if (!playerRaise(raw.raise) || typeof raw.homeTileId !== 'string') return fail('INVALID_COMMAND', 'Select a bid and home.');
           const round = auctionRound(lot.priceMilli, raw.raise, lot.out, rivals);
-          const blocked = recruitCheck(next, raw.homeTileId, round.playerBidMilli);
-          if (blocked) return refusal(blocked);
+          const admission = recruitCheck(next, raw.homeTileId, round.playerBidMilli);
+          if ('error' in admission) return refusal(admission.error);
           lot.raises.push(raw.raise);
           lot.out = round.out;
           lot.leader = round.leader;
           lot.priceMilli = round.priceMilli;
           if (round.leader === 'player') {
             gold.gold -= round.playerBidMilli;
-            admit(next, acquisitionNpc(seed, week, source, 'lot', lot.nameSalt), raw.homeTileId);
+            admit(next, acquisitionNpc(seed, week, source, 'lot', lot.nameSalt), raw.homeTileId, admission.roomId);
             lot.status = 'won';
           }
         }

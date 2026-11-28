@@ -1,8 +1,9 @@
-import { createSocietyState,hasWeeklyKeys,homeBeds,homeResidents,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from "@haven/core";
+import { createSocietyState,hasWeeklyKeys,homeBeds,homeResidents,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,MANSION_TILE_ID,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from "@haven/core";
 import { trialSafe } from "./tile-trial-week.js";
+import { moveNpcToMansionRoom, type RoomMoveErrorCode } from "./mansion-command.js";
 import { executeTileTrialCommand } from "./tile-trial.js";
 
-export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET" | "NO_BED" | "NOT_A_HOME" | "NOT_IN_HALL" | "NPC_CAP";
+export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET" | "NO_BED" | "NOT_A_HOME" | "NOT_IN_HALL" | "NPC_CAP" | RoomMoveErrorCode;
 export type WorldNpcResult = { success: true; next: NpcWorldSessionState } | { success: false; error: { code: WorldNpcErrorCode; message: string } };
 export type WorldNpcCityResult = { success: true; next: NpcWorldSessionState; report?: Readonly<TileTrialReport> } | { success: false; error: { code: string; message: string } };
 
@@ -12,11 +13,17 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const keys: Record<string, string[]> = { ASSIGN_NPC: ["npcId", "tileId"], UNASSIGN_NPC: ["npcId"], MOVE_NPC_HOME: ["npcId", "homeTileId"] };
-    if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw)) || typeof raw.type !== "string" || !Object.hasOwn(keys, raw.type) ||
-        !hasWeeklyKeys(raw, ["type", "expectedRevision", ...keys[raw.type]]) || typeof raw.npcId !== "string" ||
+    if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw)) || typeof raw.type !== "string" || !Object.hasOwn(keys, raw.type)) {
+      return fail("INVALID_COMMAND", "Unknown NPC command or fields.");
+    }
+    const mansion = raw.type === "MOVE_NPC_HOME" && raw.homeTileId === MANSION_TILE_ID;
+    const expected = ["type", "expectedRevision", ...keys[raw.type], ...(mansion ? ["roomId"] : [])];
+    if (!hasWeeklyKeys(raw, expected) || typeof raw.npcId !== "string" ||
         (raw.type === "ASSIGN_NPC" && typeof raw.tileId !== "string") ||
-        (raw.type === "MOVE_NPC_HOME" && typeof raw.homeTileId !== "string")) return fail("INVALID_COMMAND", "Unknown NPC command or fields.");
-    const c = { ...raw } as { type: string; npcId: string; tileId?: string; homeTileId?: string };
+        (raw.type === "MOVE_NPC_HOME" && typeof raw.homeTileId !== "string") || (mansion && typeof raw.roomId !== "string")) {
+      return fail("INVALID_COMMAND", "Unknown NPC command or fields.");
+    }
+    const c = { ...raw } as { type: string; npcId: string; tileId?: string; homeTileId?: string; roomId?: string };
     if (raw.expectedRevision !== session.city.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
     if (session.city.phase === "report") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (!isNpcWorldSessionState(session)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
@@ -26,10 +33,13 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
     if (c.type === "MOVE_NPC_HOME") {
       const home = c.homeTileId!, capacity = homeBeds(next.city, home);
       if (!capacity) return fail("NOT_A_HOME", "Select the Mansion or a Retainers' Hall.");
-      if (home !== npc.household.home) {
+      if (mansion) {
+        const failure = moveNpcToMansionRoom(next, npc, c.roomId!);
+        if (failure) return { success: false, error: failure };
+      } else if (home !== npc.household.home) {
         if (homeResidents(next.npcs, home) >= capacity) return fail("NO_BED", "That home has no free bed.");
+        if (npc.household.home === MANSION_TILE_ID) Object.assign(npc.household, { room: null, role: null, training: null });
         npc.household.home = home;
-        if (home === "estate-1") npc.postTileId = null;
       }
     } else if (c.type === "ASSIGN_NPC") {
       if (npc.household.home === "estate-1") return fail("NOT_IN_HALL", "Only Retainers' Hall residents can hold a city post.");

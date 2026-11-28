@@ -96,6 +96,7 @@ it('accepts a four-raise transcript and reproduces the original checkpoint bytes
   stock(session).gold -= lot.priceMilli;
   const { npc, profile } = acquisitionNpc(session.outside.seed, 1, source, 'lot', lot.nameSalt);
   npc.household.home = homeTileId;
+  npc.household.room = 'room-3';
   session.npcs.push(npc);
   session.profiles.push(profile);
   expect(lotAt(session).raises).toStrictEqual([5000, 5000, 5000, 25000]);

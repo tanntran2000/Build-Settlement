@@ -29,13 +29,15 @@ export function isMansionState(raw: unknown, city: TileTrialState, npcs: readonl
   if (!hasWeeklyKeys(raw, ['rooms', 'nextRoomSeq']) || typeof raw.nextRoomSeq !== 'number' ||
       !Number.isSafeInteger(raw.nextRoomSeq) || raw.nextRoomSeq < 1) return false;
   const rooms = readDenseArray(raw.rooms), level = mansionLevel(city);
-  if (!rooms || !level || !rooms.every(isRoom)) return false;
+  if (!rooms || !rooms.every(isRoom)) return false;
+  // City-only simulations can omit the estate. Planning saves require it.
+  const roomCountLevel = level ?? 1;
   const roomsById = new Map<string, MansionRoom>(), counts = new Map<MansionRoomTypeId, number>();
   for (const room of rooms) {
     const type = MANSION_CATALOG.roomTypes[room.typeId];
     const count = (counts.get(room.typeId) ?? 0) + 1;
-    if (roomsById.has(room.id) || Number(room.id.slice(5)) >= raw.nextRoomSeq || type.unlockLevel > level ||
-        count > type.maxCount[level - 1]) return false;
+    if (roomsById.has(room.id) || Number(room.id.slice(5)) >= raw.nextRoomSeq || type.unlockLevel > roomCountLevel ||
+        count > type.maxCount[roomCountLevel - 1]) return false;
     counts.set(room.typeId, count);
     roomsById.set(room.id, room);
   }
@@ -46,7 +48,7 @@ export function isMansionState(raw: unknown, city: TileTrialState, npcs: readonl
       continue;
     }
     const room = household.room === null ? undefined : roomsById.get(household.room);
-    if (!room) return false;
+    if (!level || !room) return false;
     const used = (occupants.get(room.id) ?? 0) + 1;
     if (used > roomBeds(room)) return false;
     occupants.set(room.id, used);

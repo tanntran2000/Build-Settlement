@@ -1,10 +1,12 @@
 import { acquisitionNpc, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, P7A_TRIAL, type CharacterLifeSessionState } from '@haven/core';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
+import { seedFixtureMansionBeds } from '@haven/core/testing/npcs';
 
 export function town(seed = 42): CharacterLifeSessionState {
   const made = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Market Keeper' });
   if (!made.success) throw Error(made.error.message);
   stock(made.value).gold = 1_000_000;
+  seedFixtureMansionBeds(made.value.city);
   return made.value;
 }
 export function stock(s: CharacterLifeSessionState) {
@@ -29,12 +31,14 @@ export function populate(s: CharacterLifeSessionState, homes: readonly string[])
     s.city.tiles.find(t => t.id === id)!.building = { typeId, level, workers: 0, enabled: true };
   }
   const names = new Set<string>();
+  const roomIds = seedFixtureMansionBeds(s.city, homes.filter(home => home === 'estate-1').length);
   for (const [index, home] of homes.entries()) {
     let salt = 0;
     let { npc, profile } = acquisitionNpc(s.outside.seed, index + 1, 'guild', 0, salt);
     while (names.has(npc.character.name)) ({ npc, profile } = acquisitionNpc(s.outside.seed, index + 1, 'guild', 0, ++salt));
     names.add(npc.character.name);
     npc.household.home = home;
+    if (home === 'estate-1') npc.household.room = roomIds.shift()!;
     npc.life.history.recent = Array.from({ length: P7A_TRIAL.recentCap }, () => ({ week: index + 1, kind: 'birthday' }));
     s.npcs.push(npc); s.profiles.push(profile);
   }

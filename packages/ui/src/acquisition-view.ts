@@ -1,5 +1,5 @@
 import {
-  acquisitionEnabled, acquisitionNpc, auctionOpeningMilli, auctionRivals, CARD_TRIAL, homeBeds, homeResidents, ITEM_TRIAL,
+  acquisitionEnabled, acquisitionNpc, auctionOpeningMilli, auctionRivals, CARD_TRIAL, homeBeds, homeResidents, ITEM_TRIAL, mansionRecruitment, MANSION_TILE_ID,
   npcAgeTitle, npcSellMilli, npcValueMilli, NPC_ORIGINS, P7B_TRIAL, REQUIRED_SKILLS, TRIAL_BUILDINGS,
   type AcquisitionSource, type AuctionLot, type TileTrialState, type WorldNpc,
 } from '@haven/core';
@@ -35,7 +35,7 @@ export function acquisitionView(city: TileTrialState, npcs: readonly WorldNpc[],
   const homes = city.tiles.flatMap(tile => {
     const beds = homeBeds(city, tile.id);
     return beds ? [{ id: tile.id, label: `${TRIAL_BUILDINGS[tile.building!.typeId].name} (${tile.id})`,
-      free: beds - homeResidents(npcs, tile.id) }] : [];
+      free: tile.id === MANSION_TILE_ID ? mansionRecruitment(city, npcs).free : beds - homeResidents(npcs, tile.id) }] : [];
   });
   return { stock, auction, homes, goldMilli: city.world.settlements[city.world.activeSettlementId!].inventory.gold };
 }
