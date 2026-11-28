@@ -590,3 +590,12 @@ Owner (Tân), verbatim: "Duyệt sửa vòng 2". Astra round 2 at `b3d1278`: FAI
 4. **R2-04 (P2) — exact diagnostics.** The catalog schema tests compare the complete error message; the evidence audit also flags string-argument `toThrow` and other substring matchers.
 
 RED first for each. Hash literals follow correction 3 item 2. Anything else outside the approved lists is a HOLD.
+
+### Correction 6 (Astra R1 round 3, 2026-11-28)
+
+Owner (Tân), verbatim: "Sửa thêm 1 vòng nhỏ". Astra round 3 at `b6365646`: FAIL, 0 P0, 0 P1, 1 P2 carried over from R2-01, 1 P3 new; R2-02, R2-03 and R2-04 closed. The owner grants one extra, narrow fix round as an exception to AGENTS.md §4, limited to the two items below. Anything still open after it, or any change outside these two items, is a HOLD to the owner.
+
+1. **R3-01 (P2, carried from R2-01) — the migration guard is not optional.** Inside the migration transaction, every store adapter (`packages/persistence/src/memory-store.ts`, `packages/ui/src/indexeddb-store.ts`) writes nothing (no rows, no marker) when any slot row exists at that moment, readable or not, whatever the caller passes. No caller can turn the guard off by omitting an argument. Cover: Astra's round-3 interleaving (rows inserted after the preliminary read, metadata row present, ordinary store factory without the optional callback) through both adapters, in unit tests and in real Chromium IndexedDB; the three round-2 Chromium cases stay green.
+2. **R3-02 (P3) — a damaged local slot is not called empty.** When the current slot is damaged, the title screen shows the existing damaged-checkpoint alert with Continue disabled and does not show "No local checkpoint". An empty slot keeps its current text. Cover: v15 rows with metadata present and the city row missing in Chromium IndexedDB, marker removed, normal title screen.
+
+RED first for each. No existing assertion may be loosened; a changed existing expectation is listed in the evidence with the item that requires it. Hash literals follow correction 3 item 2.
