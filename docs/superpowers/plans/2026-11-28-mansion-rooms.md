@@ -579,3 +579,14 @@ Owner (Tân), verbatim: "Duyệt sửa cả 10". Astra round 1 at `d306f68` (thr
 10. **P3 — integration tests.** Add a v14 IndexedDB slot with NPCs, workshop order/ready rows and an existing marker, and a successful in-game v14 file import (e2e).
 
 Every fix is RED first. Hash literals follow correction 3 item 2. Anything else outside the approved lists is a HOLD.
+
+### Correction 5 (Astra R1 round 2, 2026-11-28)
+
+Owner (Tân), verbatim: "Duyệt sửa vòng 2". Astra round 2 at `b3d1278`: FAIL, 1 P1, 3 P2; six round-1 findings closed. This is the second and last fix round for R1 under AGENTS.md §4: a finding still open after it is a HOLD to the owner.
+
+1. **R2-01 (P1) — a damaged v14 slot must not be overwritten.** Before any legacy migration or "empty slot" decision, the Continue/local read inspects every surviving slot row (city, characters, items, metadata). If any row identifies v14 (or the slot is otherwise non-empty but unreadable), `migrateSlot` does not run and nothing is written: no rows, no marker, no localStorage. The player sees the existing old-version or damaged alert per 2A. Cover: metadata row missing with empty, v13 and v15 localStorage (the three Astra cases), in real Chromium IndexedDB.
+2. **R2-02 (P2) — Main menu with session-only storage.** When the save result is volatile (also from injected dependencies, not only the defaults), leaving gameplay through Main menu shows the existing session-only message with Export still available before the title, and Quit never says the game is safe to close while the only copy is volatile.
+3. **R2-03 (P2) — bed compatibility.** A bed-adding piece counts as a bed only in a room listed in its `fitRooms`; validation, capacity and upgrade placement use the same rule, and a checkpoint with a bed piece in a room it does not fit is refused as damaged.
+4. **R2-04 (P2) — exact diagnostics.** The catalog schema tests compare the complete error message; the evidence audit also flags string-argument `toThrow` and other substring matchers.
+
+RED first for each. Hash literals follow correction 3 item 2. Anything else outside the approved lists is a HOLD.
