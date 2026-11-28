@@ -3,6 +3,7 @@ export type TableName = typeof GAME_DB.stores[number];
 export interface StoredRecord { slotId: string; id: string; table: TableName; schemaVersion: 1; value: unknown }
 export interface WriteStats { put: number; deleted: number; unchanged: number }
 export interface GameStore {
+  // Return every surviving row so callers can distinguish damaged slots from empty ones.
   read(slotId: string): Promise<StoredRecord[] | null>;
   replaceSlot(slotId: string, next: StoredRecord[], extra?: StoredRecord[]): Promise<WriteStats>;
   migrateSlot(slotId: string, candidate: StoredRecord[] | null, marker: StoredRecord): Promise<StoredRecord[] | null>;

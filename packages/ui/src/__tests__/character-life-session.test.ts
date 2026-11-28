@@ -3,7 +3,7 @@ import { createMemoryGameStore,recordsToSession,sessionToRecords,GAME_DB,type Ga
 import { readFileSync } from 'node:fs';
 import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { afterEach,beforeEach,expect,it,vi } from 'vitest';
-import { createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
+import { DAMAGED_CHECKPOINT_MESSAGE,createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
 const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
@@ -238,9 +238,9 @@ it('three consecutive started saved and fallen games never accumulate records',a
  }expect(totals).toEqual([1,1,1]);
 });
 
-it('corrupt stored city is refused with the existing message and exact records preserved',async()=>{
+it('corrupt stored city is refused as damaged and exact records are preserved',async()=>{
  const d=deps();const rows=sessionToRecords('main',a2Session());rows.find(r=>r.table==='city')!.value='{';await d.store.replaceSlot('main',rows,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);const before=await d.store.read('main');
- expect(await readLocalCharacterLife(d)).toEqual({success:false,message:OLD});expect(await d.store.read('main')).toEqual(before);
+ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:DAMAGED_CHECKPOINT_MESSAGE});expect(await d.store.read('main')).toEqual(before);
 });
 
 function deferred() {

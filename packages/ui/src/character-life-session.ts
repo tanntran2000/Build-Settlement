@@ -24,7 +24,7 @@ function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
 }
 export function createCheckpointDeps(factory: () => GameStore, legacy: CheckpointDeps['legacy']): CheckpointDeps {
   try { return { store: factory(),legacy }; }
-  catch { const deps = { store: createMemoryGameStore(),legacy }; markVolatile(deps); return deps; }
+  catch { const deps = { store: createMemoryGameStore({ allowExistingOnMigration }),legacy }; markVolatile(deps); return deps; }
 }
 function markVolatile(deps: CheckpointDeps): void {
   volatileStores.add(deps);
@@ -37,7 +37,7 @@ function defaultDeps(): CheckpointDeps {
     getItem(key) { return window.localStorage.getItem(key); },
     removeItem(key) { window.localStorage.removeItem(key); }
   };
-  defaults = createCheckpointDeps(() => createIndexedDbGameStore(),legacy); return defaults;
+  defaults = createCheckpointDeps(() => createIndexedDbGameStore(undefined, allowExistingOnMigration),legacy); return defaults;
 }
 export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded: unknown, expectedRevision: number): { success: true; next: CharacterLifeSessionState } | Failure {
   try {
@@ -66,21 +66,39 @@ export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps):
   catch { return fail(BLOCKED); }
   });
 }
+function identifiesV14(rows: StoredRecord[]): boolean {
+  return rows.some(({ value }) => {
+    if (!value || typeof value !== 'object') return false;
+    return Object.getOwnPropertyDescriptor(value, 'rulesetId')?.value === V14_RULESET ||
+      savedCityRuleset({ city: value }) === V14_RULESET;
+  });
+}
+
+function readStoredCheckpoint(rows: StoredRecord[]): { success: true; state: CharacterLifeSessionState } | Failure {
+  try {
+    const state = recordsToSession(rows);
+    if (!isPlayableCheckpoint(state)) return fail(OLD);
+    if (isCharacterLifeSessionState(state)) return { success: true, state };
+  } catch { /* Classify the failure from the surviving version fields. */ }
+  return fail(identifiesV14(rows) ? OLD : DAMAGED_CHECKPOINT_MESSAGE);
+}
+
+function allowExistingOnMigration(rows: StoredRecord[]): boolean {
+  return !identifiesV14(rows) && readStoredCheckpoint(rows).success;
+}
+
 export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState; warning?: string } | Failure> {
   return enqueueCheckpoint(async () => {
   const d = deps ?? defaultDeps();
   try {
     let marker: StoredRecord | null;
     try { marker = await d.store.getSystem(MARKER); }
-    catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); markVolatile(d); marker = null; }
-    let records = await d.store.read('main');
-    let invalid = false;
-    // v14 rows are upgraded in memory by recordsToSession, with or without a prior marker.
-    const storedVersion = records?.find(row => row.table === 'meta' && row.id === 'session')?.value as { rulesetId?: unknown } | undefined;
-    const storedCity = records?.find(row => row.table === 'city' && row.id === 'city')?.value;
-    const isV14Slot = storedVersion?.rulesetId === V14_RULESET || savedCityRuleset({ city: storedCity }) === V14_RULESET;
-    if (!marker && !isV14Slot) {
+    catch (error) { if (deps) throw error; d.store = createMemoryGameStore({ allowExistingOnMigration }); markVolatile(d); marker = null; }
+    const records = await d.store.read('main');
+    let loaded = records ? readStoredCheckpoint(records) : fail(NONE);
+    if (!marker && (!records || (loaded.success && !identifiesV14(records)))) {
       let candidate: StoredRecord[] | null = null;
+      let invalid = false;
       // A save made while migration was blocked is newer than the legacy backup.
       if (!records) {
         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
@@ -101,14 +119,11 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
           } else invalid = true;
         }
       }
-      records = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
+      // Recheck within the transaction. A different tab may have filled the slot since the read.
+      const migrated = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
+      loaded = migrated ? readStoredCheckpoint(migrated) : fail(invalid ? OLD : NONE);
     }
-    if (warnings.delete(d)) return fail(BLOCKED);
-    if (invalid && records === null) return fail(OLD);
-    if (!records) return fail(NONE);
-    let state: CharacterLifeSessionState;
-    try { state = recordsToSession(records); } catch { return fail(OLD); }
-    return isPlayableCheckpoint(state) && isCharacterLifeSessionState(state) ? { success: true,state } : fail(OLD);
+    return warnings.delete(d) ? fail(BLOCKED) : loaded;
   } catch { return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'); }
   });
 }

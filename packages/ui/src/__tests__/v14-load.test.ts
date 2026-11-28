@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import * as persistence from '@haven/persistence';
-import { OLD_CHECKPOINT_MESSAGE, readLocalCharacterLife, saveLocalCharacterLife } from '../character-life-session.js';
+import { DAMAGED_CHECKPOINT_MESSAGE, OLD_CHECKPOINT_MESSAGE, readLocalCharacterLife, saveLocalCharacterLife } from '../character-life-session.js';
 import { prepareNpcWorldSessionLoad } from '../world-npc-session.js';
 import { prepareWorldSessionLoad } from '../world-session.js';
 
@@ -87,4 +87,36 @@ it.each(['missing', 'current'] as const)('does not mark a damaged nested v14 che
   expect(result).toEqual({ success: false, message: oldLocalMessage });
   expect(await store.getSystem(marker)).toBeNull();
   expect(await store.read('main')).toBeNull();
+});
+
+it('preserves an unreadable current slot without treating it as empty', async () => {
+  const text = readFileSync(new URL('society-v15/life-new-game.json', fixtures), 'utf8');
+  const rows = persistence.sessionToRecords('main', JSON.parse(text).state).filter(row => row.table !== 'meta');
+  const store = persistence.createMemoryGameStore();
+  await store.replaceSlot('main', rows);
+  const migrate = vi.spyOn(store, 'migrateSlot');
+  const legacy = { getItem: vi.fn(() => text), removeItem: vi.fn() };
+  const result = await readLocalCharacterLife({ store, legacy });
+  expect.soft(migrate).not.toHaveBeenCalled();
+  expect.soft(await store.getSystem(marker)).toBeNull();
+  expect.soft(await store.read('main')).toEqual(rows);
+  expect(legacy.getItem).not.toHaveBeenCalled();
+  expect(result).toEqual({ success: false, message: DAMAGED_CHECKPOINT_MESSAGE });
+});
+
+it('preserves a damaged v14 slot installed after the preliminary read', async () => {
+  const store = persistence.createMemoryGameStore();
+  const rows = persistence.sessionToRecords('main', parsed().state).filter(row => row.table !== 'meta');
+  const backup = readFileSync(new URL('society-v15/life-new-game.json', fixtures), 'utf8');
+  const wrapped = { ...store, async read(slot: string) {
+    const before = await store.read(slot);
+    await store.replaceSlot(slot, rows);
+    return before;
+  } };
+  const legacy = { getItem: () => backup, removeItem: vi.fn() };
+  const result = await readLocalCharacterLife({ store: wrapped, legacy });
+  expect.soft(await store.getSystem(marker)).toBeNull();
+  expect.soft(await store.read('main')).toEqual(rows);
+  expect(legacy.removeItem).not.toHaveBeenCalled();
+  expect(result).toEqual({ success: false, message: oldLocalMessage });
 });
