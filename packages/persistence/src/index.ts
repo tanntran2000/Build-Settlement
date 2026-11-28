@@ -6,3 +6,4 @@ export * from "./character-life-save.js";
 export * from './game-store.js';
 export * from './session-records.js';
 export * from './memory-store.js';
+export * from './upgrade-v14.js';

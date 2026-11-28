@@ -16,7 +16,7 @@ it('round-trips a valid session as detached data in its own format', () => {
   const s = session(); s.npcs[0].postTileId = 'field-1';
   const before = structuredClone(s), text = encode(s);
   expect(CHARACTER_LIFE_SAVE_FORMAT).toBe('haven.character-life-session.save');
-  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-14' });
+  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-15' });
   expect(Object.keys(JSON.parse(text))).toEqual(['format', 'schemaVersion', 'cityRulesetId', 'state']);
   const loaded = deserializeCharacterLifeSave(text);
   expect(loaded).toEqual({ success: true, state: before });
@@ -37,7 +37,7 @@ it('keeps life saves out of the NPC-world format both ways', () => {
 it.each([
   ['schemaVersion 2', 'INCOMPATIBLE_SAVE', (e: ReturnType<typeof envelope>) => { e.schemaVersion = 2; }],
   ['other ruleset', 'INCOMPATIBLE_SAVE', (e: ReturnType<typeof envelope>) => { e.cityRulesetId = 'tile-trial-01'; }],
-  ['extra envelope key', 'INCOMPATIBLE_SAVE', (e: ReturnType<typeof envelope>) => { e.extra = 1; }],
+  ['extra envelope key', 'INVALID_SAVE_STATE', (e: ReturnType<typeof envelope>) => { e.extra = 1; }],
   ['unsupported generator', 'INCOMPATIBLE_SAVE', (e: ReturnType<typeof envelope>) => { e.state.outside.generator = 'outside-gen-99'; }],
   ['player age 17', 'INVALID_SAVE_STATE', (e: ReturnType<typeof envelope>) => { e.state.player.character.age = 17; }],
   ['axis 101', 'INVALID_SAVE_STATE', (e: ReturnType<typeof envelope>) => { e.state.profiles[1].traits.warmth = 101; }],
@@ -90,6 +90,6 @@ it('gives identical results on repeated operations', () => {
 
 it('keeps the generic incompatible message for a v3 envelope with the wrong format', () => {
  const value=envelope();value.format='wrong.format';
- expect(value.cityRulesetId).toBe('tile-society-14');
+ expect(value.cityRulesetId).toBe('tile-society-15');
  expect(deserializeCharacterLifeSave(JSON.stringify(value))).toEqual({success:false,error:{code:'INCOMPATIBLE_SAVE',message:INCOMPATIBLE}});
 });

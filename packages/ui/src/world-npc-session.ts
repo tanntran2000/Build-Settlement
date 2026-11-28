@@ -1,5 +1,5 @@
 import { isNpcWorldSessionState, isWorldNpcList, type NpcWorldSessionState } from '@haven/core';
-import { captureSaveData } from '@haven/persistence';
+import { captureSaveData, savedCityRuleset, upgradeV14NpcWorldSession, V14_RULESET } from '@haven/persistence';
 import { prepareWorldSessionLoad } from './world-session.js';
 
 type Failure = { success: false; message: string };
@@ -8,7 +8,8 @@ const fail = (message: string): Failure => ({ success: false, message });
 // One detached capture feeds city, outside and npcs, so all three come from the same validated data.
 export function prepareNpcWorldSessionLoad(live: NpcWorldSessionState, loaded: unknown, expectedRevision: number): { success: true; next: NpcWorldSessionState } | Failure {
   try {
-    const captured = captureSaveData(loaded);
+    const snapshot = captureSaveData(loaded);
+    const captured = savedCityRuleset(snapshot) === V14_RULESET ? upgradeV14NpcWorldSession(snapshot) : snapshot;
     if (!isNpcWorldSessionState(captured)) return fail('Checkpoint must contain a valid complete NPC world session in Planning.');
     const prepared = prepareWorldSessionLoad({ city: live.city, outside: live.outside }, { city: captured.city, outside: captured.outside }, expectedRevision);
     if (!prepared.success) return prepared;

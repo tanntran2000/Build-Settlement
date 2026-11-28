@@ -1,10 +1,12 @@
 import { hasWeeklyKeys,isCharacterLifeSessionState,outsideProvenance,SOCIETY_RULESET,type CharacterLifeSessionState } from '@haven/core';
 import { TILE_SAVE_MAX_BYTES } from './tile-trial-save.js';
 import { captureSaveData,type WorldSaveFailure } from './world-session-save.js';
+import { savedSessionWeek, upgradeV14Session, V14_RULESET } from './upgrade-v14.js';
 
 // A separate format: NPC-world files never gain a Player and life files never load as NPC-world.
 export const CHARACTER_LIFE_SAVE_FORMAT = 'haven.character-life-session.save';
 const INCOMPATIBLE = 'Not a Character Life checkpoint of a supported version. No migration was performed.';
+const OLD = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
 const INVALID_STATE = 'Checkpoint must contain a valid complete Character Life session in Planning.';
 const fail = (code: WorldSaveFailure['error']['code'], message: string): WorldSaveFailure => ({ success: false, error: { code, message } });
 const tooLarge = (text: string) => text.length > TILE_SAVE_MAX_BYTES || new TextEncoder().encode(text).byteLength > TILE_SAVE_MAX_BYTES;
@@ -13,7 +15,7 @@ export function serializeCharacterLifeSave(session: unknown): { success: true; t
   try {
     const snapshot = captureSaveData(session);
     const city = snapshot && typeof snapshot === 'object' ? Object.getOwnPropertyDescriptor(snapshot, 'city')?.value : undefined;
-    if (city && typeof city === 'object' && (!Object.hasOwn(city, 'society') || Object.getOwnPropertyDescriptor(city, 'society')?.value?.rulesetId !== SOCIETY_RULESET)) return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+    if (city && typeof city === 'object' && (!Object.hasOwn(city, 'society') || Object.getOwnPropertyDescriptor(city, 'society')?.value?.rulesetId !== SOCIETY_RULESET)) return fail('INCOMPATIBLE_SAVE', OLD);
     if (!isCharacterLifeSessionState(snapshot)) return fail('INVALID_SAVE_STATE', INVALID_STATE);
     const text = JSON.stringify({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: SOCIETY_RULESET, state: snapshot });
     if (tooLarge(text)) return fail('SAVE_TOO_LARGE', 'Checkpoint exceeds the 1 MiB limit.');
@@ -25,14 +27,21 @@ export function deserializeCharacterLifeSave(text: unknown): { success: true; st
   try {
     if (typeof text !== 'string') return fail('INVALID_SAVE', 'Choose a Character Life checkpoint JSON file.');
     if (tooLarge(text)) return fail('SAVE_TOO_LARGE', 'Checkpoint exceeds the 1 MiB limit.');
-    const value: unknown = JSON.parse(text);
-    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state']) || value.format !== CHARACTER_LIFE_SAVE_FORMAT || value.schemaVersion !== 1) {
+    const value = JSON.parse(text) as Record<string, unknown> | null;
+    if (!value || value.format !== CHARACTER_LIFE_SAVE_FORMAT || value.schemaVersion !== 1) {
       return fail('INCOMPATIBLE_SAVE', INCOMPATIBLE);
     }
-    if (value.cityRulesetId !== SOCIETY_RULESET) return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+    const version = value.cityRulesetId;
+    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state'])) {
+      return version === SOCIETY_RULESET ? fail('INVALID_SAVE_STATE', INVALID_STATE)
+        : fail('INCOMPATIBLE_SAVE', version === V14_RULESET ? OLD : INCOMPATIBLE);
+    }
     const state = value.state;
-    const city = state && typeof state === 'object' ? Object.getOwnPropertyDescriptor(state, 'city')?.value : undefined;
-    if (city && typeof city === 'object' && (!Object.hasOwn(city, 'society') || Object.getOwnPropertyDescriptor(city, 'society')?.value?.rulesetId !== SOCIETY_RULESET)) return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
+    if (value.cityRulesetId === V14_RULESET) {
+      const upgraded = upgradeV14Session(state, savedSessionWeek(state));
+      return upgraded ? { success: true, state: upgraded } : fail('INCOMPATIBLE_SAVE', OLD);
+    }
+    if (value.cityRulesetId !== SOCIETY_RULESET) return fail('INCOMPATIBLE_SAVE', OLD);
     const provenance = state && typeof state === 'object' ? outsideProvenance(Object.getOwnPropertyDescriptor(state, 'outside')?.value) : 'malformed';
     if (provenance === 'malformed') return fail('INVALID_SAVE_STATE', 'Checkpoint has malformed outside world provenance.');
     if (provenance === 'unsupported') return fail('INCOMPATIBLE_SAVE', 'Unsupported outside world generator or scenario. No migration was performed.');

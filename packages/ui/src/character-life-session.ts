@@ -1,5 +1,5 @@
 ﻿import { SOCIETY_RULESET, type CharacterLifeSessionState, isCharacterLifeSessionState } from '@haven/core';
-import { captureSaveData, deserializeCharacterLifeSave, serializeCharacterLifeSave, createMemoryGameStore, sessionToRecords, recordsToSession, type GameStore, type StoredRecord } from '@haven/persistence';
+import { captureSaveData, deserializeCharacterLifeSave, serializeCharacterLifeSave, createMemoryGameStore, sessionToRecords, recordsToSession, savedCityRuleset, savedSessionWeek, upgradeV14Session, V14_RULESET, type GameStore, type StoredRecord } from '@haven/persistence';
 import { createIndexedDbGameStore } from './indexeddb-store.js';
 import { prepareNpcWorldSessionLoad } from './world-npc-session.js';
 export const CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY = 'haven.character-life-session-society.checkpoint.v1';
@@ -36,7 +36,8 @@ function defaultDeps(): CheckpointDeps {
 }
 export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded: unknown, expectedRevision: number): { success: true; next: CharacterLifeSessionState } | Failure {
   try {
-    const captured = captureSaveData(loaded);
+    const snapshot = captureSaveData(loaded);
+    const captured = savedCityRuleset(snapshot) === V14_RULESET ? upgradeV14Session(snapshot, savedSessionWeek(snapshot)) : snapshot;
     if (!isCharacterLifeSessionState(captured)) return fail('Checkpoint must contain a valid complete Character Life session in Planning.');
     const base = prepareNpcWorldSessionLoad(live, { city: captured.city,outside: captured.outside,npcs: captured.npcs },expectedRevision);
     if (!base.success) return base;
@@ -63,7 +64,11 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
     catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); warnings.add(d); marker = null; }
     let records = await d.store.read('main');
     let invalid = false;
-    if (!marker) {
+    // v14 rows are upgraded in memory by recordsToSession, with or without a prior marker.
+    const storedVersion = records?.find(row => row.table === 'meta' && row.id === 'session')?.value as { rulesetId?: unknown } | undefined;
+    const storedCity = records?.find(row => row.table === 'city' && row.id === 'city')?.value;
+    const isV14Slot = storedVersion?.rulesetId === V14_RULESET || savedCityRuleset({ city: storedCity }) === V14_RULESET;
+    if (!marker && !isV14Slot) {
       let candidate: StoredRecord[] | null = null;
       // A save made while migration was blocked is newer than the legacy backup.
       if (!records) {
@@ -71,6 +76,9 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
       if (text !== null) {
         const loaded = deserializeCharacterLifeSave(text);
+        let legacyVersion: unknown;
+        try { legacyVersion = JSON.parse(text)?.cityRulesetId; } catch { /* The legacy reader handles invalid JSON. */ }
+        if (legacyVersion === V14_RULESET) return loaded.success ? loaded : fail(OLD);
         if (loaded.success) candidate = sessionToRecords('main',loaded.state);
         else {
           // Preserve valid old-ruleset data without making it playable or rewriting its ruleset.

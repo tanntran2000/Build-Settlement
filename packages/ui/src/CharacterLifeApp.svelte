@@ -5,7 +5,7 @@
   import CharacterCreation from './CharacterCreation.svelte';
   import TitleScreen from './TitleScreen.svelte';
   import TileManagement from './TileManagement.svelte';
-  import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE, DAMAGED_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   let screen: 'start' | 'create' = 'start';
   let session: CharacterLifeSessionState | null = null;
@@ -50,7 +50,8 @@
       const text = await file.text();
       if (ticket !== importRead || session) return;
       const result = deserializeCharacterLifeSave(text);
-      if (result.success && isPlayableCheckpoint(result.state)) session = result.state; else error = OLD_CHECKPOINT_MESSAGE;
+      if (result.success && isPlayableCheckpoint(result.state)) session = result.state;
+      else error = result.success || result.error.code === 'INCOMPATIBLE_SAVE' ? OLD_CHECKPOINT_MESSAGE : DAMAGED_CHECKPOINT_MESSAGE;
     } catch { if (ticket === importRead) error = 'Could not read the checkpoint file.'; }
   }
 </script>

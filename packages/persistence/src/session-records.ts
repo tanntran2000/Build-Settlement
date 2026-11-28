@@ -1,16 +1,17 @@
 ﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter, TileTrialState } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
-import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isHistoricalPlayerCharacter, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isHistoricalPlayerCharacter, isHistoricalHouseholdNpcList, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
+import { upgradeV14Session, V14_RULESET } from './upgrade-v14.js';
 import { hasAcquisitionRosterProof, isAcquisitionReplay } from '@haven/core';
 import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
 export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
-const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-3])$/;
-const historicalNpcLifeRuleset = /^tile-society-1[0-3]$/;
-const historicalHouseholdRuleset = /^tile-society-1[23]$/;
+const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-4])$/;
+const historicalNpcLifeRuleset = /^tile-society-1[0-4]$/;
+const historicalHouseholdRuleset = /^tile-society-1[234]$/;
 // Historical records remain readable for the caller's existing old-ruleset refusal.
 // Validate their original shape without migrating or returning a current-ruleset view.
 function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
@@ -37,6 +38,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
     }
     if (v >= 8) keys.push('items');
     if (v >= 13) keys.push('acquisition');
+    if (v === 14) keys.push('difficulty');
     if (!hasWeeklyKeys(raw.society, keys)) return false;
     const defaults = createSocietyState().society!;
     const validation: Record<string, unknown> = { ...defaults, ...raw.society, rulesetId: SOCIETY_RULESET };
@@ -50,7 +52,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
       if (!hasWeeklyKeys(crisis, ['stage','weeksInStage','hungerStreak','calmStreak','promise','lastChoice'])) return false;
       validation.crisis = { fallCause: null, ...crisis };
     }
-    if (!isSocietyState(validation)) return false;
+    if (!isSocietyState(validation) || validation.acquisition.departures.some(entry => entry.kind === 'died')) return false;
     const tiles = raw.tiles;
     if (!Array.isArray(tiles) || Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
     const ids = new Set<string>();
@@ -162,23 +164,24 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     if(!isItemsState(items,characterIds))throw new StoreRecordError('city:city');
     society.items=items;
   } else if(itemRows.length)bad(itemRows[0]);
+  const current = meta.rulesetId === SOCIETY_RULESET;
+  const v14 = meta.rulesetId === V14_RULESET;
   if (!isStoredCity(city)) throw new StoreRecordError('city:city');
   if (meta.rulesetId !== city.society?.rulesetId || meta.revision !== city.revision || meta.phase !== city.phase) throw new StoreRecordError('meta:session');
   const outside = get('world','outside');
   if (!isWorldSessionState({ city: createSocietyState(), outside })) throw new StoreRecordError('world:outside');
   let player: PlayerCharacter | undefined;
   const npcs: { npc: WorldNpc; order: number }[] = [], profiles: { profile: CharacterProfile; order: number }[] = [];
-  const validPlayer = meta.rulesetId === SOCIETY_RULESET ? isPlayerCharacter : isHistoricalPlayerCharacter;
+  const validPlayer = current ? isPlayerCharacter : (raw: unknown) => isHistoricalPlayerCharacter(raw, v14);
   for (const r of records.filter(r => r.table === 'characters')) {
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
     if (v.kind === 'player') { if (player || !validPlayer(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
     else if (v.kind === 'npc') {
       const candidate = [...npcs.map(n => n.npc), v.npc];
-      const validNpcList = meta.rulesetId === SOCIETY_RULESET || historicalHouseholdRuleset.test(meta.rulesetId)
-        ? isWorldNpcList(candidate, city)
-        : historicalSocietyRuleset.test(meta.rulesetId) &&
-          isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));
+      const validNpcList = current ? isWorldNpcList(candidate, city)
+        : historicalHouseholdRuleset.test(meta.rulesetId) ? isHistoricalHouseholdNpcList(candidate, city)
+          : historicalSocietyRuleset.test(meta.rulesetId) && isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));
       if (!validNpcList || v.npc.character.id !== r.id || !isCharacterProfile(v.profile, v.npc.character) ||
           !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r);
       npcs.push({ npc: v.npc, order: v.order });
@@ -192,7 +195,13 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
       throw new StoreRecordError('city:city');
     }
   }
-  return structuredClone({ city,outside,npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) }) as CharacterLifeSessionState;
+  const state = { city,outside,npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) };
+  if (v14) {
+    const upgraded = upgradeV14Session(state, city.world.week);
+    if (!upgraded) throw new StoreRecordError('city:city');
+    return upgraded;
+  }
+  return structuredClone(state) as CharacterLifeSessionState;
 }
 
 function isHistoricalNpcList(raw: unknown, city: TileTrialState, hasLife: boolean): boolean {
