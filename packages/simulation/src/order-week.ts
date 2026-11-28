@@ -22,7 +22,7 @@ export function authorityArrivals(authority:number,budget:number,hasRoom:boolean
  if(authority>=O.immigration.bonusAtOrAbove&&hasRoom){if(!Number.isSafeInteger(budget+1))throw Error('Order arrivals overflow.');return budget+1;}
  return budget;
 }
-export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>,terms:LawTerms=lawTerms([]),ctx?:ItemWeekContext):OrderReport {
+export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>,terms:LawTerms=lawTerms([]),ctx?:ItemWeekContext,mansionAuthority?:()=>number):OrderReport {
  const facts=orderFacts(s,fundedTileIds,terms), order=s.society!.order;
  const effects=ITEM_TRIAL.effects;
  let postCombatSecurity=0,wardenSecurity=0,townHallNegotiationAuthority=0;
@@ -39,7 +39,6 @@ export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<stri
  facts.lawAuthority+=townHallNegotiationAuthority+playerManagementAuthority+crownAuthority;
  const security=securityTarget(facts); order.security=driftToward(order.security,security,O.drift.security);
  const crime=crimeTarget(facts,order.security); order.crime=driftToward(order.crime,crime,O.drift.crime);
- const authority=authorityTarget(facts,order.security,order.crime); order.authority=driftToward(order.authority,authority,O.drift.authority);
  const society=s.society!,stocks=s.world.settlements[s.world.activeSettlementId!].inventory;
  const theftMilli:OrderReport['theftMilli']={};
  const bps=Math.max(0,order.crime-O.theft.threshold)*O.theft.bpsPerPoint;
@@ -52,6 +51,8 @@ export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<stri
  for(const key of ['stone','wool','cloth','herbs'] as const)society.stocksMilli[key]=steal(key,society.stocksMilli[key]);
  s.goodsStock!.amountMilli=steal('goods',s.goodsStock!.amountMilli);
  society.luxuryStockMilli=steal('luxury',society.luxuryStockMilli);
+ facts.lawAuthority+=mansionAuthority?.()??0;
+ const authority=authorityTarget(facts,order.security,order.crime); order.authority=driftToward(order.authority,authority,O.drift.authority);
  const tensionAdded=Math.min(100-society.tension,Math.trunc(order.crime/O.tensionDivisor));society.tension+=tensionAdded;
  const satisfactionLost=O.satisfactionLoss.find(entry=>order.crime>=entry.crime)?.loss??0;
  for(const key of classes)society.satisfaction[key]=Math.max(0,society.satisfaction[key]-satisfactionLost);

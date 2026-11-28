@@ -121,7 +121,10 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
       } else if (market) report = Object.freeze({ ...report, household: market });
       if (mansion) report = Object.freeze({ ...report, mansion: runMansionWeek(next.npcs, mansion) });
       const purse = runLevyWeek(next, report.taxMilli + report.goods.revenueMilli + (report.laws?.incomeMilli ?? 0));
-      const robbery = runHomeRobberyCheck(next, report.week);
+      const rosterChanged = householdWeek.leftIds.size > 0 ||
+        next.npcs.some((npc, index) => npc.household.role !== opening.npcs[index].household.role);
+      const closingTerms = rosterChanged ? mansionTerms(next) : mansion?.terms;
+      const robbery = runHomeRobberyCheck(next, report.week, mansion?.paid ? closingTerms?.paid : closingTerms?.plain);
       next.player.purse.donatedThisWeekMilli = 0;
       const after = purse.levyPaidMilli > 0
         ? Object.freeze({ ...report.after, gold: report.after.gold - purse.levyPaidMilli }) : report.after;

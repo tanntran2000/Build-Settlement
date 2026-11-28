@@ -1,4 +1,4 @@
-import { trialBuilding } from '../trial/catalog.js';
+import { npcBeds, trialBuilding } from '../trial/catalog.js';
 import { applyDifficulty, difficultyProfile } from '../trial/difficulty.js';
 import type { TileTrialState } from '../trial/types.js';
 import { MANSION_CATALOG, type EffectKind } from './catalog.js';
@@ -30,14 +30,29 @@ export interface MansionWeekReport {
 
 export interface MansionTerms {
   comfortNeed: number;
-  plainComfort: number;
-  paidComfort: number;
+  plain: MansionEffects;
+  paid: MansionEffects;
   buildingUpkeepMilli: number;
   roomUpkeepMilli: number;
-  upkeepFactorsBps: readonly number[];
+  upkeepFactors: readonly { source: string; bps: number }[];
   upkeepMilli: number;
   effectsByRoom: ReadonlyMap<string, EffectAmounts>;
 }
+
+export interface MansionPurseTerms {
+  safeAmount: Readonly<{ guard: number; captain: number; vault: number; accountant: number }>;
+  robberyChanceBps: number;
+  chaseSuccessBps: number;
+  vaultLossCapBps: number | undefined;
+}
+
+interface MansionEffects extends MansionPurseTerms {
+  comfortSupply: number;
+  fatalChanceBps: number;
+  authority: number;
+}
+
+type MansionHousehold = { city: TileTrialState; npcs: readonly WorldNpc[] };
 
 type StaffCount = { count: number; fit: number };
 const newStaffCount = (): StaffCount => ({ count: 0, fit: 0 });
@@ -62,24 +77,36 @@ function upkeepWithFactors(milli: number, factors: readonly number[]): number {
   return result;
 }
 
-export function mansionTerms({ city, npcs }: { city: TileTrialState; npcs: readonly WorldNpc[] }): MansionTerms | undefined {
+export function mansionTerms({ city, npcs }: MansionHousehold): MansionTerms | undefined {
   const level = mansionLevel(city);
   if (!level || !city.society) return;
   const effectsByRoom = new Map<string, EffectAmounts>();
   const roomTypes = new Map<string, string>();
   const roomBonuses = new Map<string, number>();
+  const presentTypes = new Set<string>();
   const staff = { maid: newStaffCount(), 'head-maid': newStaffCount(), guard: newStaffCount(), captain: newStaffCount(), accountant: newStaffCount() };
-  const upkeepFactorsBps: number[] = [];
+  const upkeepFactors: { source: string; bps: number }[] = [];
   const difficultyBps = difficultyProfile(city.society.difficulty).upkeepBps;
-  if (difficultyBps !== fullBps) upkeepFactorsBps.push(difficultyBps);
-  let roomUpkeepMilli = 0, roomComfort = 0;
+  if (difficultyBps !== fullBps) upkeepFactors.push({ source: 'Difficulty', bps: difficultyBps });
+  let roomUpkeepMilli = 0, roomComfort = 0, roomAuthority = 0, roomSafe = 0;
+  let chaseSuccessBps = 0, robberyChanceBps = 0, roomFatal = 0;
+  let vaultLossCapBps: number | undefined;
   for (const room of city.society.mansion.rooms) {
     const { upkeepMilli, effects } = roomLevels.get(room.typeId)![room.level - 1];
+    presentTypes.add(room.typeId);
     effectsByRoom.set(room.id, effects);
     roomTypes.set(room.id, room.typeId);
     roomUpkeepMilli += upkeepMilli;
     roomComfort += effects.comfort ?? 0;
-    if (effects.upkeepBps !== undefined) upkeepFactorsBps.push(effects.upkeepBps);
+    roomAuthority += effects.authority ?? 0;
+    roomSafe += effects.safeAmountMilli ?? 0;
+    roomFatal += effects.fatalChanceBps ?? 0;
+    chaseSuccessBps += effects.chaseSuccessBps ?? 0;
+    robberyChanceBps += effects.robberyChanceBps ?? 0;
+    if (effects.vaultLossCapBps !== undefined)
+      vaultLossCapBps = Math.min(vaultLossCapBps ?? fullBps, effects.vaultLossCapBps);
+    if (effects.upkeepBps !== undefined)
+      upkeepFactors.push({ source: MANSION_CATALOG.roomTypes[room.typeId].name, bps: effects.upkeepBps });
     if (effects.roleBonusBps !== undefined) roomBonuses.set(room.typeId, effects.roleBonusBps);
   }
   let residentCount = 0;
@@ -91,24 +118,71 @@ export function mansionTerms({ city, npcs }: { city: TileTrialState; npcs: reado
     const fitRoom = MANSION_CATALOG.roles[role].fitRoom;
     const count = staff[role];
     count.count++;
-    if (household.room !== null && roomTypes.get(household.room) === fitRoom) count.fit++;
+    const functionFit = MANSION_CATALOG.roomTypes[fitRoom].kind === 'function' && presentTypes.has(fitRoom);
+    if (functionFit || (household.room !== null && roomTypes.get(household.room) === fitRoom)) count.fit++;
   }
-  const comfort = (paid: boolean) => {
+  const accountant = staffEffects.get('accountant')!;
+  const discount = fullBps - (accountant.upkeepBps ?? fullBps);
+  if (staff.accountant.count && discount)
+    upkeepFactors.push({ source: MANSION_CATALOG.roles.accountant.name, bps: Math.max(0, fullBps - Math.floor(staffValue(staff.accountant, discount, true))) });
+  const terms = (paid: boolean): MansionEffects => {
     const headMaid = staff['head-maid'];
-    const boost = leaderBonus(headMaid, 'head-maid', roomBonuses.get(MANSION_CATALOG.roles['head-maid'].fitRoom), paid);
-    return Math.floor(
-      staffValue(staff.maid, staffEffects.get('maid')!.comfort ?? 0, paid) * boost +
+    const maidBoost = leaderBonus(headMaid, 'head-maid', roomBonuses.get(MANSION_CATALOG.roles['head-maid'].fitRoom), paid);
+    const guardBoost = leaderBonus(staff.captain, 'captain', roomBonuses.get(MANSION_CATALOG.roles.captain.fitRoom), paid);
+    const comfortSupply = Math.floor(
+      staffValue(staff.maid, staffEffects.get('maid')!.comfort ?? 0, paid) * maidBoost +
       staffValue(headMaid, staffEffects.get('head-maid')!.comfort ?? 0, paid) + (paid ? roomComfort : 0),
     );
+    const guard = staffEffects.get('guard')!, captain = staffEffects.get('captain')!;
+    const fatalChanceBps = Math.floor(
+      staffValue(staff.guard, guard.fatalChanceBps ?? 0, paid) * guardBoost +
+      staffValue(staff.captain, captain.fatalChanceBps ?? 0, paid) +
+      (paid && (staff.guard.count || staff.captain.count) ? roomFatal : 0),
+    );
+    return {
+      comfortSupply, fatalChanceBps,
+      authority: Math.floor(staffValue(staff.accountant, accountant.authority ?? 0, paid)) + (paid ? roomAuthority : 0),
+      safeAmount: {
+        guard: Math.floor(staffValue(staff.guard, guard.safeAmountMilli ?? 0, paid) * guardBoost),
+        captain: Math.floor(staffValue(staff.captain, captain.safeAmountMilli ?? 0, paid)),
+        vault: paid ? roomSafe : 0,
+        accountant: Math.floor(staffValue(staff.accountant, accountant.safeAmountMilli ?? 0, paid)),
+      },
+      chaseSuccessBps: paid ? chaseSuccessBps : 0,
+      robberyChanceBps: paid ? robberyChanceBps : 0,
+      vaultLossCapBps: paid ? vaultLossCapBps : undefined,
+    };
   };
-  const plainComfort = comfort(false);
-  const paidComfort = comfort(true);
+  const plain = terms(false), paid = terms(true);
   const comfortNeed = residentCount * MANSION_CATALOG.calibration.comfortPerResident;
-  if (paidComfort < comfortNeed) upkeepFactorsBps.push(MANSION_CATALOG.comfortShortUpkeepBps);
+  if (paid.comfortSupply < comfortNeed)
+    upkeepFactors.push({ source: 'Comfort shortfall', bps: MANSION_CATALOG.comfortShortUpkeepBps });
   const buildingUpkeepMilli = level * trialBuilding('mansion')!.upkeepMilli;
   return {
-    comfortNeed, plainComfort, paidComfort, buildingUpkeepMilli, roomUpkeepMilli, upkeepFactorsBps,
-    upkeepMilli: upkeepWithFactors(buildingUpkeepMilli + roomUpkeepMilli, upkeepFactorsBps),
+    comfortNeed, plain, paid, buildingUpkeepMilli, roomUpkeepMilli, upkeepFactors,
+    upkeepMilli: upkeepWithFactors(buildingUpkeepMilli + roomUpkeepMilli, upkeepFactors.map(factor => factor.bps)),
     effectsByRoom,
   };
+}
+
+export function homeUpkeepMilli(building: { typeId: string; level: number }, difficultyBps: number): number {
+  return applyDifficulty(trialBuilding(building.typeId)!.upkeepMilli * building.level, difficultyBps);
+}
+
+export function mansionUpkeepFunded(city: TileTrialState, due: number, gold: number): boolean {
+  const bps = difficultyProfile(city.society!.difficulty).upkeepBps;
+  for (const { id, building } of city.tiles) {
+    if (id === MANSION_TILE_ID) return gold >= due;
+    if (!building || !npcBeds(building.typeId, building.level)) continue;
+    const earlier = homeUpkeepMilli(building, bps);
+    if (gold >= earlier) gold -= earlier;
+  }
+  return false;
+}
+
+export function mansionPlanningEffects(state: MansionHousehold, terms = mansionTerms(state)) {
+  if (!terms) return;
+  const { city } = state, { world } = city;
+  const gold = world.settlements[world.activeSettlementId!].inventory.gold;
+  return mansionUpkeepFunded(city, terms.upkeepMilli, gold) ? terms.paid : terms.plain;
 }

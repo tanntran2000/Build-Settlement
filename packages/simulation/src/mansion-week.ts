@@ -18,11 +18,12 @@ export function runMansionWeek(npcs: readonly WorldNpc[], { terms, paid }: Mansi
       relationship.affection = clamp(relationship.affection + effects.npcAffection);
     }
   }
+  const effects = paid ? terms.paid : terms.plain;
   return Object.freeze({
-    comfortSupply: paid ? terms.paidComfort : terms.plainComfort,
+    comfortSupply: effects.comfortSupply,
     comfortNeed: terms.comfortNeed,
     upkeepMilli: terms.upkeepMilli,
     upkeepPaid: paid,
-    authority: 0,
+    authority: effects.authority,
   });
 }
