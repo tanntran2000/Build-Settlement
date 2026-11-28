@@ -1,5 +1,25 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## IMPORT-ALERT-01 (in-game import alert) — PR #109 G6 (2026-11-28 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** IMPORT-ALERT-01 is merged; it closes Astra's Money M3 round 2 P3. Nothing new starts until the owner picks the next item.
+
+- **Merge.** PR #109 (`fix(ui): import alert for damaged checkpoints`) was merged under G5 at 2026-11-27T17:38:18Z (GitHub account `tanntran2000`; the owner reported "Dot đã merg và xanh").
+  - Merge/main commit: `8d37d16ca24420987e6b1294257da13bcdefb5a2` (parents `bcd643f`, `d1753a4`).
+  - Accepted head: `d1753a41e3c9c8ddcb12b651edc861de30290067`. Base: `bcd643f` (Money M3 #108 merged).
+- **Trees.** The merge tree `17ba075806d8551634e9c3cea18e85b8f72ef59c` is identical to the accepted head tree `17ba075806d8551634e9c3cea18e85b8f72ef59c`. Claude checked this locally.
+- **Main CI.** Quality Gate run [46043409603](https://github.com/tanntran2000/Build-Settlement/actions/runs/46043409603), job 140656555315 (push, checkout at the exact merge SHA), SUCCESS at 2026-11-27T18:01:05Z: 3,419 unit tests (154 files) and 435/435 Chromium smoke (20.8 min); the dependency audit reported 0 vulnerabilities.
+- **Pre-merge, at `d1753a4`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,419 unit), full smoke 435/435 with `CI=1` on the first run (2026-11-27T16:19Z–17:00Z, quiet machine).
+  - PR CI: quality-gate run 46038453807 SUCCESS (435 smoke, 21.2 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:95db7f92`: round 1 at `d1753a4` PASS, 0 findings.
+  - Builder (Sol 6.2 xhigh, `mcp:82ded759`): Step 0 HOLD accepted within the WP allowlist (four existing lines were in-game imports of damaged files); RED on `bcd643f` failed only the two damaged-file cases; focused GREEN 104; gates 1–7 and full smoke 435/435.
+- **Evidence.** [`docs/verification/import-alert-01-pr109/`](https://github.com/tanntran2000/Build-Settlement/tree/3ad239f44326b0786d2e8b0bacba95b009e65a6f/docs/verification/import-alert-01-pr109) on branch `docs/money-difficulty-design`, at `3ad239f`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`): "Fix import alert"; "Câu ngắn rõ (Recommended)"; "Duyệt, giao Builder"; merge report: "Dot đã merg và xanh".
+- **Disclosed.**
+  - Scope is the in-game Import checkpoint only; title-screen import and Continue keep their current alerts.
+  - Open playtest risks R-026, R-028, R-031. Smoke runs on Chromium only. Large files and the T3 settings backup stay local, listed by SHA-256 in the evidence.
+
 ## Money M3 (home robbery card) — PR #108 G6 (2026-11-27 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** Money PR M3 of 3 is merged; the Money plan (M1–M3) is complete. Nothing new starts until the owner picks the next item.
