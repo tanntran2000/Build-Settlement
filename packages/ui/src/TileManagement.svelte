@@ -79,7 +79,7 @@
       return false;
     }
     if (!result.success) {
-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'NOT_ENOUGH_MONEY', 'INVALID_AMOUNT', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'ROOM_LOCKED', 'ROOM_LIMIT', 'ROOM_MAX_LEVEL', 'ROOM_FULL', 'MANSION_FULL', 'SUITE_ROLE_ONLY', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE', 'CHASE_UNAVAILABLE'];
       if (!known.includes(result.error.code)) {
         error = 'The action failed. Download the error log for review.';
         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
@@ -88,7 +88,7 @@
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
       else if (['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','BUY_POTION','USE_CONSUMABLE','CLAIM_STORED_ITEM','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(type)) managementError = {action:type,message:itemError(result.error.code)};
-      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUILD_ROOM', 'UPGRADE_ROOM', 'MOVE_TO_ROOM', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
@@ -283,7 +283,7 @@
       </section>
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} purse={player!.purse} {selectedId} {uiEpoch} bind:typeId bind:workers bind:workforceError {managementError} {outside}
-        onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} />
+        onselect={id => { selectTile(id); void openLifeCity(true); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} onopenreports={() => { destination = 'reports'; activeWindow = null; void focusLifeReport(); }} />
       {/if}
     {/snippet}
     {#snippet characters()}
@@ -303,7 +303,7 @@
     <p>Difficulty: {state.society?.difficulty === 'easy' ? 'Easy' : 'Normal'}</p>
     <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
     <details><summary>About checkpoints</summary>
-    <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Checkpoints from older versions of Haven cannot be played.</p>
+    <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Version 14 checkpoints upgrade when loaded.</p>
 </details>
     {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
     <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
