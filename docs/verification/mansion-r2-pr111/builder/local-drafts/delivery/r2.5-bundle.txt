@@ -1,0 +1,9 @@
+Head: a60104711b8c764097455519ded20bf1923494c8
+Tree: d43f08fa5c58b7262df05dfb5bc2e24a38c69d18
+Main UI output: packages/ui/dist
+asset | raw bytes | gzip bytes | SHA-256
+assets/index-CTxOf8u0.js | 589757 | 187210 | 9ac9d735fe78f3559739cdcfc7f35a5ed77067ae15c1196619dbfdf6d2f45af4
+assets/index-fY_O08Ly.css | 41768 | 8315 | 300f7138cbb97223c74cf4965e6c345b1d253901e332784ed5d1e9fe2220bf22
+Total JS/CSS gzip bytes: 195525
+Budget: < 200000 bytes
+Exit: 0

@@ -1,0 +1,24 @@
+UTC start: 2026-11-28T14:00:32.4048426Z
+HEAD: a60104711b8c764097455519ded20bf1923494c8
+Tree: d43f08fa5c58b7262df05dfb5bc2e24a38c69d18
+node scripts/mansion-calibration.ts 'C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/r2.5-calibration.json'
+{"seed":2026,"difficulty":"normal","style":"good","closedWeeks":40,"netGold":4.322047619047619,"grossGold":26.220142857142857,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2026,"difficulty":"normal","style":"average","closedWeeks":40,"netGold":-0.8598571428571429,"grossGold":23.092523809523808,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2026,"difficulty":"normal","style":"bad","closedWeeks":40,"netGold":0.11314285714285714,"grossGold":22.541714285714285,"firstUnpaid":9,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2026,"difficulty":"easy","style":"good","closedWeeks":40,"netGold":9.773380952380952,"grossGold":28.01014285714286,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2026,"difficulty":"easy","style":"average","closedWeeks":40,"netGold":2.9641904761904763,"grossGold":23.236571428571427,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2026,"difficulty":"easy","style":"bad","closedWeeks":40,"netGold":-0.004571428571428571,"grossGold":22.541714285714285,"firstUnpaid":18,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"normal","style":"good","closedWeeks":40,"netGold":4.322047619047619,"grossGold":26.220142857142857,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"normal","style":"average","closedWeeks":40,"netGold":-0.8598571428571429,"grossGold":23.092523809523808,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"normal","style":"bad","closedWeeks":40,"netGold":0.11314285714285714,"grossGold":22.541714285714285,"firstUnpaid":9,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"easy","style":"good","closedWeeks":40,"netGold":9.773380952380952,"grossGold":28.01014285714286,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"easy","style":"average","closedWeeks":40,"netGold":2.9641904761904763,"grossGold":23.236571428571427,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2027,"difficulty":"easy","style":"bad","closedWeeks":40,"netGold":-0.004571428571428571,"grossGold":22.541714285714285,"firstUnpaid":19,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"normal","style":"good","closedWeeks":40,"netGold":4.322047619047619,"grossGold":26.220142857142857,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"normal","style":"average","closedWeeks":40,"netGold":0.14014285714285715,"grossGold":23.092523809523808,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"normal","style":"bad","closedWeeks":40,"netGold":0.11314285714285714,"grossGold":22.541714285714285,"firstUnpaid":9,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"easy","style":"good","closedWeeks":40,"netGold":9.773380952380952,"grossGold":28.01014285714286,"firstUnpaid":null,"firstZero":null,"quarters":8,"everyRoom":30,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"easy","style":"average","closedWeeks":40,"netGold":3.9641904761904763,"grossGold":23.236571428571427,"firstUnpaid":null,"firstZero":null,"quarters":16,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+{"seed":2028,"difficulty":"easy","style":"bad","closedWeeks":40,"netGold":-0.004571428571428571,"grossGold":22.541714285714285,"firstUnpaid":18,"firstZero":null,"quarters":null,"everyRoom":null,"comfortShort":[],"firstFailure":null,"misses":[]}
+Exit: 0
+UTC end: 2026-11-28T14:00:58.8862047Z

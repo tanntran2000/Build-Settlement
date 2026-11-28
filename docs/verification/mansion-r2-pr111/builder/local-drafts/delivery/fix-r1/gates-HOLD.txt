@@ -1,0 +1,10 @@
+Mansion R2 fix round 1 — exact-head gate disposition
+UTC: 2026-11-28
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+Status: HOLD. The fixed pre-run F3 rule rejected Normal and Easy in paired End Week. See F3-exact-head.txt (exit 1) and perf-exact-head/measurement-summary.json.
+Exact-head gates 1–7: not started.
+Exact-head CI=1 smoke: not started.
+Push: not started.
+Prior independent Claude Tester totals on a601047 only: 154 architecture, 3,548 unit, 452/452 smoke (38.2 min), all gates and smoke exit 0.
+Fix round focused runs: 64 simulation unit tests, 7 UI unit tests, 2 Chromium cases. Each targeted GREEN run exited 0.

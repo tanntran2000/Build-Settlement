@@ -1,0 +1,40 @@
+Mansion R2 Builder
+mcp:c544949a-6279-4156-955b-ff692198c558  completed  codex/gpt-6.2-sol
+
+[assistant]
+The first attempt logged 100% host CPU at startup, so it can’t serve as quiet-machine evidence. I’ll stop that attempt, retain its log, and wait for the host to settle before the retry.
+
+[assistant]
+The retry started at 3% host CPU with both smoke ports free. The log includes the top processes, and keep-awake is enabled. Verification is running at `bded79d`.
+
+[assistant]
+Gates 1–7 passed at `bded79d`, including 154 architecture tests and 3,554 unit tests. The same shell set `CI=1` and started all 452 Chromium smoke tests. I’ll leave the machine quiet while they run.
+
+[assistant]
+Smoke has passed the first 18 cases, including the Character Life full-week boundary test and the accessibility baselines at 1600 and 1280 px. The single-worker run is still in the longer accessibility cases.
+
+[assistant]
+The accessibility baselines are complete. Smoke is at 46 of 452 with no failures so far, and the worktree remains on the pinned head.
+
+[assistant]
+Smoke has passed 141 cases without a failure, including the Character Life navigation, crafting, crime, and crisis cases reached so far. The run continues on `bded79d`.
+
+[assistant]
+Both Mansion role-picker smoke cases passed at 1280 and 1600 px, along with the Mansion room and save cases. The full run is at 222 of 452 with no failures so far.
+
+[assistant]
+Smoke has passed 359 of 452 cases with no failures so far. It’s now in the save and checkpoint coverage. Push and remote SHA verification will follow the runner’s exit.
+
+[assistant]
+All 452 Chromium smoke tests passed, and the exact-head runner exited 0. I’ll push `feat/mansion-roles` now and verify the remote SHA against the tested head.
+
+[assistant]
+Pushed `feat/mansion-roles` by fast-forward and verified that the remote SHA matches the tested head. The worktree is clean. No PR was opened.
+
+- **Head** `bded79d6ccd0e4e97c11d3e98f22370485e827fd`
+- **Tree** `1b9a6b1a892f188400379539a1806c31b90dc0d7`
+- **Exact-head verification** Gates 1–7 and full `CI=1` smoke exited 0. **154 architecture tests, 3,554 unit tests, and 452 Chromium smoke tests** passed. Smoke took 38.7 minutes.
+
+I stopped the first attempt after it logged 100% startup CPU. The successful retry started at 3% with ports 4173 and 4174 free. The README records Tân’s **“Chấp nhận, đi tiếp”** decision and the Correction 8 and 9 measurements. R-026 remains open under the existing thresholds.
+
+[Delivery README](C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/README.md) · [Exact-head gate log](C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/R2.5-correction-10-retry.txt) · [Remote verification log](C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/correction-10-push.txt) · [Verified 205-file SHA-256 manifest](C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/SHA256SUMS.txt)

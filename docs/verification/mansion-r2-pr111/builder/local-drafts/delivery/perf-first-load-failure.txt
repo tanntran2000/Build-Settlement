@@ -1,0 +1,47 @@
+
+Name                IDProcess PercentProcessorTime
+----                --------- --------------------
+MsMpEng                  4084                   15
+WmiPrvSE#2              30640                   10
+codebase-memory-mcp     25372                    5
+System                      4                    5
+node#17                 41120                    0
+node#18                 11496                    0
+node#16                 38196                    0
+node#24                 40276                    0
+node#22                  3064                    0
+node#23                 23988                    0
+
+
+
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-5f3e9c538c724763b355a532f736d6ae\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\perf-first
+file:///D:/QI%20Technology/Temp/mansion-r2-base-5f3e9c538c724763b355a532f736d6ae/src/packages/core/src/domain/character.ts:2
+import { Memory } from "./memory.js";
+         ^^^^^^
+SyntaxError: The requested module './memory.js' does not provide an export named 'Memory'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:327:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:431:5)
+    at async node:internal/modules/esm/loader:643:26
+    at async Promise.all (index 0)
+    at async file:///C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/measure-mansion-week.mjs:44:15
+
+Node.js v24.19.0
+Measurement exit: 1
+After CPU: 7%
+
+Name               IDProcess PercentProcessorTime
+----               --------- --------------------
+WmiPrvSE#2             30640                   15
+System                     4                    5
+SearchProtocolHost     39004                    5
+node#18                11496                    0
+node#19                 9324                    0
+node#25                40272                    0
+node#17                41120                    0
+node#23                23988                    0
+node#24                40276                    0
+node#22                 3064                    0
+
+
+
+Keep-awake released at 2026-11-28T13:10:01.8667540Z.

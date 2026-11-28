@@ -1,0 +1,1026 @@
+[
+  {
+    "openingQuote": 48500,
+    "earlyFunding": 400,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 8900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43100,
+    "earlyFunding": 500,
+    "b1Receipt": 500,
+    "reportAssembly": 1500,
+    "closingTerms": 16300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42000,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 11900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43100,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 17000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 54000,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1700,
+    "closingTerms": 21900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45600,
+    "earlyFunding": 700,
+    "b1Receipt": 300,
+    "reportAssembly": 1300,
+    "closingTerms": 8800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45700,
+    "earlyFunding": 400,
+    "b1Receipt": 500,
+    "reportAssembly": 2100,
+    "closingTerms": 21000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 40000,
+    "earlyFunding": 700,
+    "b1Receipt": 700,
+    "reportAssembly": 1400,
+    "closingTerms": 11700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45400,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 15500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45900,
+    "earlyFunding": 600,
+    "b1Receipt": 600,
+    "reportAssembly": 1400,
+    "closingTerms": 19100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45400,
+    "earlyFunding": 1000,
+    "b1Receipt": 300,
+    "reportAssembly": 1900,
+    "closingTerms": 18500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48700,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 15700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 40200,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1200,
+    "closingTerms": 9200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44900,
+    "earlyFunding": 400,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 23400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46000,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1200,
+    "closingTerms": 10000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43700,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 13100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 11700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 47400,
+    "earlyFunding": 400,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 12600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 47000,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1200,
+    "closingTerms": 14700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41800,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 9600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44300,
+    "earlyFunding": 600,
+    "b1Receipt": 600,
+    "reportAssembly": 1500,
+    "closingTerms": 16300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41000,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 13100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46400,
+    "earlyFunding": 1000,
+    "b1Receipt": 400,
+    "reportAssembly": 1700,
+    "closingTerms": 15100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45300,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 15400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42300,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1600,
+    "closingTerms": 14000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44700,
+    "earlyFunding": 900,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 14300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42400,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 14600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 61100,
+    "earlyFunding": 600,
+    "b1Receipt": 700,
+    "reportAssembly": 1600,
+    "closingTerms": 14900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43900,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 1200,
+    "closingTerms": 14900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41800,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 10800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43500,
+    "earlyFunding": 800,
+    "b1Receipt": 600,
+    "reportAssembly": 1400,
+    "closingTerms": 13000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39700,
+    "earlyFunding": 500,
+    "b1Receipt": 300,
+    "reportAssembly": 1500,
+    "closingTerms": 13300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39700,
+    "earlyFunding": 400,
+    "b1Receipt": 500,
+    "reportAssembly": 1600,
+    "closingTerms": 10700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45800,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 12500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44200,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 10800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42700,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1300,
+    "closingTerms": 13700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39300,
+    "earlyFunding": 700,
+    "b1Receipt": 600,
+    "reportAssembly": 1600,
+    "closingTerms": 13000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41400,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 19400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46900,
+    "earlyFunding": 400,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 19100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43200,
+    "earlyFunding": 700,
+    "b1Receipt": 300,
+    "reportAssembly": 1400,
+    "closingTerms": 11900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 53000,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 20400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 40700,
+    "earlyFunding": 900,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 8800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1700,
+    "closingTerms": 14900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44100,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 14700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44700,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1600,
+    "closingTerms": 14100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44500,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1600,
+    "closingTerms": 16500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 52600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 8400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43800,
+    "earlyFunding": 400,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 11500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43200,
+    "earlyFunding": 800,
+    "b1Receipt": 600,
+    "reportAssembly": 1400,
+    "closingTerms": 12600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48300,
+    "earlyFunding": 600,
+    "b1Receipt": 300,
+    "reportAssembly": 1500,
+    "closingTerms": 15300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43700,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 24000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 11800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45200,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 14400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46700,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 12900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42200,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1200,
+    "closingTerms": 12000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 47300,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 12200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43900,
+    "earlyFunding": 1000,
+    "b1Receipt": 400,
+    "reportAssembly": 1200,
+    "closingTerms": 13900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 55600,
+    "earlyFunding": 1300,
+    "b1Receipt": 500,
+    "reportAssembly": 1300,
+    "closingTerms": 14800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 51300,
+    "earlyFunding": 900,
+    "b1Receipt": 900,
+    "reportAssembly": 1800,
+    "closingTerms": 13200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 89400,
+    "earlyFunding": 1300,
+    "b1Receipt": 500,
+    "reportAssembly": 800,
+    "closingTerms": 14300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42800,
+    "earlyFunding": 800,
+    "b1Receipt": 600,
+    "reportAssembly": 1300,
+    "closingTerms": 10500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48300,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 14000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45700,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 900,
+    "closingTerms": 13600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45400,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 900,
+    "closingTerms": 8700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45400,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 900,
+    "closingTerms": 10800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44000,
+    "earlyFunding": 900,
+    "b1Receipt": 600,
+    "reportAssembly": 800,
+    "closingTerms": 10100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44400,
+    "earlyFunding": 800,
+    "b1Receipt": 600,
+    "reportAssembly": 1100,
+    "closingTerms": 19300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42500,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 1000,
+    "closingTerms": 15800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44300,
+    "earlyFunding": 800,
+    "b1Receipt": 300,
+    "reportAssembly": 900,
+    "closingTerms": 10000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44300,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 800,
+    "closingTerms": 10300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 38600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 9200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42500,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 23200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 61800,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1200,
+    "closingTerms": 8900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46000,
+    "earlyFunding": 500,
+    "b1Receipt": 600,
+    "reportAssembly": 2300,
+    "closingTerms": 12900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41300,
+    "earlyFunding": 700,
+    "b1Receipt": 600,
+    "reportAssembly": 800,
+    "closingTerms": 9300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45700,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 9300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44800,
+    "earlyFunding": 1300,
+    "b1Receipt": 500,
+    "reportAssembly": 2400,
+    "closingTerms": 34600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42500,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 8500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 56300,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 800,
+    "closingTerms": 12200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44500,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 14800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45500,
+    "earlyFunding": 800,
+    "b1Receipt": 300,
+    "reportAssembly": 800,
+    "closingTerms": 10400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43900,
+    "earlyFunding": 1000,
+    "b1Receipt": 500,
+    "reportAssembly": 1200,
+    "closingTerms": 16000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 38500,
+    "earlyFunding": 600,
+    "b1Receipt": 300,
+    "reportAssembly": 1300,
+    "closingTerms": 7800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45500,
+    "earlyFunding": 700,
+    "b1Receipt": 700,
+    "reportAssembly": 1000,
+    "closingTerms": 13500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44800,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 900,
+    "closingTerms": 12700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42300,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 8500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44200,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 11400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44000,
+    "earlyFunding": 600,
+    "b1Receipt": 300,
+    "reportAssembly": 900,
+    "closingTerms": 6400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43700,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 14600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39000,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 10500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44600,
+    "earlyFunding": 900,
+    "b1Receipt": 400,
+    "reportAssembly": 1700,
+    "closingTerms": 14300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43000,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 11300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 49100,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 9900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41900,
+    "earlyFunding": 1000,
+    "b1Receipt": 600,
+    "reportAssembly": 1000,
+    "closingTerms": 15600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39400,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 10400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 49100,
+    "earlyFunding": 1000,
+    "b1Receipt": 400,
+    "reportAssembly": 1500,
+    "closingTerms": 23400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44400,
+    "earlyFunding": 900,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 11400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39900,
+    "earlyFunding": 800,
+    "b1Receipt": 300,
+    "reportAssembly": 1200,
+    "closingTerms": 9200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44100,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 17000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42100,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 12800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 49400,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 11700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45700,
+    "earlyFunding": 1100,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 13700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42700,
+    "earlyFunding": 900,
+    "b1Receipt": 600,
+    "reportAssembly": 1200,
+    "closingTerms": 11500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45400,
+    "earlyFunding": 500,
+    "b1Receipt": 400,
+    "reportAssembly": 900,
+    "closingTerms": 13600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41300,
+    "earlyFunding": 900,
+    "b1Receipt": 500,
+    "reportAssembly": 900,
+    "closingTerms": 8600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46200,
+    "earlyFunding": 1000,
+    "b1Receipt": 500,
+    "reportAssembly": 1000,
+    "closingTerms": 12900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41600,
+    "earlyFunding": 500,
+    "b1Receipt": 500,
+    "reportAssembly": 1000,
+    "closingTerms": 9200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41900,
+    "earlyFunding": 1300,
+    "b1Receipt": 500,
+    "reportAssembly": 1400,
+    "closingTerms": 20800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 41300,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 11900,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 47300,
+    "earlyFunding": 1000,
+    "b1Receipt": 900,
+    "reportAssembly": 1100,
+    "closingTerms": 11600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 52700,
+    "earlyFunding": 1300,
+    "b1Receipt": 400,
+    "reportAssembly": 1400,
+    "closingTerms": 19500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43800,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1000,
+    "closingTerms": 9000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 47900,
+    "earlyFunding": 900,
+    "b1Receipt": 500,
+    "reportAssembly": 2800,
+    "closingTerms": 35800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 45900,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1700,
+    "closingTerms": 22400,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48100,
+    "earlyFunding": 800,
+    "b1Receipt": 400,
+    "reportAssembly": 1000,
+    "closingTerms": 9700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44100,
+    "earlyFunding": 600,
+    "b1Receipt": 500,
+    "reportAssembly": 900,
+    "closingTerms": 12100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43600,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 800,
+    "closingTerms": 10000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48000,
+    "earlyFunding": 700,
+    "b1Receipt": 300,
+    "reportAssembly": 1300,
+    "closingTerms": 20100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 43300,
+    "earlyFunding": 600,
+    "b1Receipt": 300,
+    "reportAssembly": 1100,
+    "closingTerms": 10600,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44200,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1200,
+    "closingTerms": 19100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44800,
+    "earlyFunding": 600,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 13800,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 42600,
+    "earlyFunding": 700,
+    "b1Receipt": 300,
+    "reportAssembly": 1600,
+    "closingTerms": 10300,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 50300,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 15100,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 39600,
+    "earlyFunding": 800,
+    "b1Receipt": 500,
+    "reportAssembly": 900,
+    "closingTerms": 11200,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 48700,
+    "earlyFunding": 900,
+    "b1Receipt": 400,
+    "reportAssembly": 1100,
+    "closingTerms": 16500,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 44600,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 1300,
+    "closingTerms": 11700,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 46100,
+    "earlyFunding": 700,
+    "b1Receipt": 400,
+    "reportAssembly": 800,
+    "closingTerms": 9000,
+    "rebuilt": false
+  },
+  {
+    "openingQuote": 40700,
+    "earlyFunding": 700,
+    "b1Receipt": 500,
+    "reportAssembly": 1100,
+    "closingTerms": 11500,
+    "rebuilt": false
+  }
+]

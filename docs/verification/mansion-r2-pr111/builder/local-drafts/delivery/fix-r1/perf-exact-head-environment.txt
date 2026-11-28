@@ -1,0 +1,52 @@
+UTC: 2026-11-28T15:05:02.7173283Z
+Base: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5 (7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4)
+Base archive SHA-256: da27a44e1a3f2be45bfe54044b8e3b28f63ab4d12f4bcf4fb0ed00d2178bb724
+Base snapshot source: D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src
+Parent commit: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Staged candidate tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+Node: v24.19.0
+CPU model: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
+Listener count on ports 4173/4174: 0
+Keep-awake enabled.
+Before CPU: 13%
+
+Name                  IDProcess PercentProcessorTime
+----                  --------- --------------------
+WmiPrvSE#2                32836                   15
+codebase-memory-mcp#3     28264                   10
+MsMpEng                    4084                   10
+codebase-memory-mcp#5     38596                   10
+powershell                30184                    5
+codebase-memory-mcp       25372                    5
+System                        4                    5
+T3 Code (Nightly)#4       39352                    5
+T3 Code (Nightly)#3       40416                    5
+codex#2                    8732                    5
+
+
+
+Pre-run SHA-256 measure-mansion-week.mjs: 055b2f4d9fb2b90b3512e0e4be0a92060799f56ad941c46d5f115a6dd32404d7
+Pre-run SHA-256 f3-rule.mjs: 86c323d2707249187ded1749d99b0f789c8b5d7686c18441997f83010acc4c36
+Pre-run SHA-256 instrument-mansion.mjs: 669800a254be942e00e1c7af20bd359a3582a756134f4a7d08d0f6f225d9d2a9
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\perf-exact-head
+Measurement exit: 1
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\perf-exact-head --instrument
+Instrumentation exit: 0
+After CPU: 1%
+
+Name                  IDProcess PercentProcessorTime
+----                  --------- --------------------
+WmiPrvSE#2                37212                   15
+codebase-memory-mcp#3     28264                    5
+codebase-memory-mcp#2      6864                    5
+System                        4                    5
+MsMpEng                    4084                    5
+codebase-memory-mcp#5     38596                    5
+codebase-memory-mcp#4     12728                    5
+node#18                   25792                    0
+node#24                   29420                    0
+node#17                     588                    0
+
+
+
+Keep-awake released at 2026-11-28T15:09:47.7322434Z.

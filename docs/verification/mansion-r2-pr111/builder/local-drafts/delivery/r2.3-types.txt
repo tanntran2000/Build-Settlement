@@ -1,0 +1,18 @@
+UTC start: 2026-11-28T13:00:15.3339388Z
+HEAD: 5c54d4914eb890e2dc433ccbcd37e2f7c70aff05
+Tree: 5753b9768c4c08c25580e43869e19829292c991c
+npm.cmd run typecheck:ui
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+Exit: 0
+UTC end: 2026-11-28T13:00:35.6172888Z

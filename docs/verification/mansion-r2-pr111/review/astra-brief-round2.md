@@ -1,0 +1,18 @@
+MANSION R2 Astra 6.2 round 2. Same review rules as round 1: review only, no edits, commits, pushes, GitHub comments or merges; no full smoke, no servers, no paired perf runs; single vitest/Playwright specs only for proof and only after confirming ports 4173/4174 are free.
+
+Target: feat/mansion-roles head bded79d6ccd0e4e97c11d3e98f22370485e827fd, tree 1b9a6b1a892f188400379539a1806c31b90dc0d7. Three fix commits on your round-1 head a601047: 2a8da29 fix(mansion): use exact defense math and honor renewal and room dues; 47996a9 test(ui): exercise Mansion role picker by keyboard; bded79d chore: record Mansion Good-route Money pace. Worktree (read only) as before; confirm HEAD and tree first.
+
+Owner (Tân), verbatim, after your round 1: "Duyệt sửa cả 6"; on the F3 HOLD: "Đo nguyên nhân trước"; on the profile HOLD: "Chấp nhận, đi tiếp".
+
+Binding plan, now corrections 8–10: C:/Users/Admin/.t3/local-drafts/mansion-r2/binding-plan-25aadfe.md (SHA-256 cf493dc60f242ce1424b95267c0a5acab300df82cb97fa89894c9193d9c0d5e9). Correction 8 items 1–6 map to your F1–F6. Correction 9 ordered a CPU profile before any perf fix; correction 10 records the owner accepting the measured End Week shift for R2 (R-026 stays open, no threshold changed).
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/ (README finding → RED → fix → GREEN, F2 reachability proof, F3 predeclared rule and paired run, f3-attribution/ profiles, exact-head gate log R2.5-correction-10-retry.txt, SHA256SUMS.txt 205 files). Builder reports gates 1–7 exit 0 (154 architecture, 3,554 unit), CI=1 smoke 452/452. Claude Tester is re-running gates and smoke independently.
+
+Check:
+1. F1, F2, F4, F5, F6 are closed at bded79d: reproduce your round-1 counterexamples (1,725 milli and 3,555 bps with the shipped catalog; the v15 save with a pending notice and weeksLeft > 0 through the real codec; two-room upkeep breakdown; Tab path at 1280/1600; 5 % pace record).
+2. F3: the new rule compares like with like, is declared before the run, and its paired result is reported truthfully; the correction 9 profile supports "same simulation work, no avoidable R2 overhead" well enough for the owner's correction 10 acceptance. Do not re-litigate the owner's acceptance; report only if the evidence misstates the data.
+3. No regression in the round-1 areas you passed (scope, report 1A, fatal 2A, rooms/purse 3A, contract end 4A, calibration bytes, UI/copy, LAW-02/03/04).
+4. No new partial matcher, loosened assertion, skip or timeout; every changed expectation is listed with its item; the six correction 7 substitutions and 124 fixture blobs are unchanged; every change in a601047..bded79d is inside the R2 allowlist and correction 8.
+5. Evidence matches (head, tree, totals, SHA256SUMS).
+
+Output: C:/Users/Admin/.t3/local-drafts/mansion-r2/astra-review/astra-round2.md (UTF-8, no ? in place of non-ASCII): head and tree checked, finding-by-finding closure table, new findings P0–P3 with file:line and why, final line VERDICT: PASS or VERDICT: FAIL (PASS = no P0–P2). Reply with a short summary: verdict, counts, path.

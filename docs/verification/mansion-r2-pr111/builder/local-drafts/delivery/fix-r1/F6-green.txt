@@ -1,0 +1,22 @@
+UTC: 2026-11-28T15:02:44.0091063Z
+HEAD: 2a8da29653ee2a83bccad53ea608c705ccfacec5
+Tree: fd0495e4e4b30defe01d0a193e0c3d2c08009977
+node scripts/mansion-calibration.ts "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/money-pace.json" --money-pace
+file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:154
+    driver?.observe(row, state, report);
+            ^
+
+TypeError: driver?.observe is not a function
+    at calibrate (file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:154:13)
+    at file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:163:66
+    at Array.flatMap (<anonymous>)
+    at file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:163:50
+    at Array.flatMap (<anonymous>)
+    at file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:163:12
+    at Array.flatMap (<anonymous>)
+    at file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:162:55
+    at Array.flatMap (<anonymous>)
+    at runCalibration (file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/scripts/money-calibration.ts:162:21)
+
+Node.js v24.19.0
+Exit: 1

@@ -1,0 +1,38 @@
+UTC: 2026-11-28T15:38:18.7291964Z
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+Base: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5
+Branch: feat/mansion-roles
+Node: v24.19.0
+npm: 11.17.0
+Listener count on ports 4173/4174: 0
+Windows keep-awake enabled for this gate process.
+Host CPU at start: 100%
+Top processes at start:
+
+Name       IDProcess PercentProcessorTime
+----       --------- --------------------
+MsMpEng         4084                  149
+node#40         4268                   52
+bash#6         24776                   48
+ChatGPT#8      17436                   44
+node#39        38220                   36
+WmiPrvSE#2     24280                   32
+node#36        37200                   32
+node#34        30588                   28
+node#38        34508                   20
+claude#2       40788                   20
+[2026-11-28T15:38:32.4804760Z] Gate 1 | git diff --check origin/main...HEAD
+[2026-11-28T15:38:32.7503411Z] Gate 1 exit 0
+[2026-11-28T15:38:32.7643415Z] Gate 2 | npm run lint
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+[2026-11-28T15:38:50.9994354Z] Gate 2 exit 0
+[2026-11-28T15:38:51.0014358Z] Gate 3 | npm run typecheck
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+[2026-11-28T15:39:03.7500435Z] Builder stopped after 100% startup CPU. Tool exit 1 after interrupt. This attempt does not qualify as a quiet-machine run.

@@ -1,0 +1,9 @@
+UTC: 2026-11-28T15:09:52.0208507Z
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+node "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/verify-scope.mjs"
+HEAD bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree 1b9a6b1a892f188400379539a1806c31b90dc0d7
+37 changed files in scope; 6 exact test substitutions; 124 fixture blobs identical; no credential-pattern matches in additions.
+All eight round-1 paths match the six approved findings.
+Exit: 0

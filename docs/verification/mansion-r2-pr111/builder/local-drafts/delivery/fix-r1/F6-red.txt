@@ -1,0 +1,25 @@
+UTC: 2026-11-28T15:02:19.6384913Z
+HEAD: 2a8da29653ee2a83bccad53ea608c705ccfacec5
+Tree: fd0495e4e4b30defe01d0a193e0c3d2c08009977
+node --input-type=module -e "import assert from 'node:assert/strict'; const m=await import('./scripts/mansion-calibration.ts'); assert.equal(typeof m.runMansionMoneyPace, 'function', 'Missing separate 5% Mansion Money pace replay');"
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing separate 5% Mansion Money pace replay
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/[eval1]:1:107 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+Exit: 1

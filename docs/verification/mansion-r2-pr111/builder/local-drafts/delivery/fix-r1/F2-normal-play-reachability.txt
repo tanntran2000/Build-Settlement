@@ -1,0 +1,22 @@
+UTC: 2026-11-28T15:05:45.8070767Z
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+git grep -n "notice = 'renewal'" a601047 -- packages/core/src packages/simulation/src ":!*test.ts" && git grep -n -C 8 "notice = 'renewal'" a601047 -- packages/simulation/src/household-week.ts
+a601047:packages/simulation/src/household-week.ts-68-    contract.weeksLeft = Math.max(0, contract.weeksLeft - 1);
+a601047:packages/simulation/src/household-week.ts-69-    if (contract.weeksLeft === 0) {
+a601047:packages/simulation/src/household-week.ts-70-      household.role = mansionResidentRole(household);
+a601047:packages/simulation/src/household-week.ts-71-      if (contract.unpaidWeeks >= rules.unpaidRefusalWeeks || contract.stressHits >= rules.stressRefusalHits) {
+a601047:packages/simulation/src/household-week.ts-72-        leftIds.add(character.id);
+a601047:packages/simulation/src/household-week.ts-73-        report.left.push(character.name);
+a601047:packages/simulation/src/household-week.ts-74-        continue;
+a601047:packages/simulation/src/household-week.ts-75-      }
+a601047:packages/simulation/src/household-week.ts:76:      household.notice = 'renewal';
+a601047:packages/simulation/src/household-week.ts-77-    } else if (character.relationshipToPlayer.affection >= rules.lifelongAffectionMin &&
+a601047:packages/simulation/src/household-week.ts-78-        household.obedience >= rules.lifelongObedienceMin &&
+a601047:packages/simulation/src/household-week.ts-79-        (household.lifelongAskWeek === null || household.lifelongAskWeek <= input.week - rules.lifelongAskGapWeeks)) {
+a601047:packages/simulation/src/household-week.ts-80-      household.notice = 'lifelong';
+a601047:packages/simulation/src/household-week.ts-81-    }
+a601047:packages/simulation/src/household-week.ts-82-    if (household.notice) report.notices.push(character.name);
+a601047:packages/simulation/src/household-week.ts-83-  }
+a601047:packages/simulation/src/household-week.ts-84-  return { npcs: leftIds.size ? npcs.filter(npc => !leftIds.has(npc.character.id)) : npcs, report, leftIds };
+Exit: 0

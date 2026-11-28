@@ -1,0 +1,391 @@
+UTC start: 2026-11-28T12:49:15.6690146Z
+HEAD: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5
+Tree: 7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4
+npm.cmd test -- packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts (8 tests | 8 failed) 224ms
+   × reports 2 Comfort from a Maid in a Bedroom and 3 in Maids’ Quarters, with no level-1 room charge 61ms
+   × adds only Head Maid leadership to Maid Comfort and leaves Guard and Captain Comfort at zero 22ms
+   × charges the entire 2835 milli short-Comfort upkeep at 2835 or leaves the Mansion debit at zero 22ms
+   × charges the entire 2835 milli short-Comfort upkeep at 2834 or leaves the Mansion debit at zero 21ms
+   × discounts building and room upkeep at level 2 when Comfort is supplied 18ms
+   × applies only funded Bedroom level 2 terms for affection starting at 50 29ms
+   × applies only funded Bedroom level 3 terms for affection starting at 50 24ms
+   × applies only funded Bedroom level 3 terms for affection starting at 100 24ms
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts (13 tests | 13 failed) 651ms
+   × refuses a second head-maid with byte-identical state 93ms
+   × refuses a second captain with byte-identical state 52ms
+   × refuses a second accountant with byte-identical state 46ms
+   × assigns, reselects and clears a role without changing the other household fields 35ms
+   × refuses a Hall resident without changing the roster 37ms
+   × checks exact fields, revision, phase and R2 role membership 35ms
+   × frees a capped seat through SELL_NPC and preserves exact departure data 51ms
+   × frees a capped seat through RELEASE_NPC and preserves exact departure data 56ms
+   × frees a capped seat through ANSWER_NOTICE and preserves exact departure data 47ms
+   × leaves the role and training with neither room nor NPC slot when moving to the Hall 49ms
+   × clears an expiring role at 0 prior payment failures before the cap is reused 72ms
+   × clears an expiring role at 3 prior payment failures before the cap is reused 61ms
+   × loads a proven death with the capped role available and rejects a live duplicate 16ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 21 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second head-maid with byte-identical state
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second captain with byte-identical state
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second accountant with byte-identical state
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "ROLE_CAP",
+-     "message": "That Mansion role is full.",
++     "code": "UNSUPPORTED_ACTION",
++     "message": "This action is not supported in Character Life.",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:20:31
+     18|   s.npcs[0].household.role = role;
+     19|   const before = JSON.stringify(s);
+     20|   expect(setRole(s, 1, role)).toStrictEqual(failure('ROLE_CAP', 'That …
+       |                               ^
+     21|   expect(JSON.stringify(s)).toBe(before);
+     22| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > assigns, reselects and clears a role without changing the other household fields
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:28:28
+     26|   const before = JSON.stringify(s);
+     27|   const assigned = setRole(s, 0, 'head-maid');
+     28|   expect(assigned.success).toBe(true);
+       |                            ^
+     29|   if (!assigned.success) throw Error(assigned.error.message);
+     30|   expect(assigned.next.npcs[0].household).toStrictEqual({ ...s.npcs[0]…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a Hall resident without changing the roster
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "ROLE_NOT_RESIDENT",
+-     "message": "Choose a Mansion resident.",
++     "code": "UNSUPPORTED_ACTION",
++     "message": "This action is not supported in Character Life.",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:44:33
+     42|   const s = buy(market(), 'guild', 0, 'estate-2');
+     43|   const before = JSON.stringify(s);
+     44|   expect(setRole(s, 0, 'maid')).toStrictEqual(failure('ROLE_NOT_RESIDE…
+       |                                 ^
+     45|   expect(JSON.stringify(s)).toBe(before);
+     46| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > checks exact fields, revision, phase and R2 role membership
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "INVALID_COMMAND",
+-     "message": "Unknown Mansion command fields.",
++     "code": "UNSUPPORTED_ACTION",
++     "message": "This action is not supported in Character Life.",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:52:69
+     50|   const npcId = s.npcs[0].character.id;
+     51|   const before = JSON.stringify(s);
+     52|   expect(command(s, 'SET_ROLE', { npcId, role: 'maid', extra: 1 })).to…
+       |                                                                     ^
+     53|   expect(command(s, 'SET_ROLE', { npcId, role: 'maid', expectedRevisio…
+     54|   expect(setRole(s, 0, 'wife')).toStrictEqual(failure('INVALID_COMMAND…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > frees a capped seat through SELL_NPC and preserves exact departure data
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > frees a capped seat through RELEASE_NPC and preserves exact departure data
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > frees a capped seat through ANSWER_NOTICE and preserves exact departure data
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:78:47
+     76|   expect(next.profiles.map(row => row.id)).toStrictEqual([s.npcs[1].ch…
+     77|   expect(next.city.society!.acquisition.departures).toStrictEqual([{ k…
+     78|   expect(setRole(next, 0, 'captain').success).toBe(true);
+       |                                               ^
+     79| });
+     80|
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > leaves the role and training with neither room nor NPC slot when moving to the Hall
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:89:50
+     87|     ...npc.household, home: 'estate-2', room: null, role: null, traini…
+     88|   });
+     89|   expect(setRole(next, 1, 'accountant').success).toBe(true);
+       |                                                  ^
+     90| });
+     91|
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > clears an expiring role at 0 prior payment failures before the cap is reused
+AssertionError: expected [ 'head-maid', 'room-3', 'renewal' ] to strictly equal [ null, 'room-3', 'renewal' ]
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  [
+-   null,
++   "head-maid",
+    "room-3",
+    "renewal",
+  ]
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:102:8
+    100|   if (unpaidWeeks === 0) {
+    101|     expect([next.npcs[0].household.role, next.npcs[0].household.room, …
+    102|       .toStrictEqual([null, npc.household.room, 'renewal']);
+       |        ^
+    103|     const before = JSON.stringify(next);
+    104|     expect(setRole(next, 0, 'maid')).toStrictEqual(failure('INVALID_CO…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > clears an expiring role at 3 prior payment failures before the cap is reused
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:109:73
+    107|     expect(renewed.npcs[0].household.role).toBeNull();
+    108|   }
+    109|   expect(setRole(next, unpaidWeeks === 0 ? 1 : 0, 'head-maid').success…
+       |                                                                         ^
+    110| });
+    111|
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > loads a proven death with the capped role available and rejects a live duplicate
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:129:56
+    127|   expect(decoded).toStrictEqual({ success: true, state: s });
+    128|   if (!decoded.success) throw Error(decoded.error.message);
+    129|   expect(setRole(decoded.state, 0, 'captain').success).toBe(true);
+       |                                                        ^
+    130|   Object.assign(former.npc.household, { home: 'estate-1', room: 'room-…
+    131|   s.npcs.push(former.npc); s.profiles.push(former.profile);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > reports 2 Comfort from a Maid in a Bedroom and 3 in Maids’ Quarters, with no level-1 room charge
+AssertionError: expected undefined to strictly equal { comfortSupply: 3, …(4) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "authority": 0,
+  "comfortNeed": 1,
+  "comfortSupply": 3,
+  "upkeepMilli": 2000,
+  "upkeepPaid": true,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:51:34
+     49|   const s = household('maid');
+     50|   const bedroom = addRoom(s, 'bedroom', 1);
+     51|   expect(end(s).report?.mansion).toStrictEqual(report(3, 1, 2000, true…
+       |                                  ^
+     52|   s.npcs[0].household.room = bedroom;
+     53|   expect(end(s).report?.mansion).toStrictEqual(report(2, 1, 2000, true…
+
+ Test Files  2 failed (2)
+      Tests  21 failed (21)
+   Start at  19:49:17
+   Duration  1.91s (transform 1.30s, setup 0ms, import 1.83s, tests 875ms, environment 0ms)
+
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > adds only Head Maid leadership to Maid Comfort and leaves Guard and Captain Comfort at zero
+AssertionError: expected undefined to strictly equal { comfortSupply: 10, …(4) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "authority": 0,
+  "comfortNeed": 4,
+  "comfortSupply": 10,
+  "upkeepMilli": 2000,
+  "upkeepPaid": true,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:60:17
+     58|   const first = end(s).report?.mansion;
+     59|   // The fitted Leader gives 3 Comfort herself and adds 150% of the Ma…
+     60|   expect(first).toStrictEqual(report(10, 4, 2000, true));
+       |                 ^
+     61|   s.npcs[1].household.role = null;
+     62|   expect(end(s).report?.mansion).toStrictEqual(report(3, 4, 3000, true…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > charges the entire 2835 milli short-Comfort upkeep at 2835 or leaves the Mansion debit at zero
+AssertionError: expected undefined to strictly equal { comfortSupply: 3, …(4) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "authority": 0,
+  "comfortNeed": 4,
+  "comfortSupply": 3,
+  "upkeepMilli": 2835,
+  "upkeepPaid": true,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:72:29
+     70|   const before = JSON.stringify(s);
+     71|   const r = end(s);
+     72|   expect(r.report?.mansion).toStrictEqual(report(paid ? 3 : 2, 4, 2835…
+       |                             ^
+     73|   expect(r.report?.householdUpkeep).toStrictEqual(paid ? { paidMilli: …
+     74|   expect(stock(r.next).gold).toBe(after);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > charges the entire 2835 milli short-Comfort upkeep at 2834 or leaves the Mansion debit at zero
+AssertionError: expected undefined to strictly equal { comfortSupply: 2, …(4) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "authority": 0,
+  "comfortNeed": 4,
+  "comfortSupply": 2,
+  "upkeepMilli": 2835,
+  "upkeepPaid": false,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:72:29
+     70|   const before = JSON.stringify(s);
+     71|   const r = end(s);
+     72|   expect(r.report?.mansion).toStrictEqual(report(paid ? 3 : 2, 4, 2835…
+       |                             ^
+     73|   expect(r.report?.householdUpkeep).toStrictEqual(paid ? { paidMilli: …
+     74|   expect(stock(r.next).gold).toBe(after);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > discounts building and room upkeep at level 2 when Comfort is supplied
+AssertionError: expected undefined to strictly equal { comfortSupply: 3, …(4) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "authority": 0,
+  "comfortNeed": 1,
+  "comfortSupply": 3,
+  "upkeepMilli": 1890,
+  "upkeepPaid": true,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:81:34
+     79|   const s = household('maid');
+     80|   mansion(s).rooms[2].level = 2;
+     81|   expect(end(s).report?.mansion).toStrictEqual(report(3, 1, 1890, true…
+       |                                  ^
+     82| });
+     83|
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/21]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > applies only funded Bedroom level 2 terms for affection starting at 50
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > applies only funded Bedroom level 3 terms for affection starting at 50
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > applies only funded Bedroom level 3 terms for affection starting at 100
+AssertionError: expected 5 to be 3 // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- 3
++ 5
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:94:30
+     92|   setQuietGold(s, 0);
+     93|   const unfunded = end(s).next.npcs[0];
+     94|   expect(funded.life.stress).toBe(unfunded.life.stress - 2);
+       |                              ^
+     95|   expect([unfunded.character.relationshipToPlayer.affection, funded.ch…
+     96|     .toStrictEqual([affection, Math.min(100, affection + Number(level …
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/21]⎯
+System.Management.Automation.RemoteException
+Exit: 1
+UTC end: 2026-11-28T12:49:19.2712881Z

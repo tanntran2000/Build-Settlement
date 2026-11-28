@@ -1,0 +1,19 @@
+UTC start: 2026-11-28T12:56:01.9037966Z
+HEAD: b21faf9a0bcaefa6ded522e00d565defb49e75bc
+Tree: e64becbc8bec3811f15eebdd80fac9c33a3d1a3b
+npm.cmd test -- packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/order-week.test.ts packages/simulation/src/__tests__/crime-week.test.ts packages/simulation/src/__tests__/item-effects.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/simulation/src/__tests__/craft-week.test.ts packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/order-week.test.ts packages/simulation/src/__tests__/crime-week.test.ts packages/simulation/src/__tests__/item-effects.test.ts packages/simulation/src/__tests__/home-robbery.test.ts packages/simulation/src/__tests__/craft-week.test.ts packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  9 passed (9)
+      Tests  296 passed (296)
+   Start at  19:56:03
+   Duration  3.91s (transform 5.50s, setup 0ms, import 9.86s, tests 8.33s, environment 2ms)
+
+Exit: 0
+UTC end: 2026-11-28T12:56:07.2479483Z

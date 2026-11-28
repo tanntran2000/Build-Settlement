@@ -1,0 +1,263 @@
+UTC start: 2026-11-28T12:54:09.4216915Z
+HEAD: b21faf9a0bcaefa6ded522e00d565defb49e75bc
+Tree: e64becbc8bec3811f15eebdd80fac9c33a3d1a3b
+npm.cmd test -- packages/simulation/src/__tests__/mansion-week.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts (28 tests | 11 failed) 412ms
+   × adds all safe-amount contributors after the legacy difficulty base and gives the Captain only Guards to boost 11ms
+   × uses four original draws at combat 50, Mansion reduction 150 and fatal roll 0.485 4ms
+   × uses four original draws at combat 50, Mansion reduction 4900 and fatal roll 0.1 2ms
+   × gates Guard Quarters fatal relief on defensive staff and funding 6ms
+   × applies the paid Vault term at card creation even with an empty Mansion 13ms
+   × raises the existing chase probability only when Guard Quarters level 2 is funded 14ms
+   × caps paid level-3 Vault loss for let-go with original held excess after reload 20ms
+   × caps paid level-3 Vault loss for chase with original held excess after reload 20ms
+   × boosts all three Accountant effects when a paid Vault exists 15ms
+   × adds only the paid Throne Room levels to the Authority target before drift 23ms
+   × accounts for Order theft and city robbery before granting the Throne Room term 23ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > adds all safe-amount contributors after the legacy difficulty base and gives the Captain only Guards to boost
+AssertionError: expected undefined to strictly equal { guard: 3750, captain: 3000, …(2) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "accountant": 1500,
+  "captain": 3000,
+  "guard": 3750,
+  "vault": 1500,
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:126:30
+    124|   s.npcs[1].household.room = guardRoom;
+    125|   const funded = mansionTerms(s)?.paid;
+    126|   expect(funded?.safeAmount).toStrictEqual({ guard: 3750, captain: 300…
+       |                              ^
+    127|   expect(safeAmountMilli(25, 'normal', funded)).toBe(31000);
+    128|   expect(safeAmountMilli(25, 'easy', funded)).toBe(52250);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > uses four original draws at combat 50, Mansion reduction 150 and fatal roll 0.485
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > uses four original draws at combat 50, Mansion reduction 4900 and fatal roll 0.1
+AssertionError: expected 'killed' to be 'wounded' // Object.is equality
+System.Management.Automation.RemoteException
+Expected: "wounded"
+Received: "killed"
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:152:33
+    150|     return roll;
+    151|   }, context, reduction);
+    152|   expect(result.event?.outcome).toBe(outcome);
+       |                                 ^
+    153|   expect(actualRolls).toStrictEqual(expectedRolls);
+    154| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > gates Guard Quarters fatal relief on defensive staff and funding
+AssertionError: expected [ undefined, undefined ] to strictly equal [ 600, 875 ]
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  [
+-   600,
+-   875,
++   undefined,
++   undefined,
+  ]
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:175:91
+    173|   s.city.tiles.find(tile => tile.id === 'estate-1')!.building!.level =…
+    174|   addRoom(s, 'guard-quarters', 3);
+    175|   expect([mansionTerms(s)?.plain?.fatalChanceBps, mansionTerms(s)?.pai…
+       |                                                                                           ^
+    176|   s.npcs[0].household.role = null;
+    177|   expect(mansionTerms(s)?.paid?.fatalChanceBps).toBe(500);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > applies the paid Vault term at card creation even with an empty Mansion
+AssertionError: expected { outcome: 'pending', …(1) } to strictly equal { outcome: 'pending', …(1) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+-   "excessMilli": 10000,
++   "excessMilli": 11500,
+    "outcome": "pending",
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:206:41
+    204|   s.player.purse.moneyMilli = 32750;
+    205|   expect(homeRobberyRoll(2, 1, 'home-robbery')).toBe(1024.834706913679…
+    206|   expect(end(s).report?.purse?.robbery).toStrictEqual({ outcome: 'pend…
+       |                                         ^
+    207|   mansion(s).rooms.find(room => room.id === vault)!.level = 2;
+    208|   expect(end(s).next.player.purse.robbery).toBeNull();
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > raises the existing chase probability only when Guard Quarters level 2 is funded
+AssertionError: expected { week: 1, excessMilli: 10000, …(2) } to strictly equal { week: 1, excessMilli: 10000, …(2) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "excessMilli": 10000,
+-   "lossMilli": 0,
+-   "outcome": "chase-success",
++   "lossMilli": 6000,
++   "outcome": "chase-failure",
+    "week": 1,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:229:6
+    227|   mansion(s).rooms.find(room => room.id === quarters)!.level = 2;
+    228|   expect(succeeded(s, 'ANSWER_ROBBERY', { option: 'chase' }).robberyRe…
+    229|     .toStrictEqual({ week: 1, excessMilli: 10000, lossMilli: 0, outcom…
+       |      ^
+    230|   stock(s).gold = 0;
+    231|   expect(succeeded(s, 'ANSWER_ROBBERY', { option: 'chase' }).robberyRe…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > caps paid level-3 Vault loss for let-go with original held excess after reload
+AssertionError: expected { week: 1, excessMilli: 10000, …(2) } to strictly equal { week: 1, excessMilli: 10000, …(2) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "excessMilli": 10000,
+-   "lossMilli": 4000,
++   "lossMilli": 6000,
+    "outcome": "let-go",
+    "week": 1,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:245:38
+    243|   const answered = succeeded(s, 'ANSWER_ROBBERY', { option });
+    244|   expect(succeeded(decoded.state, 'ANSWER_ROBBERY', { option })).toStr…
+    245|   expect(answered.robberyResolution).toStrictEqual({ week: 1, excessMi…
+       |                                      ^
+    246|   expect(answered.next.player.purse.moneyMilli).toBe(20000 - lossMilli…
+    247| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > caps paid level-3 Vault loss for chase with original held excess after reload
+AssertionError: expected { week: 1, excessMilli: 10000, …(2) } to strictly equal { week: 1, excessMilli: 10000, …(2) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "excessMilli": 10000,
+-   "lossMilli": 4000,
++   "lossMilli": 6000,
+    "outcome": "chase-failure",
+    "week": 1,
+  }
+
+ Test Files  1 failed (1)
+      Tests  11 failed | 17 passed (28)
+   Start at  19:54:10
+   Duration  1.86s (transform 867ms, setup 0ms, import 1.12s, tests 412ms, environment 0ms)
+
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:245:38
+    243|   const answered = succeeded(s, 'ANSWER_ROBBERY', { option });
+    244|   expect(succeeded(decoded.state, 'ANSWER_ROBBERY', { option })).toStr…
+    245|   expect(answered.robberyResolution).toStrictEqual({ week: 1, excessMi…
+       |                                      ^
+    246|   expect(answered.next.player.purse.moneyMilli).toBe(20000 - lossMilli…
+    247| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > boosts all three Accountant effects when a paid Vault exists
+AssertionError: expected { comfortSupply: +0, …(4) } to strictly equal { comfortSupply: +0, …(4) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+-   "authority": 2,
++   "authority": 0,
+    "comfortNeed": 1,
+    "comfortSupply": 0,
+-   "upkeepMilli": 2850,
++   "upkeepMilli": 3000,
+    "upkeepPaid": true,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:251:34
+    249| it('boosts all three Accountant effects when a paid Vault exists', () …
+    250|   const s = household('accountant');
+    251|   expect(end(s).report?.mansion).toStrictEqual(report(0, 1, 2850, true…
+       |                                  ^
+    252|   expect(mansionTerms(s)?.paid?.safeAmount.accountant).toBe(1000);
+    253|   addRoom(s, 'vault', 1);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > adds only the paid Throne Room levels to the Authority target before drift
+AssertionError: expected 40 to be 42 // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- 42
++ 40
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:264:45
+    262|     mansion(s).rooms[1].level = level;
+    263|     const result = end(s).report!;
+    264|     expect(result.order!.targets.authority).toBe(base + 2 * (level - 1…
+       |                                             ^
+    265|     expect(result.mansion).toStrictEqual(report(0, 0, 2000 + 100 * (le…
+    266|   }
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/mansion-week.test.ts > accounts for Order theft and city robbery before granting the Throne Room term
+AssertionError: expected { comfortSupply: +0, …(4) } to strictly equal { comfortSupply: +0, …(4) }
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+-   "authority": 2,
++   "authority": 0,
+    "comfortNeed": 0,
+    "comfortSupply": 0,
+    "upkeepMilli": 2100,
+    "upkeepPaid": true,
+  }
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/mansion-week.test.ts:282:26
+    280|   stock(s).gold = 2500;
+    281|   const funded = end(s).report!;
+    282|   expect(funded.mansion).toStrictEqual(report(0, 0, 2100, true, 2));
+       |                          ^
+    283|   expect(funded.order!.targets.authority).toBe(26);
+    284| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+System.Management.Automation.RemoteException
+Exit: 1
+UTC end: 2026-11-28T12:54:12.6670517Z

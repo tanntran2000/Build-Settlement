@@ -1,0 +1,161 @@
+diff --git a/packages/simulation/src/__tests__/mansion-roles.test.ts b/packages/simulation/src/__tests__/mansion-roles.test.ts
+index f9afed1..825ee03 100644
+--- a/packages/simulation/src/__tests__/mansion-roles.test.ts
++++ b/packages/simulation/src/__tests__/mansion-roles.test.ts
+@@ -1,7 +1,7 @@
+ import { expect, it } from 'vitest';
+-import { acquisitionNpc, isCharacterLifeSessionState, type CharacterLifeSessionState, type MansionRole } from '@haven/core';
++import { acquisitionNpc, isCharacterLifeSessionState, mansionPlanningEffects, mansionResidentRole, mansionTerms, type CharacterLifeSessionState, type MansionRole } from '@haven/core';
+ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
+-import { command, market, stock, succeeded, town } from './acquisition-fixture.js';
++import { command, market, populate, stock, succeeded, town } from './acquisition-fixture.js';
+ 
+ function buy(s: CharacterLifeSessionState, source: 'guild' | 'slave-market', slot: number, homeTileId = 'estate-1') {
+   return succeeded(s, 'BUY_NPC', { source, slot, homeTileId }).next;
+@@ -168,3 +168,75 @@ it('loads a proven death with the capped role available and rejects a live dupli
+   expect(isCharacterLifeSessionState(s)).toBe(false);
+   expect(stock(s).gold).toBe(1_000_000);
+ });
++
++function fittedGuards(guards: number, fitted: number) {
++  const s = town();
++  populate(s, Array<string>(guards + 1).fill('estate-1'));
++  const rooms = s.city.society!.mansion;
++  const quarters = 'room-' + rooms.nextRoomSeq++;
++  rooms.rooms.push({ id: quarters, typeId: 'guard-quarters', level: 2, furniture: [] });
++  for (const [index, npc] of s.npcs.entries()) {
++    npc.household.role = index === 0 ? 'captain' : 'guard';
++    if (index <= fitted) npc.household.room = quarters;
++  }
++  const saved = serializeCharacterLifeSave(s);
++  if (!saved.success) throw Error(saved.error.message);
++  return s;
++}
++
++it('adds exactly 1725 safe Money milli for one fitted Guard led by a fitted Captain', () => {
++  const s = fittedGuards(1, 1);
++  expect(mansionPlanningEffects(s)?.safeAmount.guard).toBe(1725);
++});
++
++it('reduces fatal chance by exactly 3555 bps for fourteen Guards with eight fitted', () => {
++  const s = fittedGuards(14, 8);
++  expect(mansionPlanningEffects(s)?.fatalChanceBps).toBe(3555);
++});
++
++function loadPendingCaptainWithRemainingWeek() {
++  const s = buy(buy(market(), 'guild', 0), 'guild', 1);
++  const household = s.npcs[0].household;
++  Object.assign(household, { role: 'captain', notice: 'renewal' });
++  household.contract!.weeksLeft = 1;
++  household.contract!.wageMilli = 2000;
++  const saved = serializeCharacterLifeSave(s);
++  if (!saved.success) throw Error(saved.error.message);
++  const read = deserializeCharacterLifeSave(saved.text);
++  expect(read).toStrictEqual({ success: true, state: s });
++  if (!read.success) throw Error(read.error.message);
++  return read.state;
++}
++
++it('excludes a loaded pending renewal with time remaining from staff eligibility, display and effects', () => {
++  const s = loadPendingCaptainWithRemainingWeek();
++  const before = JSON.stringify(s);
++  expect(mansionResidentRole(s.npcs[0].household)).toBeNull();
++  const terms = mansionTerms(s)!;
++  expect([terms.plain.safeAmount.captain, terms.paid.safeAmount.captain, terms.plain.fatalChanceBps, terms.paid.fatalChanceBps])
++    .toStrictEqual([0, 0, 0, 0]);
++  expect(setRole(s, 0, 'guard')).toStrictEqual(failure('INVALID_COMMAND', 'Renew the contract before assigning a role.'));
++  expect(JSON.stringify(s)).toBe(before);
++});
++
++it('frees a Captain cap seat in a saved renewal even when the saved contract has time remaining', () => {
++  const s = loadPendingCaptainWithRemainingWeek();
++  const next = succeeded(s, 'SET_ROLE', { npcId: s.npcs[1].character.id, role: 'captain' }).next;
++  expect(next.npcs.map(npc => npc.household)).toStrictEqual([
++    { ...s.npcs[0].household, role: null },
++    { ...s.npcs[1].household, role: 'captain' },
++  ]);
++  expect(isCharacterLifeSessionState(next)).toBe(true);
++});
++
++it('keeps the room and requires a fresh staff assignment after renewing a saved pending Captain', () => {
++  const s = loadPendingCaptainWithRemainingWeek();
++  const npcId = s.npcs[0].character.id;
++  const next = succeeded(s, 'ANSWER_NOTICE', { npcId, choice: 'renew' }).next;
++  expect(next.npcs[0].household).toStrictEqual({
++    ...s.npcs[0].household, role: null, notice: null,
++    contract: { weeksLeft: 20, wageMilli: 3000, unpaidWeeks: 0, stressHits: 0 },
++  });
++  const assigned = succeeded(next, 'SET_ROLE', { npcId, role: 'captain' }).next;
++  expect(assigned.npcs[0].household).toStrictEqual({ ...next.npcs[0].household, role: 'captain' });
++});
+diff --git a/packages/ui/src/__tests__/mansion-roles-view.test.ts b/packages/ui/src/__tests__/mansion-roles-view.test.ts
+index b45d393..3966bb5 100644
+--- a/packages/ui/src/__tests__/mansion-roles-view.test.ts
++++ b/packages/ui/src/__tests__/mansion-roles-view.test.ts
+@@ -36,7 +36,7 @@ it('shows exact neutral Comfort, Gold upkeep and Money safe amount breakdowns',
+   expect(view.mansionView(city, npcs).summary).toStrictEqual({
+     comfort: '0 / 0',
+     upkeep: [
+-      { label: 'Mansion building', value: '2 Gold' }, { label: 'Rooms', value: '0 Gold' },
++      { label: 'Mansion building', value: '2 Gold' },
+       { label: 'Total due', value: '2 Gold' },
+     ],
+     safeAmount: [
+@@ -58,6 +58,20 @@ it('reserves one exact Mansion row on the Steward letter even with no occupants'
+   expect(rows.length).toBeLessThanOrEqual(4);
+ });
+ 
++it('itemizes both upgraded rooms in the Homes upkeep breakdown', () => {
++  const { city, npcs } = state();
++  city.tiles.find(tile => tile.id === 'estate-1')!.building!.level = 3;
++  const [suite, throne] = city.society!.mansion.rooms;
++  suite.level = 2;
++  throne.level = 3;
++  expect(view.mansionView(city, npcs).summary?.upkeep).toStrictEqual([
++    { label: 'Mansion building', value: '6 Gold' },
++    { label: 'Master Suite · Level 2 (room-1)', value: '0.1 Gold' },
++    { label: 'Throne Room · Level 3 (room-2)', value: '0.2 Gold' },
++    { label: 'Total due', value: '6.3 Gold' },
++  ]);
++});
++
+ it('shows Pay, Chase and Let go loss with the same live Vault cap as the command', () => {
+   const purse = { moneyMilli: 20000, levyPercent: 0, donatedThisWeekMilli: 0, robbery: { id: 'home-robbery-w1', week: 1, excessMilli: 10000 } };
+   const effects = { safeAmount: { guard: 0, captain: 0, vault: 1500, accountant: 0 }, chaseSuccessBps: 0,
+diff --git a/tests/e2e/mansion-roles.spec.ts b/tests/e2e/mansion-roles.spec.ts
+index 0c75e2e..2b8626c 100644
+--- a/tests/e2e/mansion-roles.spec.ts
++++ b/tests/e2e/mansion-roles.spec.ts
+@@ -1,6 +1,14 @@
+ import { expect, test } from '@playwright/test';
+ import { exportLife, go, importLife, makeLifeWithNpcs, reportRegion, selectPerson } from './character-life-navigation.helpers.ts';
+ 
++async function tabToRole(page: import('@playwright/test').Page, profile: import('@playwright/test').Locator) {
++  const description = profile.getByRole('tab', { name: 'Description', exact: true });
++  await description.click();
++  await expect(description).toBeFocused();
++  await page.keyboard.press('Tab');
++  await expect(profile.getByRole('combobox', { name: 'Role', exact: true })).toBeFocused();
++}
++
+ for (const width of [1280, 1600]) {
+   test('assigns and clears a role with a visible fit room, cap and weekly breakdown at ' + width, async ({ page }) => {
+     await page.setViewportSize({ width, height: 900 });
+@@ -20,13 +28,12 @@ for (const width of [1280, 1600]) {
+     const captain = role.locator('option[value="captain"]');
+     await expect(captain).toBeDisabled();
+     await expect(captain).toHaveText('Captain · Guard Quarters · That Mansion role is full.');
+-    await role.focus();
+-    await expect(role).toBeFocused();
+-    await role.selectOption('maid');
++    await tabToRole(page, profile);
++    await page.keyboard.press('ArrowDown');
+     await expect(role).toHaveValue('maid');
+     expect((await exportLife(page)).npcs.find(npc => npc.character.id === id)?.household.role).toBe('maid');
+-    await selectPerson(page, id);
+-    await role.selectOption('');
++    await tabToRole(page, await selectPerson(page, id));
++    await page.keyboard.press('Home');
+     await expect(role).toHaveValue('');
+     expect((await exportLife(page)).npcs.find(npc => npc.character.id === id)?.household.role).toBeNull();
+ 

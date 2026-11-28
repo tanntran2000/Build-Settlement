@@ -1,0 +1,86 @@
+UTC start: 2026-11-28T13:02:54.2447442Z
+HEAD: 5c54d4914eb890e2dc433ccbcd37e2f7c70aff05
+Tree: 5753b9768c4c08c25580e43869e19829292c991c
+node node_modules/@playwright/test/cli.js test tests/e2e/mansion-roles.spec.ts
+
+Running 2 tests using 1 worker
+
+(node:2360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 (6.4s)
+(node:41312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 (5.9s)
+
+
+  1) [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+
+
+      16 |     const profile = await selectPerson(page, id);
+      17 |     const role = profile.getByRole('combobox', { name: 'Role', exact: true });
+    > 18 |     await expect(role).toBeVisible();
+         |                        ^
+      19 |     await expect(role.locator('option[value="maid"]')).toHaveText("Maid · Maids' Quarters");
+      20 |     const captain = role.locator('option[value="captain"]');
+      21 |     await expect(captain).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-roles.spec.ts:18:24
+
+    Error Context: test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+
+
+      16 |     const profile = await selectPerson(page, id);
+      17 |     const role = profile.getByRole('combobox', { name: 'Role', exact: true });
+    > 18 |     await expect(role).toBeVisible();
+         |                        ^
+      19 |     await expect(role.locator('option[value="maid"]')).toHaveText("Maid · Maids' Quarters");
+      20 |     const captain = role.locator('option[value="captain"]');
+      21 |     await expect(captain).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-roles.spec.ts:18:24
+
+    Error Context: test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 
+    [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 
+Exit: 1
+UTC end: 2026-11-28T13:03:21.4083390Z

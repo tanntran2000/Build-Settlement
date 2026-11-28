@@ -1,0 +1,53 @@
+UTC: 2026-11-28T12:51:39.896Z
+Head: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5
+Command: node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/mansion-roles.test.ts -t refuses a second
+File: packages/core/src/mansion/rules.ts
+Mutation: That Mansion role is full. => That Mansion role is occupied.
+Restored SHA-256: 130f7fc023ac5d439d35467f09fc450bfc3e50155c6255262a8735489c07e106
+Exit: 1
+STDOUT:
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts (13 tests | 3 failed | 10 skipped) 173ms
+   × refuses a second head-maid with byte-identical state 80ms
+   × refuses a second captain with byte-identical state 47ms
+   × refuses a second accountant with byte-identical state 44ms
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 10 skipped (13)
+   Start at  19:51:40
+   Duration  1.56s (transform 840ms, setup 0ms, import 1.08s, tests 173ms, environment 0ms)
+
+
+STDERR:
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second head-maid with byte-identical state
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second captain with byte-identical state
+ FAIL  packages/simulation/src/__tests__/mansion-roles.test.ts > refuses a second accountant with byte-identical state
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "error": {
+      "code": "ROLE_CAP",
+-     "message": "That Mansion role is full.",
++     "message": "That Mansion role is occupied.",
+    },
+    "success": false,
+  }
+
+ ❯ packages/simulation/src/__tests__/mansion-roles.test.ts:20:31
+     18|   s.npcs[0].household.role = role;
+     19|   const before = JSON.stringify(s);
+     20|   expect(setRole(s, 1, role)).toStrictEqual(failure('ROLE_CAP', 'That …
+       |                               ^
+     21|   expect(JSON.stringify(s)).toBe(before);
+     22| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+

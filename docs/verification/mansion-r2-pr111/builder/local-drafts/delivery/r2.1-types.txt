@@ -1,0 +1,10 @@
+UTC start: 2026-11-28T12:51:21.1560481Z
+HEAD: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5
+Tree: 7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4
+npm.cmd run typecheck:simulation
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+Exit: 0
+UTC end: 2026-11-28T12:51:25.9933987Z

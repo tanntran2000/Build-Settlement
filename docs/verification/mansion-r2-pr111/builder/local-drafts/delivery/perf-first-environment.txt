@@ -1,0 +1,47 @@
+UTC: 2026-11-28T13:09:50.0228564Z
+Base: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5 (7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4)
+Base archive SHA-256: da27a44e1a3f2be45bfe54044b8e3b28f63ab4d12f4bcf4fb0ed00d2178bb724
+Base snapshot source: D:\QI Technology\Temp\mansion-r2-base-5f3e9c538c724763b355a532f736d6ae\src
+Parent commit: 3329584b334309b9b7d83f0bfc55422f251e6362
+Staged candidate tree: e6a9be2d38a2274e3766450af5986d6cbf2dded0
+Node: v24.19.0
+CPU model: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
+Listener count on ports 4173/4174: 0
+Keep-awake enabled.
+Before CPU: 0%
+
+Name                IDProcess PercentProcessorTime
+----                --------- --------------------
+MsMpEng                  4084                   15
+WmiPrvSE#2              30640                   10
+codebase-memory-mcp     25372                    5
+System                      4                    5
+node#17                 41120                    0
+node#18                 11496                    0
+node#16                 38196                    0
+node#24                 40276                    0
+node#22                  3064                    0
+node#23                 23988                    0
+
+
+
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-5f3e9c538c724763b355a532f736d6ae\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\perf-first
+Measurement exit: 1
+After CPU: 7%
+
+Name               IDProcess PercentProcessorTime
+----               --------- --------------------
+WmiPrvSE#2             30640                   15
+System                     4                    5
+SearchProtocolHost     39004                    5
+node#18                11496                    0
+node#19                 9324                    0
+node#25                40272                    0
+node#17                41120                    0
+node#23                23988                    0
+node#24                40276                    0
+node#22                 3064                    0
+
+
+
+Keep-awake released at 2026-11-28T13:10:01.8667540Z.

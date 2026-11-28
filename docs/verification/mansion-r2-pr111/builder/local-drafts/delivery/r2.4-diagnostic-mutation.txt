@@ -1,0 +1,7 @@
+UTC start: 2026-11-28T13:09:12.1556569Z
+HEAD: 3329584b334309b9b7d83f0bfc55422f251e6362
+Tree: ea9161e25d5884c6022a7bea3404f0f09bd13716
+Get-Content -Raw -Encoding UTF8 -LiteralPath 'C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/calibration-mutation.mjs' | node --input-type=module
+{"changed":{"seed":2026,"difficulty":"normal","style":"good","week":13,"comfortSupplyBefore":3,"comfortSupplyAfter":1,"comfortNeed":2},"misses":["2026/normal/good: good-comfort"]}
+Exit: 0
+UTC end: 2026-11-28T13:09:14.0919221Z

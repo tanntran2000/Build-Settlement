@@ -1,0 +1,18 @@
+﻿UTC: 2026-11-28T14:04:31Z
+Listeners 4173/4174: 0
+CPU %: 2
+node processes: 32
+
+Name                   Id         CPU
+----                   --         ---
+codebase-memory-mcp 25372 3217.171875
+T3 Code (Nightly)   39352 3098.171875
+ChatGPT             17436   2092.4375
+codebase-memory-mcp  6864     1995.25
+msedgewebview2       6580 1754.671875
+claude              20232 1636.328125
+T3 Code (Nightly)   40416 1562.328125
+Zalo                30516 1548.796875
+
+
+

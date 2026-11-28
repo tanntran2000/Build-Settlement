@@ -1,0 +1,56 @@
+UTC: 2026-11-28T15:03:20.5137265Z
+HEAD: 2a8da29653ee2a83bccad53ea608c705ccfacec5
+Tree: fd0495e4e4b30defe01d0a193e0c3d2c08009977
+node "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/f3-old-rule-replay.mjs" "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/../perf-final-head/raw-paired.ndjson"
+{
+  "normal": [
+    {
+      "q": 0.5,
+      "candidate": 3.3089000000000013,
+      "control": 33.2406,
+      "met": true
+    },
+    {
+      "q": 0.95,
+      "candidate": 2.188200000000002,
+      "control": 59.52329999999999,
+      "met": true
+    }
+  ],
+  "easy": [
+    {
+      "q": 0.5,
+      "candidate": 1.0363000000000042,
+      "control": 9.381500000000003,
+      "met": true
+    },
+    {
+      "q": 0.95,
+      "candidate": -1.3693000000000026,
+      "control": 14.143599999999992,
+      "met": true
+    }
+  ]
+}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Normal tail is unresolved and must not clear acceptance
+
+true !== false
+
+    at file:///C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/f3-old-rule-replay.mjs:27:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+Exit: 1

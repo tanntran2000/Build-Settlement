@@ -1,0 +1,17 @@
+﻿UTC: 2026-11-28T16:25:04Z
+Listeners 4173/4174: 0
+CPU %: 9
+
+Name                   Id         CPU
+----                   --         ---
+codebase-memory-mcp 25372  3438.96875
+T3 Code (Nightly)   39352 3294.515625
+ChatGPT             17436 2161.515625
+codebase-memory-mcp  6864 2141.203125
+msedgewebview2       6580    1878.125
+claude              20232    1782.875
+T3 Code (Nightly)   40416  1668.46875
+Zalo                30516   1592.9375
+
+
+

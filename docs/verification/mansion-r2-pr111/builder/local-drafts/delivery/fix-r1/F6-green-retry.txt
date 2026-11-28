@@ -1,0 +1,11 @@
+UTC: 2026-11-28T15:02:58.6119667Z
+HEAD: 2a8da29653ee2a83bccad53ea608c705ccfacec5
+Tree: fd0495e4e4b30defe01d0a193e0c3d2c08009977
+node scripts/mansion-calibration.ts "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/money-pace.json" --money-pace
+{"seed":2026,"difficulty":"normal","first15Money":12,"target":[10,15],"closedWeeks":40,"met":true}
+{"seed":2026,"difficulty":"easy","first15Money":6,"target":[5,8],"closedWeeks":40,"met":true}
+{"seed":2027,"difficulty":"normal","first15Money":12,"target":[10,15],"closedWeeks":40,"met":true}
+{"seed":2027,"difficulty":"easy","first15Money":6,"target":[5,8],"closedWeeks":40,"met":true}
+{"seed":2028,"difficulty":"normal","first15Money":12,"target":[10,15],"closedWeeks":40,"met":true}
+{"seed":2028,"difficulty":"easy","first15Money":6,"target":[5,8],"closedWeeks":40,"met":true}
+Exit: 0

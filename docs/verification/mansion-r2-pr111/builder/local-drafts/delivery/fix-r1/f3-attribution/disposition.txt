@@ -1,0 +1,5 @@
+Mansion R2 Correction 9 — final attribution disposition
+Status: HOLD, Correction 9 item 4. Shared clone and validation stacks account for the largest captured shifts. Same clone input digests and validation workload. Small Mansion gameplay changes do not account for the failed paired gate.
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+Code changes: none. Full gates, CI=1 smoke, push and PR: not started.

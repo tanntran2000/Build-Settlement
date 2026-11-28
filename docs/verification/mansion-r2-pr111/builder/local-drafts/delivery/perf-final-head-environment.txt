@@ -1,0 +1,47 @@
+UTC: 2026-11-28T13:15:23.1541230Z
+Base: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5 (7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4)
+Base archive SHA-256: da27a44e1a3f2be45bfe54044b8e3b28f63ab4d12f4bcf4fb0ed00d2178bb724
+Base snapshot source: D:\QI Technology\Temp\mansion-r2-base-4a83065315c643d3bf6545c3002947e7\src
+Parent commit: a60104711b8c764097455519ded20bf1923494c8
+Staged candidate tree: d43f08fa5c58b7262df05dfb5bc2e24a38c69d18
+Node: v24.19.0
+CPU model: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
+Listener count on ports 4173/4174: 0
+Keep-awake enabled.
+Before CPU: 0%
+
+Name       IDProcess PercentProcessorTime
+----       --------- --------------------
+WmiPrvSE#2      9080                   15
+node#17        41120                    0
+node#18        11496                    0
+node#16        38196                    0
+node#15        20176                    0
+node#14        10272                    0
+node#22         3064                    0
+node#23        23988                    0
+node#24        40276                    0
+node#19         9324                    0
+
+
+
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-4a83065315c643d3bf6545c3002947e7\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\perf-final-head
+Measurement exit: 0
+After CPU: 0%
+
+Name       IDProcess PercentProcessorTime
+----       --------- --------------------
+WmiPrvSE#2      9080                   15
+dwm            35204                    5
+node#17        41120                    0
+node#18        11496                    0
+node#15        20176                    0
+node#16        38196                    0
+node#22         3064                    0
+node#23        23988                    0
+node#24        40276                    0
+node#19         9324                    0
+
+
+
+Keep-awake released at 2026-11-28T13:16:05.1956221Z.

@@ -1,0 +1,477 @@
+UTC start: 2026-11-28T13:00:15.3619369Z
+HEAD: 5c54d4914eb890e2dc433ccbcd37e2f7c70aff05
+Tree: 5753b9768c4c08c25580e43869e19829292c991c
+npm.cmd run test:smoke -- tests/e2e/mansion-roles.spec.ts tests/e2e/ledger.spec.ts tests/e2e/home-robbery.spec.ts
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 296 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-fY_O08Ly.css                   41.77 kB │ gzip:   8.32 kB
+dist/assets/index-BoOxpPGB.js                   589.53 kB │ gzip: 187.18 kB
+System.Management.Automation.RemoteException
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.49s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/mansion-roles.spec.ts tests/e2e/ledger.spec.ts tests/e2e/home-robbery.spec.ts
+
+
+Running 18 tests using 1 worker
+
+(node:22580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 (12.4s)
+(node:26792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1280 (2.7s)
+  x   3 [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the easy home robbery at 1600 (12.9s)
+(node:39268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 [chromium] › tests\e2e\home-robbery.spec.ts:90:3 › describes all controls blocked by the Money reserve at 1600 (2.6s)
+  ok  5 [chromium] › tests\e2e\home-robbery.spec.ts:137:1 › rejects a robbery card one milli above Money and preserves the session and local checkpoint (1.8s)
+  ok  6 [chromium] › tests\e2e\home-robbery.spec.ts:160:1 › shows the exact card exposure and option losses after a permitted donation (2.5s)
+  ok  7 [chromium] › tests\e2e\home-robbery.spec.ts:181:1 › blocks a 5 Money Market purchase only while the same balance includes a 4 Money hold (2.7s)
+  ok  8 [chromium] › tests\e2e\home-robbery.spec.ts:220:1 › shows crisis first and resumes between the two answers from IndexedDB and JSON (4.9s)
+  ok  9 [chromium] › tests\e2e\ledger.spec.ts:62:1 › B3 empty Report and blocked fonts retain the fallback at both widths (2.6s)
+  x  10 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 new-game letters preserve rows, Details and complete report parity (1.0s)
+(node:31100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-raid letters preserve rows, Details and complete report parity (1.2s)
+(node:27580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-wound letters preserve rows, Details and complete report parity (1.5s)
+(node:38012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 laws letters preserve rows, Details and complete report parity (1.7s)
+(node:13728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [chromium] › tests\e2e\ledger.spec.ts:124:1 › B3 urgent letter precedes reports and keeps crisis command behavior (10.8s)
+(node:5648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 rebellion is one sealed letter with unchanged fall behavior (1.5s)
+  ok 16 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 assassination is one sealed letter with unchanged fall behavior (1.4s)
+  x  17 [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 (5.9s)
+(node:21076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  18 [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 (6.0s)
+
+
+  1) [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd') with timeout 5000ms
+      - waiting for locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+       at character-life-navigation.helpers.ts:620
+
+      618 |   } else await expect(purse).toHaveCount(0);
+      619 |   const mansion = panel.locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd');
+    > 620 |   await expect(mansion).toHaveCount(expected.mansion ? 1 : 0);
+          |                         ^
+      621 |   if (expected.mansion) {
+      622 |     const value = (await mansion.textContent()) ?? '';
+      623 |     const parts = /^Comfort ([\d,]+) \/ ([\d,]+) · Upkeep ([\d,.]+) Gold (paid|unpaid) · Authority \+([\d,]+)$/.exec(value);
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:620:25)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\home-robbery.spec.ts:53:5
+
+    Error Context: test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-renders-and-a-49d97-normal-home-robbery-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the easy home robbery at 1600 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd') with timeout 5000ms
+      - waiting for locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+       at character-life-navigation.helpers.ts:620
+
+      618 |   } else await expect(purse).toHaveCount(0);
+      619 |   const mansion = panel.locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd');
+    > 620 |   await expect(mansion).toHaveCount(expected.mansion ? 1 : 0);
+          |                         ^
+      621 |   if (expected.mansion) {
+      622 |     const value = (await mansion.textContent()) ?? '';
+      623 |     const parts = /^Comfort ([\d,]+) \/ ([\d,]+) · Upkeep ([\d,.]+) Gold (paid|unpaid) · Authority \+([\d,]+)$/.exec(value);
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:620:25)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\home-robbery.spec.ts:53:5
+
+    Error Context: test-results\home-robbery-renders-and-a-72205-e-easy-home-robbery-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\home-robbery-renders-and-a-72205-e-easy-home-robbery-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\home-robbery-renders-and-a-72205-e-easy-home-robbery-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 new-game letters preserve rows, Details and complete report parity 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -3,20 +3,20 @@
+          "label": "Gold",
+          "tone": "gain",
+          "value": "120 → 140.755",
+        },
+        Object {
+    +     "label": "Tax",
+    +     "tone": "gain",
+    +     "value": "+24",
+    +   },
+    +   Object {
+          "label": "Upkeep paid",
+          "tone": "loss",
+          "value": "−2",
+        },
+        Object {
+          "label": "Household upkeep",
+          "tone": "loss",
+          "value": "3 Gold paid",
+    -   },
+    -   Object {
+    -     "label": "Mansion",
+    -     "tone": "muted",
+    -     "value": "Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0",
+        },
+      ]
+
+      91 |       await expect(details).not.toHaveAttribute('open');
+      92 |       expect(await region.locator('dl.letter-rows > div').count()).toBeLessThanOrEqual(4);
+    > 93 |       expect(await region.locator('dl.letter-rows > div').evaluateAll(nodes => nodes.map(node => ({ label: node.querySelector('dt')!.textContent, value: node.querySelector('dd')?.textContent ?? '', tone: node.getAttribute('data-tone') })))).toEqual(letter.rows);
+         |                                                                                                                                                                                                                                                  ^
+      94 |       const colours = { gain: 'rgb(47, 93, 42)', loss: 'rgb(140, 42, 31)', muted: 'rgb(107, 79, 46)' };
+      95 |       for (const row of await region.locator('dl.letter-rows > div').all()) {
+      96 |         const tone = await row.getAttribute('data-tone') as keyof typeof colours;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\ledger.spec.ts:93:242
+
+    Error Context: test-results\ledger-B3-new-game-letters-1abf4--and-complete-report-parity-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ledger-B3-new-game-letters-1abf4--and-complete-report-parity-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ledger-B3-new-game-letters-1abf4--and-complete-report-parity-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-raid letters preserve rows, Details and complete report parity 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -1,20 +1,20 @@
+      Array [
+        Object {
+    +     "label": "Gold",
+    +     "tone": "gain",
+    +     "value": "112 → 127.039",
+    +   },
+    +   Object {
+          "label": "Upkeep paid",
+          "tone": "loss",
+          "value": "−3",
+        },
+        Object {
+          "label": "Household upkeep",
+          "tone": "loss",
+          "value": "3 Gold paid",
+    -   },
+    -   Object {
+    -     "label": "Mansion",
+    -     "tone": "muted",
+    -     "value": "Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0",
+        },
+        Object {
+          "label": "Gold stolen",
+          "tone": "loss",
+          "value": "−4.716",
+
+      91 |       await expect(details).not.toHaveAttribute('open');
+      92 |       expect(await region.locator('dl.letter-rows > div').count()).toBeLessThanOrEqual(4);
+    > 93 |       expect(await region.locator('dl.letter-rows > div').evaluateAll(nodes => nodes.map(node => ({ label: node.querySelector('dt')!.textContent, value: node.querySelector('dd')?.textContent ?? '', tone: node.getAttribute('data-tone') })))).toEqual(letter.rows);
+         |                                                                                                                                                                                                                                                  ^
+      94 |       const colours = { gain: 'rgb(47, 93, 42)', loss: 'rgb(140, 42, 31)', muted: 'rgb(107, 79, 46)' };
+      95 |       for (const row of await region.locator('dl.letter-rows > div').all()) {
+      96 |         const tone = await row.getAttribute('data-tone') as keyof typeof colours;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\ledger.spec.ts:93:242
+
+    Error Context: test-results\ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-wound letters preserve rows, Details and complete report parity 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -1,20 +1,20 @@
+      Array [
+        Object {
+    +     "label": "Gold",
+    +     "tone": "gain",
+    +     "value": "120 → 132.849",
+    +   },
+    +   Object {
+          "label": "Upkeep paid",
+          "tone": "loss",
+          "value": "−2",
+        },
+        Object {
+          "label": "Household upkeep",
+          "tone": "loss",
+          "value": "3 Gold paid",
+    -   },
+    -   Object {
+    -     "label": "Mansion",
+    -     "tone": "muted",
+    -     "value": "Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0",
+        },
+        Object {
+          "label": "Gold stolen",
+          "tone": "loss",
+          "value": "−7.906",
+
+      91 |       await expect(details).not.toHaveAttribute('open');
+      92 |       expect(await region.locator('dl.letter-rows > div').count()).toBeLessThanOrEqual(4);
+    > 93 |       expect(await region.locator('dl.letter-rows > div').evaluateAll(nodes => nodes.map(node => ({ label: node.querySelector('dt')!.textContent, value: node.querySelector('dd')?.textContent ?? '', tone: node.getAttribute('data-tone') })))).toEqual(letter.rows);
+         |                                                                                                                                                                                                                                                  ^
+      94 |       const colours = { gain: 'rgb(47, 93, 42)', loss: 'rgb(140, 42, 31)', muted: 'rgb(107, 79, 46)' };
+      95 |       for (const row of await region.locator('dl.letter-rows > div').all()) {
+      96 |         const tone = await row.getAttribute('data-tone') as keyof typeof colours;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\ledger.spec.ts:93:242
+
+    Error Context: test-results\ledger-B3-crime-wound-lett-aa6c4--and-complete-report-parity-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ledger-B3-crime-wound-lett-aa6c4--and-complete-report-parity-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ledger-B3-crime-wound-lett-aa6c4--and-complete-report-parity-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 laws letters preserve rows, Details and complete report parity 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 5
+
+    @@ -3,20 +3,20 @@
+          "label": "Gold",
+          "tone": "gain",
+          "value": "1,029.861 → 1,045.444",
+        },
+        Object {
+    +     "label": "Tax",
+    +     "tone": "gain",
+    +     "value": "+23.328",
+    +   },
+    +   Object {
+          "label": "Upkeep paid",
+          "tone": "loss",
+          "value": "−4",
+        },
+        Object {
+          "label": "Household upkeep",
+          "tone": "loss",
+          "value": "3 Gold paid",
+    -   },
+    -   Object {
+    -     "label": "Mansion",
+    -     "tone": "muted",
+    -     "value": "Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0",
+        },
+      ]
+
+      91 |       await expect(details).not.toHaveAttribute('open');
+      92 |       expect(await region.locator('dl.letter-rows > div').count()).toBeLessThanOrEqual(4);
+    > 93 |       expect(await region.locator('dl.letter-rows > div').evaluateAll(nodes => nodes.map(node => ({ label: node.querySelector('dt')!.textContent, value: node.querySelector('dd')?.textContent ?? '', tone: node.getAttribute('data-tone') })))).toEqual(letter.rows);
+         |                                                                                                                                                                                                                                                  ^
+      94 |       const colours = { gain: 'rgb(47, 93, 42)', loss: 'rgb(140, 42, 31)', muted: 'rgb(107, 79, 46)' };
+      95 |       for (const row of await region.locator('dl.letter-rows > div').all()) {
+      96 |         const tone = await row.getAttribute('data-tone') as keyof typeof colours;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\ledger.spec.ts:93:242
+
+    Error Context: test-results\ledger-B3-laws-letters-pre-bc4f0--and-complete-report-parity-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ledger-B3-laws-letters-pre-bc4f0--and-complete-report-parity-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ledger-B3-laws-letters-pre-bc4f0--and-complete-report-parity-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests\e2e\ledger.spec.ts:124:1 › B3 urgent letter precedes reports and keeps crisis command behavior 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd') with timeout 5000ms
+      - waiting for locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]').locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+       at character-life-navigation.helpers.ts:620
+
+      618 |   } else await expect(purse).toHaveCount(0);
+      619 |   const mansion = panel.locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd');
+    > 620 |   await expect(mansion).toHaveCount(expected.mansion ? 1 : 0);
+          |                         ^
+      621 |   if (expected.mansion) {
+      622 |     const value = (await mansion.textContent()) ?? '';
+      623 |     const parts = /^Comfort ([\d,]+) \/ ([\d,]+) · Upkeep ([\d,.]+) Gold (paid|unpaid) · Authority \+([\d,]+)$/.exec(value);
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:620:25)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\ledger.spec.ts:141:52
+
+    Error Context: test-results\ledger-B3-urgent-letter-pr-62876-eps-crisis-command-behavior-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\ledger-B3-urgent-letter-pr-62876-eps-crisis-command-behavior-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\ledger-B3-urgent-letter-pr-62876-eps-crisis-command-behavior-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+
+
+      16 |     const profile = await selectPerson(page, id);
+      17 |     const role = profile.getByRole('combobox', { name: 'Role', exact: true });
+    > 18 |     await expect(role).toBeVisible();
+         |                        ^
+      19 |     await expect(role.locator('option[value="maid"]')).toHaveText("Maid · Maids' Quarters");
+      20 |     const captain = role.locator('option[value="captain"]');
+      21 |     await expect(captain).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-roles.spec.ts:18:24
+
+    Error Context: test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-roles-assigns-and--fb3b2-nd-weekly-breakdown-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('combobox', { name: 'Role', exact: true })
+
+
+      16 |     const profile = await selectPerson(page, id);
+      17 |     const role = profile.getByRole('combobox', { name: 'Role', exact: true });
+    > 18 |     await expect(role).toBeVisible();
+         |                        ^
+      19 |     await expect(role.locator('option[value="maid"]')).toHaveText("Maid · Maids' Quarters");
+      20 |     const captain = role.locator('option[value="captain"]');
+      21 |     await expect(captain).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-roles.spec.ts:18:24
+
+    Error Context: test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-roles-assigns-and--ef0ae-nd-weekly-breakdown-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the normal home robbery at 1280 
+    [chromium] › tests\e2e\home-robbery.spec.ts:21:3 › renders and answers the easy home robbery at 1600 
+    [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 new-game letters preserve rows, Details and complete report parity 
+    [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-raid letters preserve rows, Details and complete report parity 
+    [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-wound letters preserve rows, Details and complete report parity 
+    [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 laws letters preserve rows, Details and complete report parity 
+    [chromium] › tests\e2e\ledger.spec.ts:124:1 › B3 urgent letter precedes reports and keeps crisis command behavior 
+    [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1280 
+    [chromium] › tests\e2e\mansion-roles.spec.ts:5:3 › assigns and clears a role with a visible fit room, cap and weekly breakdown at 1600 
+  9 passed (1.7m)
+Exit: 1
+UTC end: 2026-11-28T13:02:12.9492415Z

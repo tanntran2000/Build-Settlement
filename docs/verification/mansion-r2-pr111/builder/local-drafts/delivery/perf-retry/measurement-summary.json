@@ -1,0 +1,162 @@
+{
+  "utc": "2026-11-28T13:11:04.921Z",
+  "node": "v24.19.0",
+  "base": "13cf5b165c36872d1ac216e4a8a161b79f3fb7c5",
+  "baseTree": "7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4",
+  "head": "3329584b334309b9b7d83f0bfc55422f251e6362",
+  "headTree": "e6a9be2d38a2274e3766450af5986d6cbf2dded0",
+  "paired": [
+    {
+      "difficulty": "normal",
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "hashA": "6d6badfb54a442d26d9384c3c5d03d01922c2d713d86999fb852d6e23da9ec9c",
+      "hashB": "d6fd4140f38105b3aa10ec0b9953b34d5ea1d70a2f5b7934d0d417ea33c7c84a",
+      "baseMs": {
+        "n": 64,
+        "median": 44.2751,
+        "p95": 50.171,
+        "max": 53.5108,
+        "min": 37.9496
+      },
+      "headMs": {
+        "n": 64,
+        "median": 46.6272,
+        "p95": 52.7992,
+        "max": 61.8568,
+        "min": 39.8797
+      },
+      "pairedMedianDeltaMs": {
+        "n": 8,
+        "median": 2.7665000000000006,
+        "p95": 4.246200000000002,
+        "max": 4.246200000000002,
+        "min": -0.0782999999999987
+      },
+      "aaMedianDeltaMs": {
+        "n": 8,
+        "median": -0.5639000000000038,
+        "p95": 4.753900000000002,
+        "max": 4.753900000000002,
+        "min": -1.3965000000000032
+      },
+      "pairedP95DeltaMs": {
+        "n": 8,
+        "median": 1.3372000000000028,
+        "p95": 15.286499999999997,
+        "max": 15.286499999999997,
+        "min": -6.2413000000000025
+      },
+      "aaP95DeltaMs": {
+        "n": 8,
+        "median": 4.352800000000002,
+        "p95": 7.8980999999999995,
+        "max": 7.8980999999999995,
+        "min": -2.9543999999999997
+      },
+      "medianWithinNoise": true,
+      "tailWithinNoise": true
+    },
+    {
+      "difficulty": "easy",
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "hashA": "b2201f829b8403f8d68b2ba060bf83931c385f537d1a39b4faf68456c7c09454",
+      "hashB": "b2ba989d0dd56ac61339d9f6f7792334eca06742a659e84b92760278d4922d6e",
+      "baseMs": {
+        "n": 64,
+        "median": 44.1817,
+        "p95": 53.9766,
+        "max": 104.4422,
+        "min": 41.9171
+      },
+      "headMs": {
+        "n": 64,
+        "median": 46.2235,
+        "p95": 158.7459,
+        "max": 251.8567,
+        "min": 43.5012
+      },
+      "pairedMedianDeltaMs": {
+        "n": 8,
+        "median": 1.7488000000000028,
+        "p95": 98.26150000000001,
+        "max": 98.26150000000001,
+        "min": 0.5088000000000008
+      },
+      "aaMedianDeltaMs": {
+        "n": 8,
+        "median": -0.02039999999999509,
+        "p95": 2.1929000000000016,
+        "max": 2.1929000000000016,
+        "min": -19.649100000000004
+      },
+      "pairedP95DeltaMs": {
+        "n": 8,
+        "median": 0.24020000000000152,
+        "p95": 147.41449999999998,
+        "max": 147.41449999999998,
+        "min": -1.654599999999995
+      },
+      "aaP95DeltaMs": {
+        "n": 8,
+        "median": -0.47640000000000526,
+        "p95": 8.937599999999996,
+        "max": 8.937599999999996,
+        "min": -13.979199999999992
+      },
+      "medianWithinNoise": true,
+      "tailWithinNoise": true
+    }
+  ],
+  "isolated": [
+    {
+      "difficulty": "normal",
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "ms": {
+        "n": 20000,
+        "median": 0.0023,
+        "p95": 0.0023,
+        "max": 0.0968,
+        "min": 0.0021
+      },
+      "thresholdMedianMs": 0.05,
+      "met": true
+    },
+    {
+      "difficulty": "easy",
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "ms": {
+        "n": 20000,
+        "median": 0.0022,
+        "p95": 0.0024,
+        "max": 0.0486,
+        "min": 0.0021
+      },
+      "thresholdMedianMs": 0.05,
+      "met": true
+    }
+  ],
+  "neutral": [
+    {
+      "difficulty": "normal",
+      "legacySha256": "3f9e97f95e800809cda272139c9b695cb9d1a4a1164e19d0f8c8fba953f7241f",
+      "mansion": {
+        "comfortSupply": 0,
+        "comfortNeed": 0,
+        "upkeepMilli": 2000,
+        "upkeepPaid": true,
+        "authority": 0
+      }
+    },
+    {
+      "difficulty": "easy",
+      "legacySha256": "2053b0a5200e49548240b1e5dbdec4c89d7590caf55ec533e795193ac2488089",
+      "mansion": {
+        "comfortSupply": 0,
+        "comfortNeed": 0,
+        "upkeepMilli": 1632,
+        "upkeepPaid": true,
+        "authority": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+UTC start: 2026-11-28T12:58:16.2735881Z
+HEAD: 5c54d4914eb890e2dc433ccbcd37e2f7c70aff05
+Tree: 5753b9768c4c08c25580e43869e19829292c991c
+npm.cmd test -- packages/ui/src/__tests__/mansion-roles-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/mansion-roles-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/mansion-roles-view.test.ts (4 tests | 4 failed) 92ms
+   × labels the fit rooms and derives the same capped role reason as dispatch 33ms
+   × shows exact neutral Comfort, Gold upkeep and Money safe amount breakdowns 11ms
+   × reserves one exact Mansion row on the Steward letter even with no occupants 42ms
+   × shows Pay, Chase and Let go loss with the same live Vault cap as the command 4ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/ui/src/__tests__/mansion-roles-view.test.ts > labels the fit rooms and derives the same capped role reason as dispatch
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ packages/ui/src/__tests__/mansion-roles-view.test.ts:20:35
+     18|   for (const { household } of s.npcs) Object.assign(household, { home:…
+     19|   s.npcs[0].household.role = 'head-maid';
+     20|   expect(view.mansionRoleOptions).toBeTypeOf('function');
+       |                                   ^
+     21|   expect(view.mansionRoleOptions(s.city, s.npcs, s.npcs[1])).toStrictE…
+     22|     { role: null, name: 'None', fitRoom: null, reason: '' },
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/ui/src/__tests__/mansion-roles-view.test.ts > shows exact neutral Comfort, Gold upkeep and Money safe amount breakdowns
+AssertionError: expected undefined to strictly equal { comfort: '0 / 0', …(2) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "comfort": "0 / 0",
+  "safeAmount": [
+    {
+      "label": "Security and difficulty",
+      "value": "22.5 Money",
+    },
+    {
+      "label": "Guards",
+      "value": "0 Money",
+    },
+    {
+      "label": "Captain",
+      "value": "0 Money",
+    },
+    {
+      "label": "Vault",
+      "value": "0 Money",
+    },
+    {
+      "label": "Accountant",
+      "value": "0 Money",
+    },
+    {
+      "label": "Total safe",
+      "value": "22.5 Money",
+    },
+  ],
+  "upkeep": [
+    {
+      "label": "Mansion building",
+      "value": "2 Gold",
+    },
+    {
+      "label": "Rooms",
+      "value": "0 Gold",
+    },
+    {
+      "label": "Total due",
+      "value": "2 Gold",
+    },
+  ],
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/ui/src/__tests__/mansion-roles-view.test.ts:36:48
+     34| it('shows exact neutral Comfort, Gold upkeep and Money safe amount bre…
+     35|   const { city, npcs } = state();
+     36|   expect(view.mansionView(city, npcs).summary).toStrictEqual({
+       |                                                ^
+     37|     comfort: '0 / 0',
+     38|     upkeep: [
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/ui/src/__tests__/mansion-roles-view.test.ts > reserves one exact Mansion row on the Steward letter even with no occupants
+AssertionError: expected undefined to strictly equal { label: 'Mansion', …(2) }
+System.Management.Automation.RemoteException
+- Expected:
+{
+  "label": "Mansion",
+  "tone": "muted",
+  "value": "Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0",
+}
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/ui/src/__tests__/mansion-roles-view.test.ts:57:6
+     55|   const rows = reportLetters(result.report).find(letter => letter.id =…
+     56|   expect(rows.find(row => row.label === 'Mansion'))
+     57|     .toStrictEqual({ label: 'Mansion', value: 'Comfort 0 / 0 · Upkeep …
+       |      ^
+     58|   expect(rows.length).toBeLessThanOrEqual(4);
+     59| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/ui/src/__tests__/mansion-roles-view.test.ts > shows Pay, Chase and Let go loss with the same live Vault cap as the command
+AssertionError: expected [ { option: 'pay', …(3) }, …(2) ] to strictly equal [ { option: 'pay', …(3) }, …(2) ]
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+@@ -5,16 +5,16 @@
+      "option": "pay",
+      "reason": "",
+    },
+    {
+      "label": "Chase",
+-     "lossMilli": 4000,
++     "lossMilli": 6000,
+      "option": "chase",
+      "reason": "",
+    },
+    {
+      "label": "Let go",
+-     "lossMilli": 4000,
++     "lossMilli": 6000,
+      "option": "let-go",
+      "reason": "",
+    },
+  ]
+System.Management.Automation.RemoteException
+ ❯ packages/ui/src/__tests__/mansion-roles-view.test.ts:65:57
+     63|   const effects = { safeAmount: { guard: 0, captain: 0, vault: 1500, a…
+     64|     robberyChanceBps: 0, vaultLossCapBps: 4000 };
+     65|   expect(homeRobberyOptions(purse, 30, false, effects)).toStrictEqual([
+       |                                                         ^
+     66|     { option: 'pay', label: 'Pay', lossMilli: 2500, reason: '' },
+     67|     { option: 'chase', label: 'Chase', lossMilli: 4000, reason: '' },
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  19:58:17
+   Duration  1.63s (transform 916ms, setup 0ms, import 1.19s, tests 92ms, environment 0ms)
+
+Exit: 1
+UTC end: 2026-11-28T12:58:19.4222690Z

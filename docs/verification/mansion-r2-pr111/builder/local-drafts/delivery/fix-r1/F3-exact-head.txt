@@ -1,0 +1,238 @@
+UTC: 2026-11-28T15:05:01.8337485Z
+HEAD: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/fix-r1/run-f3.ps1" -Attempt exact-head
+UTC: 2026-11-28T15:05:02.7173283Z
+Base: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5 (7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4)
+Base archive SHA-256: da27a44e1a3f2be45bfe54044b8e3b28f63ab4d12f4bcf4fb0ed00d2178bb724
+Base snapshot source: D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src
+Parent commit: bded79d6ccd0e4e97c11d3e98f22370485e827fd
+Staged candidate tree: 1b9a6b1a892f188400379539a1806c31b90dc0d7
+Node: v24.19.0
+CPU model: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
+Listener count on ports 4173/4174: 0
+Keep-awake enabled.
+Before CPU: 13%
+
+Name                  IDProcess PercentProcessorTime
+----                  --------- --------------------
+WmiPrvSE#2                32836                   15
+codebase-memory-mcp#3     28264                   10
+MsMpEng                    4084                   10
+codebase-memory-mcp#5     38596                   10
+powershell                30184                    5
+codebase-memory-mcp       25372                    5
+System                        4                    5
+T3 Code (Nightly)#4       39352                    5
+T3 Code (Nightly)#3       40416                    5
+codex#2                    8732                    5
+
+
+
+Pre-run SHA-256 measure-mansion-week.mjs: 055b2f4d9fb2b90b3512e0e4be0a92060799f56ad941c46d5f115a6dd32404d7
+Pre-run SHA-256 f3-rule.mjs: 86c323d2707249187ded1749d99b0f789c8b5d7686c18441997f83010acc4c36
+Pre-run SHA-256 instrument-mansion.mjs: 669800a254be942e00e1c7af20bd359a3582a756134f4a7d08d0f6f225d9d2a9
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\perf-exact-head
+{"difficulty":"normal","met":false,"pooled":{"baseMs":{"n":384,"median":45.8716,"p95":72.7386,"min":41.0339,"max":157.566},"headMs":{"n":384,"median":47.3336,"p95":77.7151,"min":42.4015,"max":137.6596},"aa1":{"n":384,"median":45.4519,"p95":71.0102,"min":40.7313,"max":154.8102},"aa2":{"n":384,"median":45.5554,"p95":71.4727,"min":40.624,"max":183.4783}},"metrics":{"median":{"pooledCandidate":1.4619999999999962,"pooledControl":0.10349999999999682,"pooledBound":0.10349999999999682,"blockCandidate":2.398999999999994,"controlBound":0.8351000000000042,"pooledMet":false,"blockMet":false},"p95":{"pooledCandidate":4.9765000000000015,"pooledControl":0.4625000000000057,"pooledBound":0.4625000000000057,"blockCandidate":12.0094,"controlBound":26.158199999999994,"pooledMet":false,"blockMet":true}}}
+{"difficulty":"easy","met":false,"pooled":{"baseMs":{"n":384,"median":43.4713,"p95":68.0966,"min":40.367,"max":155.3523},"headMs":{"n":384,"median":45.2184,"p95":71.0357,"min":41.8415,"max":175.0647},"aa1":{"n":384,"median":43.6213,"p95":64.3527,"min":40.332,"max":139.6667},"aa2":{"n":384,"median":43.5918,"p95":66.4877,"min":40.3563,"max":111.448}},"metrics":{"median":{"pooledCandidate":1.7471000000000032,"pooledControl":-0.02949999999999875,"pooledBound":0.02949999999999875,"blockCandidate":2.3988000000000014,"controlBound":1.0257999999999967,"pooledMet":false,"blockMet":false},"p95":{"pooledCandidate":2.9391000000000105,"pooledControl":2.135000000000005,"pooledBound":2.135000000000005,"blockCandidate":4.7391000000000005,"controlBound":16.739400000000003,"pooledMet":false,"blockMet":true}}}
+{"isolated":[{"difficulty":"normal","fixtureSha256":"b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f","ms":{"n":20000,"median":0.005,"p95":0.0069,"min":0.0027,"max":0.3208},"thresholdMedianMs":0.05,"met":true},{"difficulty":"easy","fixtureSha256":"a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7","ms":{"n":20000,"median":0.002,"p95":0.0021,"min":0.0019,"max":0.0402},"thresholdMedianMs":0.05,"met":true}],"earlyTerms":[{"difficulty":"normal","fixtureSha256":"b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f","ms":{"n":5000,"median":0.0184,"p95":0.0434,"min":0.0164,"max":1.9869}},{"difficulty":"easy","fixtureSha256":"a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7","ms":{"n":5000,"median":0.0094,"p95":0.012,"min":0.0091,"max":1.0298}}],"neutral":[{"difficulty":"normal","legacySha256":"3f9e97f95e800809cda272139c9b695cb9d1a4a1164e19d0f8c8fba953f7241f","mansion":{"comfortSupply":0,"comfortNeed":0,"upkeepMilli":2000,"upkeepPaid":true,"authority":0}},{"difficulty":"easy","legacySha256":"2053b0a5200e49548240b1e5dbdec4c89d7590caf55ec533e795193ac2488089","mansion":{"comfortSupply":0,"comfortNeed":0,"upkeepMilli":1632,"upkeepPaid":true,"authority":0}}]}
+Measurement exit: 1
+node C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\measure-mansion-week.mjs D:\QI Technology\Temp\mansion-r2-base-8b13690fae9443fc858b380bd0e4d83c\src C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 C:\Users\Admin\.t3\local-drafts\mansion-r2\delivery\fix-r1\perf-exact-head --instrument
+{
+  "head": "bded79d6ccd0e4e97c11d3e98f22370485e827fd",
+  "headTree": "1b9a6b1a892f188400379539a1806c31b90dc0d7",
+  "outside": [
+    {
+      "difficulty": "normal",
+      "rebuilt": false,
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "resultSha256": "d6fd4140f38105b3aa10ec0b9953b34d5ea1d70a2f5b7934d0d417ea33c7c84a",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.05,
+          "p95": 0.073,
+          "min": 0.0398,
+          "max": 0.1399
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0007,
+          "p95": 0.0012,
+          "min": 0.0004,
+          "max": 0.0015
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0007,
+          "min": 0.0003,
+          "max": 0.0011
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0014,
+          "p95": 0.0026,
+          "min": 0.0009,
+          "max": 0.0376
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0153,
+          "p95": 0.0328,
+          "min": 0.0072,
+          "max": 0.1011
+        }
+      }
+    },
+    {
+      "difficulty": "normal",
+      "rebuilt": true,
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "resultSha256": "3cedd2ef4a018a658a76f387d1c03aeddd4575c21f3932144d1f69afd1f6474d",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.0414,
+          "p95": 0.0554,
+          "min": 0.0355,
+          "max": 0.0792
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0008,
+          "p95": 0.0011,
+          "min": 0.0005,
+          "max": 0.0017
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0006,
+          "min": 0.0002,
+          "max": 0.0009
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0019,
+          "min": 0.0008,
+          "max": 0.0029
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0441,
+          "p95": 0.0634,
+          "min": 0.037,
+          "max": 0.0897
+        }
+      }
+    },
+    {
+      "difficulty": "easy",
+      "rebuilt": false,
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "resultSha256": "b2ba989d0dd56ac61339d9f6f7792334eca06742a659e84b92760278d4922d6e",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.0443,
+          "p95": 0.053,
+          "min": 0.0385,
+          "max": 0.0894
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0007,
+          "p95": 0.001,
+          "min": 0.0004,
+          "max": 0.0013
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0006,
+          "min": 0.0003,
+          "max": 0.0009
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0017,
+          "min": 0.0008,
+          "max": 0.0028
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0129,
+          "p95": 0.0224,
+          "min": 0.0064,
+          "max": 0.0358
+        }
+      }
+    },
+    {
+      "difficulty": "easy",
+      "rebuilt": true,
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "resultSha256": "3b022d4c776d526306695039e08d0c5f7575cc79dc3c3e0a05b39501e5835bc2",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.047,
+          "p95": 0.1079,
+          "min": 0.0389,
+          "max": 0.2559
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0009,
+          "p95": 0.0015,
+          "min": 0.0004,
+          "max": 0.0023
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0005,
+          "p95": 0.0009,
+          "min": 0.0003,
+          "max": 0.0011
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0022,
+          "min": 0.0007,
+          "max": 0.0032
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0482,
+          "p95": 0.1008,
+          "min": 0.0375,
+          "max": 0.1461
+        }
+      }
+    }
+  ]
+}
+Instrumentation exit: 0
+After CPU: 1%
+
+Name                  IDProcess PercentProcessorTime
+----                  --------- --------------------
+WmiPrvSE#2                37212                   15
+codebase-memory-mcp#3     28264                    5
+codebase-memory-mcp#2      6864                    5
+System                        4                    5
+MsMpEng                    4084                    5
+codebase-memory-mcp#5     38596                    5
+codebase-memory-mcp#4     12728                    5
+node#18                   25792                    0
+node#24                   29420                    0
+node#17                     588                    0
+
+
+
+Keep-awake released at 2026-11-28T15:09:47.7322434Z.
+Exit: 1

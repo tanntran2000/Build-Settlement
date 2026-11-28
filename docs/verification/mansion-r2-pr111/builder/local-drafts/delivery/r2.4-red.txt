@@ -1,0 +1,21 @@
+UTC start: 2026-11-28T13:06:15.8656611Z
+HEAD: 3329584b334309b9b7d83f0bfc55422f251e6362
+Tree: ea9161e25d5884c6022a7bea3404f0f09bd13716
+node 'C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/calibration-acceptance.mjs'
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+System.Management.Automation.RemoteException
+AssertionError [ERR_ASSERTION]: Missing Mansion calibration observation for good Normal week 10.
+    at file:///C:/Users/Admin/.t3/local-drafts/mansion-r2/delivery/calibration-acceptance.mjs:12:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+System.Management.Automation.RemoteException
+Node.js v24.19.0
+Exit: 1
+UTC end: 2026-11-28T13:06:19.7828645Z

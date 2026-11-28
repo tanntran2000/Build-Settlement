@@ -1,0 +1,178 @@
+{
+  "head": "bded79d6ccd0e4e97c11d3e98f22370485e827fd",
+  "headTree": "1b9a6b1a892f188400379539a1806c31b90dc0d7",
+  "outside": [
+    {
+      "difficulty": "normal",
+      "rebuilt": false,
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "resultSha256": "d6fd4140f38105b3aa10ec0b9953b34d5ea1d70a2f5b7934d0d417ea33c7c84a",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.05,
+          "p95": 0.073,
+          "min": 0.0398,
+          "max": 0.1399
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0007,
+          "p95": 0.0012,
+          "min": 0.0004,
+          "max": 0.0015
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0007,
+          "min": 0.0003,
+          "max": 0.0011
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0014,
+          "p95": 0.0026,
+          "min": 0.0009,
+          "max": 0.0376
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0153,
+          "p95": 0.0328,
+          "min": 0.0072,
+          "max": 0.1011
+        }
+      }
+    },
+    {
+      "difficulty": "normal",
+      "rebuilt": true,
+      "fixtureSha256": "b6bf70db416d67c1eb6f1b6240ce49b45760273bdb19a5ed6df01cec0a04094f",
+      "resultSha256": "3cedd2ef4a018a658a76f387d1c03aeddd4575c21f3932144d1f69afd1f6474d",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.0414,
+          "p95": 0.0554,
+          "min": 0.0355,
+          "max": 0.0792
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0008,
+          "p95": 0.0011,
+          "min": 0.0005,
+          "max": 0.0017
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0006,
+          "min": 0.0002,
+          "max": 0.0009
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0019,
+          "min": 0.0008,
+          "max": 0.0029
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0441,
+          "p95": 0.0634,
+          "min": 0.037,
+          "max": 0.0897
+        }
+      }
+    },
+    {
+      "difficulty": "easy",
+      "rebuilt": false,
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "resultSha256": "b2ba989d0dd56ac61339d9f6f7792334eca06742a659e84b92760278d4922d6e",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.0443,
+          "p95": 0.053,
+          "min": 0.0385,
+          "max": 0.0894
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0007,
+          "p95": 0.001,
+          "min": 0.0004,
+          "max": 0.0013
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0004,
+          "p95": 0.0006,
+          "min": 0.0003,
+          "max": 0.0009
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0017,
+          "min": 0.0008,
+          "max": 0.0028
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0129,
+          "p95": 0.0224,
+          "min": 0.0064,
+          "max": 0.0358
+        }
+      }
+    },
+    {
+      "difficulty": "easy",
+      "rebuilt": true,
+      "fixtureSha256": "a89defdce79b20884ea09c7b3158374bbb050869fbf99a9171e024e8cbc087b7",
+      "resultSha256": "3b022d4c776d526306695039e08d0c5f7575cc79dc3c3e0a05b39501e5835bc2",
+      "ms": {
+        "openingQuote": {
+          "n": 128,
+          "median": 0.047,
+          "p95": 0.1079,
+          "min": 0.0389,
+          "max": 0.2559
+        },
+        "earlyFunding": {
+          "n": 128,
+          "median": 0.0009,
+          "p95": 0.0015,
+          "min": 0.0004,
+          "max": 0.0023
+        },
+        "b1Receipt": {
+          "n": 128,
+          "median": 0.0005,
+          "p95": 0.0009,
+          "min": 0.0003,
+          "max": 0.0011
+        },
+        "reportAssembly": {
+          "n": 128,
+          "median": 0.0012,
+          "p95": 0.0022,
+          "min": 0.0007,
+          "max": 0.0032
+        },
+        "closingTerms": {
+          "n": 128,
+          "median": 0.0482,
+          "p95": 0.1008,
+          "min": 0.0375,
+          "max": 0.1461
+        }
+      }
+    }
+  ]
+}

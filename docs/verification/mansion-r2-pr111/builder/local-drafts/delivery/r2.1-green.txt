@@ -1,0 +1,19 @@
+UTC start: 2026-11-28T12:50:55.7395037Z
+HEAD: 13cf5b165c36872d1ac216e4a8a161b79f3fb7c5
+Tree: 7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4
+npm.cmd test -- packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/npc-acquisition.test.ts packages/simulation/src/__tests__/npc-life-week.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/npc-acquisition.test.ts packages/simulation/src/__tests__/npc-life-week.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  7 passed (7)
+      Tests  128 passed (128)
+   Start at  19:50:57
+   Duration  10.45s (transform 5.41s, setup 0ms, import 9.00s, tests 22.45s, environment 2ms)
+
+Exit: 0
+UTC end: 2026-11-28T12:51:07.6618298Z

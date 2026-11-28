@@ -1,0 +1,68 @@
+Mansion R2 Astra round 1
+mcp:22f00934-9f18-4469-b709-33fa778b62e0  completed  codex/gpt-6.2-astra
+
+[user]
+MANSION R2 Astra 6.2: independent review of Mansion PR R2 (staff roles, Comfort, upkeep, Guard/Vault/Throne Room terms).
+
+Rules for this review:
+- Review only: do not edit product files, commit, push, comment on GitHub or merge.
+- Do not run the full smoke and do not start servers.
+- Single vitest files or single Playwright specs are allowed only when you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch `feat/mansion-roles` (pushed, no PR yet), head `a60104711b8c764097455519ded20bf1923494c8`, tree `d43f08fa5c58b7262df05dfb5bc2e24a38c69d18`.
+- 5 commits on main `13cf5b165c36872d1ac216e4a8a161b79f3fb7c5` (tree `7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4`): `b21faf9`, `5c54d49`, `3329584`, `79d19fa`, `a601047`. 37 files, +1317/−100.
+- Worktree (read only): `C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01`. Confirm HEAD and tree first.
+
+Owner (Tân), verbatim:
+- "Thiết kế phòng Mansion"
+- "Duyệt hết"
+- "Chọn A1 + S1"
+- "Ân hạn 8 tuần"
+- "Duyệt G1"
+- "Duyệt, giao R1"
+- "Dot đã merg và xanh"
+- "Giao R2 Step 0"
+- Step 0 HOLD answers: "Luôn hiện (Recommended)", "Giữ giảm Combat (Recommended)", "Phòng tự tác dụng (Recommended)", "Gỡ ngay (Recommended)", "Đo đủ 8 vai trò (Recommended)"
+
+Binding documents (read fully). All drafts are in `C:/Users/Admin/.t3/local-drafts/mansion-r2/`.
+- Spec v0.1: `binding-spec-150131e.md` (SHA-256 `b9c9cdd81e018def94c03cbfc186398df5cb8c25c3e2dd663a0602469d86af76`).
+- Plan with corrections 1–7: `binding-plan-00df6a7.md` (SHA-256 `8ab7b6dadd5e7d2ff6a5c67541114ed81a441e8b2963b88ee60031636b6674eb`) = `docs/superpowers/plans/2026-11-28-mansion-rooms.md` at `00df6a7` on `docs/mansion-design`. R2 scope: Tasks R2.0–R2.5; Decisions 4, 6 (R2 part), 7, 8, 9 (fatal chance only); allowlist "PR R2" plus correction 7 item 1; Review Focus 2 (R2 part); Global Constraints including Performance. Correction 7 holds the five owner answers.
+- Step 0: `STEP0-HOLD.md`, `STEP0-byte-inventory.json`, `step0-answer.md`.
+- Builder evidence: `delivery/` (`README.md`, `SHA256SUMS.txt` 81 files, `R2.5-first.txt`, RED/GREEN logs, `verify-scope.mjs`, calibration and perf artifacts).
+- `AGENTS.md`.
+
+Check, at minimum
+1. **Scope.** Every changed path is in the R2 allowlist or correction 7 item 1. The only changed existing test bytes are the six approved `existingByteChanges` in four files (inventory), exactly. No digest, golden or fixture changed. No loosened assertion, removed case, partial matcher, new timeout or skip. Commit `a601047` is a fix outside the task list; confirm it stays inside R2 scope (Decision 4A contract end).
+2. **Report (1A).** `report.mansion` is emitted on Character Life End Week whenever the city has an estate, with exactly comfortSupply, comfortNeed, upkeepMilli, upkeepPaid, authority, in that order; transient, never saved. One Steward row `Mansion` within the four-row limit. The city-only report is unchanged.
+3. **Fatal chance (2A).** No Mansion staff → byte-identical to today (5000 bps, existing Combat reduction, same draws). With staff: `max(fatalChanceFloorBps, 5000 − combat×100 − Mansion reduction)`; the Captain counts as defensive staff; the Guard Quarters L3 term needs defensive staff. Funding uses the actual Gold B1 sees after theft, one all-or-nothing debit at B1. No new random stream, no saved flag.
+4. **Rooms and purse (3A).** A paid room's effects apply without residents. The starter Mansion keeps every purse, robbery and chase value exactly. The robbery card keeps `{ id, week, excessMilli }`; on answer, the game uses live staff, rooms, current funding quote and Security with the card's week and salt; displayed amounts use the same terms as the command.
+5. **Contract end (4A).** At `weeksLeft === 0` the role ends at once and the cap frees; she keeps her room while renewal is pending; no role until renewed, then a fresh SET_ROLE; actually leaving clears room, role and training. A saved `died` never holds a slot. Every leave path (sell, release, contract end, move to the Hall, `died` from a save) clears `role` in the same command or week. Look for a loaded v15 save that can still hold a cap seat or reactivate a role.
+6. **Commands and invariants.** Role assignment and clearing are all-or-nothing with exact refusal codes and role caps; LAW-04 (no negative Gold, clamps); UI dispatches commands only (LAW-02); determinism (LAW-03).
+7. **Calibration.** All 18 seed/style/difficulty cells meet the Money spec §5 and plan R2.4 targets (including "good play never Comfort-short after week 12" and "average Comfort-short in at most 25 % of weeks 20–40"). One retune: Accountant upkeep multiplier 9,500 → 6,400 bps. Values in `mansion.json`, marked TRIAL, validated. Reproduce at least one cell.
+8. **Performance — scrutinise.** Plan: "End Week with 100 NPCs and a full Mansion … shows no regression beyond noise against the base in paired runs" and isolated `runMansionWeek` median ≤ 0.05 ms. Builder reports isolated 0.0024 / 0.0021 ms, but Normal End Week pooled p95 82.71 → 128.22 ms and the largest Normal paired p95 shift (+89.4 ms) exceeds the largest A/A p95 shift (+59.5 ms), while the summary still marks `tailWithinNoise: true`. Judge whether the harness definition of "within noise" is sound, whether any R2 code adds per-NPC or per-End-Week work outside `runMansionWeek` (purse, crime, household, report, UI projections), and whether the evidence supports the plan's claim. Do not run the paired perf yourself.
+9. **UI and copy.** Role picker and Steward row: English only, spec names, mechanics only, disabled reasons, keyboard path at 1280 and 1600; no other games named.
+10. **Evidence.** Gates 1–7 exited 0 at `a601047` (154 architecture, 3,548 unit); `CI=1` smoke 452/452 on a quiet machine; logs name head and tree; `SHA256SUMS.txt` matches.
+
+Output
+- Write `C:/Users/Admin/.t3/local-drafts/mansion-r2/astra-review/astra-round1.md` (UTF-8, no `?` in place of non-ASCII characters) with: head and tree checked; a per-file ledger; findings P0–P3, each with file:line and why; final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS means no P0–P2).
+- Reply in this thread with a short summary: the verdict, the finding counts and the file path.
+
+
+[assistant]
+I’ll verify the checkout first, then use the codebase-memory skill to trace the changed behavior against the binding documents and builder evidence.
+
+[assistant]
+The head, tree and binding-document hashes match. The Normal timing flag compares a median of block-level shifts with the most extreme control shift, so it leaves the pooled p95 increase unresolved. I also found a possible one-milli error in the Guard calculation and will check it against the shipped catalog.
+
+[assistant]
+I reproduced all 18 calibration cells byte-for-byte. Two valid v15 save probes also confirmed gameplay issues: Guard leadership can lose one unit through rounding, and a pending renewal with a positive stored term can retain a capped role. I’ll include both reproductions in the review.
+
+[assistant]
+**VERDICT: FAIL** at `a601047`. **0 P0, 0 P1, 4 P2, 2 P3.**
+
+The four P2 findings are a rounding error in Guard protection, a valid v15 renewal save that retains the Captain seat, inconclusive evidence for Normal End Week tail performance, and an upkeep breakdown that hides individual room charges.
+
+I reproduced all 18 calibration cells byte-for-byte and verified all 81 evidence hashes. The worktree remained clean.
+
+[Full review and 37-file ledger](C:/Users/Admin/.t3/local-drafts/mansion-r2/astra-review/astra-round1.md)

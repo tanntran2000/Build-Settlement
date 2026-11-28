@@ -1,0 +1,19 @@
+UTC start: 2026-11-28T13:00:15.3149431Z
+HEAD: 5c54d4914eb890e2dc433ccbcd37e2f7c70aff05
+Tree: 5753b9768c4c08c25580e43869e19829292c991c
+npm.cmd test -- packages/ui/src/__tests__/mansion-roles-view.test.ts packages/ui/src/__tests__/mansion-view.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/ui/src/__tests__/society-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/mansion-roles-view.test.ts packages/ui/src/__tests__/mansion-view.test.ts packages/ui/src/__tests__/home-robbery-view.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/ui/src/__tests__/society-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  5 passed (5)
+      Tests  178 passed (178)
+   Start at  20:00:16
+   Duration  2.00s (transform 4.30s, setup 0ms, import 6.59s, tests 258ms, environment 1ms)
+
+Exit: 0
+UTC end: 2026-11-28T13:00:18.8879669Z

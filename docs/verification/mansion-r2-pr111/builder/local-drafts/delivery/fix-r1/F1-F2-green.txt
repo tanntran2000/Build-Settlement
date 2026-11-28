@@ -1,0 +1,18 @@
+UTC: 2026-11-28T15:01:56.8999537Z
+HEAD: a60104711b8c764097455519ded20bf1923494c8
+Tree: d43f08fa5c58b7262df05dfb5bc2e24a38c69d18
+npm test -- packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/household-week.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-roles.test.ts packages/simulation/src/__tests__/mansion-week.test.ts packages/simulation/src/__tests__/household-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  64 passed (64)
+   Start at  22:01:58
+   Duration  2.93s (transform 2.29s, setup 0ms, import 3.49s, tests 3.09s, environment 1ms)
+
+Exit: 0
