@@ -550,3 +550,15 @@ Owner (Tân), verbatim: "Duyệt A".
 
 1. The four sample pins at `packages/core/src/world/__tests__/npc-generator.test.ts:24–27` change only their SHA-256 literal, to the v15 digests in `delivery/R1.1-HOLD-byte-inventory.json` (`62ef6ef9…`, `7def8e1d…`, `4a2b44b7…`, `636e1d72…`). The full generator-output hash assertion stays. The change is proven by `projection-proof.cjs`: removing only `room`, `role` and `training` reproduces the v14 digests.
 2. Disclosed: the two approved `withNpcs` additions that read the optional Character Life state are not applied (core typecheck rejected them); the shared room-seeding helper stays. No assertion is loosened.
+
+### Correction 3 (R1.3 HOLD, 2026-11-28)
+
+Owner (Tân), verbatim: "Duyệt A + luật".
+
+1. **A.** At `packages/simulation/src/__tests__/craft-week.test.ts:24–26` the three whole-city hashes change to the verified v15 hashes in `delivery/R1.3-HOLD-byte-inventory.json`; at line 43 `mansion` joins the existing destructuring so the v12 projection excludes it. Every other hash, value and assertion stays.
+2. **Rule for the rest of R1 (R1.3–R1.5).** A hash or digest literal in an existing test may change without a new HOLD only when all of these hold:
+   - it changes only because of the v15 fields (`society.mansion`, `household.room/role/training`, `player.needs`, the ruleset id, the `died` kind);
+   - a committed-to-evidence projection proof removes only those fields (and restores the v14 ruleset id) and reproduces the old literal exactly;
+   - no other value, assertion, timeout or test in the file changes.
+   Each such change is listed (file:line, before → after, proof file) in the R1 evidence. Anything else outside the approved lists is still a HOLD.
+3. The no-estate city-only regression at `tile-trial-p7b.test.ts:173–189` is fixed in the approved core files; that test stays unchanged.
