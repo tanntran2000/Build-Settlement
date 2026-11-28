@@ -1,7 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
 import { exportLife, go, importLife, keyActivate, keyPost, makeLife, makeLifeWithNpcs } from './character-life-navigation.helpers.ts';
-import { readStoredRecords, storedSaveText } from './storage.helpers.ts';
+import { readStoredRecords, storeMarks, storedSaveText, watchMigrationActivity, writeRecords } from './storage.helpers.ts';
+
+import { sessionToRecords } from '../../packages/persistence/src/index.ts';
+import { executeCharacterLifeCommand } from '../../packages/simulation/src/index.ts';
 
 const fixtures = new URL('../../packages/persistence/src/__tests__/fixtures/', import.meta.url);
 const file = (path: string) => readFile(new URL(path, fixtures));
@@ -92,4 +95,98 @@ test('keeps both checkpoint copies when a v14 upgrade fails or a v15 file is dam
     expect(await storedSaveText(page)).toBe(oldText);
     expect(await exportLife(page)).toEqual(before);
   }
+});
+
+test('warns when continuing v14 without IndexedDB and reports volatile saves as session-only', async ({ page }) => {
+  const text = (await file('society-v14/life-new-game.json')).toString('utf8');
+  const key = 'haven.character-life-session-society.checkpoint.v1';
+  await page.addInitScript(({ text, key }) => {
+    localStorage.setItem(key, text);
+    indexedDB.open = () => { throw Error('storage blocked'); };
+  }, { text, key });
+  await page.goto('/');
+  await expect.soft(page.getByRole('alert')).toHaveText('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved for this session only. Use Export checkpoint to keep your progress.');
+  expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(text);
+});
+
+test('continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker', async ({ page }) => {
+  const initial = makeLifeWithNpcs(42);
+  initial.player.purse.moneyMilli = 1_000_000;
+  Object.assign(initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory, { gold: 1_000_000, wood: 1_000_000, iron: 1_000_000 });
+  initial.city.tiles.find(tile => tile.id === 'spec-2')!.building = { typeId: 'smithy', level: 1, workers: 0, enabled: true };
+  const items = initial.city.society!.items;
+  Object.assign(items, { nextItemId: 2, inventory: [{ id: 1, defId: 'common-ring' }], materials: { iron: 4, nitrate: 1 } });
+  const order = executeCharacterLifeCommand(initial, { type: 'PLACE_CRAFT_ORDER', tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1, expectedRevision: initial.city.revision });
+  if (!order.success) throw Error(order.error.message);
+  const state = order.next, workshop = state.city.society!.items.workshops!['spec-2'];
+  workshop.ready = [{ material: 'silver', count: 1 }, { item: { id: 2, defId: 'rare-top' } }];
+  state.city.society!.items.nextItemId = 3;
+  const savedNpc = state.npcs[0];
+  state.city.society!.mansion.rooms.push({ id: 'room-3', typeId: 'maids-quarters', level: 1, furniture: [] });
+  state.city.society!.mansion.nextRoomSeq = 4;
+  Object.assign(savedNpc.household, { home: 'estate-1', room: 'room-3' });
+
+  // Project the current detached rows to the archived v14 writer layout.
+  const rows = sessionToRecords('main', state);
+  for (const row of rows) {
+    if (row.table === 'meta') Object.assign(row.value as object, { rulesetId: 'tile-society-14' });
+    if (row.table === 'city') {
+      const society = (row.value as typeof state.city).society! as unknown as Record<string, unknown>;
+      society.rulesetId = 'tile-society-14';
+      delete society.mansion;
+    }
+    if (row.table === 'characters') {
+      const value = row.value as { kind: 'player'; player: Record<string, unknown> } | { kind: 'npc'; npc: { household: Record<string, unknown> } };
+      if (value.kind === 'player') delete value.player.needs;
+      else {
+        const { household } = value.npc;
+        delete household.room;
+        delete household.role;
+        delete household.training;
+      }
+    }
+  }
+  expect(rows.filter(row => row.table === 'items').map(row => row.value)).toEqual([
+    { defId: 'common-ring', place: 'order:spec-2:0' },
+    { defId: 'rare-top', place: 'ready:spec-2:1' },
+  ]);
+  rows.push({ table: 'system', slotId: '_', id: 'migration:legacy-local-checkpoint', schemaVersion: 1, value: true });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+  await writeRecords(page, rows);
+  const before = await readStoredRecords(page);
+  await page.reload();
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  expect(await readStoredRecords(page)).toEqual(before);
+  const loaded = await exportLife(page);
+  expect(loaded.city.society?.rulesetId).toBe('tile-society-15');
+  expect(loaded.player.needs.graceEndsWeek).toBe(state.city.world.week + 8);
+  expect(loaded.npcs).toEqual(state.npcs);
+  expect(loaded.city.society?.items.workshops?.['spec-2']).toEqual(workshop);
+  expect((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+  expect(await readStoredRecords(page)).toEqual(before);
+});
+
+test('successfully imports a v14 checkpoint in game without writing the local slot', async ({ page }) => {
+  const old = await file('society-v14/life-demand-card.json');
+  const saved = JSON.parse(old.toString('utf8')).state;
+  await page.goto('/');
+  await importLife(page, makeLife(40));
+  await go(page, 'session');
+  await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved in this browser.');
+  const before = await readStoredRecords(page), activity = await watchMigrationActivity(page);
+  await upload(page, old);
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
+  const loaded = await exportLife(page);
+  expect(loaded.outside.seed).toBe(saved.outside.seed);
+  expect(loaded.city.world.week).toBe(saved.city.world.week);
+  expect(loaded.city.society?.rulesetId).toBe('tile-society-15');
+  expect(loaded.player.needs.graceEndsWeek).toBe(saved.city.world.week + 8);
+  expect(await activity()).toEqual({ readwrite: 0, writes: [] });
+  expect(await readStoredRecords(page)).toEqual(before);
 });
