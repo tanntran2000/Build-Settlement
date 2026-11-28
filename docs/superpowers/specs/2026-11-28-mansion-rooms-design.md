@@ -1,6 +1,6 @@
 # Mansion rooms, staff roles and furniture — design v0.1
 
-- **Status:** draft for owner approval (G1). Brainstorm 2026-11-28 with the owner (Tân).
+- **Status:** v0.1 **G1 approved** by the owner (Tân), 2026-11-28, verbatim: "Duyệt G1". Brainstorm 2026-11-28 with the owner. The calls in §14 and the TRIAL numbers stand as written.
 - **Base:** `main` `8d37d16` (IMPORT-ALERT-01 merged, ruleset `tile-society-14`).
 - **Follows:** Money (`docs/superpowers/specs/2026-11-25-money-difficulty-design.md`, §6.6 names this design as the next one) and P7-B (`docs/superpowers/specs/2026-11-19-p7b-acquisition-design.md`, which built the Mansion building and its 10/20/30 beds).
 - **Content rule:** every NPC is an adult woman, 18+. Specs, data and UI text describe mechanics only, never acts in detail.
