@@ -36,7 +36,7 @@ it('shows exact neutral Comfort, Gold upkeep and Money safe amount breakdowns', 
   expect(view.mansionView(city, npcs).summary).toStrictEqual({
     comfort: '0 / 0',
     upkeep: [
-      { label: 'Mansion building', value: '2 Gold' }, { label: 'Rooms', value: '0 Gold' },
+      { label: 'Mansion building', value: '2 Gold' },
       { label: 'Total due', value: '2 Gold' },
     ],
     safeAmount: [
@@ -56,6 +56,20 @@ it('reserves one exact Mansion row on the Steward letter even with no occupants'
   expect(rows.find(row => row.label === 'Mansion'))
     .toStrictEqual({ label: 'Mansion', value: 'Comfort 0 / 0 · Upkeep 2 Gold paid · Authority +0', tone: 'muted' });
   expect(rows.length).toBeLessThanOrEqual(4);
+});
+
+it('itemizes both upgraded rooms in the Homes upkeep breakdown', () => {
+  const { city, npcs } = state();
+  city.tiles.find(tile => tile.id === 'estate-1')!.building!.level = 3;
+  const [suite, throne] = city.society!.mansion.rooms;
+  suite.level = 2;
+  throne.level = 3;
+  expect(view.mansionView(city, npcs).summary?.upkeep).toStrictEqual([
+    { label: 'Mansion building', value: '6 Gold' },
+    { label: 'Master Suite · Level 2 (room-1)', value: '0.1 Gold' },
+    { label: 'Throne Room · Level 3 (room-2)', value: '0.2 Gold' },
+    { label: 'Total due', value: '6.3 Gold' },
+  ]);
 });
 
 it('shows Pay, Chase and Let go loss with the same live Vault cap as the command', () => {

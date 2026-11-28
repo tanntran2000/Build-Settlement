@@ -1,5 +1,5 @@
 import {
-  canMoveToMansionRoom, isMansionStaffRole, mansionLevel, mansionPlanningEffects, mansionRoleRefusal, mansionTerms,
+  canMoveToMansionRoom, isMansionStaffRole, mansionLevel, mansionPlanningEffects, mansionRoleRefusal, mansionRoomUpkeepMilli, mansionTerms,
   MANSION_CATALOG, MANSION_ROLE_REFUSALS, MANSION_ROOM_TYPES, MANSION_STAFF_ROLES, roomBeds, safeAmountMilli,
   type TileTrialState, type WorldNpc,
 } from '@haven/core';
@@ -45,11 +45,16 @@ function mansionSummary(city: TileTrialState, npcs: readonly WorldNpc[]) {
   const gold = (label: string, milli: number) => ({ label, value: formatMilli(milli) + ' Gold' });
   const money = (label: string, milli: number) => ({ label, value: formatMilli(milli) + ' Money' });
   const safe = effects.safeAmount;
+  const roomCharges = city.society!.mansion.rooms.flatMap(room => {
+    const due = mansionRoomUpkeepMilli(room);
+    const name = MANSION_CATALOG.roomTypes[room.typeId].name;
+    return due ? [gold(name + ' · Level ' + room.level + ' (' + room.id + ')', due)] : [];
+  });
   return {
     comfort: effects.comfortSupply + ' / ' + terms.comfortNeed,
     upkeep: [
       gold('Mansion building', terms.buildingUpkeepMilli),
-      gold('Rooms', terms.roomUpkeepMilli),
+      ...roomCharges,
       ...terms.upkeepFactors.map(({ source, bps }) => ({ label: source, value: '× ' + bps / 100 + '%' })),
       gold('Total due', terms.upkeepMilli),
     ],

@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
-import { acquisitionNpc, isCharacterLifeSessionState, type CharacterLifeSessionState, type MansionRole } from '@haven/core';
+import { acquisitionNpc, isCharacterLifeSessionState, mansionPlanningEffects, mansionResidentRole, mansionTerms, type CharacterLifeSessionState, type MansionRole } from '@haven/core';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
-import { command, market, stock, succeeded, town } from './acquisition-fixture.js';
+import { command, market, populate, stock, succeeded, town } from './acquisition-fixture.js';
 
 function buy(s: CharacterLifeSessionState, source: 'guild' | 'slave-market', slot: number, homeTileId = 'estate-1') {
   return succeeded(s, 'BUY_NPC', { source, slot, homeTileId }).next;
@@ -167,4 +167,76 @@ it('loads a proven death with the capped role available and rejects a live dupli
   s.npcs.push(former.npc); s.profiles.push(former.profile);
   expect(isCharacterLifeSessionState(s)).toBe(false);
   expect(stock(s).gold).toBe(1_000_000);
+});
+
+function fittedGuards(guards: number, fitted: number) {
+  const s = town();
+  populate(s, Array<string>(guards + 1).fill('estate-1'));
+  const rooms = s.city.society!.mansion;
+  const quarters = 'room-' + rooms.nextRoomSeq++;
+  rooms.rooms.push({ id: quarters, typeId: 'guard-quarters', level: 2, furniture: [] });
+  for (const [index, npc] of s.npcs.entries()) {
+    npc.household.role = index === 0 ? 'captain' : 'guard';
+    if (index <= fitted) npc.household.room = quarters;
+  }
+  const saved = serializeCharacterLifeSave(s);
+  if (!saved.success) throw Error(saved.error.message);
+  return s;
+}
+
+it('adds exactly 1725 safe Money milli for one fitted Guard led by a fitted Captain', () => {
+  const s = fittedGuards(1, 1);
+  expect(mansionPlanningEffects(s)?.safeAmount.guard).toBe(1725);
+});
+
+it('reduces fatal chance by exactly 3555 bps for fourteen Guards with eight fitted', () => {
+  const s = fittedGuards(14, 8);
+  expect(mansionPlanningEffects(s)?.fatalChanceBps).toBe(3555);
+});
+
+function loadPendingCaptainWithRemainingWeek() {
+  const s = buy(buy(market(), 'guild', 0), 'guild', 1);
+  const household = s.npcs[0].household;
+  Object.assign(household, { role: 'captain', notice: 'renewal' });
+  household.contract!.weeksLeft = 1;
+  household.contract!.wageMilli = 2000;
+  const saved = serializeCharacterLifeSave(s);
+  if (!saved.success) throw Error(saved.error.message);
+  const read = deserializeCharacterLifeSave(saved.text);
+  expect(read).toStrictEqual({ success: true, state: s });
+  if (!read.success) throw Error(read.error.message);
+  return read.state;
+}
+
+it('excludes a loaded pending renewal with time remaining from staff eligibility, display and effects', () => {
+  const s = loadPendingCaptainWithRemainingWeek();
+  const before = JSON.stringify(s);
+  expect(mansionResidentRole(s.npcs[0].household)).toBeNull();
+  const terms = mansionTerms(s)!;
+  expect([terms.plain.safeAmount.captain, terms.paid.safeAmount.captain, terms.plain.fatalChanceBps, terms.paid.fatalChanceBps])
+    .toStrictEqual([0, 0, 0, 0]);
+  expect(setRole(s, 0, 'guard')).toStrictEqual(failure('INVALID_COMMAND', 'Renew the contract before assigning a role.'));
+  expect(JSON.stringify(s)).toBe(before);
+});
+
+it('frees a Captain cap seat in a saved renewal even when the saved contract has time remaining', () => {
+  const s = loadPendingCaptainWithRemainingWeek();
+  const next = succeeded(s, 'SET_ROLE', { npcId: s.npcs[1].character.id, role: 'captain' }).next;
+  expect(next.npcs.map(npc => npc.household)).toStrictEqual([
+    { ...s.npcs[0].household, role: null },
+    { ...s.npcs[1].household, role: 'captain' },
+  ]);
+  expect(isCharacterLifeSessionState(next)).toBe(true);
+});
+
+it('keeps the room and requires a fresh staff assignment after renewing a saved pending Captain', () => {
+  const s = loadPendingCaptainWithRemainingWeek();
+  const npcId = s.npcs[0].character.id;
+  const next = succeeded(s, 'ANSWER_NOTICE', { npcId, choice: 'renew' }).next;
+  expect(next.npcs[0].household).toStrictEqual({
+    ...s.npcs[0].household, role: null, notice: null,
+    contract: { weeksLeft: 20, wageMilli: 3000, unpaidWeeks: 0, stressHits: 0 },
+  });
+  const assigned = succeeded(next, 'SET_ROLE', { npcId, role: 'captain' }).next;
+  expect(assigned.npcs[0].household).toStrictEqual({ ...next.npcs[0].household, role: 'captain' });
 });

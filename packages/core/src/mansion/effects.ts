@@ -2,7 +2,8 @@ import { npcBeds, trialBuilding } from '../trial/catalog.js';
 import { applyDifficulty, difficultyProfile } from '../trial/difficulty.js';
 import type { TileTrialState } from '../trial/types.js';
 import { MANSION_CATALOG, type EffectKind } from './catalog.js';
-import { isMansionStaffRole, mansionLevel, MANSION_STAFF_ROLES, MANSION_TILE_ID, type MansionStaffRole } from './rules.js';
+import { isMansionStaffRole, mansionLevel, mansionResidentRole, MANSION_STAFF_ROLES, MANSION_TILE_ID, type MansionStaffRole } from './rules.js';
+import type { MansionRoom } from './types.js';
 import type { WorldNpc } from '../world/npc.js';
 
 const fullBps = 10_000;
@@ -16,7 +17,7 @@ function sumEffects(rows: CatalogEffects, level: number): EffectAmounts {
 }
 
 const roomLevels = new Map(Object.entries(MANSION_CATALOG.roomTypes).map(([id, type]) =>
-  [id, type.upkeepMilli.map((upkeepMilli, index) => ({ upkeepMilli, effects: sumEffects(type.effects, index + 1) }))] as const));
+  [id, type.upkeepMilli.map((_, index) => sumEffects(type.effects, index + 1))] as const));
 const staffEffects = new Map(MANSION_STAFF_ROLES.map(role => [role, sumEffects(MANSION_CATALOG.roles[role].effects, 1)]));
 const fitRatio = MANSION_CATALOG.fitMultiplierBps / fullBps;
 
@@ -61,6 +62,32 @@ function staffValue(staff: StaffCount, amount: number, paid: boolean): number {
   return amount * (staff.count + (paid ? staff.fit * (fitRatio - 1) : 0));
 }
 
+function staffWeightBps(staff: StaffCount, paid: boolean): number {
+  return staff.count * fullBps + (paid ? staff.fit * (MANSION_CATALOG.fitMultiplierBps - fullBps) : 0);
+}
+
+const bps = BigInt(fullBps);
+const leadershipScale = bps ** 3n;
+const defenseScale = leadershipScale * bps;
+
+function defenseStaff(guards: StaffCount, captains: StaffCount, roomBonus: number | undefined, paid: boolean) {
+  if (!guards.count && !captains.count) return { guardSafe: 0, captainSafe: 0, fatal: 0 };
+  const guard = staffEffects.get('guard')!, captain = staffEffects.get('captain')!;
+  const captainWeight = staffWeightBps(captains, paid);
+  // Fit, leadership and the room multiplier each use an integer bps scale.
+  const bonus = (captain.roleBonusBps ?? fullBps) - fullBps;
+  const roomBps = paid ? (roomBonus ?? fullBps) : fullBps;
+  const boost = leadershipScale + BigInt(captainWeight) * BigInt(bonus) * BigInt(roomBps);
+  const boostedGuards = BigInt(staffWeightBps(guards, paid)) * boost;
+  const fatal = boostedGuards * BigInt(guard.fatalChanceBps ?? 0)
+    + BigInt(captainWeight * (captain.fatalChanceBps ?? 0)) * leadershipScale;
+  return {
+    guardSafe: Number(boostedGuards * BigInt(guard.safeAmountMilli ?? 0) / defenseScale),
+    captainSafe: Math.floor(captainWeight * (captain.safeAmountMilli ?? 0) / fullBps),
+    fatal: Number(fatal / defenseScale),
+  };
+}
+
 function leaderBonus(staff: StaffCount, role: MansionStaffRole, roomBonus: number | undefined, paid: boolean): number {
   const bonus = (staffEffects.get(role)!.roleBonusBps ?? fullBps) - fullBps;
   const roomRatio = paid ? (roomBonus ?? fullBps) / fullBps : 1;
@@ -75,6 +102,10 @@ function upkeepWithFactors(milli: number, factors: readonly number[]): number {
   const result = Number(numerator / (BigInt(fullBps) ** BigInt(factors.length)));
   if (!Number.isSafeInteger(result)) throw Error('Mansion upkeep overflow.');
   return result;
+}
+
+export function mansionRoomUpkeepMilli(room: Pick<MansionRoom, 'typeId' | 'level'>): number {
+  return MANSION_CATALOG.roomTypes[room.typeId].upkeepMilli[room.level - 1];
 }
 
 export function mansionTerms({ city, npcs }: MansionHousehold): MansionTerms | undefined {
@@ -92,11 +123,11 @@ export function mansionTerms({ city, npcs }: MansionHousehold): MansionTerms | u
   let chaseSuccessBps = 0, robberyChanceBps = 0, roomFatal = 0;
   let vaultLossCapBps: number | undefined;
   for (const room of city.society.mansion.rooms) {
-    const { upkeepMilli, effects } = roomLevels.get(room.typeId)![room.level - 1];
+    const effects = roomLevels.get(room.typeId)![room.level - 1];
     presentTypes.add(room.typeId);
     effectsByRoom.set(room.id, effects);
     roomTypes.set(room.id, room.typeId);
-    roomUpkeepMilli += upkeepMilli;
+    roomUpkeepMilli += mansionRoomUpkeepMilli(room);
     roomComfort += effects.comfort ?? 0;
     roomAuthority += effects.authority ?? 0;
     roomSafe += effects.safeAmountMilli ?? 0;
@@ -113,8 +144,8 @@ export function mansionTerms({ city, npcs }: MansionHousehold): MansionTerms | u
   for (const { household } of npcs) {
     if (household.home !== MANSION_TILE_ID) continue;
     residentCount++;
-    const role = household.role;
-    if (!isMansionStaffRole(role) || household.contract?.weeksLeft === 0) continue;
+    const role = mansionResidentRole(household);
+    if (!isMansionStaffRole(role)) continue;
     const fitRoom = MANSION_CATALOG.roles[role].fitRoom;
     const count = staff[role];
     count.count++;
@@ -128,23 +159,18 @@ export function mansionTerms({ city, npcs }: MansionHousehold): MansionTerms | u
   const terms = (paid: boolean): MansionEffects => {
     const headMaid = staff['head-maid'];
     const maidBoost = leaderBonus(headMaid, 'head-maid', roomBonuses.get(MANSION_CATALOG.roles['head-maid'].fitRoom), paid);
-    const guardBoost = leaderBonus(staff.captain, 'captain', roomBonuses.get(MANSION_CATALOG.roles.captain.fitRoom), paid);
+    const defense = defenseStaff(staff.guard, staff.captain, roomBonuses.get(MANSION_CATALOG.roles.captain.fitRoom), paid);
     const comfortSupply = Math.floor(
       staffValue(staff.maid, staffEffects.get('maid')!.comfort ?? 0, paid) * maidBoost +
       staffValue(headMaid, staffEffects.get('head-maid')!.comfort ?? 0, paid) + (paid ? roomComfort : 0),
     );
-    const guard = staffEffects.get('guard')!, captain = staffEffects.get('captain')!;
-    const fatalChanceBps = Math.floor(
-      staffValue(staff.guard, guard.fatalChanceBps ?? 0, paid) * guardBoost +
-      staffValue(staff.captain, captain.fatalChanceBps ?? 0, paid) +
-      (paid && (staff.guard.count || staff.captain.count) ? roomFatal : 0),
-    );
+    const fatalChanceBps = defense.fatal + (paid && (staff.guard.count || staff.captain.count) ? roomFatal : 0);
     return {
       comfortSupply, fatalChanceBps,
       authority: Math.floor(staffValue(staff.accountant, accountant.authority ?? 0, paid)) + (paid ? roomAuthority : 0),
       safeAmount: {
-        guard: Math.floor(staffValue(staff.guard, guard.safeAmountMilli ?? 0, paid) * guardBoost),
-        captain: Math.floor(staffValue(staff.captain, captain.safeAmountMilli ?? 0, paid)),
+        guard: defense.guardSafe,
+        captain: defense.captainSafe,
         vault: paid ? roomSafe : 0,
         accountant: Math.floor(staffValue(staff.accountant, accountant.safeAmountMilli ?? 0, paid)),
       },

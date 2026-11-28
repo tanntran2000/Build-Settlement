@@ -12,8 +12,13 @@ export function isMansionStaffRole(value: unknown): value is MansionStaffRole {
   return (MANSION_STAFF_ROLES as readonly unknown[]).includes(value);
 }
 
-export function mansionResidentRole({ role, contract }: WorldNpc['household']): MansionRole | null {
-  return contract?.weeksLeft === 0 && isMansionStaffRole(role) ? null : role;
+function staffContractEnded({ contract, notice }: WorldNpc['household']): boolean {
+  return notice === 'renewal' || contract?.weeksLeft === 0;
+}
+
+export function mansionResidentRole(household: WorldNpc['household']): MansionRole | null {
+  const { role } = household;
+  return isMansionStaffRole(role) && staffContractEnded(household) ? null : role;
 }
 
 export const MANSION_ROLE_REFUSALS = {
@@ -28,7 +33,7 @@ export function mansionRoleRefusal(
 ): keyof typeof MANSION_ROLE_REFUSALS | null {
   const { household } = npc;
   if (household.home !== MANSION_TILE_ID) return 'ROLE_NOT_RESIDENT';
-  if (role !== null && household.contract?.weeksLeft === 0) return 'INVALID_COMMAND';
+  if (role !== null && staffContractEnded(household)) return 'INVALID_COMMAND';
   const room = city.society?.mansion.rooms.find(row => row.id === household.room);
   if (room && MANSION_CATALOG.roomTypes[room.typeId].suiteRoles !== null) return 'SUITE_ROLE_ONLY';
   if (role !== null && household.role !== role) {
