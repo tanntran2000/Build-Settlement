@@ -1,5 +1,29 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## Mansion R1 (rooms core, first save upgrade v14 → v15) — PR #110 G6 (2026-11-28 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** Mansion PR R1 of 4 is merged; the ruleset is now `tile-society-15`. R2 waits for the owner.
+
+- **Merge.** PR #110 (`feat: Mansion rooms core and v14 to v15 save upgrade (R1)`) was merged under G5 at 2026-11-28T10:38:43Z (GitHub account `tanntran2000`; the owner reported "Dot đã merg và xanh").
+  - Merge/main commit: `13cf5b165c36872d1ac216e4a8a161b79f3fb7c5` (parents `8d37d16`, `02246aa`).
+  - Accepted head: `02246aaef51ebe45c5c0508fdd3ef09764ed64ef`. Base: `8d37d16` (IMPORT-ALERT-01 #109 merged).
+- **Trees.** The merge tree `7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4` is identical to the accepted head tree `7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4`. Claude checked this locally.
+- **Main CI.** Quality Gate run [46136151320](https://github.com/tanntran2000/Build-Settlement/actions/runs/46136151320), job 140951799068 (push, checkout at the exact merge SHA), SUCCESS at 2026-11-28T10:57:39Z: 3,501 unit tests (160 files) and 450/450 Chromium smoke (17.4 min); the dependency audit reported 0 vulnerabilities.
+- **Pre-merge, at `02246aa`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,501 unit), full smoke 450/450 with `CI=1` on the first run (2026-11-28T09:18Z–10:01Z, 39.4 min, quiet machine).
+  - PR CI: quality-gate run 46133285188 SUCCESS (450 smoke, 16.3 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:98be5e79`: round 1 at `d306f68` FAIL (10 findings) → correction 4; round 2 at `b3d1278` FAIL (1 P1, 3 P2) → correction 5; round 3 at `b636564` FAIL (1 P2 carried, 1 P3) → AGENTS.md §4 HOLD → owner exception, correction 6; round 4 at `02246aa` PASS, 0 findings.
+  - Builder (Sol 6.2 xhigh, `mcp:5934f9e4`): Step 0 HOLD → corrections 1–3 (decisions 1A 2A 4B 5A, hash pins and the standing hash rule); three fix rounds, each RED first; changed existing expectations listed with diffs in the evidence.
+- **Evidence.** [`docs/verification/mansion-r1-pr110/`](https://github.com/tanntran2000/Build-Settlement/tree/ba4338530adc0cfbc15bba88d6e47ce14da42efa/docs/verification/mansion-r1-pr110) on branch `docs/mansion-design`, at `ba43385` (215 files, SHA-256 verified).
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Thiết kế phòng Mansion"; "Duyệt hết"; "Chọn A1 + S1"; "Ân hạn 8 tuần"; "Duyệt G1"; "Duyệt, giao R1";
+  - Plan corrections: 1 "Duyệt 1A 2A 4B 5A"; 2 "Duyệt A"; 3 "Duyệt A + luật"; 4 "Duyệt sửa cả 10"; 5 "Duyệt sửa vòng 2"; 6 "Sửa thêm 1 vòng nhỏ";
+  - Merge report: "Dot đã merg và xanh".
+- **Disclosed.**
+  - Astra failed three rounds; round 4 ran under the owner's one-round exception to AGENTS.md §4.
+  - First save upgrade: v14 checkpoints upgrade on a copy at load; v1–v13 are still refused. Furniture prices are TRIAL placeholders until calibration before R4.
+  - Open playtest risks R-026, R-028, R-031. Smoke runs on Chromium only. 74 large or long-path files and the T3 settings backup stay local, listed by SHA-256 in `builder/LOCAL-ONLY-ARTIFACTS.txt`.
+
 ## IMPORT-ALERT-01 (in-game import alert) — PR #109 G6 (2026-11-28 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** IMPORT-ALERT-01 is merged; it closes Astra's Money M3 round 2 P3. Nothing new starts until the owner picks the next item.
