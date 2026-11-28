@@ -1,0 +1,80 @@
+UTC: 2026-11-28T03:12:11.4015128Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: set CI=1&& npm exec -- playwright test tests/e2e/mansion-rooms.spec.ts --grep "warns when continuing|continues a v14 IndexedDB|successfully imports a v14"
+
+Running 3 tests using 1 worker
+
+(node:26528) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only (8.2s)
+(node:27728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\mansion-rooms.spec.ts:116:1 › continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker (312ms)
+(node:21412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\mansion-rooms.spec.ts:170:1 › successfully imports a v14 checkpoint in game without writing the local slot (1.7s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      106 |   }, { text, key });
+      107 |   await page.goto('/');
+    > 108 |   await expect(page.getByRole('alert')).toHaveText('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
+          |                                         ^
+      109 |   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      110 |   await go(page, 'session');
+      111 |   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:108:41
+
+    Error Context: test-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-rooms.spec.ts:116:1 › continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker 
+
+    TypeError: Cannot convert undefined or null to object
+
+      140 |       delete society.mansion;
+      141 |     }
+    > 142 |     if (row.table === 'characters') delete ((row.value as { player: Record<string, unknown> }).player).needs;
+          |                                                                                                ^
+      143 |     if (row.table === 'npcs') {
+      144 |       const household = (row.value as { household: Record<string, unknown> }).household;
+      145 |       delete household.room;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:142:96
+
+    Error Context: test-results\mansion-rooms-continues-a--da74f-n-existing-migration-marker-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-continues-a--da74f-n-existing-migration-marker-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-continues-a--da74f-n-existing-migration-marker-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:116:1 › continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker 
+  1 passed (23.6s)
+
+Exit: 1

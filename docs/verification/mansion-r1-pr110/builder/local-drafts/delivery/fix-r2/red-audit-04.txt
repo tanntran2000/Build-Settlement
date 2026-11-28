@@ -1,0 +1,10 @@
+UTC: 2026-11-28T04:19:18.9070275Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/review-contracts.cjs b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Partial matcher sites in new R1 tests: 3
+packages/core/src/mansion/__tests__/catalog.test.ts:23 expect(() => core.validateMansionCatalog(raw)).toThrow('mansion.json#roomTypes.master-suite.effects[0].kind: unknown effect kind')
+packages/core/src/mansion/__tests__/catalog.test.ts:30 expect(() => core.validateMansionCatalog(raw)).toThrow('mansion.json#roomTypes.bedroom.cost[0].gold: must be ≥ 0')
+packages/core/src/mansion/__tests__/catalog.test.ts:43 expect(import('../catalog.js')).rejects.toThrow('mansion.json#' + path + ':')
+
+Exit: 1

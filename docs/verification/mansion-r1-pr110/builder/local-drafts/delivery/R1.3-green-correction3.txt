@@ -1,0 +1,19 @@
+UTC: 2026-11-28T02:06:11.9061482Z
+HEAD: 42ee9cfa0440a27f605afc9f7af7ae384026d3e5
+Tree: 7d0fce738effcae50fe7ae6c9b1d590a0454cb91
+Command: npm test -- packages/simulation/src packages/ui/src/__tests__/acquisition-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src packages/ui/src/__tests__/acquisition-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  58 passed (58)
+      Tests  1261 passed (1261)
+   Start at  09:06:14
+   Duration  59.27s (transform 12.12s, setup 0ms, import 45.06s, tests 227.89s, environment 31ms)
+
+
+Exit: 0

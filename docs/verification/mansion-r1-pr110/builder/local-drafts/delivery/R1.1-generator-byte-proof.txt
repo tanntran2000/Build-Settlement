@@ -1,0 +1,17 @@
+UTC: 2026-11-28T01:45:44.9855594Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: node --experimental-transform-types "C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/projection-proof.cjs"
+(node:38744) ExperimentalWarning: Transform Types is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\domain\character.ts:2
+import { Memory } from "./memory.js";
+         ^
+SyntaxError: The requested module './memory.js' does not provide an export named 'Memory'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:327:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:431:5)
+    at async node:internal/modules/esm/loader:643:26
+    at async record (C:\Users\Admin\.t3\local-drafts\mansion-r1\delivery\projection-proof.cjs:25:27)
+
+Exit: 1

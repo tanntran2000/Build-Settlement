@@ -1,0 +1,3104 @@
+UTC: 2026-11-28T03:11:25.2552462Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: npm exec -- vitest run packages/core/src/mansion/__tests__/shape.test.ts packages/core/src/mansion/__tests__/catalog.test.ts packages/simulation/src/__tests__/mansion-command.test.ts packages/persistence/src/__tests__/upgrade-v14.test.ts packages/ui/src/__tests__/v14-load.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts (7 tests | 4 failed) 225ms
+   × checks the imported JSON independently at needsGraceWeeks 53ms
+   × checks the imported JSON independently at calibration.lightRoleStressRelief 31ms
+   × checks the imported JSON independently at arousalPerWeek 94ms
+   × uses the loaded catalog keys and data-defined beds for new room and furniture ids 31ms
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts (15 tests | 1 failed) 331ms
+   × rejects an inline v14 IndexedDB item collection even if it is empty 31ms
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts (21 tests | 7 failed) 385ms
+   × refuses a playable checkpoint with Master Suite missing 29ms
+   × refuses a playable checkpoint with Throne Room missing 16ms
+   × refuses a playable checkpoint with wrong type at room-1 11ms
+   × refuses a playable checkpoint with wrong type at room-2 13ms
+   × rejects invalid Mansion structure directly in the society reader (null) 11ms
+   × rejects invalid Mansion structure directly in the society reader ({"rooms":null,"nextRoomSeq":3}) 6ms
+   × rejects unknown furniture directly in the society reader 5ms
+ ❯ packages/ui/src/__tests__/v14-load.test.ts (8 tests | 2 failed) 182ms
+   × does not mark a damaged nested v14 checkpoint with an missing outer version 17ms
+   × does not mark a damaged nested v14 checkpoint with an current outer version 3ms
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts (13 tests | 1 failed) 542ms
+   × refuses a loaded Concubine entering the Master Suite through either move command 35ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > rejects an inline v14 IndexedDB item collection even if it is empty
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:114:17
+    112|   let error: unknown;
+    113|   try { persistence.recordsToSession(rows); } catch (caught) { error =…
+    114|   expect(error).toBeInstanceOf(persistence.StoreRecordError);
+       |                 ^
+    115|   expect((error as persistence.StoreRecordError).ref).toBe('city:city'…
+    116|   expect(rows).toEqual(before);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses a loaded Concubine entering the Master Suite through either move command
+AssertionError: expected null to be 'SUITE_ROLE_ONLY' // Object.is equality
+
+- Expected:
+"SUITE_ROLE_ONLY"
+
++ Received:
+null
+
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:144:81
+    142|   expect(isCharacterLifeSessionState(loaded)).toBe(true);
+    143|   const suite = loaded.city.society!.mansion.rooms[0];
+    144|   expect(canMoveToMansionRoom(loaded.city, loaded.npcs, loaded.npcs[0]…
+       |                                                                                 ^
+    145|   refuses(loaded, 'MOVE_TO_ROOM', { npcId, roomId: suite.id }, 'SUITE_…
+    146|   refuses(loaded, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1', ro…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  packages/ui/src/__tests__/v14-load.test.ts > does not mark a damaged nested v14 checkpoint with an missing outer version
+ FAIL  packages/ui/src/__tests__/v14-load.test.ts > does not mark a damaged nested v14 checkpoint with an current outer version
+AssertionError: expected { slotId: '_', …(4) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "id": "migration:legacy-local-checkpoint",
+  "schemaVersion": 1,
+  "slotId": "_",
+  "table": "system",
+  "value": true,
+}
+
+ ❯ packages/ui/src/__tests__/v14-load.test.ts:86:41
+     84|   const result = await readLocalCharacterLife(deps);
+     85|   expect(result).toEqual({ success: false, message: `Local checkpoint …
+     86|   expect(await store.getSystem(marker)).toBeNull();
+       |                                         ^
+     87|   expect(await store.read('main')).toBeNull();
+     88| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > checks the imported JSON independently at needsGraceWeeks
+AssertionError: promise resolved "{ …(6), …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "MANSION_CATALOG": {
++     "arousalPerWeek": 35,
++     "arousalStressMax": 10,
++     "calibration": {
++       "arousalPerLust": 1,
++       "comfortPerResident": 1,
++       "comfortShortStress": 1,
++       "fatalChanceFloorBps": 1000,
++       "furnitureResaleBps": 5000,
++       "hobbyJoy": 1,
++       "hobbyStressRelief": 1,
++       "lightReliefAffectionMin": 80,
++       "lightRoleStressRelief": 1,
++       "stressPerShortfall": 2,
++       "stressReliefPerPoint": 1,
++       "tavernStressRelief": 1,
++       "trainingGainPerWeek": 1,
++       "trainingLevelThreeGain": 2,
++     },
++     "calibrationNote": "All provisional amounts are TRIAL placeholders. R2.4 and R3.3 calibrate them with seeded runs.",
++     "comfortShortUpkeepBps": 15000,
++     "concubineRegen": 1,
++     "fitMultiplierBps": 15000,
++     "furniture": {
++       "armchair": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Armchair",
++         "priceMoneyMilli": 1000,
++       },
++       "bookshelf": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:management",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++           "bedroom",
++         ],
++         "hobby": "reading",
++         "name": "Bookshelf",
++         "priceMoneyMilli": 1000,
++       },
++       "cooking-tools": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "nutrition",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++         ],
++         "hobby": "cooking",
++         "name": "Cooking Tools",
++         "priceMoneyMilli": 1000,
++       },
++       "game-table": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "board_games",
++         "name": "Game Table",
++         "priceMoneyMilli": 1000,
++       },
++       "incense-jar": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": -1,
++             "kind": "npcShame",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Incense Jar",
++         "priceMoneyMilli": 1000,
++       },
++       "lute": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "music",
++         "name": "Lute",
++         "priceMoneyMilli": 1000,
++       },
++       "medicine-cabinet": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:medical",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Medicine Cabinet",
++         "priceMoneyMilli": 1000,
++       },
++       "mini-shrine": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcMind",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcHope",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Mini Shrine",
++         "priceMoneyMilli": 1000,
++       },
++       "pen-and-quill": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:negotiation",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "vault",
++         ],
++         "hobby": null,
++         "name": "Pen and Quill",
++         "priceMoneyMilli": 1000,
++       },
++       "sex-toys": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "sexExpGrowth",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Sex Toys",
++         "priceMoneyMilli": 1000,
++       },
++       "shackles": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Shackles",
++         "priceMoneyMilli": 1000,
++       },
++       "single-bed": {
++         "effects": [],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Single Bed",
++         "priceMoneyMilli": 1000,
++       },
++       "sofa": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Sofa",
++         "priceMoneyMilli": 1000,
++       },
++       "telescope": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "stargazing",
++         "name": "Telescope",
++         "priceMoneyMilli": 1000,
++       },
++       "tool-bench": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:technical",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Tool Bench",
++         "priceMoneyMilli": 1000,
++       },
++       "weapon-rack": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:combat",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "guard-quarters",
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Weapon Rack",
++         "priceMoneyMilli": 1000,
++       },
++     },
++     "furnitureFitMultiplierBps": 15000,
++     "lustPoints": {
++       "concubine": 2,
++       "fucktoy": 1,
++       "wife": 3,
++     },
++     "lustRequirementMax": 10,
++     "maidsQuartersUpkeepBps": 9000,
++     "needsGraceWeeks": "8",
++     "roles": {
++       "accountant": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 9500,
++             "kind": "upkeepBps",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "vault",
++         "name": "Accountant",
++       },
++       "captain": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 200,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 2000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Captain",
++       },
++       "concubine": {
++         "cap": 4,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Concubine",
++       },
++       "fucktoy": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Fucktoy",
++       },
++       "guard": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Guard",
++       },
++       "head-maid": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Head Maid",
++       },
++       "maid": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Maid",
++       },
++       "wife": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 3,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Wife",
++       },
++     },
++     "roomTypes": {
++       "bedroom": {
++         "beds": 1,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "npcAffection",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           2,
++           4,
++           6,
++         ],
++         "maxSingleBeds": 3,
++         "name": "Bedrooms",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "dungeon": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcFear",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcResentment",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": -1,
++             "kind": "npcFear",
++             "level": 3,
++           },
++           {
++             "amount": -1,
++             "kind": "npcResentment",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Dungeon",
++         "unlockLevel": 3,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "guard-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "chaseSuccessBps",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "guard",
++           "captain",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Guard Quarters",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "maids-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 9000,
++             "kind": "upkeepBps",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 3,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "maid",
++           "head-maid",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Maids' Quarters",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "master-suite": {
++         "beds": 5,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "fucktoy",
++           "concubine",
++           "wife",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Master Suite",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "throne-room": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Throne Room",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "training-yard": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 2,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Training Yard",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "vault": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++           {
++             "amount": 100,
++             "kind": "robberyChanceBps",
++             "level": 2,
++           },
++           {
++             "amount": 9000,
++             "kind": "vaultLossCapBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "accountant",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Vault",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++     },
++     "stressPenaltyFrom": 40,
++     "stressPenaltyMax": 10,
++     "trial": "TRIAL",
++     "wifeAffectionMin": 80,
++     "wifeExpertParts": 2,
++     "wifeSaveHealth": 20,
++   },
++   "isMansionRole": [Function isMansionRole],
++   "isMansionRoomType": [Function isMansionRoomType],
++   "isRoomLevel": [Function isRoomLevel],
++   "isSkillKey": [Function isSkillKey],
++   "validateMansionCatalog": [Function validateMansionCatalog],
+  }
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:38:59
+     36|   vi.doMock('../../data/mansion.json', () => ({ default: raw }));
+     37|   try {
+     38|     await expect(import('../catalog.js')).rejects.toThrow('mansion.jso…
+       |                                                           ^
+     39|   } finally {
+     40|     vi.doUnmock('../../data/mansion.json');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > checks the imported JSON independently at calibration.lightRoleStressRelief
+AssertionError: promise resolved "{ …(6), …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "MANSION_CATALOG": {
++     "arousalPerWeek": 35,
++     "arousalStressMax": 10,
++     "calibration": {
++       "arousalPerLust": 1,
++       "comfortPerResident": 1,
++       "comfortShortStress": 1,
++       "fatalChanceFloorBps": 1000,
++       "furnitureResaleBps": 5000,
++       "hobbyJoy": 1,
++       "hobbyStressRelief": 1,
++       "lightReliefAffectionMin": 80,
++       "stressPerShortfall": 2,
++       "stressReliefPerPoint": 1,
++       "tavernStressRelief": 1,
++       "trainingGainPerWeek": 1,
++       "trainingLevelThreeGain": 2,
++     },
++     "calibrationNote": "All provisional amounts are TRIAL placeholders. R2.4 and R3.3 calibrate them with seeded runs.",
++     "comfortShortUpkeepBps": 15000,
++     "concubineRegen": 1,
++     "fitMultiplierBps": 15000,
++     "furniture": {
++       "armchair": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Armchair",
++         "priceMoneyMilli": 1000,
++       },
++       "bookshelf": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:management",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++           "bedroom",
++         ],
++         "hobby": "reading",
++         "name": "Bookshelf",
++         "priceMoneyMilli": 1000,
++       },
++       "cooking-tools": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "nutrition",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++         ],
++         "hobby": "cooking",
++         "name": "Cooking Tools",
++         "priceMoneyMilli": 1000,
++       },
++       "game-table": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "board_games",
++         "name": "Game Table",
++         "priceMoneyMilli": 1000,
++       },
++       "incense-jar": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": -1,
++             "kind": "npcShame",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Incense Jar",
++         "priceMoneyMilli": 1000,
++       },
++       "lute": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "music",
++         "name": "Lute",
++         "priceMoneyMilli": 1000,
++       },
++       "medicine-cabinet": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:medical",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Medicine Cabinet",
++         "priceMoneyMilli": 1000,
++       },
++       "mini-shrine": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcMind",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcHope",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Mini Shrine",
++         "priceMoneyMilli": 1000,
++       },
++       "pen-and-quill": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:negotiation",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "vault",
++         ],
++         "hobby": null,
++         "name": "Pen and Quill",
++         "priceMoneyMilli": 1000,
++       },
++       "sex-toys": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "sexExpGrowth",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Sex Toys",
++         "priceMoneyMilli": 1000,
++       },
++       "shackles": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Shackles",
++         "priceMoneyMilli": 1000,
++       },
++       "single-bed": {
++         "effects": [],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Single Bed",
++         "priceMoneyMilli": 1000,
++       },
++       "sofa": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Sofa",
++         "priceMoneyMilli": 1000,
++       },
++       "telescope": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "stargazing",
++         "name": "Telescope",
++         "priceMoneyMilli": 1000,
++       },
++       "tool-bench": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:technical",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Tool Bench",
++         "priceMoneyMilli": 1000,
++       },
++       "weapon-rack": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:combat",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "guard-quarters",
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Weapon Rack",
++         "priceMoneyMilli": 1000,
++       },
++     },
++     "furnitureFitMultiplierBps": 15000,
++     "lustPoints": {
++       "concubine": 2,
++       "fucktoy": 1,
++       "wife": 3,
++     },
++     "lustRequirementMax": 10,
++     "maidsQuartersUpkeepBps": 9000,
++     "needsGraceWeeks": 8,
++     "roles": {
++       "accountant": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 9500,
++             "kind": "upkeepBps",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "vault",
++         "name": "Accountant",
++       },
++       "captain": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 200,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 2000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Captain",
++       },
++       "concubine": {
++         "cap": 4,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Concubine",
++       },
++       "fucktoy": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Fucktoy",
++       },
++       "guard": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Guard",
++       },
++       "head-maid": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Head Maid",
++       },
++       "maid": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Maid",
++       },
++       "wife": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 3,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Wife",
++       },
++     },
++     "roomTypes": {
++       "bedroom": {
++         "beds": 1,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "npcAffection",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           2,
++           4,
++           6,
++         ],
++         "maxSingleBeds": 3,
++         "name": "Bedrooms",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "dungeon": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcFear",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcResentment",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": -1,
++             "kind": "npcFear",
++             "level": 3,
++           },
++           {
++             "amount": -1,
++             "kind": "npcResentment",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Dungeon",
++         "unlockLevel": 3,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "guard-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "chaseSuccessBps",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "guard",
++           "captain",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Guard Quarters",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "maids-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 9000,
++             "kind": "upkeepBps",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 3,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "maid",
++           "head-maid",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Maids' Quarters",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "master-suite": {
++         "beds": 5,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "fucktoy",
++           "concubine",
++           "wife",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Master Suite",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "throne-room": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Throne Room",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "training-yard": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 2,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Training Yard",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "vault": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++           {
++             "amount": 100,
++             "kind": "robberyChanceBps",
++             "level": 2,
++           },
++           {
++             "amount": 9000,
++             "kind": "vaultLossCapBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "accountant",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Vault",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++     },
++     "stressPenaltyFrom": 40,
++     "stressPenaltyMax": 10,
++     "trial": "TRIAL",
++     "wifeAffectionMin": 80,
++     "wifeExpertParts": 2,
++     "wifeSaveHealth": 20,
++   },
++   "isMansionRole": [Function isMansionRole],
++   "isMansionRoomType": [Function isMansionRoomType],
++   "isRoomLevel": [Function isRoomLevel],
++   "isSkillKey": [Function isSkillKey],
++   "validateMansionCatalog": [Function validateMansionCatalog],
+  }
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:38:59
+     36|   vi.doMock('../../data/mansion.json', () => ({ default: raw }));
+     37|   try {
+     38|     await expect(import('../catalog.js')).rejects.toThrow('mansion.jso…
+       |                                                           ^
+     39|   } finally {
+     40|     vi.doUnmock('../../data/mansion.json');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > checks the imported JSON independently at arousalPerWeek
+AssertionError: promise resolved "{ …(6), …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "MANSION_CATALOG": {
++     "arousalStressMax": 10,
++     "calibration": {
++       "arousalPerLust": 1,
++       "comfortPerResident": 1,
++       "comfortShortStress": 1,
++       "fatalChanceFloorBps": 1000,
++       "furnitureResaleBps": 5000,
++       "hobbyJoy": 1,
++       "hobbyStressRelief": 1,
++       "lightReliefAffectionMin": 80,
++       "lightRoleStressRelief": 1,
++       "stressPerShortfall": 2,
++       "stressReliefPerPoint": 1,
++       "tavernStressRelief": 1,
++       "trainingGainPerWeek": 1,
++       "trainingLevelThreeGain": 2,
++     },
++     "calibrationNote": "All provisional amounts are TRIAL placeholders. R2.4 and R3.3 calibrate them with seeded runs.",
++     "comfortShortUpkeepBps": 15000,
++     "concubineRegen": 1,
++     "fitMultiplierBps": 15000,
++     "furniture": {
++       "armchair": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Armchair",
++         "priceMoneyMilli": 1000,
++       },
++       "bookshelf": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:management",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++           "bedroom",
++         ],
++         "hobby": "reading",
++         "name": "Bookshelf",
++         "priceMoneyMilli": 1000,
++       },
++       "cooking-tools": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "nutrition",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "maids-quarters",
++         ],
++         "hobby": "cooking",
++         "name": "Cooking Tools",
++         "priceMoneyMilli": 1000,
++       },
++       "game-table": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "board_games",
++         "name": "Game Table",
++         "priceMoneyMilli": 1000,
++       },
++       "incense-jar": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": -1,
++             "kind": "npcShame",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Incense Jar",
++         "priceMoneyMilli": 1000,
++       },
++       "lute": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "music",
++         "name": "Lute",
++         "priceMoneyMilli": 1000,
++       },
++       "medicine-cabinet": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:medical",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Medicine Cabinet",
++         "priceMoneyMilli": 1000,
++       },
++       "mini-shrine": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcMind",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcHope",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Mini Shrine",
++         "priceMoneyMilli": 1000,
++       },
++       "pen-and-quill": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:negotiation",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "vault",
++         ],
++         "hobby": null,
++         "name": "Pen and Quill",
++         "priceMoneyMilli": 1000,
++       },
++       "sex-toys": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "sexExpGrowth",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "master-suite",
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Sex Toys",
++         "priceMoneyMilli": 1000,
++       },
++       "shackles": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "dungeon",
++         ],
++         "hobby": null,
++         "name": "Shackles",
++         "priceMoneyMilli": 1000,
++       },
++       "single-bed": {
++         "effects": [],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": null,
++         "name": "Single Bed",
++         "priceMoneyMilli": 1000,
++       },
++       "sofa": {
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++           "master-suite",
++         ],
++         "hobby": null,
++         "name": "Sofa",
++         "priceMoneyMilli": 1000,
++       },
++       "telescope": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcJoy",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "bedroom",
++         ],
++         "hobby": "stargazing",
++         "name": "Telescope",
++         "priceMoneyMilli": 1000,
++       },
++       "tool-bench": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:technical",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Tool Bench",
++         "priceMoneyMilli": 1000,
++       },
++       "weapon-rack": {
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "skillGrowth:combat",
++             "level": 1,
++           },
++         ],
++         "fitRooms": [
++           "guard-quarters",
++           "training-yard",
++         ],
++         "hobby": null,
++         "name": "Weapon Rack",
++         "priceMoneyMilli": 1000,
++       },
++     },
++     "furnitureFitMultiplierBps": 15000,
++     "lustPoints": {
++       "concubine": 2,
++       "fucktoy": 1,
++       "wife": 3,
++     },
++     "lustRequirementMax": 10,
++     "maidsQuartersUpkeepBps": 9000,
++     "needsGraceWeeks": 8,
++     "roles": {
++       "accountant": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 9500,
++             "kind": "upkeepBps",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "vault",
++         "name": "Accountant",
++       },
++       "captain": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 200,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 2000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Captain",
++       },
++       "concubine": {
++         "cap": 4,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerRegen",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Concubine",
++       },
++       "fucktoy": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Fucktoy",
++       },
++       "guard": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 1,
++           },
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "guard-quarters",
++         "name": "Guard",
++       },
++       "head-maid": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Head Maid",
++       },
++       "maid": {
++         "cap": null,
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "maids-quarters",
++         "name": "Maid",
++       },
++       "wife": {
++         "cap": 1,
++         "effects": [
++           {
++             "amount": 3,
++             "kind": "lustPoints",
++             "level": 1,
++           },
++           {
++             "amount": 11000,
++             "kind": "roleBonusBps",
++             "level": 1,
++           },
++         ],
++         "fitRoom": "master-suite",
++         "name": "Wife",
++       },
++     },
++     "roomTypes": {
++       "bedroom": {
++         "beds": 1,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": -1,
++             "kind": "npcStress",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "npcAffection",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           2,
++           4,
++           6,
++         ],
++         "maxSingleBeds": 3,
++         "name": "Bedrooms",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "dungeon": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcFear",
++             "level": 1,
++           },
++           {
++             "amount": 3,
++             "kind": "npcResentment",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "npcObedience",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": -1,
++             "kind": "npcFear",
++             "level": 3,
++           },
++           {
++             "amount": -1,
++             "kind": "npcResentment",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Dungeon",
++         "unlockLevel": 3,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "guard-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 100,
++             "kind": "chaseSuccessBps",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++           {
++             "amount": 100,
++             "kind": "fatalChanceBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "guard",
++           "captain",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Guard Quarters",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "maids-quarters": {
++         "beds": 10,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 9000,
++             "kind": "upkeepBps",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "comfort",
++             "level": 3,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "maid",
++           "head-maid",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Maids' Quarters",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "master-suite": {
++         "beds": 5,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "playerStressRelief",
++             "level": 1,
++           },
++           {
++             "amount": 1,
++             "kind": "playerArousalRelief",
++             "level": 2,
++           },
++           {
++             "amount": 15000,
++             "kind": "roleBonusBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "fucktoy",
++           "concubine",
++           "wife",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "residence",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Master Suite",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "throne-room": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 2,
++           },
++           {
++             "amount": 1,
++             "kind": "authority",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Throne Room",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "training-yard": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 1,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 2,
++           },
++           {
++             "amount": 2,
++             "kind": "trainees",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Training Yard",
++         "unlockLevel": 2,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++       "vault": {
++         "beds": 0,
++         "cost": [
++           {
++             "gold": 1000,
++             "iron": 100,
++             "wood": 250,
++           },
++           {
++             "gold": 2000,
++             "iron": 200,
++             "wood": 500,
++           },
++           {
++             "gold": 3000,
++             "iron": 300,
++             "wood": 750,
++           },
++         ],
++         "effects": [
++           {
++             "amount": 1000,
++             "kind": "safeAmountMilli",
++             "level": 1,
++           },
++           {
++             "amount": 100,
++             "kind": "robberyChanceBps",
++             "level": 2,
++           },
++           {
++             "amount": 9000,
++             "kind": "vaultLossCapBps",
++             "level": 3,
++           },
++         ],
++         "fitRoles": [
++           "accountant",
++         ],
++         "furnitureSlots": [
++           2,
++           3,
++           4,
++         ],
++         "kind": "function",
++         "maxCount": [
++           1,
++           1,
++           1,
++         ],
++         "maxSingleBeds": 0,
++         "name": "Vault",
++         "unlockLevel": 1,
++         "upkeepMilli": [
++           0,
++           100,
++           200,
++         ],
++       },
++     },
++     "stressPenaltyFrom": 40,
++     "stressPenaltyMax": 10,
++     "trial": "TRIAL",
++     "wifeAffectionMin": 80,
++     "wifeExpertParts": 2,
++     "wifeSaveHealth": 20,
++   },
++   "isMansionRole": [Function isMansionRole],
++   "isMansionRoomType": [Function isMansionRoomType],
++   "isRoomLevel": [Function isRoomLevel],
++   "isSkillKey": [Function isSkillKey],
++   "validateMansionCatalog": [Function validateMansionCatalog],
+  }
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:38:59
+     36|   vi.doMock('../../data/mansion.json', () => ({ default: raw }));
+     37|   try {
+     38|     await expect(import('../catalog.js')).rejects.toThrow('mansion.jso…
+       |                                                           ^
+     39|   } finally {
+     40|     vi.doUnmock('../../data/mansion.json');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > uses the loaded catalog keys and data-defined beds for new room and furniture ids
+Error: mansion.json#roomTypes: unexpected or missing field
+ ❯ bad packages/core/src/mansion/catalog.ts:37:57
+     35| export const isRoomLevel = (value: unknown): value is RoomLevel => val…
+     36|
+     37| function bad(path: string, rule: string): never { throw Error('mansion…
+       |                                                         ^
+     38| function record(value: unknown, keys: readonly string[], path: string)…
+     39|   return hasWeeklyKeys(value, keys) ? value : bad(path, 'unexpected or…
+ ❯ record packages/core/src/mansion/catalog.ts:39:47
+ ❯ validateMansionCatalog packages/core/src/mansion/catalog.ts:77:44
+ ❯ packages/core/src/mansion/catalog.ts:113:43
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:54:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > refuses a playable checkpoint with Master Suite missing
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > refuses a playable checkpoint with Throne Room missing
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > refuses a playable checkpoint with wrong type at room-1
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > refuses a playable checkpoint with wrong type at room-2
+AssertionError: expected null to be 'INVALID_SAVE_STATE' // Object.is equality
+
+- Expected:
+"INVALID_SAVE_STATE"
+
++ Received:
+null
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:96:49
+     94|   change(envelope.state.city.society.mansion.rooms);
+     95|   const load = deserializeCharacterLifeSave(JSON.stringify(envelope));
+     96|   expect(load.success ? null : load.error.code).toBe('INVALID_SAVE_STA…
+       |                                                 ^
+     97| });
+     98|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects invalid Mansion structure directly in the society reader (null)
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects invalid Mansion structure directly in the society reader ({"rooms":null,"nextRoomSeq":3})
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:100:71
+     98|
+     99| it.each([null, { rooms: null, nextRoomSeq: 3 }])('rejects invalid Mans…
+    100|   expect(core.isSocietyState({ ...newGame().city.society, mansion })).…
+       |                                                                       ^
+    101| });
+    102|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects unknown furniture directly in the society reader
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:106:40
+    104|   const society = newGame().city.society!;
+    105|   society.mansion.rooms[0].furniture = ['does-not-exist'];
+    106|   expect(core.isSocietyState(society)).toBe(false);
+       |                                        ^
+    107| });
+    108|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  15 failed | 49 passed (64)
+   Start at  10:11:28
+   Duration  3.06s (transform 5.24s, setup 0ms, import 7.97s, tests 1.66s, environment 1ms)
+
+
+Exit: 1

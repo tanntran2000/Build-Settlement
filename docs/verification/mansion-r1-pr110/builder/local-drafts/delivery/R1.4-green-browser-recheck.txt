@@ -1,0 +1,128 @@
+UTC: 2026-11-28T02:12:42.4089487Z
+HEAD: dc66904415ff5a797da34b88870e41c374e05b1d
+Tree: a2d02cb29fabd1feba2c46aabcde130a82e0a872
+Command: set CI=1&& npm run test:smoke -- tests/e2e/mansion-rooms.spec.ts
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 292 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Ca9jhBq9.css                   40.73 kB │ gzip:   8.14 kB
+dist/assets/index-Cuebr91Y.js                   572.96 kB │ gzip: 181.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.56s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/mansion-rooms.spec.ts
+
+
+Running 4 tests using 1 worker
+
+(node:7488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 (14.7s)
+(node:3968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 (13.8s)
+(node:39720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\mansion-rooms.spec.ts:57:1 › imports a real v14 file at the title and opens the existing Report from the Throne Room (2.0s)
+  ok 4 [chromium] › tests\e2e\mansion-rooms.spec.ts:71:1 › keeps both checkpoint copies when a v14 upgrade fails or a v15 file is damaged (2.1s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere')
+    Expected: "room-3"
+    Received: "room-4"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere')
+        14 × locator resolved to <select class="svelte-18isbut" id="npc-home-room-npc_w1_guild_0">…</select>
+           - unexpected value "room-4"
+
+
+       at character-life-navigation.helpers.ts:86
+
+      84 |   for (let i = 0; i < values.indexOf(value); i++) await page.keyboard.press('ArrowDown');
+      85 |   await page.keyboard.press('Tab');
+    > 86 |   await expect(target).toHaveValue(value);
+         |                        ^
+      87 | }
+      88 |
+      89 | export async function watchTurnStatus(page: Page) {
+        at keyPost (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:86:24)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:45:5
+
+    Error Context: test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere')
+    Expected: "room-3"
+    Received: "room-4"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Home residents' }).getByRole('listitem').filter({ hasText: 'Ardis Frostmere' }).getByLabel('Room for Ardis Frostmere')
+        14 × locator resolved to <select class="svelte-18isbut" id="npc-home-room-npc_w1_guild_0">…</select>
+           - unexpected value "room-4"
+
+
+       at character-life-navigation.helpers.ts:86
+
+      84 |   for (let i = 0; i < values.indexOf(value); i++) await page.keyboard.press('ArrowDown');
+      85 |   await page.keyboard.press('Tab');
+    > 86 |   await expect(target).toHaveValue(value);
+         |                        ^
+      87 | }
+      88 |
+      89 | export async function watchTurnStatus(page: Page) {
+        at keyPost (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:86:24)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:45:5
+
+    Error Context: test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 
+  2 passed (44.9s)
+
+Exit: 1

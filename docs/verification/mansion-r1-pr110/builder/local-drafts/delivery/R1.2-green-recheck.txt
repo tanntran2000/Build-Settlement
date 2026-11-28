@@ -1,0 +1,19 @@
+UTC: 2026-11-28T01:56:24.3820645Z
+HEAD: 21ebd564b1072fdd04fb349c723fe02bfa1ea196
+Tree: 1af20a6dc6b7be629896812e7d45cda580bbae4b
+Command: npm test -- packages/persistence/src packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/world-session.test.ts packages/ui/src/__tests__/world-npc-session.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/persistence/src packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/world-session.test.ts packages/ui/src/__tests__/world-npc-session.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  30 passed (30)
+      Tests  495 passed (495)
+   Start at  08:56:25
+   Duration  11.31s (transform 6.67s, setup 0ms, import 20.98s, tests 24.04s, environment 12ms)
+
+
+Exit: 0

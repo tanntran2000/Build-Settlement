@@ -1,0 +1,91 @@
+UTC: 2026-11-28T01:44:27.8653126Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: npm test -- packages/core/src packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts (52 tests | 4 failed) 1044ms
+     × pins seed 0 week 1 from guild slot 0 31ms
+     × pins seed 42 week 3 from auction-house slot 2 6ms
+     × pins seed 2026 week 4 from slave-market slot lot 4ms
+     × pins seed 2026 week 1 from auction-house slot lot 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 0 week 1 from guild slot 0
+AssertionError: expected '62ef6ef9bdffe9bb28e7b6b3b127837eac0fb…' to be '5711b25078588298643a4884eec2c417783ef…' // Object.is equality
+
+Expected: "5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f"
+Received: "62ef6ef9bdffe9bb28e7b6b3b127837eac0fb1e1e641f9451f72e5749592bd19"
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:60:28
+     58|     expect([generated.npc.character.id, generated.npc.character.name, …
+     59|       .toStrictEqual([id, name, age, origin]);
+     60|     expect(sha(generated)).toBe(hash);
+       |                            ^
+     61|     expect(api.npcValueMilli(generated.npc, source, slot === 'lot')).t…
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 42 week 3 from auction-house slot 2
+AssertionError: expected '7def8e1daa7a494016aefaa7ebbda1a867840…' to be 'db94789a78e6ca07288524a07ac42ca6d67ec…' // Object.is equality
+
+Expected: "db94789a78e6ca07288524a07ac42ca6d67eca53dbaf3ed027d7c22f00931e5a"
+Received: "7def8e1daa7a494016aefaa7ebbda1a8678407290b68cde3de727ae61c306bd9"
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:60:28
+     58|     expect([generated.npc.character.id, generated.npc.character.name, …
+     59|       .toStrictEqual([id, name, age, origin]);
+     60|     expect(sha(generated)).toBe(hash);
+       |                            ^
+     61|     expect(api.npcValueMilli(generated.npc, source, slot === 'lot')).t…
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 2026 week 4 from slave-market slot lot
+AssertionError: expected '4a2b44b7d0f7030ff41789452254b09afe7ee…' to be '1e25d57b31365e1d20678bdc20483efb7ed74…' // Object.is equality
+
+Expected: "1e25d57b31365e1d20678bdc20483efb7ed74cc6c60e8e93d0513b8215ebd63b"
+Received: "4a2b44b7d0f7030ff41789452254b09afe7ee618d493c0ec62130f6eb2b4f5bf"
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:60:28
+     58|     expect([generated.npc.character.id, generated.npc.character.name, …
+     59|       .toStrictEqual([id, name, age, origin]);
+     60|     expect(sha(generated)).toBe(hash);
+       |                            ^
+     61|     expect(api.npcValueMilli(generated.npc, source, slot === 'lot')).t…
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 2026 week 1 from auction-house slot lot
+AssertionError: expected '636e1d72e36626fe8052f33f45ff3e99209c4…' to be 'b0cca7a583a112c302575a4dc686de0497615…' // Object.is equality
+
+Expected: "b0cca7a583a112c302575a4dc686de04976151f8a8db3bf2bf09eed7a0a8eeed"
+Received: "636e1d72e36626fe8052f33f45ff3e99209c4640431b4dd69b1f0c94852f1184"
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:60:28
+     58|     expect([generated.npc.character.id, generated.npc.character.name, …
+     59|       .toStrictEqual([id, name, age, origin]);
+     60|     expect(sha(generated)).toBe(hash);
+       |                            ^
+     61|     expect(api.npcValueMilli(generated.npc, source, slot === 'lot')).t…
+     62|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 44 passed (45)
+      Tests  4 failed | 1074 passed (1078)
+   Start at  08:44:29
+   Duration  15.70s (transform 6.85s, setup 0ms, import 20.58s, tests 27.23s, environment 24ms)
+
+
+Exit: 1

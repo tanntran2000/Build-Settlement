@@ -1,0 +1,100 @@
+UTC: 2026-11-28T04:18:36.0256413Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: npm exec -- vitest run packages/core/src/mansion/__tests__/catalog.test.ts packages/ui/src/__tests__/character-life-session.test.ts -t "incompatible bed furniture|factory failure falls back"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts (9 tests | 2 failed | 7 skipped) 257ms
+   × rejects incompatible bed furniture in a playable checkpoint (guest-room, single-bed) 185ms
+   × rejects incompatible bed furniture in a playable checkpoint (bedroom, guest-cot) 69ms
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (63 tests | 1 failed | 62 skipped) 46ms
+   × factory failure falls back to memory with a one-time warning 44ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > factory failure falls back to memory with a one-time warning
+AssertionError: expected { success: true, replaced: false } to deeply equal { Object (success, replaced, ...) }
+
+- Expected
++ Received
+
+  {
+    "replaced": false,
+    "success": true,
+-   "volatile": true,
+  }
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:196:436
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (guest-room, single-bed)
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (bedroom, guest-cot)
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:100:38
+     98|     room.typeId = typeId;
+     99|     room.furniture = [furnitureId];
+    100|     expect.soft(live.roomBeds(room)).toBe(1);
+       |                                      ^
+    101|     expect.soft(live.isMansionStructure(mansion)).toBe(false);
+    102|     const mismatch = deserializeCharacterLifeSave(JSON.stringify({ ...…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (guest-room, single-bed)
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (bedroom, guest-cot)
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:101:51
+     99|     room.furniture = [furnitureId];
+    100|     expect.soft(live.roomBeds(room)).toBe(1);
+    101|     expect.soft(live.isMansionStructure(mansion)).toBe(false);
+       |                                                   ^
+    102|     const mismatch = deserializeCharacterLifeSave(JSON.stringify({ ...…
+    103|     expect(mismatch.success ? null : mismatch.error.code).toBe('INVALI…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (guest-room, single-bed)
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects incompatible bed furniture in a playable checkpoint (bedroom, guest-cot)
+AssertionError: expected null to be 'INVALID_SAVE_STATE' // Object.is equality
+
+- Expected:
+"INVALID_SAVE_STATE"
+
++ Received:
+null
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:103:59
+    101|     expect.soft(live.isMansionStructure(mansion)).toBe(false);
+    102|     const mismatch = deserializeCharacterLifeSave(JSON.stringify({ ...…
+    103|     expect(mismatch.success ? null : mismatch.error.code).toBe('INVALI…
+       |                                                           ^
+    104|   } finally {
+    105|     vi.doUnmock('../../data/mansion.json');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 69 skipped (72)
+   Start at  11:18:39
+   Duration  2.75s (transform 2.82s, setup 0ms, import 3.71s, tests 304ms, environment 0ms)
+
+
+Exit: 1

@@ -1,0 +1,62 @@
+{
+  "records": [
+    {
+      "file": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "line": 24,
+      "why": "Pin the whole v15 city state after the same 60-week replay",
+      "before": "  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'8e572bc49c9ecd1d578032548a16ce0785dac863dc0dd0ff1be9961764fc6857',priorCity:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},",
+      "after": "  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'e3b100fb8c08944508cf7b5c11370bb1633c0cb0bb4f046e7317475c64f547c4',priorCity:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},",
+      "afterUtf8Base64": "ICAwOiB7cmVwb3J0czonOTM5M2I3MTAzMzE3NWU1ZGM2YzFkYTY1ZWQxMTZhNTc0NTIxNjcyZDJjMWEzNjMxMTQxYmE1N2U2NTRkOGE0NScsaXRlbXM6J2NkZGFiY2VlZTIzYzI3NDZkNGRkMzQwOGQwNWU3MWVlNjI0ZGQ4MDBkOGEwZjc2MWNiODhmMTMwMTIyZGViNjUnLGNpdHk6J2UzYjEwMGZiOGMwODk0NDUwOGNmN2I1YzExMzcwYmIxNjMzYzBjYjBiYjRmMDQ2ZTczMTc0NzVjNjRmNTQ3YzQnLHByaW9yQ2l0eTonY2I2MDdkNmI1MjY1ZDc3ODVmNjZjYzExMGVmNDg5YmY2MTZjMjQyZWZhYzBiOTY1YmU1NWEwOWI3NTcwODY5Myd9LA=="
+    },
+    {
+      "file": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "line": 25,
+      "why": "Pin the whole v15 city state after the same 60-week replay",
+      "before": "  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'f558e188697a8279c0e5bd65a4ea0c56c993cacd98f9c46bdd352c10062a1813',priorCity:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},",
+      "after": "  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'d78cc71ec051368389518846e3ed4af72cce714217f55cc690df89f61b943762',priorCity:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},",
+      "afterUtf8Base64": "ICA0Mjoge3JlcG9ydHM6JzYyMzhhZjc0MjBjNTVmY2Y3NWFjZWY5MTEwMTFiYjRiNTAxMzgyMzEzOTc4NTMxNTBkNTQzM2NmNzZmYmIzMTknLGl0ZW1zOicyODNkYTZhMWU0ZmVkOGZkYzNhNDE5ZTcyZTAwODI3MDIwYWIxYWNlNjNmNjgyNzdkYjBjMWQ3Y2VlNTYxNmU4JyxjaXR5OidkNzhjYzcxZWMwNTEzNjgzODk1MTg4NDZlM2VkNGFmNzJjY2U3MTQyMTdmNTVjYzY5MGRmODlmNjFiOTQzNzYyJyxwcmlvckNpdHk6J2U2NDgyODVhYjJiNzVkMDU0OThiMmEzZmI2YmY3MmMzNjJhMGM4YTYzYjViZWVlZjBjZWQ3OGI0MzYwZTA1NzcnfSw="
+    },
+    {
+      "file": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "line": 26,
+      "why": "Pin the whole v15 city state after the same 60-week replay",
+      "before": "  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'9f4b8aa3adfb2ef5a0a9759c1f8b07aed63c307992ca50ac5373bda5d692efdf',priorCity:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},",
+      "after": "  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'37b386c5040d73d91181cfa9fd0e7725a8a7a53d2984b24a1c0593e2f05cb17a',priorCity:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},",
+      "afterUtf8Base64": "ICAyMDI2MTAyODoge3JlcG9ydHM6J2U3Yzk2ZjUzNzgzNzNjYzcxMDgwNzJkYmRhMWRiYjEyM2Q2MGRmZDYyM2M0OWM4YTFmMGY2OTM2OGRhNzI3NWQnLGl0ZW1zOiczYWQ0ZGU0ZWE3YzZhMDY4N2FjNmQ4NDgxNzc4YTI1MTNlODQxZGQwNjFlMTcxMjQyOWQ4YmIyZGFjYzMxNTE1JyxjaXR5OiczN2IzODZjNTA0MGQ3M2Q5MTE4MWNmYTlmZDBlNzcyNWE4YTdhNTNkMjk4NGIyNGExYzA1OTNlMmYwNWNiMTdhJyxwcmlvckNpdHk6J2EyYmY2NzZiMGQ2MDc0NWYwMzUwZWI1NGNlMTg4NGIzNTE1MWQ1NDFiZjMwZDU0YjZkZWIzZjJmYjRlMjhhZjUnfSw="
+    },
+    {
+      "file": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "line": 43,
+      "why": "Exclude the new Mansion key from the v12 projection and retain the original v12 digest",
+      "before": "  const { acquisition, difficulty, ...v12Society } = city.society!;",
+      "after": "  const { acquisition, difficulty, mansion, ...v12Society } = city.society!;",
+      "afterUtf8Base64": "ICBjb25zdCB7IGFjcXVpc2l0aW9uLCBkaWZmaWN1bHR5LCBtYW5zaW9uLCAuLi52MTJTb2NpZXR5IH0gPSBjaXR5LnNvY2lldHkhOw=="
+    }
+  ],
+  "replayEvidence": [
+    {
+      "seed": 0,
+      "reports": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45",
+      "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+      "v12Projection": "cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693",
+      "v14Projection": "8e572bc49c9ecd1d578032548a16ce0785dac863dc0dd0ff1be9961764fc6857",
+      "v15": "e3b100fb8c08944508cf7b5c11370bb1633c0cb0bb4f046e7317475c64f547c4"
+    },
+    {
+      "seed": 42,
+      "reports": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319",
+      "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+      "v12Projection": "e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577",
+      "v14Projection": "f558e188697a8279c0e5bd65a4ea0c56c993cacd98f9c46bdd352c10062a1813",
+      "v15": "d78cc71ec051368389518846e3ed4af72cce714217f55cc690df89f61b943762"
+    },
+    {
+      "seed": 20261028,
+      "reports": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d",
+      "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+      "v12Projection": "a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5",
+      "v14Projection": "9f4b8aa3adfb2ef5a0a9759c1f8b07aed63c307992ca50ac5373bda5d692efdf",
+      "v15": "37b386c5040d73d91181cfa9fd0e7725a8a7a53d2984b24a1c0593e2f05cb17a"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+UTC: 2026-11-28T03:14:58.2109032Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: set CI=1&& npm exec -- playwright test tests/e2e/mansion-rooms.spec.ts --grep "continues a v14 IndexedDB|successfully imports a v14" --output C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/baseline-browser-results
+
+Running 2 tests using 1 worker
+
+(node:33556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\mansion-rooms.spec.ts:116:1 › continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker (2.1s)
+  ok 2 [chromium] › tests\e2e\mansion-rooms.spec.ts:173:1 › successfully imports a v14 checkpoint in game without writing the local slot (1.5s)
+
+  2 passed (22.5s)
+
+Exit: 0

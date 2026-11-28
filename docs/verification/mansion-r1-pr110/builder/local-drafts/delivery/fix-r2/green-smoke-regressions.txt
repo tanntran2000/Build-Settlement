@@ -1,0 +1,76 @@
+UTC: 2026-11-28T05:14:11.7616763Z
+HEAD: 84bfd6689eaef0b968f0fb2f61f70a9bbb04b6cf
+Tree: 872bd0be3bb9736978c71d9162d35c872059f543
+Command: (npm run build && set CI=1&& npm exec -- playwright test tests/e2e/home-robbery.spec.ts tests/e2e/purse.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/world-session.spec.ts tests/e2e/mansion-rooms.spec.ts tests/e2e/storage.spec.ts --grep "shows crisis first|uses the Player purse|reports fractional Easy|while preserving full state and both slots|wrong-slot bytes never overwrite|R2-01|R2-02|blocked IndexedDB stays" --output C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/recovery-browser-results)
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 291 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-BSpK5jqL.css                   40.90 kB │ gzip:   8.18 kB
+dist/assets/index-CUv4MxHP.js                   578.26 kB │ gzip: 183.24 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 7.41s
+
+Running 32 tests using 1 worker
+
+(node:14160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\home-robbery.spec.ts:220:1 › shows crisis first and resumes between the two answers from IndexedDB and JSON (4.2s)
+  ok  2 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is empty (706ms)
+  ok  3 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v13 (934ms)
+  ok  4 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v15 (1.2s)
+  ok  5 [chromium] › tests\e2e\mansion-rooms.spec.ts:232:1 › R2-02 keeps Export available before leaving a volatile game and warns on Quit (1.7s)
+  ok  6 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1280 (8.9s)
+  ok  7 [chromium] › tests\e2e\purse.spec.ts:6:3 › uses the Player purse, reports both transactions and round-trips at 1600 (11.3s)
+  ok  8 [chromium] › tests\e2e\purse.spec.ts:114:1 › reports fractional Easy donation Gold after reloading a saved week (5.2s)
+  ok  9 [chromium] › tests\e2e\storage.spec.ts:42:1 › blocked IndexedDB stays playable warns once and exports (1.4s)
+  ok 10 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects missing while preserving full state and both slots (tiles) (2.1s)
+  ok 11 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects malformed while preserving full state and both slots (tiles) (2.5s)
+  ok 12 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects empty object while preserving full state and both slots (tiles) (2.2s)
+  ok 13 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects opposite mode while preserving full state and both slots (tiles) (2.4s)
+  ok 14 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects version while preserving full state and both slots (tiles) (2.7s)
+  ok 15 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects ruleset while preserving full state and both slots (tiles) (2.3s)
+  ok 16 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects map while preserving full state and both slots (tiles) (2.3s)
+  ok 17 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects negative stock while preserving full state and both slots (tiles) (2.5s)
+  ok 18 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects report phase while preserving full state and both slots (tiles) (3.2s)
+  ok 19 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects oversize while preserving full state and both slots (tiles) (2.1s)
+  ok 20 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects revision overflow while preserving full state and both slots (tiles) (2.1s)
+  ok 21 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects missing while preserving full state and both slots (population) (1.9s)
+  ok 22 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects malformed while preserving full state and both slots (population) (1.9s)
+  ok 23 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects empty object while preserving full state and both slots (population) (2.0s)
+  ok 24 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects opposite mode while preserving full state and both slots (population) (2.0s)
+  ok 25 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects version while preserving full state and both slots (population) (2.1s)
+  ok 26 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects ruleset while preserving full state and both slots (population) (2.9s)
+  ok 27 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects map while preserving full state and both slots (population) (2.1s)
+  ok 28 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects negative stock while preserving full state and both slots (population) (2.1s)
+  ok 29 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects report phase while preserving full state and both slots (population) (2.1s)
+  ok 30 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects oversize while preserving full state and both slots (population) (2.1s)
+  ok 31 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects revision overflow while preserving full state and both slots (population) (2.0s)
+  ok 32 [chromium] › tests\e2e\world-session.spec.ts:37:1 › U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (11.9s)
+
+  32 passed (1.8m)
+
+Exit: 0

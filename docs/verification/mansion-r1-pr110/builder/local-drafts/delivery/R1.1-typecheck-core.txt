@@ -1,0 +1,10 @@
+UTC: 2026-11-28T01:44:16.3119717Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: npm run typecheck:core
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+Exit: 0

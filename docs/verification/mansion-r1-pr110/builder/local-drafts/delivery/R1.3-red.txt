@@ -1,0 +1,256 @@
+UTC: 2026-11-28T01:58:19.7335017Z
+HEAD: 42ee9cfa0440a27f605afc9f7af7ae384026d3e5
+Tree: 7d0fce738effcae50fe7ae6c9b1d590a0454cb91
+Command: npm test -- packages/simulation/src/__tests__/mansion-command.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-command.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts (12 tests | 11 failed) 165ms
+   × unlocks Guard Quarters with Mansion level 2 and charges all three resources 25ms
+   × refuses when there is no gold 8ms
+   × refuses when there is no wood 6ms
+   × refuses when there is no iron 5ms
+   × refuses a third Bedroom at Mansion level 1 7ms
+   × upgrades a Bedroom, charges level costs, and refuses level 4 5ms
+   × requires a room on Mansion entry, clears the post, and clears the household fields on exit 18ms
+   × counts the moving NPC once when keeping a full room and refuses another occupant 11ms
+   × refuses a Hall resident entering a full Mansion with an unused Bedroom 11ms
+   × transfers one of 100 residents and refuses commands against a 101-NPC roster 23ms
+   × recruits into the first available furnished Mansion bed and keeps the existing payload 21ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > unlocks Guard Quarters with Mansion level 2 and charges all three resources
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "ROOM_LOCKED",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:30:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses when there is no gold
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "NOT_ENOUGH_GOLD",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:42:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses when there is no wood
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses when there is no iron
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INSUFFICIENT_RESOURCES",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:42:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses a third Bedroom at Mansion level 1
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "ROOM_LIMIT",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:49:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > upgrades a Bedroom, charges level costs, and refuses level 4
+Error: UNSUPPORTED_ACTION: This action is not supported in Character Life.
+ ❯ success packages/simulation/src/__tests__/mansion-command.test.ts:8:30
+      6| function success(state: CharacterLifeSessionState, type: string, field…
+      7|   const result = command(state, type, fields);
+      8|   if (!result.success) throw Error(result.error.code + ': ' + result.e…
+       |                              ^
+      9|   return result.next;
+     10| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:55:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > requires a room on Mansion entry, clears the post, and clears the household fields on exit
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_COMMAND",
++     "code": "EXECUTION_ERROR",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:66:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > counts the moving NPC once when keeping a full room and refuses another occupant
+Error: INVALID_COMMAND: Unknown NPC command or fields.
+ ❯ success packages/simulation/src/__tests__/mansion-command.test.ts:8:30
+      6| function success(state: CharacterLifeSessionState, type: string, field…
+      7|   const result = command(state, type, fields);
+      8|   if (!result.success) throw Error(result.error.code + ': ' + result.e…
+       |                              ^
+      9|   return result.next;
+     10| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:81:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > refuses a Hall resident entering a full Mansion with an unused Bedroom
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "MANSION_FULL",
++     "code": "INVALID_STATE",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:95:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > transfers one of 100 residents and refuses commands against a 101-NPC roster
+Error: INVALID_STATE: World session is invalid; nothing was changed.
+ ❯ success packages/simulation/src/__tests__/mansion-command.test.ts:8:30
+      6| function success(state: CharacterLifeSessionState, type: string, field…
+      7|   const result = command(state, type, fields);
+      8|   if (!result.success) throw Error(result.error.code + ': ' + result.e…
+       |                              ^
+      9|   return result.next;
+     10| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:104:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  packages/simulation/src/__tests__/mansion-command.test.ts > recruits into the first available furnished Mansion bed and keeps the existing payload
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "NO_BED",
++     "code": "EXECUTION_ERROR",
+    },
+    "success": false,
+  }
+
+ ❯ refuses packages/simulation/src/__tests__/mansion-command.test.ts:13:40
+     11| function refuses(state: CharacterLifeSessionState, type: string, field…
+     12|   const before = structuredClone(state);
+     13|   expect(command(state, type, fields)).toMatchObject({ success: false,…
+       |                                        ^
+     14|   expect(state).toEqual(before);
+     15| }
+ ❯ packages/simulation/src/__tests__/mansion-command.test.ts:114:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  11 failed | 1 passed (12)
+   Start at  08:58:20
+   Duration  1.53s (transform 816ms, setup 0ms, import 1.03s, tests 165ms, environment 0ms)
+
+
+Exit: 1

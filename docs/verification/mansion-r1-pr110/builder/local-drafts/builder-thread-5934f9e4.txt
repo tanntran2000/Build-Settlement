@@ -1,0 +1,48 @@
+Mansion R1 Builder (Sol 6.2)
+mcp:5934f9e4-9a70-4589-a5f5-6a5b67f931fa  completed  codex/gpt-6.2-sol
+
+[assistant]
+I’ll read Astra’s reproductions and correction 6, then record both failures on `b6365646` before editing. After the two fixes, I’ll re-run the earlier regressions and the full exact-head gates before pushing.
+
+[assistant]
+Both findings reproduced on `b6365646`. All three interleavings wrote a marker in memory and in Chromium IndexedDB. Chromium also showed the damaged alert alongside “No local checkpoint.” I’ll put the write decision in one shared store guard and give the title a distinct damaged state.
+
+[assistant]
+All 298 focused unit tests and 75 Chromium tests passed, including the new interleavings, the damaged-title case, and the three round-two IndexedDB cases. The scope proof covers 11 files and confirms that fixtures, goldens, and digest literals are unchanged. I’m starting the full exact-head checks.
+
+[assistant]
+Gates 1–7 passed at `02246aa`, with 154 architecture tests and 3,501 unit tests green. The full 450-case Chromium smoke run has started. The machine was at 3% CPU, both ports were free, and Windows keep-awake is active.
+
+[assistant]
+The first 17 smoke cases passed, including the full-week scenario and the first desktop accessibility baseline. The suite is still running, with no failures recorded.
+
+[assistant]
+Smoke has logged 86 passes with no failures. The longer keyboard, report-parity, and session-reset scenarios have passed. The run is continuing at `02246aa`.
+
+[assistant]
+Both round-three fixes and all three round-two IndexedDB cases have passed in the full smoke run. The run is at 231 passes with no failures recorded.
+
+[assistant]
+The storage and Tile checkpoint suites have passed in full smoke, including the competing migration case. The run is at 381 passes with no failures recorded.
+
+[assistant]
+All 450 smoke cases passed. I’ll run the pre-push scan, verify the remote branch after the push, and seal the evidence bundle.
+
+[assistant]
+Fixed both round-three findings and pushed `feat/mansion-rooms` by fast-forward. The remote SHA matches the tested head.
+
+- **R3-01** Both storage adapters now use one unconditional guard. If any row already occupies the slot when migration starts, the adapter writes neither checkpoint rows nor a migration marker.
+- **R3-02** A damaged current checkpoint shows the damaged alert with Continue disabled. Empty slots still show “No local checkpoint.”
+
+| Verification | Result |
+| --- | --- |
+| Head | `02246aaef51ebe45c5c0508fdd3ef09764ed64ef` |
+| Tree | `7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4` |
+| Gates 1–7 | All passed |
+| Architecture tests | 154 passed |
+| Unit tests | 3,501 passed across 160 files |
+| Full Chromium smoke | 450 passed in 41.5 minutes |
+
+The round-one and round-two regression rechecks passed. The evidence lists the existing expectations updated for R3-01 and confirms that no digest literals changed.
+
+Evidence is in `C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/`. [RED/GREEN README](C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/README.md) · [Exact-head gate log](C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/R1.5-exact-head.txt) · [Scope proof](C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/exact-head-scope.txt) · [Verified SHA-256 manifest](C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/SHA256SUMS.txt)

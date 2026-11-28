@@ -1,0 +1,25 @@
+UTC: 2026-11-28T04:22:31.5723438Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: (npm exec -- vitest run packages/core/src/mansion/__tests__ packages/simulation/src/__tests__/mansion-command.test.ts packages/persistence/src/__tests__/upgrade-v14.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/persistence/src/__tests__/craft-records.test.ts packages/persistence/src/__tests__/game-store.test.ts packages/ui/src/__tests__/v14-load.test.ts packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/mansion-view.test.ts && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/diagnostic-mutation.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/review-contracts.cjs)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  10 passed (10)
+      Tests  295 passed (295)
+   Start at  11:22:36
+   Duration  9.38s (transform 14.09s, setup 0ms, import 21.96s, tests 17.39s, environment 5ms)
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  71 skipped (71)
+      Tests  1852 skipped (1852)
+   Start at  11:22:50
+   Duration  26.67s (transform 15.19s, setup 0ms, import 56.86s, tests 0ms, environment 54ms)
+
+RED contract: the schema assertion accepted the intentionally wrong full message.
+
+Exit: 1

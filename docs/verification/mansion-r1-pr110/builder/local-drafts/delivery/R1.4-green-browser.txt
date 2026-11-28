@@ -1,0 +1,168 @@
+UTC: 2026-11-28T02:10:17.6403178Z
+HEAD: dc66904415ff5a797da34b88870e41c374e05b1d
+Tree: a2d02cb29fabd1feba2c46aabcde130a82e0a872
+Command: set CI=1&& npm run test:smoke -- tests/e2e/mansion-rooms.spec.ts tests/e2e/npc-homes.spec.ts tests/e2e/acquisition.spec.ts tests/e2e/import-alert.spec.ts tests/e2e/title.spec.ts
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 292 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Ca9jhBq9.css                   40.73 kB │ gzip:   8.14 kB
+dist/assets/index-Cuebr91Y.js                   572.96 kB │ gzip: 181.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.52s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/mansion-rooms.spec.ts tests/e2e/npc-homes.spec.ts tests/e2e/acquisition.spec.ts tests/e2e/import-alert.spec.ts tests/e2e/title.spec.ts
+
+
+Running 53 tests using 1 worker
+
+(node:39048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\acquisition.spec.ts:26:3 › acquisition panels, keyboard bids and real report rows at 1280px (13.4s)
+  ok  2 [chromium] › tests\e2e\acquisition.spec.ts:26:3 › acquisition panels, keyboard bids and real report rows at 1600px (12.1s)
+  ok  3 [chromium] › tests\e2e\acquisition.spec.ts:100:1 › sells a market slave and releases a servant from the roster with exact weekly rows (7.3s)
+Largest acquisition checkpoint {"saveBytes":298751,"emptyWeekBytes":296731,"acquisitionDeltaBytes":2020,"indexedDbRowJsonBytes":314412,"rowCount":104,"npcCount":100,"stock":12,"lots":2,"actionsPerLot":[4,4],"departures":14,"recentEntriesPerNpc":20}
+  ok  4 [chromium] › tests\e2e\acquisition.spec.ts:133:1 › round-trips the largest representative 100-NPC market checkpoint through IndexedDB and JSON (3.9s)
+  ok  5 [chromium] › tests\e2e\acquisition.spec.ts:205:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus (2.0s)
+  ok  6 [chromium] › tests\e2e\acquisition.spec.ts:205:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus (2.0s)
+  ok  7 [chromium] › tests\e2e\import-alert.spec.ts:58:3 › in-game import of a real v13 checkpoint keeps the older-version alert (1.2s)
+  ok  8 [chromium] › tests\e2e\import-alert.spec.ts:58:3 › in-game import of malformed JSON explains that the game was preserved (1.2s)
+  ok  9 [chromium] › tests\e2e\import-alert.spec.ts:58:3 › in-game import of a robbery card one milli above Money explains that the game was preserved (1.1s)
+  ok 10 [chromium] › tests\e2e\import-alert.spec.ts:58:3 › in-game import of a file over 1 MiB keeps the size alert (1.4s)
+  ok 11 [chromium] › tests\e2e\import-alert.spec.ts:75:1 › in-game import during Report keeps the phase alert (1.4s)
+  x  12 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 (12.4s)
+(node:33740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 (12.3s)
+(node:14748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 14 [chromium] › tests\e2e\mansion-rooms.spec.ts:57:1 › imports a real v14 file at the title and opens the existing Report from the Throne Room (1.6s)
+  ok 15 [chromium] › tests\e2e\mansion-rooms.spec.ts:71:1 › keeps both checkpoint copies when a v14 upgrade fails or a v15 file is damaged (2.0s)
+  ok 16 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1280px (6.0s)
+  ok 17 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1600px (5.9s)
+  ok 18 [chromium] › tests\e2e\title.spec.ts:6:3 › B1 in-game Options › Options plaque opens the shared dialog (877ms)
+  ok 19 [chromium] › tests\e2e\title.spec.ts:11:3 › B1 in-game Options › Options changes apply immediately in game (876ms)
+  ok 20 [chromium] › tests\e2e\title.spec.ts:18:3 › B1 in-game Options › About downloads the real error log in game (770ms)
+  ok 21 [chromium] › tests\e2e\title.spec.ts:28:3 › B1 in-game Options › Session no longer renders ErrorLog (745ms)
+  ok 22 [chromium] › tests\e2e\title.spec.ts:37:1 › fallback and version position (441ms)
+  ok 23 [chromium] › tests\e2e\title.spec.ts:44:1 › keyboard wraps, Home End, focus ring and Enter (557ms)
+  ok 24 [chromium] › tests\e2e\title.spec.ts:53:1 › Options persist and Large uses 3px (887ms)
+  ok 25 [chromium] › tests\e2e\title.spec.ts:65:1 › fullscreen refusal (616ms)
+  ok 26 [chromium] › tests\e2e\title.spec.ts:71:1 › About and error log (452ms)
+  ok 27 [chromium] › tests\e2e\title.spec.ts:77:1 › Quit and return (603ms)
+  ok 28 [chromium] › tests\e2e\title.spec.ts:81:38 › art integer scale and reduce motion false (625ms)
+  ok 29 [chromium] › tests\e2e\title.spec.ts:81:38 › art integer scale and reduce motion true (523ms)
+  ok 30 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 320 normal (771ms)
+  ok 31 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 320 large (744ms)
+  ok 32 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 375 normal (743ms)
+  ok 33 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 375 large (852ms)
+  ok 34 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1280 normal (932ms)
+  ok 35 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1280 large (809ms)
+  ok 36 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1600 normal (840ms)
+  ok 37 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1600 large (712ms)
+  ok 38 [chromium] › tests\e2e\title.spec.ts:107:1 › empty slot disables Continue and focuses New Game (453ms)
+  ok 39 [chromium] › tests\e2e\title.spec.ts:110:1 › manual save enables cached Continue with exactly one mount read (1.4s)
+  ok 40 [chromium] › tests\e2e\title.spec.ts:119:1 › old checkpoint disables Continue with reason (386ms)
+  ok 41 [chromium] › tests\e2e\title.spec.ts:123:1 › valid Load checkpoint replaces stale mount cache (912ms)
+  ok 42 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses oversize and keeps title (648ms)
+  ok 43 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses old and keeps title (399ms)
+  ok 44 [chromium] › tests\e2e\title.spec.ts:133:1 › double New Game and Create produce one session (912ms)
+  ok 45 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage junk still renders title (503ms)
+  ok 46 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage throws still renders title (503ms)
+  ok 47 [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page (1.1s)
+  ok 48 [chromium] › tests\e2e\title.spec.ts:174:1 › Fullscreen reflects live document changes while Options stays open (664ms)
+  ok 49 [chromium] › tests\e2e\title.spec.ts:184:1 › fallen city clears cached Continue after New Game and creation Cancel (1.2s)
+  ok 50 [chromium] › tests\e2e\title.spec.ts:197:1 › Quit invalidates a pending checkpoint file read (578ms)
+  ok 51 [chromium] › tests\e2e\title.spec.ts:221:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (1.2s)
+  ok 52 [chromium] › tests\e2e\title.spec.ts:229:3 › B2 Main menu › Main menu is locked with its reason throughout Report (732ms)
+  ok 53 [chromium] › tests\e2e\title.spec.ts:238:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (1.2s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron')
+
+
+      34 |     await keyActivate(page, build);
+      35 |     const bedrooms = rooms.getByRole('article').filter({ has: rooms.getByRole('heading', { name: 'Bedrooms · Level 1' }) });
+    > 36 |     await expect(bedrooms.getByText('2 Gold · 0.5 Wood · 0.2 Iron')).toBeVisible();
+         |                                                                      ^
+      37 |     await keyActivate(page, bedrooms.getByRole('button', { name: 'Upgrade Bedrooms' }));
+      38 |     await expect(rooms.getByRole('heading', { name: 'Bedrooms · Level 2' })).toBeVisible();
+      39 |     await selectHome(page, 'estate-2');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:36:70
+
+    Error Context: test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-builds-and-u-26133-sidents-by-keyboard-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Mansion rooms' }).getByRole('article').filter({ has: getByRole('region', { name: 'Mansion rooms' }).getByRole('heading', { name: 'Bedrooms · Level 1' }) }).getByText('2 Gold · 0.5 Wood · 0.2 Iron')
+
+
+      34 |     await keyActivate(page, build);
+      35 |     const bedrooms = rooms.getByRole('article').filter({ has: rooms.getByRole('heading', { name: 'Bedrooms · Level 1' }) });
+    > 36 |     await expect(bedrooms.getByText('2 Gold · 0.5 Wood · 0.2 Iron')).toBeVisible();
+         |                                                                      ^
+      37 |     await keyActivate(page, bedrooms.getByRole('button', { name: 'Upgrade Bedrooms' }));
+      38 |     await expect(rooms.getByRole('heading', { name: 'Bedrooms · Level 2' })).toBeVisible();
+      39 |     await selectHome(page, 'estate-2');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:36:70
+
+    Error Context: test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\mansion-rooms-builds-and-u-7a866-sidents-by-keyboard-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 
+  51 passed (2.1m)
+
+Exit: 1

@@ -1,0 +1,49 @@
+UTC: 2026-11-28T08:21:02.3916372Z
+HEAD: b6365646a4f13c0eb21babbcbae953b19400b52b
+Tree: 94f60e007e1c51e3722407e2a70495a3605539c7
+Command: npm exec -- vitest run packages/ui/src/__tests__/v14-load.test.ts -t R3-01
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/v14-load.test.ts (13 tests | 3 failed | 10 skipped) 81ms
+   × R3-01 preserves intact v14 with metadata inserted after the preliminary read in memory 56ms
+   × R3-01 preserves v14 missing city with metadata inserted after the preliminary read in memory 11ms
+   × R3-01 preserves v15 missing city with metadata inserted after the preliminary read in memory 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/v14-load.test.ts > R3-01 preserves intact v14 with metadata inserted after the preliminary read in memory
+ FAIL  packages/ui/src/__tests__/v14-load.test.ts > R3-01 preserves v14 missing city with metadata inserted after the preliminary read in memory
+ FAIL  packages/ui/src/__tests__/v14-load.test.ts > R3-01 preserves v15 missing city with metadata inserted after the preliminary read in memory
+AssertionError: expected { slotId: '_', …(4) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "id": "migration:legacy-local-checkpoint",
+  "schemaVersion": 1,
+  "slotId": "_",
+  "table": "system",
+  "value": true,
+}
+
+ ❯ packages/ui/src/__tests__/v14-load.test.ts:149:43
+    147|       expect(result).toEqual({ success: false, message: incoming === '…
+    148|     }
+    149|     expect(await store.getSystem(marker)).toBeNull();
+       |                                           ^
+    150|   },
+    151| );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 10 skipped (13)
+   Start at  15:21:04
+   Duration  1.62s (transform 950ms, setup 0ms, import 1.21s, tests 81ms, environment 0ms)
+
+
+Exit: 1

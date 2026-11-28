@@ -1,0 +1,27 @@
+﻿UTC: 2026-11-28T09:16:52Z HEAD: 02246aaef51ebe45c5c0508fdd3ef09764ed64ef
+Ports 4173/4174 listeners: 0
+16:16:55 CPU % 27
+16:17:01 CPU % 43
+16:17:07 CPU % 6
+16:17:13 CPU % 23
+16:17:19 CPU % 74
+16:17:25 CPU % 5
+Top processes by CPU time:
+
+Name                   Id         CPU WorkingSet64
+----                   --         --- ------------
+codebase-memory-mcp 25372 2814.921875      8724480
+T3 Code (Nightly)   39352 2764.578125    222429184
+ChatGPT             17436 1800.703125    598646784
+codebase-memory-mcp  6864  1739.34375      5357568
+msedgewebview2       6580   1548.3125    108412928
+claude              20232 1457.828125    550813696
+Zalo                30516 1438.234375    497770496
+T3 Code (Nightly)   40416 1378.234375    248328192
+claude              30480  1258.59375     49238016
+claude              27572   1109.3125    223641600
+claude              18060  916.984375    330170368
+ChatGPT             34120    641.9375    198524928
+
+
+

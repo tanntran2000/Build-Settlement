@@ -1,0 +1,284 @@
+UTC: 2026-11-28T08:21:00.3413995Z
+HEAD: b6365646a4f13c0eb21babbcbae953b19400b52b
+Tree: 94f60e007e1c51e3722407e2a70495a3605539c7
+Command: set CI=1&& npm exec -- playwright test tests/e2e/mansion-rooms.spec.ts --grep R3- --output C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/red-browser-results
+
+Running 4 tests using 1 worker
+
+(node:37004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves intact v14 inserted between IndexedDB reads (2.4s)
+(node:1240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v14 missing city inserted between IndexedDB reads (823ms)
+(node:5600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v15 missing city inserted between IndexedDB reads (871ms)
+(node:41936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\mansion-rooms.spec.ts:362:1 › R3-02 shows a damaged current slot as damaged on the title (8.2s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves intact v14 inserted between IndexedDB reads 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 7
+
+    @@ -1035,10 +1035,17 @@
+            "rulesetId": "tile-society-14",
+            "saveFormat": "haven.character-life-session.save",
+          },
+        },
+        Object {
+    +     "id": "migration:legacy-local-checkpoint",
+    +     "schemaVersion": 1,
+    +     "slotId": "_",
+    +     "table": "system",
+    +     "value": true,
+    +   },
+    +   Object {
+          "id": "outside",
+          "schemaVersion": 1,
+          "slotId": "main",
+          "table": "world",
+          "value": Object {
+
+      355 |     }
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    > 357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+          |                                                ^
+      358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+      359 |   });
+      360 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:357:48
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 10
+
+      Object {
+        "readwrite": 1,
+    -   "writes": Array [],
+    +   "writes": Array [
+    +     Object {
+    +       "key": Array [
+    +         "_",
+    +         "migration:legacy-local-checkpoint",
+    +       ],
+    +       "operation": "put",
+    +       "table": "system",
+    +     },
+    +   ],
+      }
+
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+    > 358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+          |                              ^
+      359 |   });
+      360 | }
+      361 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:358:30
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-d2fb0-ted-between-IndexedDB-reads-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-d2fb0-ted-between-IndexedDB-reads-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-d2fb0-ted-between-IndexedDB-reads-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v14 missing city inserted between IndexedDB reads 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 7
+
+    @@ -151,10 +151,17 @@
+            "rulesetId": "tile-society-14",
+            "saveFormat": "haven.character-life-session.save",
+          },
+        },
+        Object {
+    +     "id": "migration:legacy-local-checkpoint",
+    +     "schemaVersion": 1,
+    +     "slotId": "_",
+    +     "table": "system",
+    +     "value": true,
+    +   },
+    +   Object {
+          "id": "outside",
+          "schemaVersion": 1,
+          "slotId": "main",
+          "table": "world",
+          "value": Object {
+
+      355 |     }
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    > 357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+          |                                                ^
+      358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+      359 |   });
+      360 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:357:48
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 10
+
+      Object {
+        "readwrite": 1,
+    -   "writes": Array [],
+    +   "writes": Array [
+    +     Object {
+    +       "key": Array [
+    +         "_",
+    +         "migration:legacy-local-checkpoint",
+    +       ],
+    +       "operation": "put",
+    +       "table": "system",
+    +     },
+    +   ],
+      }
+
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+    > 358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+          |                              ^
+      359 |   });
+      360 | }
+      361 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:358:30
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-122e7-ted-between-IndexedDB-reads-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-122e7-ted-between-IndexedDB-reads-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-122e7-ted-between-IndexedDB-reads-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v15 missing city inserted between IndexedDB reads 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 7
+
+    @@ -157,10 +157,17 @@
+            "rulesetId": "tile-society-15",
+            "saveFormat": "haven.character-life-session.save",
+          },
+        },
+        Object {
+    +     "id": "migration:legacy-local-checkpoint",
+    +     "schemaVersion": 1,
+    +     "slotId": "_",
+    +     "table": "system",
+    +     "value": true,
+    +   },
+    +   Object {
+          "id": "outside",
+          "schemaVersion": 1,
+          "slotId": "main",
+          "table": "world",
+          "value": Object {
+
+      355 |     }
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    > 357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+          |                                                ^
+      358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+      359 |   });
+      360 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:357:48
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 10
+
+      Object {
+        "readwrite": 1,
+    -   "writes": Array [],
+    +   "writes": Array [
+    +     Object {
+    +       "key": Array [
+    +         "_",
+    +         "migration:legacy-local-checkpoint",
+    +       ],
+    +       "operation": "put",
+    +       "table": "system",
+    +     },
+    +   ],
+      }
+
+      356 |     expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      357 |     expect.soft(await readStoredRecords(page)).toEqual(before);
+    > 358 |     expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+          |                              ^
+      359 |   });
+      360 | }
+      361 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:358:30
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-69d62-ted-between-IndexedDB-reads-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-69d62-ted-between-IndexedDB-reads-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-01-preser-69d62-ted-between-IndexedDB-reads-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\mansion-rooms.spec.ts:362:1 › R3-02 shows a damaged current slot as damaged on the title 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByText('No local checkpoint', { exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByText('No local checkpoint', { exact: true }) with timeout 5000ms
+      - waiting for getByText('No local checkpoint', { exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      385 |   await expect(page.getByRole('alert')).toHaveText(damagedMessage);
+      386 |   expect(await readStoredRecords(page)).toEqual(before);
+    > 387 |   await expect(page.getByText('No local checkpoint', { exact: true })).toHaveCount(0);
+          |                                                                        ^
+      388 | });
+      389 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:387:72
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-02-shows--2af8e-lot-as-damaged-on-the-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-02-shows--2af8e-lot-as-damaged-on-the-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r3\red-browser-results\mansion-rooms-R3-02-shows--2af8e-lot-as-damaged-on-the-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves intact v14 inserted between IndexedDB reads 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v14 missing city inserted between IndexedDB reads 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:307:3 › R3-01 preserves v15 missing city inserted between IndexedDB reads 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:362:1 › R3-02 shows a damaged current slot as damaged on the title 
+
+Exit: 1

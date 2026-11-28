@@ -1,0 +1,117 @@
+UTC: 2026-11-28T04:21:33.1456436Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: (npm exec -- vitest run packages/core/src/mansion/__tests__ packages/simulation/src/__tests__/mansion-command.test.ts packages/persistence/src/__tests__/upgrade-v14.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/persistence/src/__tests__/craft-records.test.ts packages/persistence/src/__tests__/game-store.test.ts packages/ui/src/__tests__/v14-load.test.ts packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/mansion-view.test.ts && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/diagnostic-mutation.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/review-contracts.cjs)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (63 tests | 15 failed) 3250ms
+   × rejects an NPC-world checkpoint in the life slot and leaves every byte untouched 33ms
+   × ported checkpoint boundary: malformed bytes stay untouched 21ms
+   × ported checkpoint boundary: empty bytes stay untouched 27ms
+   × ported checkpoint boundary: version bytes stay untouched 21ms
+   × ported checkpoint boundary: ruleset bytes stay untouched 28ms
+   × ported checkpoint boundary: opposite mode bytes stay untouched 22ms
+   × ported checkpoint boundary: map bytes stay untouched 22ms
+   × ported checkpoint boundary: negative stock bytes stay untouched 36ms
+   × ported checkpoint boundary: report bytes stay untouched 28ms
+   × ported checkpoint boundary: extra field bytes stay untouched 26ms
+   × ported checkpoint boundary: workforce bytes stay untouched 27ms
+   × ported checkpoint boundary: oversize bytes stay untouched 28ms
+   × ported checkpoint boundary: UTF-8 oversize bytes stay untouched 43ms
+   × fix2 F1: pending migration keeps saved B when legacy A is readable 147ms
+   × fix2 F1: pending migration keeps saved B when legacy A is still blocked 148ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > rejects an NPC-world checkpoint in the life slot and leaves every byte untouched
+AssertionError: expected [ [ 'main', null, …(2) ] ] to deeply equal [ [ 'main', null, …(1) ] ]
+
+- Expected
++ Received
+
+@@ -7,7 +7,8 @@
+        "schemaVersion": 1,
+        "slotId": "_",
+        "table": "system",
+        "value": true,
+      },
++     [Function anonymous],
+    ],
+  ]
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:70:127
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: malformed bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: empty bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: version bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: ruleset bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: opposite mode bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: map bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: negative stock bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: report bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: extra field bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: workforce bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: oversize bytes stay untouched
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: UTF-8 oversize bytes stay untouched
+AssertionError: expected [ [ 'main', null, …(2) ] ] to deeply equal [ [ 'main', null, …(1) ] ]
+
+- Expected
++ Received
+
+@@ -7,7 +7,8 @@
+        "schemaVersion": 1,
+        "slotId": "_",
+        "table": "system",
+        "value": true,
+      },
++     [Function anonymous],
+    ],
+  ]
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:167:339
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix2 F1: pending migration keeps saved B when legacy A is readable
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix2 F1: pending migration keeps saved B when legacy A is still blocked
+AssertionError: expected "vi.fn()" to be called once with arguments: [ 'main', null, { slotId: '_', …(4) } ]
+
+Received:
+
+  1st vi.fn() call:
+
+@@ -6,6 +6,7 @@
+      "schemaVersion": 1,
+      "slotId": "_",
+      "table": "system",
+      "value": true,
+    },
++   [Function anonymous],
+  ]
+
+
+Number of calls: 1
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:313:18
+    311|  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b…
+    312|  expect(await d.store.read('main')).toEqual(before);expect(await d.sto…
+    313|  expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'…
+       |                  ^
+    314|  expect(await migrate.mock.results[0].value).toEqual(before);
+    315|  expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerP…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  15 failed | 280 passed (295)
+   Start at  11:21:35
+   Duration  5.51s (transform 5.16s, setup 0ms, import 9.54s, tests 11.68s, environment 4ms)
+
+
+Exit: 1

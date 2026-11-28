@@ -1,0 +1,19 @@
+UTC: 2026-11-28T01:43:22.8431250Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: set GENERATE_CATALOG_GOLDEN=1&& npm test -- packages/core/src/mansion/__tests__/catalog.test.ts packages/core/src/mansion/__tests__/shape.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/mansion/__tests__/catalog.test.ts packages/core/src/mansion/__tests__/shape.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  31 passed (31)
+   Start at  08:43:24
+   Duration  10.22s (transform 2.38s, setup 0ms, import 6.88s, tests 5.63s, environment 1ms)
+
+
+Exit: 0

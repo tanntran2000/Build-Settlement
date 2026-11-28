@@ -1,0 +1,35 @@
+UTC: 2026-11-28T02:06:54.5504882Z
+HEAD: 42ee9cfa0440a27f605afc9f7af7ae384026d3e5
+Tree: 7d0fce738effcae50fe7ae6c9b1d590a0454cb91
+Command: npm test -- packages/ui/src/__tests__/mansion-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/mansion-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/mansion-view.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/mansion-view.test.ts [ packages/ui/src/__tests__/mansion-view.test.ts ]
+Error: Cannot find module '../mansion-view.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/mansion-view.test.ts
+ ❯ packages/ui/src/__tests__/mansion-view.test.ts:4:1
+      2| import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@hav…
+      3| import { NPC_TEST_KEYS, seedFixtureMansionBeds, withNpcs } from '@have…
+      4| import * as view from '../mansion-view.js';
+       | ^
+      5|
+      6| function state() {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  09:07:00
+   Duration  2.18s (transform 1.05s, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+
+Exit: 1

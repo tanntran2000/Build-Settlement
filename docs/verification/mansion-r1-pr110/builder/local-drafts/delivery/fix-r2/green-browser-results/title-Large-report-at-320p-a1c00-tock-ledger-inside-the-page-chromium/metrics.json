@@ -1,0 +1,53 @@
+{
+  "viewport": 320,
+  "document": 320,
+  "px": "3px",
+  "letters": [
+    {
+      "id": "steward",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    },
+    {
+      "id": "quartermaster",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    },
+    {
+      "id": "census",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    },
+    {
+      "id": "captain",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    },
+    {
+      "id": "council",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    },
+    {
+      "id": "streets",
+      "left": 34,
+      "right": 286,
+      "scroll": 240,
+      "client": 240
+    }
+  ],
+  "ledger": {
+    "scroll": 400,
+    "client": 208
+  }
+}

@@ -1,0 +1,87 @@
+Mansion R1 Astra review
+mcp:98be5e79-ee6d-417f-a048-344aab2f88d7  completed  codex/gpt-6.2-astra
+
+[assistant]
+**VERDICT: FAIL** at `b3d1278` · **0 P0, 1 P1, 3 P2** and **0 P3**.
+
+The P1 is a save-preservation failure. In Chromium, I removed only the metadata row from a v14 IndexedDB slot and left a v13 backup in localStorage. Reloading the title replaced the surviving v14 city row with the v13 city and wrote the migration marker. Continue remained disabled.
+
+Six round‑1 findings closed without qualification. The builder’s exact-head log confirms all seven gates and **442/442 smoke tests** passed.
+
+[Round‑2 review with the ten-item closure table and reproductions](C:/Users/Admin/.t3/local-drafts/mansion-r1/astra-review/astra-round2.md)
+
+[user]
+MANSION R1 Astra round 3. Same review rules as rounds 1-2: review only, no edits, commits, pushes, GitHub comments or merges, no full smoke or servers; single vitest/Playwright specs only for proof and only after confirming ports 4173/4174 are free.
+
+This is the LAST review round for R1 under AGENTS.md §4. Any P0-P2 still open is a HOLD to the owner, so be exact about which findings are new versus carried over.
+
+Target: feat/mansion-rooms head b6365646a4f13c0eb21babbcbae953b19400b52b, tree 94f60e007e1c51e3722407e2a70495a3605539c7. Five commits on your round-2 head b3d1278: b5fe15a test: require exact Mansion catalog diagnostics; 72290ae fix(core): require room-compatible bed furniture; d1005ee fix(persistence): preserve unreadable checkpoint slots; 84bfd66 fix(ui): warn before leaving a session-only checkpoint; b636564 fix(ui): preserve checkpoint feedback around the exit prompt. 15 files, +269/-64. Worktree (read only) as before; confirm HEAD and tree first.
+
+Owner (Tân), verbatim, on your round 2: "Duyệt sửa vòng 2".
+
+Binding plan, now correction 5: C:/Users/Admin/.t3/local-drafts/mansion-r1/binding-plan-a32b543.md (SHA-256 bcbbf13e3ca94aa47d1f6914e946d9c30360ca0c0aa8a6677e2aad69a8a8b8a7). Correction 5 items 1-4 map to your R2-01..R2-04.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/ (README finding -> RED -> fix -> GREEN, R1.5-exact-head.txt, exact-head-scope.txt, SHA256SUMS.txt over 94 files; Orchestrator re-checked all 94 OK). Builder reports gates 1-7 exit 0 (154 architecture, 3,498 unit), CI=1 smoke 446/446, no digest literal changed. The first full smoke at 84bfd66 failed 23 cases (duplicate save notices; missing "left unchanged" wording in in-game Continue); b636564 is the recovery.
+
+Check:
+1. Each of R2-01..R2-04 is closed at b6365646: reproduce your round-2 counterexamples (the three metadata-missing Chromium variants; Main menu and Quit with a volatile save, including injected dependencies; Guest Room/Single Bed and Bedroom/Guest Cot refused as damaged with validation, capacity and upgrade on one predicate; no substring matcher left).
+2. The Builder changed three existing assertions or test flows (corrupt current-row case now expects the damaged message; injected fallback asserts volatile: true; blocked-storage Main menu case acknowledges the Export prompt). Confirm each is a direct, minimal consequence of correction 5 (or 2A) and that nothing else was loosened.
+3. b636564: confirm it only restores pre-existing behaviour (no duplicate notice; the existing "left unchanged" wording kept alongside the damaged classification) and does not weaken R2-01/R2-02. The 23 previously failing tests are unchanged.
+4. No regression in round-1 and round-2 areas you passed (scope, v15 shape, upgrade 10+10+4/4/2, unchanged Gold/Money/stats, alerts 2A, v1-v13 refusal, 5A, UI 1280/1600, data, catalog-field design); no new partial matcher, loosened assertion, skip or timeout; every change in b3d1278..b6365646 is inside the approved lists; evidence matches.
+
+Output: C:/Users/Admin/.t3/local-drafts/mansion-r1/astra-review/astra-round3.md (UTF-8, no ? in place of non-ASCII): head and tree checked, finding-by-finding closure table for R2-01..R2-04, new findings P0-P3 with file:line and why (mark each new or carried over), final line VERDICT: PASS or VERDICT: FAIL (PASS = no P0-P2). Reply with a short summary: verdict, counts, path.
+
+[assistant]
+I’ll verify the head and tree first, then replay the four round‑2 counterexamples. I’ll also compare the failed smoke run with the recovery commit so the report distinguishes any carried-over finding from a new one.
+
+[assistant]
+The three original missing-metadata cases now take the preservation path. I found a related race when a caller supplies the checkpoint store. I’ll replay it with the standard adapter to verify whether it writes the migration marker, and separately check the exact Chromium cases against the built UI.
+
+[assistant]
+I reproduced the marker write with both the memory adapter and real Chromium IndexedDB. The checkpoint rows survived, and all three original browser cases passed. I also matched all 23 earlier smoke failures to passing cases at the final head and confirmed their four spec files are unchanged.
+
+[assistant]
+**VERDICT: FAIL — HOLD for Tân under AGENTS.md §4.** Three of four round‑2 findings are closed. Open counts: **0 P0, 0 P1, 1 P2 carried over, 1 P3 new**.
+
+- **P2, carried over from R2-01.** All three original overwrite cases now pass. A concurrent load through an injected store can still write the migration marker while preserving the checkpoint rows. I reproduced this with both the memory adapter and Chromium IndexedDB.
+- **P3, new.** For a damaged v15 slot, the title screen displays both “No local checkpoint” and the damaged-checkpoint alert.
+
+All 23 earlier smoke failures passed at the reviewed head with their tests unchanged. All 94 evidence hashes matched.
+
+[astra-round3.md](C:/Users/Admin/.t3/local-drafts/mansion-r1/astra-review/astra-round3.md)
+
+[user]
+MANSION R1 Astra round 4. Same review rules as before: review only, no edits, commits, pushes, GitHub comments or merges, no full smoke or servers; single vitest/Playwright specs only for proof and only after confirming ports 4173/4174 are free.
+
+This is an owner-granted extra round (exception to AGENTS.md §4) limited to your round-3 P2 and P3. Any P0-P2 still open is a HOLD to the owner; mark each finding new or carried over.
+
+Target: feat/mansion-rooms head 02246aaef51ebe45c5c0508fdd3ef09764ed64ef, tree 7d6ba6d57c74132c2178a6e84b6f0ad8d573efc4. Two commits on your round-3 head b6365646: c64d87f fix(persistence): guard occupied slots during migration; 02246aa fix(ui): distinguish damaged title checkpoints. 11 files, +199/-41. Worktree (read only) as before; confirm HEAD and tree first.
+
+Owner (Tân), verbatim, on your round 3: "Sửa thêm 1 vòng nhỏ".
+
+Binding plan, now correction 6: C:/Users/Admin/.t3/local-drafts/mansion-r1/binding-plan-624c8da.md (SHA-256 5ae1eeeded2c429309d6537fb14900ccee5d97a98e538839729232bbe7605648). Correction 6 items R3-01 and R3-02 map to your round-3 P2 and P3.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r3/ (README, R1.5-exact-head.txt, exact-head-scope.txt, existing-expectations-R3-01.diff, SHA256SUMS.txt over 78 files; Orchestrator re-checked all 78 OK). Builder reports gates 1-7 exit 0 (154 architecture, 3,501 unit), CI=1 smoke 450/450.
+
+Check:
+1. R3-01 closed: replay your round-3 interleaving (rows inserted after the preliminary read, metadata row present, ordinary factory without the optional callback) through both adapters and in Chromium IndexedDB: no rows, no marker. The guard is one unconditional rule no caller can bypass. The three round-2 Chromium cases still pass.
+2. R3-02 closed: your Chromium reproduction (v15 rows, metadata present, city row missing, marker removed) shows only the damaged alert with Continue disabled; an empty slot still shows "No local checkpoint".
+3. Existing expectations changed in game-store.test.ts, character-life-session.test.ts and tests/e2e/storage.spec.ts (listed in README "Existing expectations updated by R3-01" and the .diff): confirm each is a direct, minimal consequence of R3-01 (occupied slots no longer marked), that the marker-winner storage.spec flow still proves what it proved before, and that nothing else was loosened.
+4. No regression in areas you passed in rounds 1-3; no new partial matcher, skip or timeout; every change in b6365646..02246aa is inside correction 6; evidence matches.
+
+Output: C:/Users/Admin/.t3/local-drafts/mansion-r1/astra-review/astra-round4.md (UTF-8, no ? in place of non-ASCII): head and tree checked, closure table for R3-01/R3-02, findings P0-P3 with file:line and why (new or carried), final line VERDICT: PASS or VERDICT: FAIL (PASS = no P0-P2). Reply with a short summary: verdict, counts, path.
+
+[assistant]
+I’ll confirm the head and tree first, then replay the occupied-slot race and the damaged-title case. I’ll also compare the changed expectations with their round‑3 versions and verify the evidence hashes.
+
+[assistant]
+Both adapters preserved the inserted rows and left the marker absent in all three race variants. Chromium also showed the damaged alert alone with Continue disabled, and the separate marker-winner replay preserved the competing tab’s checkpoint. All 78 evidence hashes matched.
+
+[assistant]
+**VERDICT: PASS** at `02246aa`. Both round‑3 findings are closed. The memory and Chromium IndexedDB adapters preserved occupied slots without writing a migration marker. The title showed the damaged-checkpoint alert with Continue disabled and reserved “No local checkpoint” for the empty slot.
+
+**Open findings:** P0 0 · P1 0 · P2 0 · P3 0. Zero new or carried over.
+
+All 78 evidence hashes matched. The builder’s exact-head smoke recorded 450/450 passes.
+
+[astra-round4.md](C:/Users/Admin/.t3/local-drafts/mansion-r1/astra-review/astra-round4.md)

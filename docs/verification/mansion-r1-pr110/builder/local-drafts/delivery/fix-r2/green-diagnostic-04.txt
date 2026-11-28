@@ -1,0 +1,38 @@
+UTC: 2026-11-28T04:23:54.7780487Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: (node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/diagnostic-mutation.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/review-contracts.cjs)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts (9 tests | 1 failed | 8 skipped) 28ms
+   × checks the imported JSON independently at needsGraceWeeks 25ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 skipped (9)
+   Start at  11:23:56
+   Duration  1.85s (transform 973ms, setup 0ms, import 1.28s, tests 28ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > checks the imported JSON independently at needsGraceWeeks
+AssertionError: expected Error: wrong prefix mansion.json#needsGra… to have property "message" with value 'mansion.json#needsGraceWeeks: must be…'
+
+Expected: "mansion.json#needsGraceWeeks: must be a safe integer"
+Received: "wrong prefix mansion.json#needsGraceWeeks: wrong diagnostic"
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:43:103
+     41|   vi.doMock('../../data/mansion.json', () => ({ default: raw }));
+     42|   try {
+     43|     await expect(Promise.reject(Error("wrong prefix mansion.json#needs…
+       |                                                                                                       ^
+     44|   } finally {
+     45|     vi.doUnmock('../../data/mansion.json');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+GREEN contract: the schema assertion rejected the intentionally wrong full message.
+Partial matcher sites in new R1 tests: 0
+
+Exit: 0

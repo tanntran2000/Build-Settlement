@@ -1,0 +1,58 @@
+UTC: 2026-11-28T03:18:40.4090143Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: (node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/scope-proof.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/scope-and-pins-proof.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/review-contracts.cjs && node packages/simulation/src/__tests__/fixtures/mansion-r1-path-diff.ts)
+packages/core/src/data/mansion.json
+packages/core/src/mansion/__tests__/catalog.test.ts
+packages/core/src/mansion/__tests__/shape.test.ts
+packages/core/src/mansion/catalog.ts
+packages/core/src/mansion/invariants.ts
+packages/core/src/mansion/rules.ts
+packages/core/src/mansion/types.ts
+packages/core/src/trial/society.ts
+packages/persistence/src/__tests__/upgrade-v14.test.ts
+packages/persistence/src/session-records.ts
+packages/persistence/src/upgrade-v14.ts
+packages/simulation/src/__tests__/mansion-command.test.ts
+packages/simulation/src/mansion-command.ts
+packages/ui/src/CharacterLifeApp.svelte
+packages/ui/src/MansionPanel.svelte
+packages/ui/src/TileManagement.svelte
+packages/ui/src/__tests__/mansion-view.test.ts
+packages/ui/src/__tests__/v14-load.test.ts
+packages/ui/src/character-life-session.ts
+packages/ui/src/mansion-view.ts
+tests/e2e/mansion-rooms.spec.ts
+21 approved paths; no changes to saved fixtures, serialized goldens, tuning, or SHA-256 literals.
+The Mansion catalog, with only the new behavior fields removed, exactly matches the pre-review catalog.
+Existing changed test rows and serialized fixtures match approved bytes at b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7.
+Finding 8: 0 prohibited assertion sites
+Finding 10: 0 required integration cases absent
+The coverage audit checks registration. Browser execution verifies the assertions.
+packages/simulation/src/__tests__/fixtures/catalog-golden.json 6c6bd0548dfc2236054203364ae7cc58b0b71c886a2a0c44b175d635bcf979c7 → 249db351cb41ed547f7512837678f21f3c6c2ffd4fda41b898ce304b39f4c677
+Seed 0: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+Seed 42: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+Seed 20261028: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-5-weeks.json 80c8b4bee6b657ab9d697848d9e2413a4f41c532596bf7f9e770f0d144616d13 → f0cccb6b6dd0819075443415dc453ec240e1b7ea40f77dbb9c36ed5407336e1d
+life-5-weeks.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-crime-death.json 192dc94fa920239287b8cfb7e06ef6665179752dc6996de07ebcc916007c8b21 → 71e08b2fb544240d55340526d978ae7bce8902f25e7738352536d90bf1766d50
+life-crime-death.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-crime-raid.json efe0de8280a345f7693311dc7f51cba57919f371726390de81ec63f69bd228ad → d563e8b5473b90be9b51b91e27812603d2d982e651c46b66a773c9b429e0e76d
+life-crime-raid.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-crime-robbery.json a1fe63c04e85853d671f2c4795536bc5dd126e45347ede80efcb2abfb5f6e7eb → d0c8ae045635e93df86bee6d8dfdb68656f532972a43ecfd98b637db84401118
+life-crime-robbery.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-crime-wound.json 92bd357bc26bd76d0fb4954cd5c17addf71f9a9c7c6d5e082732daa6d1d6f7df → 153aa449c52599a4341bc4ad518e097b139c26607b55b775c80cd62e8b6f93e0
+life-crime-wound.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-demand-card.json 66fe6a11187c8ab3bcf6729c55ea3f6594a297508e1ff65603002d9b8c00d0af → 46aecac82e637192df65dd2596044e7ae0cc57835ffc6910877769da6641c62d
+life-demand-card.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-laws.json c2d998215439509424ed199ee6357d65b2b125969f3660ef7aa8abcf5baac25e → f6db4b32a933b6b8a01471b9e81b29323daefba68f404a564ca7b1f4321d5869
+life-laws.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-new-game.json 41ca7bbb86324f22029f09d418af927995c71c227e2289d1dbed1678a179657a → b680de258594f395620d700c2f8d1a67c7ce680efbd7a367001f1067f1b413dc
+life-new-game.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+life-rebellion-last-week.json b039ca205740cfa1d5c3fa7521ef479748379533c65c9f6a6477063802c06758 → 9ab00825aef3f8496eb5c9e56eb87b1c5a24898e9b01a7ff9d0993ccfc794a21
+life-rebellion-last-week.json: cityRulesetId, state.city.society.rulesetId, state.city.society.mansion, state.player.needs
+new-game.json a50b1d176d5fed499cbf2b36b7c66acd9021c341060e7f31ae7fd31312df9ebf → 07ff7dc737f6fbaf482b556833a564850cbf2653b3b5f9638b50668c7b008d3b
+new-game.json: rulesetId, state.society.rulesetId, state.society.mansion
+Only the R1 shape and version bytes changed.
+
+Exit: 0

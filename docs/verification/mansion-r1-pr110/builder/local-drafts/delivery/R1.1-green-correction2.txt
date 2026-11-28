@@ -1,0 +1,19 @@
+UTC: 2026-11-28T01:52:56.3504413Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: npm test -- packages/core/src packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  45 passed (45)
+      Tests  1078 passed (1078)
+   Start at  08:52:57
+   Duration  14.67s (transform 4.93s, setup 0ms, import 17.56s, tests 26.11s, environment 19ms)
+
+
+Exit: 0

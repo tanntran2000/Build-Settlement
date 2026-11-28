@@ -1,0 +1,65 @@
+diff --git a/packages/persistence/src/__tests__/game-store.test.ts b/packages/persistence/src/__tests__/game-store.test.ts
+index b11c7be..1ff424d 100644
+--- a/packages/persistence/src/__tests__/game-store.test.ts
++++ b/packages/persistence/src/__tests__/game-store.test.ts
+@@ -14 +14 @@ it.each([true,false])('fix3 memory: existing marker writes nothing with meta=%s'
+-it('fix3 memory: existing slot wins and only receives the marker',async()=>{
++it('fix3 memory: existing slot wins without receiving a marker',async()=>{
+@@ -16 +16 @@ it('fix3 memory: existing slot wins and only receives the marker',async()=>{
+- expect(await s.migrateSlot('main',records('A'),marker)).toEqual(b);expect(await s.read('main')).toEqual(b);expect(await s.getSystem(marker.id)).toEqual(marker);
++ expect(await s.migrateSlot('main',records('A'),marker)).toEqual(b);expect(await s.read('main')).toEqual(b);expect(await s.getSystem(marker.id)).toBeNull();
+@@ -37 +37 @@ it.each(['candidate slot','candidate system','marker table'] as const)('fix3 mem
+-it.each([true,false])('fix3 memory: failed migration preserves records with meta=%s',async hasMeta=>{
++it.each([true,false])('fix3 memory: preserves records when writes fail with meta=%s',async hasMeta=>{
+@@ -39 +39,4 @@ it.each([true,false])('fix3 memory: failed migration preserves records with meta
+- expect(typeof s.migrateSlot).toBe('function');await expect(s.migrateSlot('main',records('A'),marker)).rejects.toThrow('Write aborted');
++ expect(typeof s.migrateSlot).toBe('function');
++ const result=s.migrateSlot('main',records('A'),marker);
++ if(hasMeta)await expect(result).resolves.toEqual(b);
++ else await expect(result).rejects.toThrow('Write aborted');
+diff --git a/packages/ui/src/__tests__/character-life-session.test.ts b/packages/ui/src/__tests__/character-life-session.test.ts
+index 049832e..a345344 100644
+--- a/packages/ui/src/__tests__/character-life-session.test.ts
++++ b/packages/ui/src/__tests__/character-life-session.test.ts
+@@ -312 +312 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+- expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
++ expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toBeNull();
+@@ -315 +315 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+- expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:1});expect(replace).not.toHaveBeenCalled();
++ expect(dataWrites.counts()).toEqual({dataPuts:0,dataDeletes:0,markerPuts:0});expect(replace).not.toHaveBeenCalled();
+@@ -343 +343 @@ it.each(['existing B','empty','invalid legacy','other migration'] as const)('fix
+- expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
++ expect(await base.read('main')).toEqual(cRows);expect(await base.getSystem(MARKER)).toEqual(kind==='other migration'?otherMarker:null);
+diff --git a/tests/e2e/storage.spec.ts b/tests/e2e/storage.spec.ts
+index 07737c8..640d823 100644
+--- a/tests/e2e/storage.spec.ts
++++ b/tests/e2e/storage.spec.ts
+@@ -118 +118 @@ test('fix2 F1: recovered legacy A cannot replace B saved while migration was blo
+- expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
++ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+@@ -176,2 +176,2 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
+-  await importLife(writer,c);const savedC=await exportLife(writer);await save(writer);
+-  const before=await readStoredRecords(writer);expect(before.filter(r=>r.table==='system')).toEqual([]);expect(await storedSaveText(writer)).toBe(bytes(savedC));
++  await importLife(writer,c);const savedC=await exportLife(writer);
++  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([]);
+@@ -179 +179,6 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
+-   await writer.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());await button(writer,'Continue locally').click();
++   await writer.evaluate(({key,text})=>{
++    (window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage();
++    const get = Storage.prototype.getItem;
++    Storage.prototype.getItem = function(k) { return k === key ? text : get.call(this,k); };
++   },{key:KEY,text:bytes(savedC)});
++   await button(writer,'Continue locally').click();
+@@ -181,2 +186,5 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
+-   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);
+-  }
++  } else await save(writer);
++  const before=await readStoredRecords(writer);
++  const expectedMarkers=scenario==='marker winner'?[marker]:[];
++  expect(before.filter(r=>r.table==='system')).toEqual(expectedMarkers);
++  expect(await storedSaveText(writer)).toBe(bytes(savedC));
+@@ -187,2 +195,2 @@ for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3
+-  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+-  expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
++  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual(expectedMarkers);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
++  expect(await activity()).toEqual({readwrite:1,writes:[]});

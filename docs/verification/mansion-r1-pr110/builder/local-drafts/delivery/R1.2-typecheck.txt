@@ -1,0 +1,20 @@
+UTC: 2026-11-28T01:56:24.6533441Z
+HEAD: 21ebd564b1072fdd04fb349c723fe02bfa1ea196
+Tree: 1af20a6dc6b7be629896812e7d45cda580bbae4b
+Command: npm run typecheck:core && npm run typecheck:persistence
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+packages/persistence/src/__tests__/upgrade-v14.test.ts(6,88): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/ui/src/character-life-session.ts(3,42): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/indexeddb-store.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/ui/src/character-life-session.ts(4,44): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/world-npc-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './world-npc-session.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts'
+    Imported via '../../../ui/src/world-npc-session.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/upgrade-v14.test.ts'
+packages/ui/src/world-npc-session.ts(3,41): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/world-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './world-session.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/world-npc-session.ts'
+    Imported via '../../../ui/src/world-session.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/upgrade-v14.test.ts'
+
+Exit: 2

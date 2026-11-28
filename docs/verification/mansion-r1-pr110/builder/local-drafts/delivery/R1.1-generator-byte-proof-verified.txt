@@ -1,0 +1,10 @@
+UTC: 2026-11-28T01:45:54.3452682Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: node "C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/projection-proof.cjs"
+packages/core/src/world/__tests__/npc-generator.test.ts:24 5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f → 62ef6ef9bdffe9bb28e7b6b3b127837eac0fb1e1e641f9451f72e5749592bd19
+packages/core/src/world/__tests__/npc-generator.test.ts:25 db94789a78e6ca07288524a07ac42ca6d67eca53dbaf3ed027d7c22f00931e5a → 7def8e1daa7a494016aefaa7ebbda1a8678407290b68cde3de727ae61c306bd9
+packages/core/src/world/__tests__/npc-generator.test.ts:26 1e25d57b31365e1d20678bdc20483efb7ed74cc6c60e8e93d0513b8215ebd63b → 4a2b44b7d0f7030ff41789452254b09afe7ee618d493c0ec62130f6eb2b4f5bf
+packages/core/src/world/__tests__/npc-generator.test.ts:27 b0cca7a583a112c302575a4dc686de04976151f8a8db3bf2bf09eed7a0a8eeed → 636e1d72e36626fe8052f33f45ff3e99209c4640431b4dd69b1f0c94852f1184
+
+Exit: 0

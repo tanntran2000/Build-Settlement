@@ -1,0 +1,19 @@
+UTC: 2026-11-28T08:22:26.1004845Z
+HEAD: b6365646a4f13c0eb21babbcbae953b19400b52b
+Tree: 94f60e007e1c51e3722407e2a70495a3605539c7
+Command: (npm exec -- vitest run packages/core/src/mansion/__tests__ packages/simulation/src/__tests__/mansion-command.test.ts packages/persistence/src/__tests__/upgrade-v14.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/persistence/src/__tests__/craft-records.test.ts packages/persistence/src/__tests__/game-store.test.ts packages/ui/src/__tests__/v14-load.test.ts packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/mansion-view.test.ts && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/review-contracts.cjs && node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/review-contracts.cjs)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  10 passed (10)
+      Tests  298 passed (298)
+   Start at  15:22:28
+   Duration  4.55s (transform 5.39s, setup 0ms, import 9.62s, tests 8.58s, environment 3ms)
+
+Partial matcher sites in new R1 tests: 0
+Finding 8: 0 prohibited assertion sites
+Finding 10: 0 required integration cases absent
+The coverage audit checks registration. Browser execution verifies the assertions.
+
+Exit: 0

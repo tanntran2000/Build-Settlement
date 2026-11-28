@@ -1,0 +1,15 @@
+UTC: 2026-11-28T03:15:01.0369303Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: npm exec -- vitest run packages/core/src/mansion/__tests__ packages/simulation/src/__tests__/mansion-command.test.ts packages/persistence/src/__tests__/upgrade-v14.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/persistence/src/__tests__/craft-records.test.ts packages/ui/src/__tests__/v14-load.test.ts packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/mansion-view.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  9 passed (9)
+      Tests  271 passed (271)
+   Start at  10:15:03
+   Duration  8.20s (transform 12.30s, setup 0ms, import 19.81s, tests 14.61s, environment 7ms)
+
+
+Exit: 0

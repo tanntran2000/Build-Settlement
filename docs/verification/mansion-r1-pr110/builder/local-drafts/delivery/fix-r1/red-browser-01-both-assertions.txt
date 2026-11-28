@@ -1,0 +1,72 @@
+UTC: 2026-11-28T03:15:57.7857896Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: set CI=1&& npm exec -- playwright test tests/e2e/mansion-rooms.spec.ts --grep "warns when continuing" --output C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/red-browser-results
+
+Running 1 test using 1 worker
+
+(node:40536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only (10.8s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "soft toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      106 |   }, { text, key });
+      107 |   await page.goto('/');
+    > 108 |   await expect.soft(page.getByRole('alert')).toHaveText('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
+          |                                              ^
+      109 |   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      110 |   await go(page, 'session');
+      111 |   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:108:46
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[aria-label="Planning checkpoints"] [role="status"]')
+    Expected: "Saved for this session only. Use Export checkpoint to keep your progress."
+    Received: "Saved in this browser."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[aria-label="Planning checkpoints"] [role="status"]') with timeout 5000ms
+      - waiting for locator('[aria-label="Planning checkpoints"] [role="status"]')
+        14 × locator resolved to <p role="status" class="svelte-68buw">Saved in this browser.</p>
+           - unexpected value "Saved in this browser."
+
+
+      110 |   await go(page, 'session');
+      111 |   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+    > 112 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Saved for this session only. Use Export checkpoint to keep your progress.');
+          |                                                                                     ^
+      113 |   expect(await page.evaluate(key => localStorage.getItem(key), key)).toBe(text);
+      114 | });
+      115 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:112:85
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r1\red-browser-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r1\red-browser-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r1\red-browser-results\mansion-rooms-warns-when-c-90c69-atile-saves-as-session-only-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:100:1 › warns when continuing v14 without IndexedDB and reports volatile saves as session-only 
+
+Exit: 1

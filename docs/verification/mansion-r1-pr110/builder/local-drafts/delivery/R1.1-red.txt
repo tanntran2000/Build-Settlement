@@ -1,0 +1,179 @@
+UTC: 2026-11-28T01:41:09.1005448Z
+HEAD: 8d37d16ca24420987e6b1294257da13bcdefb5a2
+Tree: 17ba075806d8551634e9c3cea18e85b8f72ef59c
+Command: npm test -- packages/core/src/mansion/__tests__/catalog.test.ts packages/core/src/mansion/__tests__/shape.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/mansion/__tests__/catalog.test.ts packages/core/src/mansion/__tests__/shape.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts (3 tests | 3 failed) 13ms
+   × pins the eight rooms, eight roles and sixteen furniture entries 7ms
+   × rejects an unknown effect with a catalog path 4ms
+   × rejects a negative resource cost with a catalog path 1ms
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts (14 tests | 14 failed) 91ms
+   × starts v15 with two empty rooms and eight weeks of grace 19ms
+   × keeps bed capacity independent of furnishing slots and round-trips exact bytes 16ms
+   × rejects hall-with-room in v15 6ms
+   × rejects estate-without-room in v15 6ms
+   × rejects unknown-room in v15 6ms
+   × rejects too-many-residents in v15 5ms
+   × rejects too-many-beds in v15 4ms
+   × rejects too-many-furnishings in v15 5ms
+   × rejects two-wives in v15 5ms
+   × rejects needs-out-of-range in v15 5ms
+   × rejects five Concubines in a valid Maids’ Quarters placement 2ms
+   × accepts a proven died departure from guild 4ms
+   × accepts a proven died departure from auction-house 3ms
+   × accepts a proven died departure from slave-market 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > pins the eight rooms, eight roles and sixteen furniture entries
+AssertionError: expected undefined to be defined
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:6:19
+      4| it('pins the eight rooms, eight roles and sixteen furniture entries', …
+      5|   const catalog = core.MANSION_CATALOG;
+      6|   expect(catalog).toBeDefined();
+       |                   ^
+      7|   expect(Object.keys(catalog.roomTypes)).toEqual(['master-suite', 'mai…
+      8|   expect(Object.keys(catalog.roles)).toEqual(['maid', 'head-maid', 'gu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects an unknown effect with a catalog path
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:15:39
+     13|
+     14| it('rejects an unknown effect with a catalog path', () => {
+     15|   expect(core.validateMansionCatalog).toBeTypeOf('function');
+       |                                       ^
+     16|   const raw = structuredClone(core.MANSION_CATALOG);
+     17|   Object.assign(raw.roomTypes['master-suite'].effects[0], { kind: 'unk…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/catalog.test.ts > rejects a negative resource cost with a catalog path
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/core/src/mansion/__tests__/catalog.test.ts:22:39
+     20|
+     21| it('rejects a negative resource cost with a catalog path', () => {
+     22|   expect(core.validateMansionCatalog).toBeTypeOf('function');
+       |                                       ^
+     23|   const raw = structuredClone(core.MANSION_CATALOG);
+     24|   Object.assign(raw.roomTypes.bedroom.cost[0], { gold: -1 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > starts v15 with two empty rooms and eight weeks of grace
+AssertionError: expected 'tile-society-14' to be 'tile-society-15' // Object.is equality
+
+Expected: "tile-society-15"
+Received: "tile-society-14"
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:14:41
+     12| it('starts v15 with two empty rooms and eight weeks of grace', () => {
+     13|   const state = newGame();
+     14|   expect(state.city.society!.rulesetId).toBe('tile-society-15');
+       |                                         ^
+     15|   expect(state.city.society!.mansion).toEqual({
+     16|     rooms: [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > keeps bed capacity independent of furnishing slots and round-trips exact bytes
+AssertionError: expected 'tile-society-14' to be 'tile-society-15' // Object.is equality
+
+Expected: "tile-society-15"
+Received: "tile-society-14"
+
+ ❯ bedroom packages/core/src/mansion/__tests__/shape.test.ts:27:41
+     25| function bedroom() {
+     26|   const state = withNpcs(newGame(), NPC_TEST_KEYS);
+     27|   expect(state.city.society!.rulesetId).toBe('tile-society-15');
+       |                                         ^
+     28|   const room: core.MansionRoom = { id: 'room-3', typeId: 'bedroom', le…
+     29|   state.city.society!.mansion.rooms.push(room);
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:40:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects hall-with-room in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects estate-without-room in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects unknown-room in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects too-many-residents in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects too-many-beds in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects too-many-furnishings in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects two-wives in v15
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects needs-out-of-range in v15
+AssertionError: expected 'tile-society-14' to be 'tile-society-15' // Object.is equality
+
+Expected: "tile-society-15"
+Received: "tile-society-14"
+
+ ❯ bedroom packages/core/src/mansion/__tests__/shape.test.ts:27:41
+     25| function bedroom() {
+     26|   const state = withNpcs(newGame(), NPC_TEST_KEYS);
+     27|   expect(state.city.society!.rulesetId).toBe('tile-society-15');
+       |                                         ^
+     28|   const room: core.MansionRoom = { id: 'room-3', typeId: 'bedroom', le…
+     29|   state.city.society!.mansion.rooms.push(room);
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:50:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > rejects five Concubines in a valid Maids’ Quarters placement
+AssertionError: expected 'tile-society-14' to be 'tile-society-15' // Object.is equality
+
+Expected: "tile-society-15"
+Received: "tile-society-14"
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:65:41
+     63| it('rejects five Concubines in a valid Maids’ Quarters placement', () …
+     64|   const state = newGame();
+     65|   expect(state.city.society!.rulesetId).toBe('tile-society-15');
+       |                                         ^
+     66|   const history = Array.from({ length: 5 }, (_, i) => ({ week: i + 1, …
+     67|   state.city.world.week = 9;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > accepts a proven died departure from guild
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > accepts a proven died departure from auction-house
+ FAIL  packages/core/src/mansion/__tests__/shape.test.ts > accepts a proven died departure from slave-market
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/core/src/mansion/__tests__/shape.test.ts:82:51
+     80|   state.city.world.week = 2;
+     81|   state.city.society!.acquisition = { ...core.emptyAcquisition(), week…
+     82|   expect(core.isCharacterLifeSessionState(state)).toBe(true);
+       |                                                   ^
+     83| });
+     84|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  17 failed (17)
+   Start at  08:41:11
+   Duration  1.62s (transform 1.19s, setup 0ms, import 1.60s, tests 104ms, environment 0ms)
+
+
+Exit: 1

@@ -1,0 +1,65 @@
+UTC: 2026-11-28T02:13:45.8625377Z
+HEAD: dc66904415ff5a797da34b88870e41c374e05b1d
+Tree: a2d02cb29fabd1feba2c46aabcde130a82e0a872
+Command: (npm run build --workspace=@haven/ui && set CI=1&& npm run test:smoke -- tests/e2e/mansion-rooms.spec.ts tests/e2e/npc-homes.spec.ts)
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 291 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Ca9jhBq9.css                   40.73 kB │ gzip:   8.14 kB
+dist/assets/index-uCkEXSbx.js                   572.93 kB │ gzip: 181.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.01s
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 292 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Ca9jhBq9.css                   40.73 kB │ gzip:   8.14 kB
+dist/assets/index-uCkEXSbx.js                   572.93 kB │ gzip: 181.57 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 4.48s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/mansion-rooms.spec.ts tests/e2e/npc-homes.spec.ts
+
+
+Running 6 tests using 1 worker
+
+(node:40340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1280 (12.1s)
+  ok 2 [chromium] › tests\e2e\mansion-rooms.spec.ts:17:3 › builds and upgrades rooms and moves residents by keyboard at 1600 (10.6s)
+  ok 3 [chromium] › tests\e2e\mansion-rooms.spec.ts:57:1 › imports a real v14 file at the title and opens the existing Report from the Throne Room (1.6s)
+  ok 4 [chromium] › tests\e2e\mansion-rooms.spec.ts:71:1 › keeps both checkpoint copies when a v14 upgrade fails or a v15 file is damaged (2.0s)
+  ok 5 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1280px (5.1s)
+  ok 6 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1600px (5.3s)
+
+  6 passed (48.3s)
+
+Exit: 0

@@ -1,0 +1,193 @@
+UTC: 2026-11-28T01:54:12.9909806Z
+HEAD: 21ebd564b1072fdd04fb349c723fe02bfa1ea196
+Tree: 1af20a6dc6b7be629896812e7d45cda580bbae4b
+Command: npm test -- packages/persistence/src/__tests__/upgrade-v14.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/persistence/src/__tests__/upgrade-v14.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts (19 tests | 19 failed) 70ms
+   × loads life-5-weeks.json as v15 with grace from its saved week 16ms
+   × loads life-crime-death.json as v15 with grace from its saved week 2ms
+   × loads life-crime-raid.json as v15 with grace from its saved week 2ms
+   × loads life-crime-robbery.json as v15 with grace from its saved week 2ms
+   × loads life-crime-wound.json as v15 with grace from its saved week 2ms
+   × loads life-demand-card.json as v15 with grace from its saved week 2ms
+   × loads life-laws.json as v15 with grace from its saved week 2ms
+   × loads life-new-game.json as v15 with grace from its saved week 2ms
+   × loads life-rebellion-last-week.json as v15 with grace from its saved week 2ms
+   × converts the city-only fixture through its city reader 2ms
+   × places 1-level Mansion residents in order across 3 beds 1ms
+   × places 3-level Mansion residents in order across 30 beds 0ms
+   × keeps standalone world format and also supports decoded World and NPC World loads 2ms
+   × keeps older and failed v14 files incompatible and categorizes damage in current files 10ms
+   × loads v14 legacy without writes until the next successful save 5ms
+   × loads v14 rows without writes until the next successful save 3ms
+   × loads v14 detached rows without writes until the next successful save 5ms
+   × rejects damaged v14 legacy without adding a migration marker 3ms
+   × rejects damaged v14 rows without adding a migration marker 5ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 19 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-5-weeks.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-crime-death.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-crime-raid.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-crime-robbery.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-crime-wound.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-demand-card.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-laws.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-new-game.json as v15 with grace from its saved week
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads life-rebellion-last-week.json as v15 with grace from its saved week
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:20:26
+     18|   const text = fixture(name), old = JSON.parse(text);
+     19|   const loaded = persistence.deserializeCharacterLifeSave(text);
+     20|   expect(loaded.success).toBe(true);
+       |                          ^
+     21|   if (!loaded.success) throw Error(loaded.error.message);
+     22|   expect(loaded.state.city.society?.rulesetId).toBe('tile-society-15');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > converts the city-only fixture through its city reader
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:29:38
+     27|
+     28| it('converts the city-only fixture through its city reader', () => {
+     29|   expect(persistence.upgradeV14City).toBeTypeOf('function');
+       |                                      ^
+     30|   const old = JSON.parse(fixture('new-game.json')).state;
+     31|   const before = JSON.stringify(old);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > places 1-level Mansion residents in order across 3 beds
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > places 3-level Mansion residents in order across 30 beds
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:61:41
+     59|
+     60| it.each([[1, 3, [3]], [3, 30, [10, 10, 4, 4, 2]]] as const)('places %i…
+     61|   expect(persistence.upgradeV14Session).toBeTypeOf('function');
+       |                                         ^
+     62|   const source = occupiedV14(level, residents), before = JSON.stringif…
+     63|   const upgraded = persistence.upgradeV14Session(source, 35);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > keeps standalone world format and also supports decoded World and NPC World loads
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:91:26
+     89|   const oldText = JSON.stringify({ format: 'haven.world-session.save',…
+     90|   const loaded = persistence.deserializeWorldSessionSave(oldText);
+     91|   expect(loaded.success).toBe(true);
+       |                          ^
+     92|   if (!loaded.success) throw Error(loaded.error.message);
+     93|   expect(Object.keys(loaded.state)).toEqual(['city', 'outside']);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > keeps older and failed v14 files incompatible and categorizes damage in current files
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_SAVE_STATE",
++     "code": "INCOMPATIBLE_SAVE",
+    },
+    "success": false,
+  }
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:114:77
+    112|   const current = JSON.parse(readFileSync(new URL('./fixtures/society-…
+    113|   current.state.city.society.rulesetId = 'tile-society-14';
+    114|   expect(persistence.deserializeCharacterLifeSave(JSON.stringify(curre…
+       |                                                                             ^
+    115|   delete current.state;
+    116|   expect(persistence.deserializeCharacterLifeSave(JSON.stringify(curre…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads v14 legacy without writes until the next successful save
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads v14 rows without writes until the next successful save
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > loads v14 detached rows without writes until the next successful save
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:146:26
+    144|   const deps = { store, legacy: { getItem: () => medium === 'legacy' ?…
+    145|   const loaded = await readLocalCharacterLife(deps);
+    146|   expect(loaded.success).toBe(true);
+       |                          ^
+    147|   if (!loaded.success) throw Error(loaded.message);
+    148|   if (medium === 'detached rows') expect(loaded.state.city.society?.it…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/19]⎯
+
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > rejects damaged v14 legacy without adding a migration marker
+ FAIL  packages/persistence/src/__tests__/upgrade-v14.test.ts > rejects damaged v14 rows without adding a migration marker
+AssertionError: expected { slotId: '_', …(4) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "id": "migration:legacy-local-checkpoint",
+  "schemaVersion": 1,
+  "slotId": "_",
+  "table": "system",
+  "value": true,
+}
+
+ ❯ packages/persistence/src/__tests__/upgrade-v14.test.ts:163:41
+    161|   const result = await readLocalCharacterLife({store, legacy: { getIte…
+    162|   expect(result).toMatchObject({ success: false, message: expect.strin…
+    163|   expect(await store.getSystem(marker)).toBeNull();
+       |                                         ^
+    164|   expect(JSON.stringify(await store.read('main'))).toBe(before);
+    165| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/19]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  19 failed (19)
+   Start at  08:54:14
+   Duration  1.74s (transform 991ms, setup 0ms, import 1.24s, tests 70ms, environment 0ms)
+
+
+Exit: 1

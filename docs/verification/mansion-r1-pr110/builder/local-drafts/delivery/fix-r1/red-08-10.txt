@@ -1,0 +1,23 @@
+UTC: 2026-11-28T03:10:43.3425046Z
+HEAD: d306f686876aca47bd9f4176a366380aa56fc774
+Tree: 3b69492a313493bee86294be35ec7871550ccaf7
+Command: node C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r1/review-contracts.cjs d306f686876aca47bd9f4176a366380aa56fc774
+Finding 8: 12 prohibited assertion sites
+packages/core/src/mansion/__tests__/catalog.test.ts:10 expect(catalog.roomTypes.bedroom).toMatchObject({ furnitureSlots: [2, 3, 4], maxSingleBeds: 3, beds: 1 });
+packages/core/src/mansion/__tests__/catalog.test.ts:11 expect(catalog).toMatchObject({ needsGraceWeeks: 8, fitMultiplierBps: 15000, maidsQuartersUpkeepBps: 9000 });
+packages/simulation/src/__tests__/mansion-command.test.ts:19 expect(command(state, type, fields)).toMatchObject({ success: false, error: { code } });
+packages/simulation/src/__tests__/mansion-command.test.ts:76 expect(inMansion.npcs[0].household).toMatchObject({ home: 'estate-1', room: 'room-3' });
+packages/simulation/src/__tests__/mansion-command.test.ts:80 expect(exit.npcs[0].household).toMatchObject({ home: 'estate-2', room: null, role: null, training: null });
+packages/persistence/src/__tests__/upgrade-v14.test.ts:98 for (const text of [v13, encode(badOld)]) expect(persistence.deserializeCharacterLifeSave(text)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
+packages/persistence/src/__tests__/upgrade-v14.test.ts:101 expect(persistence.deserializeCharacterLifeSave(JSON.stringify(current))).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
+packages/persistence/src/__tests__/upgrade-v14.test.ts:103 expect(persistence.deserializeCharacterLifeSave(JSON.stringify(current))).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
+packages/ui/src/__tests__/v14-load.test.ts:20 expect(prepared).toMatchObject({ success: true, next: { city: { society: { rulesetId: 'tile-society-15' } } } });
+packages/ui/src/__tests__/v14-load.test.ts:62 expect(await saveLocalCharacterLife(loaded.state, deps)).toMatchObject({ success: true });
+packages/ui/src/__tests__/v14-load.test.ts:63 expect((await store.read('main'))?.find(row => row.table === 'meta')?.value).toMatchObject({ rulesetId: 'tile-society-15' });
+packages/ui/src/__tests__/v14-load.test.ts:72 expect(result).toMatchObject({ success: false, message: expect.stringContaining(OLD_CHECKPOINT_MESSAGE) });
+Finding 10: 2 required integration cases absent
+continues a v14 IndexedDB slot with NPCs, workshop rows and an existing migration marker
+successfully imports a v14 checkpoint in game without writing the local slot
+The coverage audit checks registration. Browser execution verifies the assertions.
+
+Exit: 1

@@ -1,0 +1,117 @@
+UTC: 2026-11-28T02:01:54.9829540Z
+HEAD: 42ee9cfa0440a27f605afc9f7af7ae384026d3e5
+Tree: 7d0fce738effcae50fe7ae6c9b1d590a0454cb91
+Command: npm test -- packages/simulation/src/__tests__/mansion-command.test.ts packages/simulation/src/__tests__/craft-week.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/mansion-command.test.ts packages/simulation/src/__tests__/craft-week.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts (29 tests | 1 failed) 242ms
+   × keeps named beds outside resident housing and funds fixed upkeep 52ms
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts (82 tests | 3 failed) 597ms
+   × preserves all no-order reports and item states for sixty weeks at seed 0 179ms
+   × preserves all no-order reports and item states for sixty weeks at seed 42 118ms
+   × preserves all no-order reports and item states for sixty weeks at seed 20261028 92ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 0
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "8e572bc49c9ecd1d578032548a16ce0785dac863dc0dd0ff1be9961764fc6857",
++   "city": "e3b100fb8c08944508cf7b5c11370bb1633c0cb0bb4f046e7317475c64f547c4",
+    "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+    "reports": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:41:76
+     39|   }
+     40|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     41|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     42|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     43|   const { acquisition, difficulty, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 42
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "f558e188697a8279c0e5bd65a4ea0c56c993cacd98f9c46bdd352c10062a1813",
++   "city": "d78cc71ec051368389518846e3ed4af72cce714217f55cc690df89f61b943762",
+    "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+    "reports": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:41:76
+     39|   }
+     40|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     41|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     42|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     43|   const { acquisition, difficulty, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 20261028
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "9f4b8aa3adfb2ef5a0a9759c1f8b07aed63c307992ca50ac5373bda5d692efdf",
++   "city": "37b386c5040d73d91181cfa9fd0e7725a8a7a53d2984b24a1c0593e2f05cb17a",
+    "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+    "reports": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:41:76
+     39|   }
+     40|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     41|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     42|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     43|   const { acquisition, difficulty, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > keeps named beds outside resident housing and funds fixed upkeep
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/tile-trial-p7b.test.ts:25:26
+     23| function success(city: TileTrialState, command: Record<string, unknown…
+     24|   const result = run(city, command);
+     25|   expect(result.success).toBe(true);
+       |                          ^
+     26|   if (!result.success) throw Error(result.error.message);
+     27|   return result;
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:185:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  4 failed | 119 passed (123)
+   Start at  09:01:56
+   Duration  1.98s (transform 1.86s, setup 0ms, import 2.86s, tests 1.32s, environment 0ms)
+
+
+Exit: 1

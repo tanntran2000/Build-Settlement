@@ -1,0 +1,368 @@
+UTC: 2026-11-28T04:18:14.9094079Z
+HEAD: b3d1278ee02e374f1c3cf1eceee48a0dc0fbcbf7
+Tree: f3417d01d5176f50a488f1f2564767a15afe19b7
+Command: set CI=1&& npm exec -- playwright test tests/e2e/mansion-rooms.spec.ts --grep "R2-01|R2-02" --output C:/Users/Admin/.t3/local-drafts/mansion-r1/delivery/fix-r2/red-browser-results
+
+Running 4 tests using 1 worker
+
+(node:37612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is empty (8.4s)
+(node:20800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v13 (1.2s)
+(node:29780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v15 (11.2s)
+(node:36064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\mansion-rooms.spec.ts:232:1 › R2-02 keeps Export available before leaving a volatile game and warns on Quit (11.5s)
+
+
+  1) [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is empty 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      221 |     const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+    > 223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+          |                                                            ^
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:223:60
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+    > 224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+          |                                                                   ^
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:224:67
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "haven.store.write",
+    + ]
+
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+    > 225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+          |                                                                                        ^
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+      228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:225:88
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true })
+
+
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+    > 228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+          |                                                               ^
+      229 |   });
+      230 | }
+      231 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:228:63
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-2a0bb-tadata-when-legacy-is-empty-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-2a0bb-tadata-when-legacy-is-empty-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-2a0bb-tadata-when-legacy-is-empty-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v13 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "tile-society-14"
+    Received: "tile-society-13"
+
+      220 |     const after = await readStoredRecords(page);
+      221 |     const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+    > 222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+          |                                         ^
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:222:41
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      221 |     const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+    > 223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+          |                                                            ^
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:223:60
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+    > 224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+          |                                                                   ^
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:224:67
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "haven.store.write",
+    + ]
+
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+    > 225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+          |                                                                                        ^
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+      228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:225:88
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-22143-metadata-when-legacy-is-v13-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-22143-metadata-when-legacy-is-v13-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-22143-metadata-when-legacy-is-v13-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v15 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "tile-society-14"
+    Received: "tile-society-15"
+
+      220 |     const after = await readStoredRecords(page);
+      221 |     const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+    > 222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+          |                                         ^
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:222:41
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      221 |     const city = after.find(row => row.table === 'city')?.value as { society: { rulesetId: string } };
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+    > 223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+          |                                                            ^
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:223:60
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      222 |     expect.soft(city.society.rulesetId).toBe('tile-society-14');
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+    > 224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+          |                                                                   ^
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:224:67
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "haven.store.write",
+    + ]
+
+      223 |     expect.soft(after.some(row => row.table === 'system')).toBe(false);
+      224 |     expect.soft(JSON.stringify(after) === JSON.stringify(before)).toBe(true);
+    > 225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+          |                                                                                        ^
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+      228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:225:88
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  getByRole('button', { name: 'Continue', exact: true })
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toBeDisabled" getByRole('button', { name: 'Continue', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Continue', exact: true })
+        14 × locator resolved to <button tabindex="0" class="ledger-plaque svelte-17c114l">Continue</button>
+           - unexpected value "enabled"
+
+
+      225 |     expect.soft((await storeMarks(page)).filter(mark => mark === 'haven.store.write')).toEqual([]);
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    > 227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+          |                                                                                    ^
+      228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+      229 |   });
+      230 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:227:84
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.', { exact: true })
+
+
+      226 |     expect.soft(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+      227 |     await expect.soft(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+    > 228 |     await expect(page.getByText(oldMessage, { exact: true })).toBeVisible();
+          |                                                               ^
+      229 |   });
+      230 | }
+      231 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:228:63
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-09868-metadata-when-legacy-is-v15-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-09868-metadata-when-legacy-is-v15-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-01-preser-09868-metadata-when-legacy-is-v15-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\mansion-rooms.spec.ts:232:1 › R2-02 keeps Export available before leaving a volatile game and warns on Quit 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      247 |   await expect(prompt.or(title)).toBeVisible();
+      248 |   const prompted = await prompt.isVisible();
+    > 249 |   expect.soft(prompted).toBe(true);
+          |                         ^
+      250 |   if (prompted) {
+      251 |     await expect(prompt.getByText(sessionOnly, { exact: true })).toBeVisible();
+      252 |     const download = page.waitForEvent('download');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:249:25
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByText('You can close this tab now.', { exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toHaveCount" getByText('You can close this tab now.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('You can close this tab now.', { exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      260 |   await expect(title).toBeVisible();
+      261 |   await page.getByRole('button', { name: 'Quit', exact: true }).click();
+    > 262 |   await expect.soft(page.getByText('You can close this tab now.', { exact: true })).toHaveCount(0);
+          |                                                                                     ^
+      263 |   await expect(page.getByText(sessionOnly, { exact: true })).toBeVisible();
+      264 |   await page.getByRole('button', { name: 'Back to title', exact: true }).click();
+      265 |   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:262:85
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('Saved for this session only. Use Export checkpoint to keep your progress.', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('Saved for this session only. Use Export checkpoint to keep your progress.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('Saved for this session only. Use Export checkpoint to keep your progress.', { exact: true })
+
+
+      261 |   await page.getByRole('button', { name: 'Quit', exact: true }).click();
+      262 |   await expect.soft(page.getByText('You can close this tab now.', { exact: true })).toHaveCount(0);
+    > 263 |   await expect(page.getByText(sessionOnly, { exact: true })).toBeVisible();
+          |                                                              ^
+      264 |   await page.getByRole('button', { name: 'Back to title', exact: true }).click();
+      265 |   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      266 |   const recovered = await exportLife(page);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\mansion-rooms.spec.ts:263:62
+
+    Error Context: ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-02-keeps--6dd6e-tile-game-and-warns-on-Quit-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-02-keeps--6dd6e-tile-game-and-warns-on-Quit-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\mansion-r1\delivery\fix-r2\red-browser-results\mansion-rooms-R2-02-keeps--6dd6e-tile-game-and-warns-on-Quit-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is empty 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v13 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:197:3 › R2-01 preserves the v14 slot without metadata when legacy is v15 
+    [chromium] › tests\e2e\mansion-rooms.spec.ts:232:1 › R2-02 keeps Export available before leaving a volatile game and warns on Quit 
+
+Exit: 1
