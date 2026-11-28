@@ -9,6 +9,10 @@ import { captureSaveData } from './world-session-save.js';
 export const V14_RULESET = 'tile-society-14';
 type Data = Record<string, unknown>;
 
+const migrationRoomTypes = Object.entries(MANSION_CATALOG.roomTypes)
+  .flatMap(([id, type]) => type.migrationPriority === null ? [] : [{ id, type, priority: type.migrationPriority }])
+  .sort((a, b) => a.priority - b.priority);
+
 function record(raw: unknown): Data | undefined {
   return raw !== null && typeof raw === 'object' && !Array.isArray(raw) ? raw as Data : undefined;
 }
@@ -56,19 +60,22 @@ function placeResidents(city: TileTrialState, mansion: MansionState, rows: unkno
   let next = 0;
   function fill(typeId: MansionRoomTypeId) {
     const room: MansionRoom = { id: 'room-' + mansion.nextRoomSeq++, typeId, level: 1, furniture: [] };
-    if (typeId === 'bedroom') {
-      const { beds, maxSingleBeds } = MANSION_CATALOG.roomTypes.bedroom;
-      const extra = Math.min(maxSingleBeds, Math.max(0, residents.length - next - beds));
-      room.furniture = Array<string>(extra).fill('single-bed');
+    const { beds, maxSingleBeds } = MANSION_CATALOG.roomTypes[typeId];
+    const extra = Math.min(maxSingleBeds, Math.max(0, residents.length - next - beds));
+    if (extra) {
+      const bed = Object.entries(MANSION_CATALOG.furniture).find(([, piece]) => piece.addsBed && piece.fitRooms.includes(typeId));
+      if (!bed) throw Error('Missing migration bed for ' + typeId);
+      room.furniture = Array<string>(extra).fill(bed[0]);
     }
     mansion.rooms.push(room);
     const end = Math.min(residents.length, next + roomBeds(room));
     while (next < end) residents[next++].household.room = room.id;
   }
 
-  if (next < residents.length) fill('maids-quarters');
-  if (next < residents.length && level >= MANSION_CATALOG.roomTypes['guard-quarters'].unlockLevel) fill('guard-quarters');
-  for (let bedrooms = 0; next < residents.length && bedrooms < MANSION_CATALOG.roomTypes.bedroom.maxCount[level - 1]; bedrooms++) fill('bedroom');
+  for (const { id, type } of migrationRoomTypes) {
+    if (type.unlockLevel > level) continue;
+    for (let count = 0; next < residents.length && count < type.maxCount[level - 1]; count++) fill(id);
+  }
   return next === residents.length;
 }
 

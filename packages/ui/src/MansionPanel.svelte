@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick } from 'svelte';
-  import type { MansionRoomTypeId, TileTrialState, WorldNpc } from '@haven/core';
+  import { MANSION_CATALOG, type MansionRoomTypeId, type TileTrialState, type WorldNpc } from '@haven/core';
   import { mansionRoomChoices, mansionView } from './mansion-view.js';
 
   export let city: TileTrialState;
@@ -10,7 +10,7 @@
   export let oncommand: (type: string, fields: Record<string, unknown>) => boolean;
   export let onopenreports: () => void;
   let heading: HTMLHeadingElement;
-  let buildType: MansionRoomTypeId = 'bedroom';
+  let buildType: MansionRoomTypeId = MANSION_CATALOG.defaultBuildType;
   let assignments: Record<string, string> = {};
 
   $: model = mansionView(city, npcs);
@@ -82,7 +82,7 @@
       <button type="button" disabled={!!room.upgradeReason} aria-label={'Upgrade ' + room.name}
         aria-describedby={room.upgradeReason ? 'mansion-upgrade-' + room.id : undefined}
         onclick={() => oncommand('UPGRADE_ROOM', { roomId: room.id })}>Upgrade</button>
-      {#if room.typeId === 'throne-room'}<button type="button" onclick={onopenreports}>Open Report</button>{/if}
+      {#if room.reportAccess}<button type="button" onclick={onopenreports}>Open Report</button>{/if}
     </article>
   {/each}
 </section>

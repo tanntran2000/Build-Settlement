@@ -13,6 +13,7 @@ import { createItemsState, isItemsState, type ItemsState } from './items.js';
 import { emptyAcquisition, isAcquisitionState, type AcquisitionState } from './acquisition.js';
 
 import type { DifficultyId } from './difficulty.js';
+import { isMansionStructure } from '../mansion/invariants.js';
 import { createMansionState } from '../mansion/rules.js';
 import type { MansionState } from '../mansion/types.js';
 
@@ -71,7 +72,7 @@ export function isSocietyState(raw: unknown): raw is SocietyState {
       const tier = raw.classes[group];
       if (!hasWeeklyKeys(tier, ['common', 'elite']) || !count(tier.common) || !count(tier.elite)) return false;
     }
-    return (hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) || hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals','workshops'])) &&
+    return isMansionStructure(raw.mansion) && (hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) || hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals','workshops'])) &&
       raw.items.equipped!==null && typeof raw.items.equipped==='object' && isItemsState(raw.items,['player',...Object.keys(raw.items.equipped)]) &&
       hasWeeklyKeys(raw.stocksMilli,['stone','wool','cloth','herbs']) && Object.values(raw.stocksMilli).every(count) &&
       isCrisisState(raw.crisis, raw.pendingCard) && isOrderState(raw.order) && isOutsideState(raw.outside) && isOutsideResearch(raw.research) &&

@@ -6,13 +6,14 @@ import type { MansionRoom, MansionState, PlayerNeeds, RoomLevel } from './types.
 
 export const MANSION_TILE_ID = 'estate-1';
 
+const starterTypes = Object.entries(MANSION_CATALOG.roomTypes)
+  .flatMap(([typeId, type]) => type.starter === null ? [] : [{ id: 'room-' + type.starter, typeId, seq: type.starter }])
+  .sort((a, b) => a.seq - b.seq);
+
 export function createMansionState(): MansionState {
   return {
-    rooms: [
-      { id: 'room-1', typeId: 'master-suite', level: 1, furniture: [] },
-      { id: 'room-2', typeId: 'throne-room', level: 1, furniture: [] },
-    ],
-    nextRoomSeq: 3,
+    rooms: starterTypes.map(({ id, typeId }) => ({ id, typeId, level: 1, furniture: [] })),
+    nextRoomSeq: starterTypes.length + 1,
   };
 }
 
@@ -27,7 +28,7 @@ export function mansionLevel(city: TileTrialState): RoomLevel | undefined {
 
 export function roomBeds(room: MansionRoom): number {
   const { beds } = MANSION_CATALOG.roomTypes[room.typeId];
-  return room.typeId === 'bedroom' ? beds + room.furniture.filter(id => id === 'single-bed').length : beds;
+  return beds + room.furniture.filter(id => MANSION_CATALOG.furniture[id]?.addsBed).length;
 }
 
 export function mansionResidents(state: { npcs: readonly WorldNpc[] }): WorldNpc[] {
@@ -39,7 +40,7 @@ export function roomOccupancy(npcs: readonly WorldNpc[], roomId: string): number
 }
 
 export function canMoveToMansionRoom(city: TileTrialState, npcs: readonly WorldNpc[], npc: WorldNpc, room: MansionRoom) {
-  if (room.typeId === 'master-suite' && !MANSION_CATALOG.roomTypes['master-suite'].fitRoles.some(role => npc.household.role === role)) return 'SUITE_ROLE_ONLY';
+  if (MANSION_CATALOG.roomTypes[room.typeId].suiteRoles !== null) return 'SUITE_ROLE_ONLY';
   if (npc.household.home !== MANSION_TILE_ID && mansionResidents({ npcs }).length >= homeBeds(city, MANSION_TILE_ID)) return 'MANSION_FULL';
   const occupiedByOthers = roomOccupancy(npcs, room.id) - Number(npc.household.room === room.id);
   return occupiedByOthers >= roomBeds(room) ? 'ROOM_FULL' : null;
@@ -49,7 +50,7 @@ export function mansionRecruitment(city: TileTrialState, npcs: readonly WorldNpc
   let firstRoomId: string | null = null;
   let free = 0;
   for (const room of city.society?.mansion.rooms ?? []) {
-    if (room.typeId === 'master-suite') continue;
+    if (MANSION_CATALOG.roomTypes[room.typeId].suiteRoles !== null) continue;
     const space = Math.max(0, roomBeds(room) - roomOccupancy(npcs, room.id));
     if (space > 0 && firstRoomId === null) firstRoomId = room.id;
     free += space;

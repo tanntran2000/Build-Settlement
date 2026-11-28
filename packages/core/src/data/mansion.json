@@ -19,6 +19,7 @@
   "stressPenaltyMax": 10,
   "comfortShortUpkeepBps": 15000,
   "maidsQuartersUpkeepBps": 9000,
+  "defaultBuildType": "bedroom",
   "roomTypes": {
     "master-suite": {
       "name": "Master Suite",
@@ -79,7 +80,15 @@
           "level": 3,
           "amount": 15000
         }
-      ]
+      ],
+      "starter": 1,
+      "suiteRoles": [
+        "fucktoy",
+        "concubine",
+        "wife"
+      ],
+      "migrationPriority": null,
+      "reportAccess": false
     },
     "maids-quarters": {
       "name": "Maids' Quarters",
@@ -139,7 +148,11 @@
           "level": 3,
           "amount": 15000
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": 1,
+      "reportAccess": false
     },
     "guard-quarters": {
       "name": "Guard Quarters",
@@ -199,7 +212,11 @@
           "level": 3,
           "amount": 100
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": 2,
+      "reportAccess": false
     },
     "training-yard": {
       "name": "Training Yard",
@@ -256,7 +273,11 @@
           "level": 3,
           "amount": 2
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": null,
+      "reportAccess": false
     },
     "vault": {
       "name": "Vault",
@@ -315,7 +336,11 @@
           "level": 3,
           "amount": 9000
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": null,
+      "reportAccess": false
     },
     "bedroom": {
       "name": "Bedrooms",
@@ -367,7 +392,11 @@
           "level": 3,
           "amount": 1
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": 3,
+      "reportAccess": false
     },
     "dungeon": {
       "name": "Dungeon",
@@ -449,7 +478,11 @@
           "level": 3,
           "amount": -1
         }
-      ]
+      ],
+      "starter": null,
+      "suiteRoles": null,
+      "migrationPriority": null,
+      "reportAccess": false
     },
     "throne-room": {
       "name": "Throne Room",
@@ -501,7 +534,11 @@
           "level": 3,
           "amount": 1
         }
-      ]
+      ],
+      "starter": 2,
+      "suiteRoles": null,
+      "migrationPriority": null,
+      "reportAccess": true
     }
   },
   "roles": {
@@ -665,7 +702,8 @@
         "bedroom"
       ],
       "hobby": null,
-      "effects": []
+      "effects": [],
+      "addsBed": true
     },
     "bookshelf": {
       "name": "Bookshelf",
@@ -681,7 +719,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "armchair": {
       "name": "Armchair",
@@ -696,7 +735,8 @@
           "level": 1,
           "amount": -1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "sofa": {
       "name": "Sofa",
@@ -717,7 +757,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "sex-toys": {
       "name": "Sex Toys",
@@ -738,7 +779,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "mini-shrine": {
       "name": "Mini Shrine",
@@ -758,7 +800,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "cooking-tools": {
       "name": "Cooking Tools",
@@ -778,7 +821,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "pen-and-quill": {
       "name": "Pen and Quill",
@@ -798,7 +842,8 @@
           "level": 1,
           "amount": 11000
         }
-      ]
+      ],
+      "addsBed": false
     },
     "incense-jar": {
       "name": "Incense Jar",
@@ -818,7 +863,8 @@
           "level": 1,
           "amount": -1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "weapon-rack": {
       "name": "Weapon Rack",
@@ -834,7 +880,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "medicine-cabinet": {
       "name": "Medicine Cabinet",
@@ -854,7 +901,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "tool-bench": {
       "name": "Tool Bench",
@@ -869,7 +917,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "lute": {
       "name": "Lute",
@@ -884,7 +933,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "game-table": {
       "name": "Game Table",
@@ -899,7 +949,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "telescope": {
       "name": "Telescope",
@@ -914,7 +965,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     },
     "shackles": {
       "name": "Shackles",
@@ -929,7 +981,8 @@
           "level": 1,
           "amount": 1
         }
-      ]
+      ],
+      "addsBed": false
     }
   },
   "calibration": {

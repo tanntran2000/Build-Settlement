@@ -27,7 +27,7 @@ it('describes unavailable build, upgrade and room moves', () => {
   expect(planning.builds.find(row => row.id === 'guard-quarters')?.reason).toBe('Needs Mansion level 2');
   expect(planning.rooms[0].upgradeCost).toBe('2 Gold · 0.5 Wood · 0.2 Iron');
   expect(view.mansionRoomChoices(city, npcs, npcs[0]).map(row => [row.id, row.reason])).toEqual([
-    ['room-1', 'The Master Suite requires a Wife, Concubine or Fucktoy.'],
+    ['room-1', 'This room is closed to moves.'],
     ['room-2', 'That room has no free bed.'],
     ['room-3', ''],
   ]);

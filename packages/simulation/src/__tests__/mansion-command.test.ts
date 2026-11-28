@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest';
-import { acquisitionNpc, createMansionState, emptyAcquisition, type CharacterLifeSessionState, type MansionRoom } from '@haven/core';
+import { acquisitionNpc, canMoveToMansionRoom, createMansionState, emptyAcquisition, type CharacterLifeSessionState, type MansionRoom } from '@haven/core';
+import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
 import { NPC_TEST_KEYS, seedFixtureMansionBeds, withNpcs } from '@haven/core/testing/npcs';
 import { command, populate, stock, town as seededTown } from './acquisition-fixture.js';
 
@@ -16,7 +17,8 @@ function success(state: CharacterLifeSessionState, type: string, fields: Record<
 }
 function refuses(state: CharacterLifeSessionState, type: string, fields: Record<string, unknown>, code: string) {
   const before = structuredClone(state);
-  expect(command(state, type, fields)).toMatchObject({ success: false, error: { code } });
+  const result = command(state, type, fields);
+  expect(result.success ? null : result.error.code).toBe(code);
   expect(state).toEqual(before);
 }
 function addRoom(state: CharacterLifeSessionState, typeId: MansionRoom['typeId'], level: MansionRoom['level'] = 1) {
@@ -73,11 +75,11 @@ it('requires a room on Mansion entry, clears the post, and clears the household 
   refuses(state, 'MOVE_NPC_HOME', { ...fields, roomId: 'room-1' }, 'SUITE_ROLE_ONLY');
   const inMansion = success(state, 'MOVE_NPC_HOME', { ...fields, roomId: 'room-3' });
   expect(inMansion.npcs[0].postTileId).toBeNull();
-  expect(inMansion.npcs[0].household).toMatchObject({ home: 'estate-1', room: 'room-3' });
+  expect(inMansion.npcs[0].household).toEqual({ ...state.npcs[0].household, home: 'estate-1', room: 'room-3' });
   inMansion.npcs[0].household.role = 'maid';
   inMansion.npcs[0].household.training = 'management';
   const exit = success(inMansion, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-2' });
-  expect(exit.npcs[0].household).toMatchObject({ home: 'estate-2', room: null, role: null, training: null });
+  expect(exit.npcs[0].household).toEqual({ ...inMansion.npcs[0].household, home: 'estate-2', room: null, role: null, training: null });
 });
 
 it('counts the moving NPC once when keeping a full room and refuses another occupant', () => {
@@ -131,4 +133,19 @@ it('processes a loaded died departure when resolving the week', () => {
   state.city.world.week = 2;
   state.city.society!.acquisition = { ...emptyAcquisition(), week: 2, departures: [{ kind: 'died', id: npc.character.id, name: npc.character.name }] };
   expect(command(state, 'END_WEEK', { expectedWeek: 2 }).success).toBe(true);
+});
+
+it('refuses a loaded Concubine entering the Master Suite through either move command', () => {
+  const state = household(), npcId = state.npcs[0].character.id;
+  const placed = success(state, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1', roomId: 'room-3' });
+  placed.npcs[0].household.role = 'concubine';
+  const saved = serializeCharacterLifeSave(placed);
+  if (!saved.success) throw Error(saved.error.message);
+  const result = deserializeCharacterLifeSave(saved.text);
+  if (!result.success) throw Error(result.error.message);
+  const loaded = result.state;
+  const suite = loaded.city.society!.mansion.rooms[0];
+  expect(canMoveToMansionRoom(loaded.city, loaded.npcs, loaded.npcs[0], suite)).toBe('SUITE_ROLE_ONLY');
+  refuses(loaded, 'MOVE_TO_ROOM', { npcId, roomId: suite.id }, 'SUITE_ROLE_ONLY');
+  refuses(loaded, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1', roomId: suite.id }, 'SUITE_ROLE_ONLY');
 });

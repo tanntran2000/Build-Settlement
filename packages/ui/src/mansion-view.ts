@@ -7,7 +7,7 @@ import { formatMilli } from './milli-format.js';
 type Cost = { gold: number; wood: number; iron: number };
 const costLabel = ({ gold, wood, iron }: Cost) => formatMilli(gold) + ' Gold · ' + formatMilli(wood) + ' Wood · ' + formatMilli(iron) + ' Iron';
 const moveMessages = {
-  SUITE_ROLE_ONLY: 'The Master Suite requires a Wife, Concubine or Fucktoy.',
+  SUITE_ROLE_ONLY: 'This room is closed to moves.',
   MANSION_FULL: 'The Mansion has no free bed.',
   ROOM_FULL: 'That room has no free bed.',
 };
@@ -39,7 +39,7 @@ export function mansionView(city: TileTrialState, npcs: readonly WorldNpc[]) {
     const cost = room.level === 3 ? undefined : type.cost[room.level];
     const upgradeReason = locked ? 'Plan next week to upgrade rooms.'
       : !cost ? 'That room is already level 3.' : fundsReason(cost);
-    return { ...room, name: type.name, beds: roomBeds(room), residents: npcs.filter(npc => npc.household.room === room.id),
+    return { ...room, name: type.name, reportAccess: type.reportAccess, beds: roomBeds(room), residents: npcs.filter(npc => npc.household.room === room.id),
       upgradeCost: cost ? costLabel(cost) : null, upgradeReason };
   });
   return { builds, rooms };

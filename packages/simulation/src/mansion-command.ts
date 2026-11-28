@@ -9,7 +9,7 @@ export const MANSION_COMMAND_TYPES = ['BUILD_ROOM', 'UPGRADE_ROOM', 'MOVE_TO_ROO
 export type MansionCommandType = typeof MANSION_COMMAND_TYPES[number];
 export type RoomMoveErrorCode = 'INVALID_COMMAND' | 'SUITE_ROLE_ONLY' | 'MANSION_FULL' | 'ROOM_FULL';
 const moveMessages = {
-  SUITE_ROLE_ONLY: 'The Master Suite requires a Wife, Concubine or Fucktoy.',
+  SUITE_ROLE_ONLY: 'This room is closed to moves.',
   MANSION_FULL: 'The Mansion has no free bed.',
   ROOM_FULL: 'That room has no free bed.',
 };

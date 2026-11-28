@@ -81,3 +81,27 @@ it.each(['guild', 'auction-house', 'slave-market'] as const)('accepts a proven d
   state.city.society!.acquisition = { ...core.emptyAcquisition(), week: 2, departures: [{ kind: 'died', id: npc.character.id, name: npc.character.name }] };
   expect(core.isCharacterLifeSessionState(state)).toBe(true);
 });
+
+it.each([
+  ['Master Suite missing', (rooms: core.MansionRoom[]) => rooms.splice(0, 1)],
+  ['Throne Room missing', (rooms: core.MansionRoom[]) => rooms.splice(1, 1)],
+  ['wrong type at room-1', (rooms: core.MansionRoom[]) => { rooms[0].typeId = 'bedroom'; }],
+  ['wrong type at room-2', (rooms: core.MansionRoom[]) => { rooms[1].typeId = 'bedroom'; }],
+] as const)('refuses a playable checkpoint with %s', (_label, change) => {
+  const save = serializeCharacterLifeSave(newGame());
+  if (!save.success) throw Error(save.error.message);
+  const envelope = JSON.parse(save.text);
+  change(envelope.state.city.society.mansion.rooms);
+  const load = deserializeCharacterLifeSave(JSON.stringify(envelope));
+  expect(load.success ? null : load.error.code).toBe('INVALID_SAVE_STATE');
+});
+
+it.each([null, { rooms: null, nextRoomSeq: 3 }])('rejects invalid Mansion structure directly in the society reader (%j)', mansion => {
+  expect(core.isSocietyState({ ...newGame().city.society, mansion })).toBe(false);
+});
+
+it('rejects unknown furniture directly in the society reader', () => {
+  const society = newGame().city.society!;
+  society.mansion.rooms[0].furniture = ['does-not-exist'];
+  expect(core.isSocietyState(society)).toBe(false);
+});
