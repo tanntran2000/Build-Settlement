@@ -39,6 +39,7 @@
   let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
   let leaveDialog: HTMLDialogElement;
+  let leavePromptOpen = false;
   let importRead = 0;
   let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -236,7 +237,12 @@
     const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await readLocalCharacterLife();
     if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
-    if (!result.success) { checkpointError(result.message); return; }
+    if (!result.success) {
+      checkpointError(result.message === DAMAGED_CHECKPOINT_MESSAGE
+        ? 'Local checkpoint not loaded; it was left unchanged. ' + result.message
+        : result.message);
+      return;
+    }
     if (loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true) && result.warning) error = result.warning;
   }
   async function mainMenu() {
@@ -248,6 +254,8 @@
     if (result.volatile) {
       importRead++;
       error = ''; saveNotice = '';
+      leavePromptOpen = true;
+      await tick();
       leaveDialog.showModal();
       return;
     }
@@ -332,14 +340,16 @@
 <details class="card"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>
     {/snippet}
   </CharacterLifeShell>
-  <dialog bind:this={leaveDialog} aria-labelledby="session-only-checkpoint-title">
-    <h2 id="session-only-checkpoint-title">Session-only checkpoint</h2>
-    <p>{SESSION_ONLY_CHECKPOINT_MESSAGE}</p>
-    <button onclick={exportCheckpoint}>Export checkpoint</button>
-    <button onclick={() => { leaveDialog.close(); onexit(true); }}>Return to title</button>
-    <button onclick={() => leaveDialog.close()}>Stay in game</button>
-    {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
-    {#if error}<p role="alert">{error}</p>{/if}
+  <dialog bind:this={leaveDialog} aria-labelledby="session-only-checkpoint-title" onclose={() => { leavePromptOpen = false; }}>
+    {#if leavePromptOpen}
+      <h2 id="session-only-checkpoint-title">Session-only checkpoint</h2>
+      <p>{SESSION_ONLY_CHECKPOINT_MESSAGE}</p>
+      <button onclick={exportCheckpoint}>Export checkpoint</button>
+      <button onclick={() => { leaveDialog.close(); onexit(true); }}>Return to title</button>
+      <button onclick={() => leaveDialog.close()}>Stay in game</button>
+      {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
+      {#if error}<p role="alert">{error}</p>{/if}
+    {/if}
   </dialog>
 {/if}
 
