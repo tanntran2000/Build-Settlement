@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DifficultyId, PlayerCharacter } from '@haven/core';
+  import type { DifficultyId, MansionPurseTerms, PlayerCharacter } from '@haven/core';
   import { formatMilli } from './milli-format.js';
   import { heldMoneyNotice, purseControls, purseRisk } from './purse-view.js';
 
@@ -7,11 +7,12 @@
   export let locked: boolean;
   export let security: number;
   export let difficulty: DifficultyId;
+  export let mansion: MansionPurseTerms | undefined = undefined;
   export let oncommand: (type: 'SET_LEVY' | 'DONATE_MONEY', fields: Record<string, unknown>) => boolean;
 
   let input = '';
   $: controls = purseControls(purse, input, locked, difficulty);
-  $: risk = purseRisk(purse.moneyMilli, security, difficulty, purse.robbery);
+  $: risk = purseRisk(purse.moneyMilli, security, difficulty, purse.robbery, mansion);
   $: holdNotice = heldMoneyNotice(purse);
 
   function donate(event: SubmitEvent) {

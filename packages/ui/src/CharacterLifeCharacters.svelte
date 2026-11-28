@@ -3,9 +3,11 @@
   import HouseholdNotice from './HouseholdNotice.svelte';
   import { tick } from 'svelte';
   import { departureReason } from './acquisition-view.js';
-  import { homeBeds, managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
+  import { homeBeds, managerSlotTileIds, MANSION_TILE_ID, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS,
+    type CharacterLifeSessionState, type CharacterView, type MansionStaffRole } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
+  import RolePicker from './RolePicker.svelte';
   import type { CharacterArea, PostDraftEntry } from './character-life-navigation.js';
 
   export let session: CharacterLifeSessionState;
@@ -55,6 +57,13 @@
   let playerButton: HTMLButtonElement;
   const rosterButtons: Record<string, HTMLButtonElement> = {};
   let noticeError: { npcId: string; message: string } | null = null;
+
+  function assignRole(npcId: string, role: MansionStaffRole | null): string | null {
+    const result = executeCharacterLifeCommand(session, { type: 'SET_ROLE', expectedRevision: session.city.revision, npcId, role });
+    if (!result.success) return result.error.message;
+    onapply(result.next);
+    return null;
+  }
 
   function answer(npcId: string, choice: string): boolean {
     const result = executeCharacterLifeCommand(session, {
@@ -116,6 +125,10 @@
     <CharacterProfile {view} {npc} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}
       area={areas[selectedCharacterId] ?? 'description'} onarea={area => { areas[selectedCharacterId] = area; }}>
       {#snippet notice()}
+        {#if npc?.household.home === MANSION_TILE_ID}
+          {@const id = npc.character.id}
+          <RolePicker city={session.city} npcs={session.npcs} {npc} {locked} onassign={role => assignRole(id, role)} />
+        {/if}
         {#if npc?.household.notice}
           {@const id = npc.character.id}
           <HouseholdNotice city={session.city} {npc} {locked}

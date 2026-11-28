@@ -148,8 +148,9 @@ export function outsideReportLines(report:Readonly<TileTrialReport>):string[] {
 import {securityTarget,crimeTarget,authorityTarget,orderBand,type ResearchTopic} from '@haven/core';
 import {orderFacts} from '@haven/simulation';
 export const RESEARCH_LABELS:Record<ResearchTopic,string>={'deep-mining':'Deep Mining','watch-patrols':'Watch Patrols','barracks-drill':'Barracks Drill'};
-export function orderRows(city:TileTrialState):{label:'Security'|'Crime'|'Authority';value:number;target:number;band:'Low'|'Fair'|'High'}[]{
+export function orderRows(city:TileTrialState,mansionAuthority=0):{label:'Security'|'Crime'|'Authority';value:number;target:number;band:'Low'|'Fair'|'High'}[]{
  const facts=orderFacts(city,new Set(city.tiles.filter(t=>t.building?.enabled).map(t=>t.id))),order=city.society!.order;
+ facts.lawAuthority+=mansionAuthority;
  const targets={security:securityTarget(facts),crime:crimeTarget(facts,order.security),authority:authorityTarget(facts,order.security,order.crime)};
  return (['security','crime','authority'] as const).map(key=>({label:({security:'Security',crime:'Crime',authority:'Authority'} as const)[key],value:order[key],target:targets[key],band:orderBand(order[key])}));
 }
