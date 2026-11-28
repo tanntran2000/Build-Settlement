@@ -109,6 +109,42 @@ it.each([0, 3])('clears an expiring role at %i prior payment failures before the
   expect(setRole(next, unpaidWeeks === 0 ? 1 : 0, 'head-maid').success).toBe(true);
 });
 
+function loadPendingAccountant() {
+  const s = buy(buy(market(), 'guild', 0), 'guild', 1);
+  const household = s.npcs[0].household;
+  household.role = 'accountant';
+  household.notice = 'renewal';
+  household.contract!.weeksLeft = 0;
+  const save = serializeCharacterLifeSave(s);
+  if (!save.success) throw Error(save.error.message);
+  const loaded = deserializeCharacterLifeSave(save.text);
+  expect(loaded).toStrictEqual({ success: true, state: s });
+  if (!loaded.success) throw Error(loaded.error.message);
+  return loaded.state;
+}
+
+it('allows another resident to take the capped seat from a resident awaiting renewal in a v15 save', () => {
+  const s = loadPendingAccountant();
+  const before = JSON.stringify(s);
+  const next = succeeded(s, 'SET_ROLE', { npcId: s.npcs[1].character.id, role: 'accountant' }).next;
+  expect(next.npcs.map(row => row.household)).toStrictEqual([
+    { ...s.npcs[0].household, role: null },
+    { ...s.npcs[1].household, role: 'accountant' },
+  ]);
+  expect(isCharacterLifeSessionState(next)).toBe(true);
+  expect(JSON.stringify(s)).toBe(before);
+});
+
+it('keeps a loaded resident in her room through renewal without restoring her staff role', () => {
+  const s = loadPendingAccountant();
+  const npcId = s.npcs[0].character.id;
+  const next = succeeded(s, 'ANSWER_NOTICE', { npcId, choice: 'renew' }).next;
+  expect([next.npcs[0].household.room, next.npcs[0].household.role, next.npcs[0].household.notice])
+    .toStrictEqual([s.npcs[0].household.room, null, null]);
+  const assigned = succeeded(next, 'SET_ROLE', { npcId, role: 'accountant' }).next;
+  expect(assigned.npcs[0].household).toStrictEqual({ ...next.npcs[0].household, role: 'accountant' });
+});
+
 it('loads a proven death with the capped role available and rejects a live duplicate', () => {
   const s = town();
   s.city.world.week = 3;

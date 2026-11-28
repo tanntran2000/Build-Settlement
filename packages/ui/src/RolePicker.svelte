@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isMansionStaffRole, type MansionStaffRole, type TileTrialState, type WorldNpc } from '@haven/core';
+  import { isMansionStaffRole, mansionResidentRole, type MansionStaffRole, type TileTrialState, type WorldNpc } from '@haven/core';
   import { mansionRoleOptions } from './mansion-view.js';
 
   export let city: TileTrialState;
@@ -9,19 +9,20 @@
   export let onassign: (role: MansionStaffRole | null) => string | null;
   let error: string | null = null;
   $: choices = mansionRoleOptions(city, npcs, npc);
+  $: selected = mansionResidentRole(npc.household) ?? '';
   $: selectId = 'mansion-role-' + npc.character.id;
 
   function change(select: HTMLSelectElement) {
     const role = select.value || null;
     if (role !== null && !isMansionStaffRole(role)) return;
     error = onassign(role);
-    if (error) select.value = npc.household.role ?? '';
+    if (error) select.value = selected;
   }
 </script>
 
 <div class="role-picker">
   <label for={selectId}>Role</label>
-  <select id={selectId} value={npc.household.role ?? ''} disabled={locked}
+  <select id={selectId} value={selected} disabled={locked}
     aria-describedby={locked ? selectId + '-reason' : undefined} onchange={event => change(event.currentTarget)}>
     {#each choices as option (option.role)}
       <option value={option.role ?? ''} disabled={!!option.reason}>

@@ -1,5 +1,5 @@
 import {
-  canMoveToMansionRoom, hasWeeklyKeys, isMansionRoomType, isMansionStaffRole, mansionLevel, mansionRoleRefusal,
+  canMoveToMansionRoom, hasWeeklyKeys, isMansionRoomType, isMansionStaffRole, mansionLevel, mansionResidentRole, mansionRoleRefusal,
   MANSION_CATALOG, MANSION_ROLE_REFUSALS, MANSION_TILE_ID,
   type CharacterLifeSessionState, type NpcWorldSessionState, type RoomLevel, type WorldNpc,
 } from '@haven/core';
@@ -44,6 +44,8 @@ export function executeMansionCommand(state: CharacterLifeSessionState, type: Ma
       if (!npc) return fail('UNKNOWN_NPC', 'Select a known NPC.');
       const refusal = mansionRoleRefusal(city, next.npcs, npc, role);
       if (refusal) return fail(refusal, MANSION_ROLE_REFUSALS[refusal]);
+      // A v15 checkpoint can carry an expired role until the next household action.
+      for (const { household } of next.npcs) household.role = mansionResidentRole(household);
       npc.household.role = role;
     } else if (type === 'MOVE_TO_ROOM') {
       const npc = next.npcs.find(row => row.character.id === raw.npcId);

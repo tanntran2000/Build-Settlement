@@ -12,6 +12,10 @@ export function isMansionStaffRole(value: unknown): value is MansionStaffRole {
   return (MANSION_STAFF_ROLES as readonly unknown[]).includes(value);
 }
 
+export function mansionResidentRole({ role, contract }: WorldNpc['household']): MansionRole | null {
+  return contract?.weeksLeft === 0 && isMansionStaffRole(role) ? null : role;
+}
+
 export const MANSION_ROLE_REFUSALS = {
   ROLE_NOT_RESIDENT: 'Choose a Mansion resident.',
   ROLE_CAP: 'That Mansion role is full.',
@@ -29,7 +33,7 @@ export function mansionRoleRefusal(
   if (room && MANSION_CATALOG.roomTypes[room.typeId].suiteRoles !== null) return 'SUITE_ROLE_ONLY';
   if (role !== null && household.role !== role) {
     const cap = MANSION_CATALOG.roles[role].cap;
-    if (cap !== null && npcs.filter(row => row.household.home === MANSION_TILE_ID && row.household.role === role).length >= cap)
+    if (cap !== null && npcs.filter(row => row.household.home === MANSION_TILE_ID && mansionResidentRole(row.household) === role).length >= cap)
       return 'ROLE_CAP';
   }
   return null;
