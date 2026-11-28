@@ -1,5 +1,5 @@
 import {
-  hasWeeklyKeys, isLiveCharacterLifeSessionState, P7B_TRIAL, returnEquippedToStorage,
+  hasWeeklyKeys, isLiveCharacterLifeSessionState, mansionResidentRole, P7B_TRIAL, returnEquippedToStorage,
   type CharacterLifeSessionState, type HouseholdReport, type WorldNpc,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
@@ -67,6 +67,7 @@ export function runHouseholdWeek(npcs: WorldNpc[], input: { week: number; openin
     if (atStressLimit && input.opening[index].life.stress < statMax) contract.stressHits = trialSafe(contract.stressHits + 1);
     contract.weeksLeft = Math.max(0, contract.weeksLeft - 1);
     if (contract.weeksLeft === 0) {
+      household.role = mansionResidentRole(household);
       if (contract.unpaidWeeks >= rules.unpaidRefusalWeeks || contract.stressHits >= rules.stressRefusalHits) {
         leftIds.add(character.id);
         report.left.push(character.name);
@@ -111,6 +112,7 @@ export function answerNotice(session: CharacterLifeSessionState, raw: unknown): 
     { type: 'RELEASE_NPC', npcId: raw.npcId, expectedRevision: raw.expectedRevision });
   try {
     const next = structuredClone(session), household = next.npcs[index].household;
+    household.role = mansionResidentRole(household);
     household.notice = null;
     if (raw.choice === 'renew') {
       const step = rules.renewalWageStepMilli;

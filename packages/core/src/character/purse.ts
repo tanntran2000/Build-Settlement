@@ -5,6 +5,7 @@ import { applyDifficulty, difficultyProfile, type DifficultyId } from '../trial/
 import { mixSeed } from '../trial/crime.js';
 import { createSeededRandom } from '../world/random.js';
 import type { PlayerCharacter } from './types.js';
+import type { MansionPurseTerms } from '../mansion/effects.js';
 
 export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
 
@@ -34,29 +35,31 @@ export function homeRobberyRoll(seed: number, week: number, stream: keyof typeof
   return createSeededRandom(mixSeed(mixSeed(seed, week), homeRobberySalts[stream]))() * 10000;
 }
 
-export function safeAmountMilli(security: number, difficulty: DifficultyId): number {
+export function safeAmountMilli(security: number, difficulty: DifficultyId, mansion?: MansionPurseTerms): number {
   const base = PURSE_TRIAL.robberySafeBaseMilli + security * PURSE_TRIAL.robberySafePerSecurityMilli;
-  return applyDifficulty(base, difficultyProfile(difficulty).robberySafeBps);
+  const terms = mansion?.safeAmount;
+  return applyDifficulty(base, difficultyProfile(difficulty).robberySafeBps) +
+    (terms ? terms.guard + terms.captain + terms.vault + terms.accountant : 0);
 }
 
 export function canSpendMoney(purse: PlayerCharacter['purse'], amountMilli: number): boolean {
   return purse.moneyMilli - amountMilli >= (purse.robbery?.excessMilli ?? 0);
 }
 
-export function homeRobberyChanceBps(excessMilli: number): number {
+export function homeRobberyChanceBps(excessMilli: number, mansion?: MansionPurseTerms): number {
   if (excessMilli <= 0) return 0;
   const { robberyChanceBpsPerGold: rate, robberyChanceCapBps: cap } = PURSE_TRIAL;
-  if (excessMilli >= Math.ceil(cap * 1000 / rate)) return cap;
-  return Math.floor(excessMilli * rate / 1000);
+  const chance = excessMilli >= Math.ceil(cap * 1000 / rate) ? cap : Math.floor(excessMilli * rate / 1000);
+  return Math.max(0, chance - (mansion?.robberyChanceBps ?? 0));
 }
 
-export function homeRobberyChaseChanceBps(security: number): number {
-  return Math.min(10000, security * PURSE_TRIAL.robberyChaseSuccessBpsPerSecurity);
+export function homeRobberyChaseChanceBps(security: number, mansion?: MansionPurseTerms): number {
+  return Math.min(10000, security * PURSE_TRIAL.robberyChaseSuccessBpsPerSecurity + (mansion?.chaseSuccessBps ?? 0));
 }
 
 export function homeRobberyLossMilli(
-  excessMilli: number, option: 'pay' | 'let-go',
+  excessMilli: number, option: 'pay' | 'let-go', mansion?: MansionPurseTerms,
 ): number {
   const rate = option === 'pay' ? PURSE_TRIAL.robberyRansomBps : PURSE_TRIAL.robberyLossBps;
-  return applyDifficulty(excessMilli, rate);
+  return applyDifficulty(excessMilli, Math.min(rate, mansion?.vaultLossCapBps ?? rate));
 }

@@ -7,6 +7,7 @@ import type { GoodsStock } from './goods-stock.js';
 import type { LawId } from './law.js';
 import type { SocietyClassKey } from './society.js';
 import type { ItemGoal } from './items.js';
+import type { MansionWeekReport } from '../mansion/effects.js';
 
 export type SocietyWallRing = 1 | 2 | 3 | 4;
 
@@ -55,6 +56,7 @@ export interface PurseWeekReport {
   moneyAfterMilli: number;
 }
 export interface TileTrialReport {
+  mansion?: Readonly<MansionWeekReport>;
   purse?: Readonly<PurseWeekReport>;
   items: ItemWeekReport;
   npcLife?: { exhausted: string[]; recovered: string[]; birthdays: string[] };

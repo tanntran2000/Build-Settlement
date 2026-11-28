@@ -1,4 +1,4 @@
-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, type CharacterLifeSessionState, type HomeRobberyResolution, type TileTrialReport } from '@haven/core';
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, levySatisfactionCost, donationGoldMilli, mansionTerms, type CharacterLifeSessionState, type HomeRobberyResolution, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeMansionCommand, MANSION_COMMAND_TYPES, type MansionCommandType } from './mansion-command.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
@@ -8,6 +8,7 @@ import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAc
 import { executePurseCommand, PURSE_COMMAND_TYPES, type PurseCommandType } from './purse-command.js';
 import { runHomeRobberyCheck, runLevyWeek } from './purse-week.js';
 import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment } from './household-week.js';
+import { runMansionWeek, type MansionWeekCharge } from './mansion-week.js';
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
@@ -62,11 +63,13 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
       ? payNpcWages(session) : undefined;
     const opening = wages?.session ?? session;
     const world = { city: opening.city, outside: opening.outside, npcs: opening.npcs };
+    const terms = type === 'END_WEEK' ? mansionTerms(world) : undefined;
+    const mansion: MansionWeekCharge | undefined = terms ? { terms } : undefined;
     const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'
       ? executeWorldNpcCommand(world, raw)
       : type === 'END_WEEK' ? executeWorldNpcCityCommand(world, raw, buildItemWeekContext(opening),
         levySatisfactionCost(opening.player.purse.levyPercent,
-          donationGoldMilli(opening.player.purse.donatedThisWeekMilli, opening.city.society!.difficulty)))
+          donationGoldMilli(opening.player.purse.donatedThisWeekMilli, opening.city.society!.difficulty)), mansion)
       : executeWorldNpcCityCommand(world, raw);
     if (!result.success) return result;
 
@@ -116,8 +119,12 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
         Object.freeze(report.household!.bought); Object.freeze(report.household!.sold);
         Object.freeze(report.household!.released); Object.freeze(report.household!.lotsToRivals);
       } else if (market) report = Object.freeze({ ...report, household: market });
+      if (mansion) report = Object.freeze({ ...report, mansion: runMansionWeek(next.npcs, mansion) });
       const purse = runLevyWeek(next, report.taxMilli + report.goods.revenueMilli + (report.laws?.incomeMilli ?? 0));
-      const robbery = runHomeRobberyCheck(next, report.week);
+      const rosterChanged = householdWeek.leftIds.size > 0 ||
+        next.npcs.some((npc, index) => npc.household.role !== opening.npcs[index].household.role);
+      const closingTerms = rosterChanged ? mansionTerms(next) : mansion?.terms;
+      const robbery = runHomeRobberyCheck(next, report.week, mansion?.paid ? closingTerms?.paid : closingTerms?.plain);
       next.player.purse.donatedThisWeekMilli = 0;
       const after = purse.levyPaidMilli > 0
         ? Object.freeze({ ...report.after, gold: report.after.gold - purse.levyPaidMilli }) : report.after;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import './ledger-theme.css';
   import { tick, type Snippet } from 'svelte';
-  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport, type HomeRobberyOption } from '@haven/core';
+  import { mansionPlanningEffects, type CharacterLifeSessionState, type TileTrialState, type TileTrialReport, type HomeRobberyOption } from '@haven/core';
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import HomeRobberyCard from './HomeRobberyCard.svelte';
@@ -68,6 +68,7 @@
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: locked = state.phase === 'report';
   $: robbery = storageSession.player.purse.robbery;
+  $: mansion = mansionPlanningEffects(storageSession);
   $: endWeekReason = state.society?.pendingCard ? 'Answer the crisis first.' : robbery ? 'Answer the robbery first.' : '';
 
   async function chooseCrisis(cardId: string, option: import('@haven/core').CardOption) {
@@ -89,7 +90,7 @@
 {#snippet urgentLetter()}
   <CrisisCard {state} onchoose={chooseCrisis} />
   {#if !state.society?.pendingCard && robbery}
-    <HomeRobberyCard purse={storageSession.player.purse} security={state.society!.order.security} {locked} onanswer={onanswerrobbery} />
+    <HomeRobberyCard purse={storageSession.player.purse} security={state.society!.order.security} {locked} {mansion} onanswer={onanswerrobbery} />
   {/if}
 {/snippet}
 
@@ -172,7 +173,7 @@
       <p data-testid="trial-crime-chance">{crimeChanceRow(state)}</p>
       <p data-testid="trial-crisis">Crisis: {crisisRow(state)}</p>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
-      {#each orderRows(state) as row}<p data-testid={`trial-order-${row.label.toLowerCase()}`}>{row.label} {row.value} → {row.target} · {row.band}</p>{/each}<p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
+      {#each orderRows(state, mansion?.authority) as row}<p data-testid={`trial-order-${row.label.toLowerCase()}`}>{row.label} {row.value} → {row.target} · {row.band}</p>{/each}<p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
       </div>
       </div>
     </section>
@@ -180,7 +181,7 @@
     <section hidden={activeWindow !== 'player'}>
       {@render playerInfo()}
       {#if activeWindow === 'player'}
-        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} security={state.society!.order.security} {locked} oncommand={onpurse} />
+        <PursePanel purse={storageSession.player.purse} difficulty={state.society!.difficulty} security={state.society!.order.security} {locked} {mansion} oncommand={onpurse} />
       {/if}
     </section>
     <section hidden={activeWindow !== 'population'}>

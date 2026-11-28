@@ -1,4 +1,4 @@
-import { canSpendMoney, donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type PlayerCharacter } from '@haven/core';
+import { canSpendMoney, donationGoldMilli, levySatisfactionCost, PURSE_TRIAL, homeRobberyLossMilli, safeAmountMilli, type DifficultyId, type HomeRobberyOption, type MansionPurseTerms, type PlayerCharacter } from '@haven/core';
 import { formatMilli } from './milli-format.js';
 
 export function parseDonationMilli(text: string): number | null {
@@ -32,15 +32,15 @@ export function heldMoneyNotice(purse: PlayerCharacter['purse']): string {
 }
 
 export function purseRisk(moneyMilli: number, security: number, difficulty: DifficultyId,
-  robbery: PlayerCharacter['purse']['robbery'] = null) {
-  const safeMilli = safeAmountMilli(security, difficulty);
+  robbery: PlayerCharacter['purse']['robbery'] = null, mansion?: MansionPurseTerms) {
+  const safeMilli = safeAmountMilli(security, difficulty, mansion);
   return { safeMilli, atRiskMilli: robbery?.excessMilli ?? Math.max(0, moneyMilli - safeMilli) };
 }
 
-export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean) {
+export function homeRobberyOptions(purse: PlayerCharacter['purse'], security: number, locked: boolean, mansion?: MansionPurseTerms) {
   const excess = purse.robbery?.excessMilli ?? 0;
-  const pay = homeRobberyLossMilli(excess, 'pay');
-  const loss = homeRobberyLossMilli(excess, 'let-go');
+  const pay = homeRobberyLossMilli(excess, 'pay', mansion);
+  const loss = homeRobberyLossMilli(excess, 'let-go', mansion);
   const reportReason = locked ? 'Choose Plan next week to answer.' : '';
   const chaseReason = reportReason || (security < PURSE_TRIAL.robberyChaseSecurityMin
     ? 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.' : '');

@@ -1,6 +1,6 @@
 {
   "trial": "TRIAL",
-  "calibrationNote": "All provisional amounts are TRIAL placeholders. R2.4 and R3.3 calibrate them with seeded runs.",
+  "calibrationNote": "TRIAL. R2 staff and room amounts are calibrated with seeded runs. R3 and R4 amounts are placeholders.",
   "fitMultiplierBps": 15000,
   "furnitureFitMultiplierBps": 15000,
   "wifeAffectionMin": 80,
@@ -141,7 +141,7 @@
         {
           "kind": "comfort",
           "level": 3,
-          "amount": 1
+          "amount": 2
         },
         {
           "kind": "roleBonusBps",
@@ -200,7 +200,7 @@
         {
           "kind": "chaseSuccessBps",
           "level": 2,
-          "amount": 100
+          "amount": 300
         },
         {
           "kind": "roleBonusBps",
@@ -210,7 +210,7 @@
         {
           "kind": "fatalChanceBps",
           "level": 3,
-          "amount": 100
+          "amount": 200
         }
       ],
       "starter": null,
@@ -324,17 +324,17 @@
         {
           "kind": "safeAmountMilli",
           "level": 1,
-          "amount": 1000
+          "amount": 1500
         },
         {
           "kind": "robberyChanceBps",
           "level": 2,
-          "amount": 100
+          "amount": 200
         },
         {
           "kind": "vaultLossCapBps",
           "level": 3,
-          "amount": 9000
+          "amount": 4000
         }
       ],
       "starter": null,
@@ -385,7 +385,7 @@
         {
           "kind": "npcStress",
           "level": 2,
-          "amount": -1
+          "amount": -2
         },
         {
           "kind": "npcAffection",
@@ -527,12 +527,12 @@
         {
           "kind": "authority",
           "level": 2,
-          "amount": 1
+          "amount": 2
         },
         {
           "kind": "authority",
           "level": 3,
-          "amount": 1
+          "amount": 2
         }
       ],
       "starter": 2,
@@ -550,7 +550,7 @@
         {
           "kind": "comfort",
           "level": 1,
-          "amount": 1
+          "amount": 2
         }
       ]
     },
@@ -563,6 +563,11 @@
           "kind": "comfort",
           "level": 1,
           "amount": 2
+        },
+        {
+          "kind": "roleBonusBps",
+          "level": 1,
+          "amount": 11000
         }
       ]
     },
@@ -574,7 +579,7 @@
         {
           "kind": "fatalChanceBps",
           "level": 1,
-          "amount": 100
+          "amount": 150
         },
         {
           "kind": "safeAmountMilli",
@@ -591,12 +596,17 @@
         {
           "kind": "fatalChanceBps",
           "level": 1,
-          "amount": 200
+          "amount": 300
         },
         {
           "kind": "safeAmountMilli",
           "level": 1,
           "amount": 2000
+        },
+        {
+          "kind": "roleBonusBps",
+          "level": 1,
+          "amount": 11000
         }
       ]
     },
@@ -608,12 +618,12 @@
         {
           "kind": "upkeepBps",
           "level": 1,
-          "amount": 9500
+          "amount": 6400
         },
         {
           "kind": "authority",
           "level": 1,
-          "amount": 1
+          "amount": 2
         },
         {
           "kind": "safeAmountMilli",

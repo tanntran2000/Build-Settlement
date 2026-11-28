@@ -1,5 +1,6 @@
 import {
-  canMoveToMansionRoom, mansionLevel, MANSION_CATALOG, MANSION_ROOM_TYPES, roomBeds,
+  canMoveToMansionRoom, isMansionStaffRole, mansionLevel, mansionPlanningEffects, mansionRoleRefusal, mansionRoomUpkeepMilli, mansionTerms,
+  MANSION_CATALOG, MANSION_ROLE_REFUSALS, MANSION_ROOM_TYPES, MANSION_STAFF_ROLES, roomBeds, safeAmountMilli,
   type TileTrialState, type WorldNpc,
 } from '@haven/core';
 import { formatMilli } from './milli-format.js';
@@ -11,6 +12,59 @@ const moveMessages = {
   MANSION_FULL: 'The Mansion has no free bed.',
   ROOM_FULL: 'That room has no free bed.',
 };
+
+export function mansionRoleOptions(city: TileTrialState, npcs: readonly WorldNpc[], npc: WorldNpc) {
+  const roles = [null, ...MANSION_STAFF_ROLES];
+  const current = npc.household.role;
+  const options = roles.map(role => {
+    const definition = role === null ? undefined : MANSION_CATALOG.roles[role];
+    const refusal = mansionRoleRefusal(city, npcs, npc, role);
+    return {
+      role: role as typeof current,
+      name: definition?.name ?? 'None',
+      fitRoom: definition ? MANSION_CATALOG.roomTypes[definition.fitRoom].name : null,
+      reason: refusal ? MANSION_ROLE_REFUSALS[refusal] : '',
+    };
+  });
+  if (current !== null && !isMansionStaffRole(current)) {
+    const role = MANSION_CATALOG.roles[current];
+    options.unshift({
+      role: current, name: role.name, fitRoom: MANSION_CATALOG.roomTypes[role.fitRoom].name,
+      reason: 'This role is unavailable for assignment.',
+    });
+  }
+  return options;
+}
+
+function mansionSummary(city: TileTrialState, npcs: readonly WorldNpc[]) {
+  const state = { city, npcs }, terms = mansionTerms(state);
+  const effects = mansionPlanningEffects(state, terms);
+  if (!terms || !effects) return;
+  const { security } = city.society!.order;
+  const { difficulty } = city.society!;
+  const gold = (label: string, milli: number) => ({ label, value: formatMilli(milli) + ' Gold' });
+  const money = (label: string, milli: number) => ({ label, value: formatMilli(milli) + ' Money' });
+  const safe = effects.safeAmount;
+  const roomCharges = city.society!.mansion.rooms.flatMap(room => {
+    const due = mansionRoomUpkeepMilli(room);
+    const name = MANSION_CATALOG.roomTypes[room.typeId].name;
+    return due ? [gold(name + ' · Level ' + room.level + ' (' + room.id + ')', due)] : [];
+  });
+  return {
+    comfort: effects.comfortSupply + ' / ' + terms.comfortNeed,
+    upkeep: [
+      gold('Mansion building', terms.buildingUpkeepMilli),
+      ...roomCharges,
+      ...terms.upkeepFactors.map(({ source, bps }) => ({ label: source, value: '× ' + bps / 100 + '%' })),
+      gold('Total due', terms.upkeepMilli),
+    ],
+    safeAmount: [
+      money('Security and difficulty', safeAmountMilli(security, difficulty)),
+      money('Guards', safe.guard), money('Captain', safe.captain), money('Vault', safe.vault),
+      money('Accountant', safe.accountant), money('Total safe', safeAmountMilli(security, difficulty, effects)),
+    ],
+  };
+}
 
 export function mansionRoomChoices(city: TileTrialState, npcs: readonly WorldNpc[], npc: WorldNpc) {
   return (city.society?.mansion.rooms ?? []).map(room => {
@@ -42,5 +96,5 @@ export function mansionView(city: TileTrialState, npcs: readonly WorldNpc[]) {
     return { ...room, name: type.name, reportAccess: type.reportAccess, beds: roomBeds(room), residents: npcs.filter(npc => npc.household.room === room.id),
       upgradeCost: cost ? costLabel(cost) : null, upgradeReason };
   });
-  return { builds, rooms };
+  return { builds, rooms, summary: mansionSummary(city, npcs) };
 }

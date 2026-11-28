@@ -1,6 +1,6 @@
 import {
   canSpendMoney, donationGoldMilli, hasWeeklyKeys, homeRobberyChaseChanceBps, homeRobberyLossMilli, homeRobberyRoll,
-  isLiveCharacterLifeSessionState, PURSE_TRIAL, type CharacterLifeSessionState, type HomeRobberyResolution,
+  isLiveCharacterLifeSessionState, mansionPlanningEffects, PURSE_TRIAL, type CharacterLifeSessionState, type HomeRobberyResolution,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
 
@@ -37,10 +37,11 @@ export function executePurseCommand(
     const { security } = society!.order;
     if (option === 'chase' && security < PURSE_TRIAL.robberyChaseSecurityMin)
       return fail('CHASE_UNAVAILABLE', 'Needs Security ' + PURSE_TRIAL.robberyChaseSecurityMin + '.');
+    const mansion = mansionPlanningEffects(next);
     const chased = option === 'chase' &&
-      homeRobberyRoll(world.worldMetadata.worldSeed, card.week, 'home-robbery-chase') < homeRobberyChaseChanceBps(security);
+      homeRobberyRoll(world.worldMetadata.worldSeed, card.week, 'home-robbery-chase') < homeRobberyChaseChanceBps(security, mansion);
     const lossMilli = chased ? 0 :
-      homeRobberyLossMilli(card.excessMilli, option === 'pay' ? 'pay' : 'let-go');
+      homeRobberyLossMilli(card.excessMilli, option === 'pay' ? 'pay' : 'let-go', mansion);
     purse.moneyMilli -= lossMilli;
     purse.robbery = null;
     robberyResolution = Object.freeze({

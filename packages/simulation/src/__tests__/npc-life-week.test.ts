@@ -213,7 +213,7 @@ describe('item context and Character Life integration', () => {
     const s = session(); s.npcs[0].life.lust = 30;
     const r = end(s); expect(r.next.npcs[0].life.arousal).toBe(3); expect(Object.hasOwn(r.report!, 'npcLife')).toBe(false);
   });
-  it('keeps every no-NPC result byte-identical to the delegated path plus purse', () => {
+  it('keeps every no-NPC result byte-identical to the delegated path plus Mansion and purse', () => {
     const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' });
     if (!made.success) throw Error(made.error.message);
     const s = made.value;
@@ -224,7 +224,7 @@ describe('item context and Character Life integration', () => {
     const old = executeWorldNpcCityCommand({ city: s.city, outside: s.outside, npcs: [] }, raw, buildItemWeekContext(s));
     expect(old.success).toBe(true); if (!old.success) throw Error(old.error.message);
     const expected = { ...old, next: { ...old.next, player: structuredClone(s.player), profiles: [] },
-      report: { ...old.report, purse: { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 0 } } };
+      report: { ...old.report, mansion: { comfortSupply: 0, comfortNeed: 0, upkeepMilli: 2000, upkeepPaid: true, authority: 0 }, purse: { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 0 } } };
     const actual = executeCharacterLifeCommand(s, raw);
     expect(JSON.stringify(actual)).toBe(JSON.stringify(expected)); expect(run([]).report).toEqual(empty);
   });

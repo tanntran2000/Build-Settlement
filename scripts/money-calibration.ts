@@ -3,13 +3,26 @@ import { pathToFileURL } from 'node:url';
 import { writeFileSync } from 'node:fs';
 import type { CharacterLifeSessionState, DifficultyId, TileTrialReport } from '@haven/core';
 
-const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation, safeAmountMilli, homeRobberyChanceBps } = await import('@haven/core');
+const { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, CRISIS_TRIAL, buildItemWeekContext, crisisOptions, societyPopulation, safeAmountMilli, homeRobberyChanceBps, mansionTerms } = await import('@haven/core');
 const { executeCharacterLifeCommand, resolveWorkshopOperation, societyWorkforce } = await import('@haven/simulation');
 const styles = ['good', 'average', 'bad'] as const;
 const difficulties: DifficultyId[] = ['normal', 'easy'];
 type Style = typeof styles[number];
 const levyColumns = [0, 2, 5, 10, 20] as const;
-type CalibrationOptions = { seeds: number[]; difficulties: DifficultyId[]; weeks: 40; levies?: readonly number[] };
+type CalibrationAct = (type: string, fields?: Record<string, unknown>) => Readonly<TileTrialReport> | undefined;
+export interface CalibrationPlanContext {
+  seed: number;
+  difficulty: DifficultyId;
+  style: Style;
+  week: number;
+  read: () => Readonly<CharacterLifeSessionState>;
+  act: CalibrationAct;
+}
+interface CalibrationDriver {
+  plan: (context: CalibrationPlanContext) => void;
+  observe?: (row: CalibrationRow, state: Readonly<CharacterLifeSessionState>, report: Readonly<TileTrialReport>) => void;
+}
+type CalibrationOptions = { seeds: number[]; difficulties: DifficultyId[]; weeks: 40; levies?: readonly number[]; driver?: CalibrationDriver };
 export interface CalibrationRow {
   seed: number; difficulty: DifficultyId; style: Style; week: number; residents: number;
   start: number; end: number; net: number; gross: number; tax: number; goodsRevenue: number; lawPay: number;
@@ -25,7 +38,7 @@ export interface CalibrationRow {
 }
 const inventory = (s: CharacterLifeSessionState) => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
 
-function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 40, levyPercent: number): CalibrationRow[] {
+function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 40, levyPercent: number, driver?: CalibrationDriver): CalibrationRow[] {
   const made = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Calibration Keeper' }, difficulty);
   if (!made.success) throw Error(made.error.message);
   let state = made.value;
@@ -84,6 +97,7 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
         const notice = npc.household.notice;
         if (notice) act('ANSWER_NOTICE', { npcId: npc.character.id, choice: notice === 'renewal' ? 'renew' : 'accept' });
       }
+      driver?.plan({ seed, difficulty, style, week, read: () => state, act });
     } catch (error) { failure = String(error); }
     const opening = state;
     const start = inventory(opening).gold, residents = societyPopulation(opening.city.society!);
@@ -112,7 +126,9 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
     }
     const closeAfterAnswer = inventory(state).gold, fallen = state.city.society!.crisis.stage === 'fallen';
     const security = report.order!.after.security;
-    const safeMoneyMilli = safeAmountMilli(security, difficulty);
+    const mansion = driver ? mansionTerms(state) : undefined;
+    const risk = report.mansion?.upkeepPaid ? mansion?.paid : mansion?.plain;
+    const safeMoneyMilli = safeAmountMilli(security, difficulty, risk);
     const robberyExcessMilli = Math.max(0, report.purse.moneyAfterMilli - safeMoneyMilli);
     const robberyHit = report.purse.robbery?.outcome === 'pending';
     let robberyLossMilli = 0;
@@ -121,7 +137,7 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
       act('ANSWER_ROBBERY', { option: 'pay' });
       robberyLossMilli = report.purse.moneyAfterMilli - state.player.purse.moneyMilli;
     }
-    rows.push({ seed,difficulty,style,week,residents,start,end,net,gross,tax,goodsRevenue,lawPay,wages,operations,
+    const row: CalibrationRow = { seed,difficulty,style,week,residents,start,end,net,gross,tax,goodsRevenue,lawPay,wages,operations,
       farmBatch:report.farmBatchGoldMilli,scheduledUpkeepPaid:report.upkeepPaidMilli,scheduledUpkeepUnfunded:report.unpaidUpkeepMilli,
       homes,homeUpkeepUnfunded,lawCosts,training,securityTheft,crimeTheft,luxury,planningNet:start-prePlan,crisisCost:end-closeAfterAnswer,
       closeAfterAnswer,goods:report.goodsStock.producedMilli,sold:report.goods.servedMilli,foodDemand:report.foodDemandMilli,
@@ -130,10 +146,12 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
       levyPercent, levyDueMilli: report.purse.levyDueMilli, levyPaidMilli: report.purse.levyPaidMilli,
       levyMoneyMilli: report.purse.moneyAfterMilli - opening.player.purse.moneyMilli,
       moneyAfterMilli: report.purse.moneyAfterMilli, security, safeMoneyMilli, robberyExcessMilli,
-      robberyChanceBps: fallen ? 0 : homeRobberyChanceBps(robberyExcessMilli), robberyHit,
+      robberyChanceBps: fallen ? 0 : homeRobberyChanceBps(robberyExcessMilli, risk), robberyHit,
       robberyLossMilli, moneyAfterAnswerMilli: state.player.purse.moneyMilli,
       crisisStage: report.crisis?.stageAfter ?? 'unavailable',
-      tension: report.crisis?.tensionAfter ?? society.tension, hungry: report.crisis?.hungry ?? false, failure,fallen });
+      tension: report.crisis?.tensionAfter ?? society.tension, hungry: report.crisis?.hungry ?? false, failure,fallen };
+    rows.push(row);
+    driver?.observe?.(row, state, report);
     if (fallen || week === weeks) break;
     if (!robberyHit) act('NEXT_WEEK');
   }
@@ -142,7 +160,7 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
 
 export function runCalibration(opts: CalibrationOptions): CalibrationRow[] {
   return opts.seeds.flatMap(seed => opts.difficulties.flatMap(difficulty =>
-    styles.flatMap(style => (opts.levies ?? [0]).flatMap(levy => calibrate(seed,difficulty,style,opts.weeks,levy)))));
+    styles.flatMap(style => (opts.levies ?? [0]).flatMap(levy => calibrate(seed,difficulty,style,opts.weeks,levy,opts.driver)))));
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

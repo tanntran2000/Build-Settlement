@@ -1,11 +1,12 @@
 import {
-  canMoveToMansionRoom, hasWeeklyKeys, isMansionRoomType, mansionLevel, MANSION_CATALOG, MANSION_TILE_ID,
+  canMoveToMansionRoom, hasWeeklyKeys, isMansionRoomType, isMansionStaffRole, mansionLevel, mansionResidentRole, mansionRoleRefusal,
+  MANSION_CATALOG, MANSION_ROLE_REFUSALS, MANSION_TILE_ID,
   type CharacterLifeSessionState, type NpcWorldSessionState, type RoomLevel, type WorldNpc,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
 import { trialSafe } from './tile-trial-week.js';
 
-export const MANSION_COMMAND_TYPES = ['BUILD_ROOM', 'UPGRADE_ROOM', 'MOVE_TO_ROOM'] as const;
+export const MANSION_COMMAND_TYPES = ['BUILD_ROOM', 'UPGRADE_ROOM', 'MOVE_TO_ROOM', 'SET_ROLE'] as const;
 export type MansionCommandType = typeof MANSION_COMMAND_TYPES[number];
 export type RoomMoveErrorCode = 'INVALID_COMMAND' | 'SUITE_ROLE_ONLY' | 'MANSION_FULL' | 'ROOM_FULL';
 const moveMessages = {
@@ -26,7 +27,7 @@ export function moveNpcToMansionRoom(state: NpcWorldSessionState, npc: WorldNpc,
   return null;
 }
 
-const fields = { BUILD_ROOM: ['typeId'], UPGRADE_ROOM: ['roomId'], MOVE_TO_ROOM: ['npcId', 'roomId'] };
+const fields = { BUILD_ROOM: ['typeId'], UPGRADE_ROOM: ['roomId'], MOVE_TO_ROOM: ['npcId', 'roomId'], SET_ROLE: ['npcId', 'role'] };
 
 export function executeMansionCommand(state: CharacterLifeSessionState, type: MansionCommandType, raw: unknown): CharacterLifeCommandResult {
   if (!hasWeeklyKeys(raw, ['type', 'expectedRevision', ...fields[type]])) return fail('INVALID_COMMAND', 'Unknown Mansion command fields.');
@@ -35,7 +36,18 @@ export function executeMansionCommand(state: CharacterLifeSessionState, type: Ma
   try {
     const next = structuredClone(state);
     const { city } = next, mansion = city.society!.mansion;
-    if (type === 'MOVE_TO_ROOM') {
+    if (type === 'SET_ROLE') {
+      const { npcId, role } = raw;
+      if (typeof npcId !== 'string' || (role !== null && !isMansionStaffRole(role)))
+        return fail('INVALID_COMMAND', 'Choose a Mansion staff role.');
+      const npc = next.npcs.find(row => row.character.id === npcId);
+      if (!npc) return fail('UNKNOWN_NPC', 'Select a known NPC.');
+      const refusal = mansionRoleRefusal(city, next.npcs, npc, role);
+      if (refusal) return fail(refusal, MANSION_ROLE_REFUSALS[refusal]);
+      // A v15 checkpoint can carry an expired role until the next household action.
+      for (const { household } of next.npcs) household.role = mansionResidentRole(household);
+      npc.household.role = role;
+    } else if (type === 'MOVE_TO_ROOM') {
       const npc = next.npcs.find(row => row.character.id === raw.npcId);
       if (typeof raw.roomId !== 'string' || typeof raw.npcId !== 'string') return fail('INVALID_COMMAND', 'Select an NPC and Mansion room.');
       if (!npc) return fail('UNKNOWN_NPC', 'Select a known NPC.');

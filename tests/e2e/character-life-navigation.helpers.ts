@@ -616,6 +616,20 @@ export async function expectReport(
     const shortfall = actual.purse.levyDueMilli - actual.purse.levyPaidMilli;
     expect(levy[5] ? milli(levy[5]) : 0).toBe(shortfall);
   } else await expect(purse).toHaveCount(0);
+  const mansion = panel.locator('[data-letter="steward"] .letter-rows dt:text-is("Mansion") + dd');
+  await expect(mansion).toHaveCount(expected.mansion ? 1 : 0);
+  if (expected.mansion) {
+    const value = (await mansion.textContent()) ?? '';
+    const parts = /^Comfort ([\d,]+) \/ ([\d,]+) · Upkeep ([\d,.]+) Gold (paid|unpaid) · Authority \+([\d,]+)$/.exec(value);
+    if (!parts) throw Error('Invalid Mansion row: ' + value);
+    actual.mansion = {
+      comfortSupply: Number(parts[1].replaceAll(',', '')),
+      comfortNeed: Number(parts[2].replaceAll(',', '')),
+      upkeepMilli: milli(parts[3]),
+      upkeepPaid: parts[4] === 'paid',
+      authority: Number(parts[5].replaceAll(',', '')),
+    };
+  }
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {

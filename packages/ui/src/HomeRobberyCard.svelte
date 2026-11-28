@@ -1,14 +1,15 @@
 <script lang="ts">
-  import type { HomeRobberyOption, PlayerCharacter } from '@haven/core';
+  import type { HomeRobberyOption, MansionPurseTerms, PlayerCharacter } from '@haven/core';
   import { formatMilli } from './milli-format.js';
   import { homeRobberyOptions } from './purse-view.js';
 
   export let purse: PlayerCharacter['purse'];
   export let security: number;
   export let locked: boolean;
+  export let mansion: MansionPurseTerms | undefined = undefined;
   export let onanswer: (option: HomeRobberyOption) => void;
 
-  $: options = homeRobberyOptions(purse, security, locked);
+  $: options = homeRobberyOptions(purse, security, locked, mansion);
 </script>
 
 <section class="card urgent-letter" data-testid="home-robbery-card" aria-labelledby="home-robbery-title">

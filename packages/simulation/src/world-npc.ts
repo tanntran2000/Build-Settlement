@@ -2,6 +2,7 @@ import { createSocietyState,hasWeeklyKeys,homeBeds,homeResidents,isNpcWorldSessi
 import { trialSafe } from "./tile-trial-week.js";
 import { moveNpcToMansionRoom, type RoomMoveErrorCode } from "./mansion-command.js";
 import { executeTileTrialCommand } from "./tile-trial.js";
+import type { MansionWeekCharge } from './mansion-week.js';
 
 export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET" | "NO_BED" | "NOT_A_HOME" | "NOT_IN_HALL" | "NPC_CAP" | RoomMoveErrorCode;
 export type WorldNpcResult = { success: true; next: NpcWorldSessionState } | { success: false; error: { code: WorldNpcErrorCode; message: string } };
@@ -56,7 +57,7 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
 }
 
 // City commands for an NPC session: a post whose tile was replaced or lost its slot is cleared in the same result.
-export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:ItemWeekContext,levyPenalty=0): WorldNpcCityResult {
+export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:ItemWeekContext,levyPenalty=0,mansion?:MansionWeekCharge): WorldNpcCityResult {
   const fail = (code: string, message: string): WorldNpcCityResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city) || !isWorldNpcList(session.npcs, session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
@@ -66,7 +67,7 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:I
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
     const occupiedHomes = new Set((session.npcs as NpcWorldSessionState["npcs"]).map(npc => npc.household.home));
-    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes,levyPenalty);
+    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes,levyPenalty,mansion);
     if (!result.success) return fail(result.error.code, result.error.message);
     const city: TileTrialState = result.nextState, slots = managerSlotTileIds(city);
     const replaced = type === "REPLACE" ? Object.getOwnPropertyDescriptor(raw, "tileId")?.value : undefined;

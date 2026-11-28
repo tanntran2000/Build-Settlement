@@ -29,6 +29,21 @@
 <section aria-labelledby="mansion-rooms-heading" class="mansion">
   <h3 id="mansion-rooms-heading" bind:this={heading} tabindex="-1">Mansion rooms</h3>
 
+  {#if model.summary}
+    <section aria-label="Mansion household" class="household">
+      <h4>Household summary</h4>
+      <p>Comfort {model.summary.comfort}</p>
+      <div class="household-ledgers">
+        <dl aria-label="Weekly upkeep">
+          {#each model.summary.upkeep as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}
+        </dl>
+        <dl aria-label="Safe amount">
+          {#each model.summary.safeAmount as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}
+        </dl>
+      </div>
+    </section>
+  {/if}
+
   <div class="mansion-build">
     <label for="mansion-build-type">Build room type</label>
     <select id="mansion-build-type" bind:value={buildType} disabled={locked} aria-describedby={build.reason ? 'mansion-build-reason' : undefined}>
@@ -90,6 +105,11 @@
 <style>
   .mansion { margin-block: 1.35rem; min-width: 0; }
   .mansion-build, .room { border-top: 1px solid var(--life-control-border); padding-block: .8rem; }
+  .household { padding-block: .65rem; overflow-wrap: anywhere; }
+  .household-ledgers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: .75rem; }
+  dl { margin: 0; padding: .5rem; border: 1px solid var(--life-control-border); }
+  dl > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .45rem; padding: .25rem; }
+  dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; }
   h3 { font-size: var(--life-card-heading); }
   h4 { margin: 0 0 .45rem; }
   p { margin-block: .45rem; line-height: 1.4; }

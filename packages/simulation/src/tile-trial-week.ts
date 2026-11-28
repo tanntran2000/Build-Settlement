@@ -3,7 +3,7 @@ export { trialSafe } from './workshop-operation.js';
 import { lawTerms, ITEM_CATALOG, ITEM_TRIAL, ITEM_GOAL_IDS, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
 import { completeCraftOrders } from './craft-week.js';
 import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
-import { resolveCrimeWeek } from './crime-week.js';
+import { prepareCrimeWeek, resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
 import { authorityArrivals, resolveOrderWeek } from './order-week.js';
 import { applyDifficulty,difficultyProfile,crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
@@ -12,8 +12,10 @@ import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } f
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
 import { PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
+import { homeUpkeepMilli, mansionUpkeepFunded, MANSION_TILE_ID } from '@haven/core';
+import type { MansionWeekCharge } from './mansion-week.js';
 
-export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPenalty=0): Readonly<TileTrialReport> {
+export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPenalty=0,mansion?:MansionWeekCharge): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const profile=difficultyProfile(s.society.difficulty);
   const operation=resolveWorkshopOperation(s,ctx);
@@ -114,7 +116,19 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPena
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
-  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter},terms,ctx);
+  let preparedCrime: ReturnType<typeof prepareCrimeWeek> | undefined;
+  let fundedAfterTheft: boolean | undefined;
+  let fatalReduction = mansion?.terms.plain.fatalChanceBps ?? 0;
+  const mansionAuthority = mansion && (() => {
+    const { plain, paid, upkeepMilli } = mansion.terms;
+    if (plain.authority === paid.authority && plain.fatalChanceBps === paid.fatalChanceBps) return plain.authority;
+    preparedCrime = prepareCrimeWeek(s, operatingIds, crimeRandom(s.world.worldMetadata.worldSeed, s.world.week - 1));
+    fundedAfterTheft = mansionUpkeepFunded(s, upkeepMilli, stocks.gold - preparedCrime.goldLossMilli);
+    const effects = fundedAfterTheft ? paid : plain;
+    fatalReduction = effects.fatalChanceBps;
+    return effects.authority;
+  });
+  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter},terms,ctx,mansionAuthority);
   if(order.tensionAdded>0)societyReport.tensionAfter=s.society.tension;
   if(order.satisfactionLost>0){
     s.happiness=cityHappiness(s.society.satisfaction,societyCounts(s.society),happinessBefore);
@@ -123,7 +137,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPena
   const lawPromise=resolveLawPromiseWeek(s);
   if(lawPromise?.outcome==='broken')societyReport.classes[lawPromise.group].satisfactionAfter=s.society.satisfaction[lawPromise.group];
   const laws={inForce:[...s.society.laws.active],costs:lawGold.costs,unfunded:lawGold.unfunded,incomeMilli:lawIncomeMilli,promise:lawPromise};
-  const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx);
+  const crimeEvent=resolveCrimeWeek(s,operatingIds,undefined,ctx,fatalReduction,preparedCrime);
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
   const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion',materialPosts);
@@ -136,10 +150,15 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPena
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
   let householdUpkeep: TileTrialReport['householdUpkeep'];
-  for (const { building } of s.tiles) {
+  for (const { id, building } of s.tiles) {
     if (!building || npcBeds(building.typeId,building.level) === 0) continue;
     householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };
-    const due = applyDifficulty(scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level),profile.upkeepBps);
+    const charge = id === MANSION_TILE_ID ? mansion : undefined;
+    const due = charge?.terms.upkeepMilli ?? homeUpkeepMilli(building, profile.upkeepBps);
+    if (charge) {
+      charge.paid = stocks.gold >= due;
+      if (fundedAfterTheft !== undefined && charge.paid !== fundedAfterTheft) throw Error('Mansion funding changed before upkeep.');
+    }
     if (stocks.gold < due) {
       householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);
       continue;
