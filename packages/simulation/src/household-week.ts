@@ -1,5 +1,5 @@
 import {
-  hasWeeklyKeys, isLiveCharacterLifeSessionState, P7B_TRIAL, returnEquippedToStorage,
+  hasWeeklyKeys, isLiveCharacterLifeSessionState, isMansionStaffRole, P7B_TRIAL, returnEquippedToStorage,
   type CharacterLifeSessionState, type HouseholdReport, type WorldNpc,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
@@ -67,6 +67,7 @@ export function runHouseholdWeek(npcs: WorldNpc[], input: { week: number; openin
     if (atStressLimit && input.opening[index].life.stress < statMax) contract.stressHits = trialSafe(contract.stressHits + 1);
     contract.weeksLeft = Math.max(0, contract.weeksLeft - 1);
     if (contract.weeksLeft === 0) {
+      if (isMansionStaffRole(household.role)) household.role = null;
       if (contract.unpaidWeeks >= rules.unpaidRefusalWeeks || contract.stressHits >= rules.stressRefusalHits) {
         leftIds.add(character.id);
         report.left.push(character.name);

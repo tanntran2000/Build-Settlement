@@ -48,4 +48,5 @@ export * from './trial/recipes.js';
 export * from './mansion/types.js';
 export * from './mansion/catalog.js';
 export * from './mansion/rules.js';
+export * from './mansion/effects.js';
 export * from './mansion/invariants.js';

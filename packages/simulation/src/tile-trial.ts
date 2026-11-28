@@ -2,8 +2,9 @@ import { LAW_IDS, LAW_MESSAGES, LAW_TRIAL, previewLawVote, type LawId, CARD_OPTI
 import { cityHappiness, societyCounts } from './society-week.js';
 import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,RING4_TRIAL,RETAINERS_HALL_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,buildingWorkerCap,trialBuilding,npcBeds,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
+import type { MansionWeekCharge } from './mansion-week.js';
 
-export function executeTileTrialCommand(state: unknown, raw: unknown, ctx?: ItemWeekContext, occupiedHomeTileIds?: ReadonlySet<string>, levyPenalty = 0): TileTrialResult {
+export function executeTileTrialCommand(state: unknown, raw: unknown, ctx?: ItemWeekContext, occupiedHomeTileIds?: ReadonlySet<string>, levyPenalty = 0, mansion?: MansionWeekCharge): TileTrialResult {
   const fail = (code: string, message: string): TileTrialResult => ({ success: false, state, error: { code, message } });
   try {
     if (!isTileTrialState(state) || !state.society || !state.goodsStock) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
@@ -103,7 +104,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ctx?: Item
       next.revision = Math.max(state.revision, next.revision);
     } else if (c.type === "END_WEEK") {
       if (c.expectedWeek !== state.world.week) return fail("WEEK_MISMATCH", "The week changed; this command was not applied.");
-      report = runTileTrialWeek(next,ctx,levyPenalty);
+      report = runTileTrialWeek(next,ctx,levyPenalty,mansion);
     } else if (c.type === "NEXT_WEEK") next.phase = "planning";
     else {
       const tile = next.tiles.find(t => t.id === c.tileId);

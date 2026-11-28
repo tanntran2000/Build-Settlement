@@ -2,9 +2,38 @@ import type { TileTrialState } from '../trial/types.js';
 import type { WorldNpc } from '../world/npc.js';
 import { homeBeds } from '../world/npc-household.js';
 import { MANSION_CATALOG } from './catalog.js';
-import type { MansionFurnitureId, MansionRoom, MansionRoomTypeId, MansionState, PlayerNeeds, RoomLevel } from './types.js';
+import type { MansionFurnitureId, MansionRole, MansionRoom, MansionRoomTypeId, MansionState, PlayerNeeds, RoomLevel } from './types.js';
 
 export const MANSION_TILE_ID = 'estate-1';
+export const MANSION_STAFF_ROLES = ['maid', 'head-maid', 'guard', 'captain', 'accountant'] as const satisfies readonly MansionRole[];
+export type MansionStaffRole = typeof MANSION_STAFF_ROLES[number];
+
+export function isMansionStaffRole(value: unknown): value is MansionStaffRole {
+  return (MANSION_STAFF_ROLES as readonly unknown[]).includes(value);
+}
+
+export const MANSION_ROLE_REFUSALS = {
+  ROLE_NOT_RESIDENT: 'Choose a Mansion resident.',
+  ROLE_CAP: 'That Mansion role is full.',
+  INVALID_COMMAND: 'Renew the contract before assigning a role.',
+  SUITE_ROLE_ONLY: 'Move the resident out of the Master Suite before changing her role.',
+} as const;
+
+export function mansionRoleRefusal(
+  city: TileTrialState, npcs: readonly WorldNpc[], npc: WorldNpc, role: MansionStaffRole | null,
+): keyof typeof MANSION_ROLE_REFUSALS | null {
+  const { household } = npc;
+  if (household.home !== MANSION_TILE_ID) return 'ROLE_NOT_RESIDENT';
+  if (role !== null && household.contract?.weeksLeft === 0) return 'INVALID_COMMAND';
+  const room = city.society?.mansion.rooms.find(row => row.id === household.room);
+  if (room && MANSION_CATALOG.roomTypes[room.typeId].suiteRoles !== null) return 'SUITE_ROLE_ONLY';
+  if (role !== null && household.role !== role) {
+    const cap = MANSION_CATALOG.roles[role].cap;
+    if (cap !== null && npcs.filter(row => row.household.home === MANSION_TILE_ID && row.household.role === role).length >= cap)
+      return 'ROLE_CAP';
+  }
+  return null;
+}
 
 const starterTypes = Object.entries(MANSION_CATALOG.roomTypes)
   .flatMap(([typeId, type]) => type.starter === null ? [] : [{ id: 'room-' + type.starter, typeId, seq: type.starter }])

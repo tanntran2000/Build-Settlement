@@ -12,8 +12,10 @@ import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } f
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
 import { PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
+import { MANSION_TILE_ID } from '@haven/core';
+import type { MansionWeekCharge } from './mansion-week.js';
 
-export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPenalty=0): Readonly<TileTrialReport> {
+export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPenalty=0,mansion?:MansionWeekCharge): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const profile=difficultyProfile(s.society.difficulty);
   const operation=resolveWorkshopOperation(s,ctx);
@@ -136,10 +138,12 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPena
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
   let householdUpkeep: TileTrialReport['householdUpkeep'];
-  for (const { building } of s.tiles) {
+  for (const { id, building } of s.tiles) {
     if (!building || npcBeds(building.typeId,building.level) === 0) continue;
     householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };
-    const due = applyDifficulty(scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level),profile.upkeepBps);
+    const charge = id === MANSION_TILE_ID ? mansion : undefined;
+    const due = charge?.terms.upkeepMilli ?? applyDifficulty(scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level),profile.upkeepBps);
+    if (charge) charge.paid = stocks.gold >= due;
     if (stocks.gold < due) {
       householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);
       continue;
