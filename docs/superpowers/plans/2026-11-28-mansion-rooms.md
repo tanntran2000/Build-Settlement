@@ -18,7 +18,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-28-mansion-rooms-design.md` v0.1 (`e18e7ac`, branch `docs/mansion-design`), G1 approved by Tân, 2026-11-28, verbatim: "Duyệt G1".
 
-**Plan approval:** pending owner (Tân).
+**Plan approval:** the owner (Tân) approved this plan on 2026-11-28, verbatim: "Duyệt, giao R1".
 
 **Base:** `main` `8d37d16` (IMPORT-ALERT-01 merged, ruleset `tile-society-14`).
 
