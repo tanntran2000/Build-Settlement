@@ -201,7 +201,7 @@
     "robberyChaseSuccessBpsPerSecurity": 250
   },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-14",
+    "rulesetId": "tile-society-15",
     "standing": 50,
     "laws": {
       "active": [],

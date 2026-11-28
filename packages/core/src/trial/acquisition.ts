@@ -35,7 +35,7 @@ export interface AcquisitionState {
   week: number;
   stock: StockOffer[];
   lots: AuctionLot[];
-  departures: { kind: 'sold' | 'released'; name: string; id: string }[];
+  departures: { kind: 'sold' | 'released' | 'died'; name: string; id: string }[];
 }
 
 export const emptyAcquisition = (): AcquisitionState => ({ week: 0, stock: [], lots: [], departures: [] });
@@ -100,7 +100,7 @@ export function isAcquisitionState(raw: unknown): raw is AcquisitionState {
     const stock = readDenseArray(raw.stock), lots = readDenseArray(raw.lots), departures = readDenseArray(raw.departures);
     if (!stock || !lots || !departures || stock.length + lots.length > possibleRecruits || departures.length > departureCap ||
         !stock.every(isStockOffer) || !lots.every(isAuctionLot) || !departures.every(entry =>
-          hasWeeklyKeys(entry, ['kind', 'name', 'id']) && typeof entry.id === 'string' && (entry.kind === 'sold' || entry.kind === 'released') &&
+          hasWeeklyKeys(entry, ['kind', 'name', 'id']) && typeof entry.id === 'string' && (entry.kind === 'sold' || entry.kind === 'released' || entry.kind === 'died') &&
           typeof entry.name === 'string' && !!entry.name && entry.name.trim() === entry.name)) return false;
     if (raw.week === 0) return !stock.length && !lots.length && !departures.length;
     return new Set(stock.map(offer => `${offer.source}:${offer.slot}`)).size === stock.length &&

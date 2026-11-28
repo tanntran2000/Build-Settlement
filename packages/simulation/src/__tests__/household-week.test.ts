@@ -28,7 +28,7 @@ function roundTrip(s: CharacterLifeSessionState) {
   const encoded = serializeCharacterLifeSave(s);
   if (!encoded.success) throw Error(encoded.error.message);
   expect(deserializeCharacterLifeSave(encoded.text)).toStrictEqual({ success: true, state: s });
-  expect(JSON.parse(encoded.text).cityRulesetId).toBe('tile-society-14');
+  expect(JSON.parse(encoded.text).cityRulesetId).toBe('tile-society-15');
 }
 
 it('pays in NPC order before tile operations and home upkeep, clamps unpaid stats, and preserves input', () => {
@@ -130,12 +130,14 @@ it('accepts lifelong with no wage or term and declines with a current-week coold
 it('adds Mansion +1 and clamps the top and bottom', () => {
   const npc = recruit().npcs[0];
   npc.household.home = 'estate-1';
+  npc.household.room = 'room-3';
   npc.household.obedience = 99;
   runHouseholdWeek([npc], { week: 2, opening: [structuredClone(npc)] });
   expect(npc.household.obedience).toBe(100);
   runHouseholdWeek([npc], { week: 3, opening: [structuredClone(npc)] });
   expect(npc.household.obedience).toBe(100);
   npc.household.home = 'estate-2';
+  npc.household.room = null;
   npc.life.stress = 100;
   npc.household.obedience = 1;
   runHouseholdWeek([npc], { week: 4, opening: [structuredClone(npc)] });

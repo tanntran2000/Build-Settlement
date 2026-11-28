@@ -82,14 +82,14 @@ it("rejects missing and non-integer Retainers' Hall caps", () => {
   expect(failures).toStrictEqual([message, message]);
 });
 
-it.each([10, 11])('uses the v14 ruleset and refuses the v%i checkpoint unchanged', version => {
+it.each([10, 11])('uses the v15 ruleset and refuses the v%i checkpoint unchanged', version => {
   const fresh = core.createCharacterLifeSession(42, { ...core.DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
   if (!fresh.success) throw Error(fresh.error.message);
   const before = structuredClone(fresh.value);
   const encoded = serializeCharacterLifeSave(fresh.value);
   if (!encoded.success) throw Error(encoded.error.message);
   const envelope = JSON.parse(encoded.text);
-  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-14', 'tile-society-14']);
+  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-15', 'tile-society-15']);
   const source = readFileSync(oldSave(version), 'utf8');
   expect(deserializeCharacterLifeSave(source)).toStrictEqual({
     success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' },
@@ -99,7 +99,7 @@ it.each([10, 11])('uses the v14 ruleset and refuses the v%i checkpoint unchanged
   expect(serializeCharacterLifeSave(fresh.value)).toStrictEqual(encoded);
 });
 
-it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v14 planning save with %s', problem => {
+it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v15 planning save with %s', problem => {
   const city = core.createSocietyState();
   const mansion = city.tiles.find(t => t.id === 'estate-1');
   const estateHall = city.tiles.find(t => t.id === 'estate-2');

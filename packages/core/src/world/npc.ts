@@ -1,4 +1,5 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { isMansionState } from '../mansion/invariants.js';
 import type { NamedCharacter } from '../domain/character.js';
 import { REQUIRED_EMOTIONS,REQUIRED_NEEDS,REQUIRED_RELATIONSHIP,REQUIRED_SKILLS } from '../domain/gamestate.js';
 import type { TileTrialState } from '../trial/types.js';
@@ -68,7 +69,7 @@ export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is World
       if (post !== null && (household.home === 'estate-1' || typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
       ids.add(c.id); names.add(c.name); if (post !== null) posts.add(post);
     }
-    return true;
+    return isMansionState(city.society?.mansion, city, list as WorldNpc[]);
   } catch { return false; }
 }
 

@@ -2,6 +2,7 @@ import type { DifficultyId } from '../trial/difficulty.js';
 import { createNamedCharacter,type Occupation } from '../domain/character.js';
 import { readDenseArray } from '../world/arrays.js';
 import { createNpcWorldSession } from '../world/npc.js';
+import { createPlayerNeeds } from '../mansion/rules.js';
 import {
 BUILDS,
 EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_TEXTURES,
@@ -98,7 +99,7 @@ export function validatePlayerDraft(draft: PlayerDraft): DraftErrors {
   return errors;
 }
 
-export function createPlayerCharacter(draft: PlayerDraft): { success: true; value: PlayerCharacter } | { success: false; error: { code: 'INVALID_PLAYER'; message: string } } {
+export function createPlayerCharacter(draft: PlayerDraft, startWeek = 1): { success: true; value: PlayerCharacter } | { success: false; error: { code: 'INVALID_PLAYER'; message: string } } {
   const invalid = (message: string) => ({ success: false as const, error: { code: 'INVALID_PLAYER' as const, message } });
   const errors = validatePlayerDraft(draft);
   if (Object.keys(errors).length > 0) return invalid(Object.values(errors).join(' '));
@@ -120,7 +121,7 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
       ...(m && { measurements: { chestCm: Number(m.chestCm), waistCm: Number(m.waistCm), hipsCm: Number(m.hipsCm), disclosure: 'known' as const } }),
       outfit: a.outfit },
     ...(draft.intimateHistory && { private: { intimateHistory: { value: draft.intimateHistory, disclosure: 'known' as const } } }),
-  }, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null } };
+  }, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null }, needs: createPlayerNeeds(startWeek) };
   return isPlayerCharacter(value) ? { success: true, value } : invalid('The player character could not be created.');
 }
 
@@ -128,7 +129,7 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
 export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft, difficulty: DifficultyId = 'normal'): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
   const world = createNpcWorldSession(seed, difficulty);
   if (!world.success) return world;
-  const player = createPlayerCharacter(draft);
+  const player = createPlayerCharacter(draft, world.value.city.world.week);
   if (!player.success) return player;
   const value = { ...world.value, player: player.value, profiles: [] };
   return isCharacterLifeSessionState(value) ? { success: true, value }

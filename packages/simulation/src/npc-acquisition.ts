@@ -78,7 +78,7 @@ export function acquisitionWeekReport(seed: number, previous: AcquisitionState, 
       result.lotsToRivals.push({ source, priceMilli: closed.priceMilli });
     }
   }
-  for (const entry of previous.departures) result[entry.kind].push(entry.name);
+  for (const entry of previous.departures) if (entry.kind !== 'died') result[entry.kind].push(entry.name);
   if (result.bought.length || result.sold.length || result.released.length || result.lotsToRivals.length) {
     Object.freeze(result.bought); Object.freeze(result.sold); Object.freeze(result.released); Object.freeze(result.left);
     for (const row of result.lotsToRivals) Object.freeze(row);

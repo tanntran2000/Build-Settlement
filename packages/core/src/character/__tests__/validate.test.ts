@@ -23,7 +23,7 @@ const player = () => {
   profile.traits = { ...profile.traits, intimacyKnowledge: 40 };
   profile.appearance = { ...profile.appearance, presentation: 'androgynous', measurements: { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'known' } };
   profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
-  return { character: playerCharacter(), profile, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null } };
+  return { character: playerCharacter(), profile, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null }, needs: { lust: 0, arousal: 0, graceEndsWeek: 9, trainingSkill: null } };
 };
 const lifeSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return withNpcs({ ...r.value, player: player(), profiles: [] as CharacterProfile[] }, NPC_TEST_KEYS); };
 const character = (age = 27) => ({ ...npcSession().npcs[0].character, age });

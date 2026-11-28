@@ -5,8 +5,9 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-14', difficulty: 'normal', standing:50,
+    rulesetId: 'tile-society-15', difficulty: 'normal', standing:50,
     acquisition: { week: 0, stock: [], lots: [], departures: [] },
+    mansion: {"rooms":[{"id":"room-1","typeId":"master-suite","level":1,"furniture":[]},{"id":"room-2","typeId":"throne-room","level":1,"furniture":[]}],"nextRoomSeq":3},
     items: {
       nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
       market: [

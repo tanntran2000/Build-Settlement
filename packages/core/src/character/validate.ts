@@ -1,4 +1,5 @@
 import { PURSE_TRIAL } from './purse.js';
+import { isPlayerNeeds } from '../mansion/invariants.js';
 export { PURSE_TRIAL } from './purse.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import type { NamedCharacter } from '../domain/character.js';
@@ -86,7 +87,7 @@ export function isHistoricalPlayerCharacter(raw: unknown): boolean {
 
 export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
   try {
-    if (!keysOf(raw, ['character', 'profile', 'purse']) || !hasPlayerIdentity(raw)) return false;
+    if (!keysOf(raw, ['character', 'profile', 'purse', 'needs']) || !hasPlayerIdentity(raw) || !isPlayerNeeds(raw.needs)) return false;
     const purse = raw.purse;
     if (!keysOf(purse, ['moneyMilli', 'levyPercent', 'donatedThisWeekMilli', 'robbery']) ||
         !int(purse.moneyMilli, balanceRange) || !int(purse.levyPercent, [0, levyMaxPercent]) ||

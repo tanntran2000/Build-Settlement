@@ -1,4 +1,6 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { isMansionRole, isSkillKey } from '../mansion/catalog.js';
+import type { MansionRole, SkillKey } from '../mansion/types.js';
 import { npcBeds } from '../trial/catalog.js';
 import type { TileTrialState } from '../trial/types.js';
 import { NPC_GENERATOR_CATALOG, P7B_TRIAL, type AcquisitionSource } from './npc-generator.js';
@@ -15,6 +17,9 @@ export interface NpcHousehold {
   lifelongAskWeek: number | null;
   source: AcquisitionSource;
   boughtWeek: number;
+  room: string | null;
+  role: MansionRole | null;
+  training: SkillKey | null;
 }
 
 const keys = ['home', 'status', 'obedience', 'contract', 'will', 'notice', 'lifelongAskWeek', 'source', 'boughtWeek'];
@@ -27,7 +32,9 @@ const axis = (value: unknown, ids: readonly string[]) => hasWeeklyKeys(value, ['
 
 export function isNpcHousehold(raw: unknown): raw is NpcHousehold {
   try {
-    if (!hasWeeklyKeys(raw, keys) || typeof raw.home !== 'string' || !raw.home || raw.home !== raw.home.trim() ||
+    if (!hasWeeklyKeys(raw, [...keys, 'room', 'role', 'training']) ||
+        !(raw.room === null || typeof raw.room === 'string') || !(raw.role === null || isMansionRole(raw.role)) ||
+        !(raw.training === null || isSkillKey(raw.training)) || typeof raw.home !== 'string' || !raw.home || raw.home !== raw.home.trim() ||
         !stat(raw.obedience) || !positive(raw.boughtWeek) || !hasWeeklyKeys(raw.will, ['preference', 'flaw']) ||
         !axis(raw.will.preference, NPC_GENERATOR_CATALOG.preferences) || !axis(raw.will.flaw, NPC_GENERATOR_CATALOG.flaws)) return false;
     if (raw.source !== 'guild' && raw.source !== 'auction-house' && raw.source !== 'slave-market') return false;
