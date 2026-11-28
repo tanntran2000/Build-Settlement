@@ -562,3 +562,20 @@ Owner (Tân), verbatim: "Duyệt A + luật".
    - no other value, assertion, timeout or test in the file changes.
    Each such change is listed (file:line, before → after, proof file) in the R1 evidence. Anything else outside the approved lists is still a HOLD.
 3. The no-estate city-only regression at `tile-trial-p7b.test.ts:173–189` is fixed in the approved core files; that test stays unchanged.
+
+### Correction 4 (Astra R1 round 1, 2026-11-28)
+
+Owner (Tân), verbatim: "Duyệt sửa cả 10". Astra round 1 at `d306f68` (thread `mcp:98be5e79`): FAIL, 1 P1, 7 P2, 2 P3. Every finding is fixed in R1:
+
+1. **P1 — v14 Continue without IndexedDB.** The v14 local path shows the existing blocked-storage warning like every other path; a save into the volatile fallback store is never reported as durable.
+2. **P2 — marker on a damaged v14.** An identifiable v14 source (outer or nested version) writes no localStorage, row or migration marker whether the upgrade succeeds or fails (2A).
+3. **P2 — v14 IndexedDB layout.** The v14 row reader accepts only the layout the v14 writer produced (detached item rows); portable JSON conversion stays separate from row-layout validation. v14 record fixtures are generated with the v14 detachment rules.
+4. **P2 — starter rooms.** A playable checkpoint must contain `room-1` Master Suite and `room-2` Throne Room (any level); otherwise the decoder refuses it as damaged.
+5. **P2 — Master Suite in R1.** Every move into the Master Suite is `SUITE_ROLE_ONLY` in R1 whatever the loaded role, in the shared move rule (picker, `MOVE_TO_ROOM`, `MOVE_NPC_HOME` and 5A admission agree). R3 opens it.
+6. **P2 — catalog schema.** `mansion.json` is validated against a fixed schema independent of the file (required keys, scalar types, nested maps); a wrong-typed value fails with its path.
+7. **P2 — data-only types (changes Decision 1).** Room type and furniture ids come from the catalog, not hard-coded TypeScript lists: `MansionRoomTypeId` and furniture ids are catalog keys (`string`, validated against the loaded catalog). Behaviour that is specific to a room is a catalog field (for example `suiteRoles`, `maxSingleBeds`, `starter`), not an id check. Tests still pin the shipped content at exactly 8 room types, 8 roles and 16 furniture pieces. Roles and effect kinds stay closed lists in code.
+8. **P2 — exact assertions.** The 12 partial matchers in new test files compare complete values or one named field exactly; no `stringContaining` for alert copy.
+9. **P3 — `isSocietyState`.** It checks the context-free Mansion structure; occupancy and building checks stay with the city and roster validators.
+10. **P3 — integration tests.** Add a v14 IndexedDB slot with NPCs, workshop order/ready rows and an existing marker, and a successful in-game v14 file import (e2e).
+
+Every fix is RED first. Hash literals follow correction 3 item 2. Anything else outside the approved lists is a HOLD.
