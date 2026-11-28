@@ -530,3 +530,16 @@ HOLD once.
 - [ ] **Step 4:** GREEN; commit `feat(ui): furnish panel and training yard`.
 
 ### Task R4.4: R4 gates and evidence.
+
+---
+
+## Plan corrections
+
+### Correction 1 (R1 Step 0, 2026-11-28)
+
+Owner (Tân), verbatim: "Duyệt 1A 2A 4B 5A". Accepted by the Orchestrator within the plan: shared upgrade for file import, Continue and world-session loads; the root envelope version follows `rulesetId`; Comfort is derived, not saved; the Accountant's Vault fit applies when a Vault exists (the Vault has no beds).
+
+1. **1A — files and tests.** The R1 allowlist adds the files in the Step 0 HOLD §6 table, with their stated reasons: `data/tuning.json`, `data/validate.ts`, `world/npc-generator.ts`, `world/npc.ts`, `trial/state.ts`, `simulation/npc-acquisition.ts`, `ui/acquisition-view.ts`, `ui/CharacterLifeApp.svelte`, `ui/TileManagement.svelte`, `ui/character-life-session.ts`, `persistence/world-session-save.ts`, `ui/world-session.ts`, `ui/world-npc-session.ts`, `persistence/index.ts`, and `simulation/src/__tests__/fixtures/mansion-r1-path-diff.ts` (new). The existing test and fixture substitutions are approved exactly as listed in `STEP0-byte-inventory.json` `existingByteChanges`.
+2. **2A — title-screen alerts.** The title-screen import uses the same mapping as the in-game import: `INCOMPATIBLE_SAVE` (including a v14 that fails the upgrade) shows `OLD_CHECKPOINT_MESSAGE`; every other decoder failure shows `DAMAGED_CHECKPOINT_MESSAGE`. `OLD_CHECKPOINT_MESSAGE` keeps its current text exactly (spec §9's "Your game was preserved." is not added to it). A v14 load writes no localStorage, IndexedDB row or migration marker; the first successful save writes v15.
+3. **4B — Single Beds.** `single-bed` does not use a furniture slot. Every Bedroom, at any level, takes up to 3 `single-bed` pieces (4 beds) in addition to its furniture slots 2 / 3 / 4. The v14 upgrade fills Bedrooms up to 4 each.
+4. **5A — buying into the Mansion.** `BUY_NPC` / `BID_NPC` keep their payloads. A recruit whose home is the Mansion goes to the first room, in room order, that is not the Master Suite and has a free bed. With none, the existing `NO_BED` result applies. The acquisition picker shows Mansion free beds as the lesser of room beds free and building beds free.
