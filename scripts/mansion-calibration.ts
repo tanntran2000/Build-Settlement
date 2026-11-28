@@ -125,10 +125,30 @@ export function runMansionCalibration() {
   return { schemaVersion: 1, rows, commands, ...scoreMansionCalibration(rows) };
 }
 
+export function runMansionMoneyPace() {
+  const levyPercent = 5;
+  const rows = runCalibration({ seeds, difficulties: [...difficulties], weeks: 40, levies: [levyPercent], driver: {
+    plan(context) {
+      if (context.style === 'good') planWeek(context);
+    },
+  } }).filter(row => row.style === 'good');
+  const summary = seeds.flatMap(seed => difficulties.map(difficulty => {
+    const run = rows.filter(row => row.seed === seed && row.difficulty === difficulty);
+    const first15Money = run.find(row => row.moneyAfterMilli >= 15_000)?.week ?? null;
+    const target = difficulty === 'normal' ? [10, 15] : [5, 8];
+    const complete = run.length === 40 && run.every((row, index) => row.week === index + 1 && row.failure === null && !row.fallen);
+    const met = complete && first15Money !== null && first15Money >= target[0] && first15Money <= target[1];
+    return { seed, difficulty, first15Money, target, closedWeeks: run.length, met };
+  }));
+  return { schemaVersion: 1, levyPercent, rows, summary, misses: summary.filter(cell => !cell.met) };
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const path = process.argv[2];
-  if (!path) throw Error('Usage: node scripts/mansion-calibration.ts <mansion-calibration.json>');
-  const result = runMansionCalibration();
+  const mode = process.argv[3];
+  if (!path || (mode !== undefined && mode !== '--money-pace'))
+    throw Error('Usage: node scripts/mansion-calibration.ts <output.json> [--money-pace]');
+  const result = mode === '--money-pace' ? runMansionMoneyPace() : runMansionCalibration();
   writeFileSync(path, JSON.stringify(result, null, 2) + '\n', 'utf8');
   for (const row of result.summary) console.log(JSON.stringify(row));
   if (result.misses.length) process.exitCode = 1;

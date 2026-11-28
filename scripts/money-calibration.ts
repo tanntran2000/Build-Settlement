@@ -20,7 +20,7 @@ export interface CalibrationPlanContext {
 }
 interface CalibrationDriver {
   plan: (context: CalibrationPlanContext) => void;
-  observe: (row: CalibrationRow, state: Readonly<CharacterLifeSessionState>, report: Readonly<TileTrialReport>) => void;
+  observe?: (row: CalibrationRow, state: Readonly<CharacterLifeSessionState>, report: Readonly<TileTrialReport>) => void;
 }
 type CalibrationOptions = { seeds: number[]; difficulties: DifficultyId[]; weeks: 40; levies?: readonly number[]; driver?: CalibrationDriver };
 export interface CalibrationRow {
@@ -151,7 +151,7 @@ function calibrate(seed: number, difficulty: DifficultyId, style: Style, weeks: 
       crisisStage: report.crisis?.stageAfter ?? 'unavailable',
       tension: report.crisis?.tensionAfter ?? society.tension, hungry: report.crisis?.hungry ?? false, failure,fallen };
     rows.push(row);
-    driver?.observe(row, state, report);
+    driver?.observe?.(row, state, report);
     if (fallen || week === weeks) break;
     if (!robberyHit) act('NEXT_WEEK');
   }
