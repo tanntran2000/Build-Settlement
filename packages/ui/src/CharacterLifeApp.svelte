@@ -10,7 +10,7 @@
   let screen: 'start' | 'create' = 'start';
   let session: CharacterLifeSessionState | null = null;
   let cachedCheckpoint: CharacterLifeSessionState | null = null;
-  let checkpoint: 'playable' | 'none' | 'old' = 'none';
+  let checkpoint: 'playable' | 'none' | 'old' | 'damaged' = 'none';
   let checkpointReady = false;
   let volatileCheckpoint = false;
   let error = '';
@@ -24,8 +24,10 @@
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
       if (result.warning) error = result.warning;
+    } else if (!result.success && result.message === DAMAGED_CHECKPOINT_MESSAGE) {
+      checkpoint = 'damaged';
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
-    if (!result.success && (result.message === DAMAGED_CHECKPOINT_MESSAGE || result.message.startsWith('Could not'))) error = result.message;
+    if (!result.success && result.message.startsWith('Could not')) error = result.message;
     checkpointReady = true;
   }
   onMount(() => { void readSlot(); });

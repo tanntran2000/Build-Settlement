@@ -1,9 +1,10 @@
 import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { expect, test, type Page } from '@playwright/test';
 import { exportLife, go, importLife, keyActivate, keyPost, makeLife, makeLifeWithNpcs } from './character-life-navigation.helpers.ts';
 import { readStoredRecords, storeMarks, storedSaveText, watchMigrationActivity, writeRecords } from './storage.helpers.ts';
 
-import { GAME_DB, sessionToRecords } from '../../packages/persistence/src/index.ts';
+import { GAME_DB, sessionToRecords, type GameStore } from '../../packages/persistence/src/index.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/index.ts';
 
 const fixtures = new URL('../../packages/persistence/src/__tests__/fixtures/', import.meta.url);
@@ -267,4 +268,121 @@ test('R2-02 keeps Export available before leaving a volatile game and warns on Q
     id: 'room-3', typeId: 'bedroom', level: 1, furniture: [],
   });
   expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(text);
+});
+
+// Bundle the production store and loader for an isolated page with real browser storage.
+const uiRequire = createRequire(new URL('../../packages/ui/package.json', import.meta.url));
+let adapterProbe: Promise<string> | undefined;
+function checkpointAdapterProbe() {
+  return adapterProbe ??= (async () => {
+    const { build } = createRequire(uiRequire.resolve('vite'))('esbuild');
+    const bundle = await build({
+      stdin: {
+        contents: [
+          "export { createIndexedDbGameStore } from './packages/ui/src/indexeddb-store.ts';",
+          "export { readLocalCharacterLife } from './packages/ui/src/character-life-session.ts';",
+        ].join('\n'),
+        resolveDir: process.cwd(),
+        loader: 'ts',
+      },
+      bundle: true,
+      format: 'iife',
+      globalName: 'checkpointProbe',
+      write: false,
+    });
+    return bundle.outputFiles[0].text;
+  })();
+}
+
+interface CheckpointProbeWindow extends Window {
+  checkpointProbe: {
+    createIndexedDbGameStore: () => GameStore;
+    readLocalCharacterLife: typeof import('../../packages/ui/src/character-life-session.ts').readLocalCharacterLife;
+  };
+  finishCheckpointPreliminaryRead?: () => void;
+  checkpointProbeResult?: Promise<Awaited<ReturnType<CheckpointProbeWindow['checkpointProbe']['readLocalCharacterLife']>>>;
+}
+
+for (const incoming of ['intact v14', 'v14 missing city', 'v15 missing city'] as const) {
+  test(`R3-01 preserves ${incoming} inserted between IndexedDB reads`, async ({ page }) => {
+    const version = incoming === 'v15 missing city' ? 'v15' : 'v14';
+    const envelope = JSON.parse((await file(`society-${version}/life-new-game.json`)).toString('utf8'));
+    const backup = (await file('society-v15/life-new-game.json')).toString('utf8');
+    const rows = sessionToRecords('main', envelope.state).filter(row => incoming === 'intact v14' || row.table !== 'city');
+
+    await page.route('**/checkpoint-adapter-probe', route => route.fulfill({
+      contentType: 'text/html',
+      body: '<!doctype html><title>Checkpoint adapter probe</title>',
+    }));
+    await page.goto('/checkpoint-adapter-probe');
+    await page.addScriptTag({ content: await checkpointAdapterProbe() });
+    await page.evaluate(({ key, backup }) => {
+      const probe = window as CheckpointProbeWindow;
+      const { createIndexedDbGameStore, readLocalCharacterLife } = probe.checkpointProbe;
+      const store = createIndexedDbGameStore();
+      localStorage.setItem(key, backup);
+      probe.checkpointProbeResult = readLocalCharacterLife({
+        legacy: localStorage,
+        store: { ...store, async read(slot: string) {
+          const preliminary = await store.read(slot);
+          if (preliminary !== null) throw Error('The preliminary read must see an empty slot.');
+          await new Promise<void>(resolve => { probe.finishCheckpointPreliminaryRead = resolve; });
+          return preliminary;
+        } },
+      });
+    }, { key: legacyKey, backup });
+    await page.waitForFunction(() => typeof (window as CheckpointProbeWindow).finishCheckpointPreliminaryRead === 'function');
+    expect(await readStoredRecords(page)).toEqual([]);
+    await writeRecords(page, rows);
+    const before = await readStoredRecords(page);
+    const activity = await watchMigrationActivity(page);
+
+    const result = await page.evaluate(() => {
+      const probe = window as CheckpointProbeWindow;
+      probe.finishCheckpointPreliminaryRead!();
+      return probe.checkpointProbeResult!;
+    });
+
+    if (incoming === 'intact v14') {
+      expect(result.success ? result.state.city.society?.rulesetId : null).toBe('tile-society-15');
+    } else {
+      expect(result).toEqual({
+        success: false,
+        message: incoming === 'v14 missing city'
+          ? 'Local checkpoint not loaded; it was left unchanged. ' + oldMessage
+          : damagedMessage,
+      });
+    }
+    expect(await page.evaluate(key => localStorage.getItem(key), legacyKey)).toBe(backup);
+    expect.soft(await readStoredRecords(page)).toEqual(before);
+    expect(await activity()).toEqual({ readwrite: 1, writes: [] });
+  });
+}
+
+test('R3-02 shows a damaged current slot as damaged on the title', async ({ page }) => {
+  const rows = sessionToRecords('main', makeLife()).filter(row => row.table !== 'city');
+  await page.goto('/');
+  await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
+  await writeRecords(page, rows);
+  await page.evaluate(db => new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open(db.name, db.version);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const connection = request.result;
+      const tx = connection.transaction('system', 'readwrite');
+      tx.objectStore('system').delete(['_', 'migration:legacy-local-checkpoint']);
+      tx.oncomplete = () => { connection.close(); resolve(); };
+      tx.onabort = () => { connection.close(); reject(tx.error); };
+    };
+  }), GAME_DB);
+  const before = await readStoredRecords(page);
+  expect(before.some(row => row.table === 'meta')).toBe(true);
+  expect(before.filter(row => row.table === 'city' || row.table === 'system')).toEqual([]);
+
+  await page.reload();
+
+  await expect(page.getByRole('button', { name: 'Continue', exact: true })).toBeDisabled();
+  await expect(page.getByRole('alert')).toHaveText(damagedMessage);
+  expect(await readStoredRecords(page)).toEqual(before);
+  await expect(page.getByText('No local checkpoint', { exact: true })).toHaveCount(0);
 });
