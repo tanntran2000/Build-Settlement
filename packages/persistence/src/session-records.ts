@@ -68,11 +68,13 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
     return true;
   } catch { return false; }
 }
+const usesDetachedItems = (ruleset: string) => ruleset === SOCIETY_RULESET || ruleset === V14_RULESET;
+
 export function sessionToRecords(slotId: string, session: CharacterLifeSessionState): StoredRecord[] {
   const record = (table: TableName, id: string, value: unknown): StoredRecord => ({ slotId,id,table,schemaVersion: 1,value });
   const profile = (id: string) => ({ profile: session.profiles.find(p => p.id === id), profileOrder: session.profiles.findIndex(p => p.id === id) });
   const city = structuredClone(session.city), itemRecords:StoredRecord[]=[];
-  if (city.society?.rulesetId === SOCIETY_RULESET) {
+  if (city.society && usesDetachedItems(city.society.rulesetId)) {
     const items=city.society.items;
     const add=(item:ItemInstance,place:string)=>itemRecords.push(record('items',`item:${item.id}`,{defId:item.defId,place}));
     for(const item of items.inventory)add(item,'inventory');
@@ -111,7 +113,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   const itemRows=records.filter(r=>r.table==='items');
   const storedItems = storedSociety && typeof storedSociety === 'object' ? Object.getOwnPropertyDescriptor(storedSociety,'items')?.value : undefined;
   const detachedItems = hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals']) || hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals','workshops']);
-  if (meta.rulesetId === SOCIETY_RULESET || (historicalNpcLifeRuleset.test(meta.rulesetId) && detachedItems)) {
+  if (usesDetachedItems(meta.rulesetId) || (historicalNpcLifeRuleset.test(meta.rulesetId) && detachedItems)) {
     const society=Object.getOwnPropertyDescriptor(city,'society')?.value;
     if(!society||typeof society!=='object'||!detachedItems)throw new StoreRecordError('city:city');
     const rest=storedItems as Record<string, unknown>;

@@ -95,10 +95,27 @@ it('keeps older and failed v14 files incompatible and categorizes damage in curr
   const v13 = readFileSync(new URL('./fixtures/society-v13/life-new-game.json', import.meta.url), 'utf8');
   const badOld = parsed().state;
   badOld.player.purse.moneyMilli = -1;
-  for (const text of [v13, encode(badOld)]) expect(persistence.deserializeCharacterLifeSave(text)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
+  const failureCode = (text: string) => {
+    const result = persistence.deserializeCharacterLifeSave(text);
+    return result.success ? null : result.error.code;
+  };
+  for (const text of [v13, encode(badOld)]) expect(failureCode(text)).toBe('INCOMPATIBLE_SAVE');
   const current = JSON.parse(readFileSync(new URL('./fixtures/society-v15/life-new-game.json', import.meta.url), 'utf8'));
   current.state.city.society.rulesetId = 'tile-society-14';
-  expect(persistence.deserializeCharacterLifeSave(JSON.stringify(current))).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
+  expect(failureCode(JSON.stringify(current))).toBe('INVALID_SAVE_STATE');
   delete current.state;
-  expect(persistence.deserializeCharacterLifeSave(JSON.stringify(current))).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
+  expect(failureCode(JSON.stringify(current))).toBe('INVALID_SAVE_STATE');
+});
+
+it('rejects an inline v14 IndexedDB item collection even if it is empty', () => {
+  const state = parsed().state;
+  const rows = persistence.sessionToRecords('main', state).filter(row => row.table !== 'items');
+  const city = rows.find(row => row.table === 'city')!.value as typeof state.city;
+  city.society.items = structuredClone(state.city.society.items);
+  const before = structuredClone(rows);
+  let error: unknown;
+  try { persistence.recordsToSession(rows); } catch (caught) { error = caught; }
+  expect(error).toBeInstanceOf(persistence.StoreRecordError);
+  expect((error as persistence.StoreRecordError).ref).toBe('city:city');
+  expect(rows).toEqual(before);
 });
