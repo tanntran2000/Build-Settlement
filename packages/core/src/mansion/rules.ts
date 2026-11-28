@@ -2,7 +2,7 @@ import type { TileTrialState } from '../trial/types.js';
 import type { WorldNpc } from '../world/npc.js';
 import { homeBeds } from '../world/npc-household.js';
 import { MANSION_CATALOG } from './catalog.js';
-import type { MansionRoom, MansionState, PlayerNeeds, RoomLevel } from './types.js';
+import type { MansionFurnitureId, MansionRoom, MansionRoomTypeId, MansionState, PlayerNeeds, RoomLevel } from './types.js';
 
 export const MANSION_TILE_ID = 'estate-1';
 
@@ -26,9 +26,14 @@ export function mansionLevel(city: TileTrialState): RoomLevel | undefined {
   return building?.typeId === 'mansion' ? building.level as RoomLevel : undefined;
 }
 
+export function isMansionBedForRoom(furnitureId: MansionFurnitureId, roomTypeId: MansionRoomTypeId): boolean {
+  const piece = MANSION_CATALOG.furniture[furnitureId];
+  return piece?.addsBed === true && piece.fitRooms.includes(roomTypeId);
+}
+
 export function roomBeds(room: MansionRoom): number {
   const { beds } = MANSION_CATALOG.roomTypes[room.typeId];
-  return beds + room.furniture.filter(id => MANSION_CATALOG.furniture[id]?.addsBed).length;
+  return beds + room.furniture.filter(id => isMansionBedForRoom(id, room.typeId)).length;
 }
 
 export function mansionResidents(state: { npcs: readonly WorldNpc[] }): WorldNpc[] {

@@ -1,5 +1,5 @@
 import {
-  createMansionState, createPlayerNeeds, homeBeds, isCharacterLifeSessionState, isHistoricalNpcHousehold, isNpcWorldSessionState,
+  createMansionState, createPlayerNeeds, homeBeds, isCharacterLifeSessionState, isHistoricalNpcHousehold, isMansionBedForRoom, isNpcWorldSessionState,
   isRoomLevel, isTileTrialPlanningState, isWorldSessionState, MANSION_CATALOG, MANSION_TILE_ID, mansionLevel, P7B_TRIAL,
   roomBeds, SOCIETY_RULESET, type CharacterLifeSessionState, type MansionRoom, type MansionRoomTypeId,
   type MansionState, type NpcWorldSessionState, type TileTrialState, type WorldSessionState,
@@ -63,9 +63,9 @@ function placeResidents(city: TileTrialState, mansion: MansionState, rows: unkno
     const { beds, maxSingleBeds } = MANSION_CATALOG.roomTypes[typeId];
     const extra = Math.min(maxSingleBeds, Math.max(0, residents.length - next - beds));
     if (extra) {
-      const bed = Object.entries(MANSION_CATALOG.furniture).find(([, piece]) => piece.addsBed && piece.fitRooms.includes(typeId));
+      const bed = Object.keys(MANSION_CATALOG.furniture).find(id => isMansionBedForRoom(id, typeId));
       if (!bed) throw Error('Missing migration bed for ' + typeId);
-      room.furniture = Array<string>(extra).fill(bed[0]);
+      room.furniture = Array<string>(extra).fill(bed);
     }
     mansion.rooms.push(room);
     const end = Math.min(residents.length, next + roomBeds(room));

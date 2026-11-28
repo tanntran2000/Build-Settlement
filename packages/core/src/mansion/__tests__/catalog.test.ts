@@ -47,12 +47,16 @@ it.each([
   }
 });
 
-it('uses the loaded catalog keys and data-defined beds for new room and furniture ids', async () => {
+function guestCatalog() {
   const raw = structuredClone(core.MANSION_CATALOG);
-  const candidate = { ...raw,
+  return { ...raw,
     roomTypes: { ...raw.roomTypes, 'guest-room': { ...raw.roomTypes.bedroom, name: 'Guest Room', migrationPriority: null } },
     furniture: { ...raw.furniture, 'guest-cot': { ...raw.furniture['single-bed'], fitRooms: ['guest-room'] } },
   };
+}
+
+it('uses the loaded catalog keys and data-defined beds for new room and furniture ids', async () => {
+  const candidate = guestCatalog();
   vi.resetModules();
   vi.doMock('../../data/mansion.json', () => ({ default: candidate }));
   try {
@@ -61,6 +65,42 @@ it('uses the loaded catalog keys and data-defined beds for new room and furnitur
     expect(catalog.isMansionRoomType('guest-room')).toBe(true);
     expect(catalog.isMansionFurniture('guest-cot')).toBe(true);
     expect(rules.roomBeds({ id: 'room-3', typeId: 'guest-room', level: 1, furniture: ['guest-cot'] })).toBe(2);
+  } finally {
+    vi.doUnmock('../../data/mansion.json');
+    vi.resetModules();
+  }
+});
+
+it.each([
+  ['guest-room', 'single-bed'],
+  ['bedroom', 'guest-cot'],
+] as const)('rejects incompatible bed furniture in a playable checkpoint (%s, %s)', async (typeId, furnitureId) => {
+  const candidate = guestCatalog();
+  vi.resetModules();
+  vi.doMock('../../data/mansion.json', () => ({ default: candidate }));
+  try {
+    const live = await import('../../index.js');
+    const { NPC_TEST_KEYS, withNpcs } = await import('../../__tests__/helpers/npcs.js');
+    const { deserializeCharacterLifeSave, serializeCharacterLifeSave } = await import('@haven/persistence');
+    const made = live.createCharacterLifeSession(42, { ...live.DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
+    if (!made.success) throw Error(made.error.message);
+    const state = withNpcs(made.value, NPC_TEST_KEYS.slice(0, 2));
+    const room: core.MansionRoom = { id: 'room-3', typeId: 'guest-room', level: 1, furniture: ['guest-cot'] };
+    const mansion = state.city.society!.mansion;
+    mansion.rooms.push(room);
+    mansion.nextRoomSeq++;
+    for (const { household } of state.npcs) Object.assign(household, { home: 'estate-1', room: room.id });
+    const save = serializeCharacterLifeSave(state);
+    if (!save.success) throw Error(save.error.message);
+    expect(deserializeCharacterLifeSave(save.text).success).toBe(true);
+    expect(live.roomBeds(room)).toBe(2);
+
+    room.typeId = typeId;
+    room.furniture = [furnitureId];
+    expect.soft(live.roomBeds(room)).toBe(1);
+    expect.soft(live.isMansionStructure(mansion)).toBe(false);
+    const mismatch = deserializeCharacterLifeSave(JSON.stringify({ ...JSON.parse(save.text), state }));
+    expect(mismatch.success ? null : mismatch.error.code).toBe('INVALID_SAVE_STATE');
   } finally {
     vi.doUnmock('../../data/mansion.json');
     vi.resetModules();

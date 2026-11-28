@@ -3,7 +3,7 @@ import type { TileTrialState } from '../trial/types.js';
 import { readDenseArray } from '../world/arrays.js';
 import type { WorldNpc } from '../world/npc.js';
 import { isMansionFurniture, isMansionRoomType, isRoomLevel, isSkillKey, MANSION_CATALOG } from './catalog.js';
-import { MANSION_TILE_ID, mansionLevel, roomBeds } from './rules.js';
+import { isMansionBedForRoom, MANSION_TILE_ID, mansionLevel, roomBeds } from './rules.js';
 import type { MansionRole, MansionRoom, MansionRoomTypeId, MansionState, PlayerNeeds } from './types.js';
 
 export function isPlayerNeeds(raw: unknown): raw is PlayerNeeds {
@@ -18,8 +18,10 @@ function isRoom(raw: unknown): raw is MansionRoom {
       !/^room-[1-9]\d*$/.test(raw.id) || !isMansionRoomType(raw.typeId) || !isRoomLevel(raw.level)) return false;
   const furniture = readDenseArray(raw.furniture);
   if (!furniture || !furniture.every(isMansionFurniture)) return false;
+  const typeId = raw.typeId;
   const furnishings = furniture.filter(id => !MANSION_CATALOG.furniture[id].addsBed);
-  const type = MANSION_CATALOG.roomTypes[raw.typeId];
+  if (furniture.some(id => MANSION_CATALOG.furniture[id].addsBed && !isMansionBedForRoom(id, typeId))) return false;
+  const type = MANSION_CATALOG.roomTypes[typeId];
   return furniture.length - furnishings.length <= type.maxSingleBeds &&
     furnishings.length <= type.furnitureSlots[raw.level - 1] && furnishings.length === new Set(furnishings).size;
 }
